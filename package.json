@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "pnpm -r build",
+    "prepare": "husky install",
     "dev": "pnpm --parallel dev",
-    "pre-commit": "pnpm -F @libs/styles pre-commit",
+    "pre-commit": "pnpm -r pre-commit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

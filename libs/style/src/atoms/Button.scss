@@ -1,0 +1,13 @@
+@import "../config/all";
+
+.button-primary {
+  background-color: $primary;
+  color: $white;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: 500;
+  /* lskjdsd */
+  margin: 0.2em;
+  padding: .8rem 1rem;
+  border-radius: 0.3em;
+}

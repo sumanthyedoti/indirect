@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import "@libs/styles/lib/Button.css";
+import "@libs/style/lib/Button.css";
 
 interface props {
   label: string;

@@ -1,0 +1,31 @@
+{
+  "name": "@libs/style",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pre-commit": "lint-staged",
+    "build": "node scripts/build.js",
+    "dev": "nodemon --watch src --exec pnpm build -e scss",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "lint-staged": {
+    "**/*.scss": "pnpm lint:fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.2",
+    "node-sass": "^7.0.1",
+    "nodemon": "^2.0.18",
+    "normalize-scss": "^7.0.1",
+    "postcss": "^8.4.14",
+    "prettier": "^2.7.1",
+    "stylelint": "^14.9.1",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-sass-guidelines": "^9.0.1",
+    "stylelint-prettier": "^2.0.0"
+  }
+}

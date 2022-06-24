@@ -1,0 +1,39 @@
+/* COLORS */
+$primary: #611f69;
+$white: #f5f5f5;
+
+/* FONTSIZE */
+$fontsize: (
+  xxs: 0.5rem,
+  xs: 0.75rem,
+  sm: 1rem,
+  md: 1.5rem,
+  lg: 2rem,
+  xl: 3rem,
+  xxl: 4.5rem,
+);
+
+/* BREAK PONITS */
+$breakpoints: (
+  md: 48rem,
+  lg: 60rem,
+);
+
+/* SPACING */
+$spacing: (
+  xxs: 0.5rem,
+  xs: 0.75rem,
+  sm: 1rem,
+  md: 1.5rem,
+  lg: 2rem,
+  xl: 3rem,
+  xxl: 4.5rem,
+);
+$rounded: (
+  xs: 0.15em,
+  sm: 0.3em,
+  md: 0.5em,
+  lg: 0.7em,
+  xl: 0.9em,
+  xxl: 1em,
+);
