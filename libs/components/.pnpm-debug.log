@@ -1,0 +1,51 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@libs/components",
+      "version": "1.0.0",
+      "description": "",
+      "main": "lib/index.js",
+      "scripts": {
+        "build": "tsc",
+        "dev": "pnpm build --watch",
+        "test": "echo \"Error: no test specified\" && exit 1"
+      },
+      "keywords": [],
+      "author": "",
+      "license": "ISC",
+      "devDependencies": {
+        "@rollup/plugin-typescript": "^8.3.3",
+        "@types/react": "^18.0.14",
+        "rollup": "^2.75.7",
+        "typescript": "^4.7.4"
+      },
+      "dependencies": {
+        "@libs/styles": "workspace:^1.0.0",
+        "react": "^18.2.0"
+      }
+    },
+    "prefix": "/home/sumanthyedoti/geekskool/slack-clone/libs/components"
+  },
+  "2 debug pnpm:context": {
+    "currentLockfileExists": false,
+    "storeDir": "/home/sumanthyedoti/.local/share/pnpm/store/v3",
+    "virtualStoreDir": "/home/sumanthyedoti/geekskool/slack-clone/libs/components/node_modules/.pnpm"
+  },
+  "3 debug pnpm:stage": {
+    "prefix": "/home/sumanthyedoti/geekskool/slack-clone/libs/components",
+    "stage": "resolution_started"
+  },
+  "4 error pnpm": {
+    "code": "ERR_PNPM_NO_MATCHING_VERSION_INSIDE_WORKSPACE",
+    "pkgsStack": [],
+    "err": {
+      "name": "pnpm",
+      "message": "In : No matching version found for @libs/styles@^1.0.0 inside the workspace",
+      "code": "ERR_PNPM_NO_MATCHING_VERSION_INSIDE_WORKSPACE",
+      "stack": "pnpm: In : No matching version found for @libs/styles@^1.0.0 inside the workspace\n    at tryResolveFromWorkspace (/snapshot/dist/pnpm.cjs)\n    at resolveNpm (/snapshot/dist/pnpm.cjs)\n    at Object.resolve (/snapshot/dist/pnpm.cjs)\n    at /snapshot/dist/pnpm.cjs\n    at run (/snapshot/dist/pnpm.cjs)\n    at PQueue._tryToStartAnother (/snapshot/dist/pnpm.cjs)\n    at /snapshot/dist/pnpm.cjs\n    at new Promise (<anonymous>)\n    at PQueue.add (/snapshot/dist/pnpm.cjs)\n    at resolveAndFetch (/snapshot/dist/pnpm.cjs)"
+    }
+  }
+}

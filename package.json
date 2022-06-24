@@ -1,0 +1,18 @@
+{
+  "name": "slack-clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm --parallel dev",
+    "pre-commit": "pnpm -F @libs/styles pre-commit",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "husky": "^8.0.1"
+  }
+}

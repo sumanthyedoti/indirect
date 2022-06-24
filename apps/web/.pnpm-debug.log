@@ -1,0 +1,281 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@apps/web",
+      "version": "1.0.0",
+      "description": "",
+      "main": "index.js",
+      "scripts": {
+        "start": "pnpm webpack-dev-server -- --env mode=development",
+        "build": "rm -rf dist && webpack --mode production",
+        "test": "echo \"Error: no test specified\" && exit 1"
+      },
+      "keywords": [],
+      "author": "",
+      "license": "ISC",
+      "dependencies": {
+        "@libs/components": "workspace:^1.0.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+      },
+      "devDependencies": {
+        "@babel/core": "^7.18.5",
+        "@babel/plugin-transform-runtime": "^7.18.5",
+        "@babel/preset-env": "^7.18.2",
+        "@babel/preset-react": "^7.17.12",
+        "@babel/preset-typescript": "^7.17.12",
+        "@babel/runtime": "^7.18.3",
+        "@types/react": "^18.0.14",
+        "@types/react-dom": "^18.0.5",
+        "@typescript-eslint/eslint-plugin": "^5.29.0",
+        "@typescript-eslint/parser": "^5.29.0",
+        "babel-loader": "^8.2.5",
+        "css-loader": "^6.7.1",
+        "eslint": "^8.18.0",
+        "eslint-plugin-react": "^7.30.1",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "file-loader": "^6.2.0",
+        "html-loader": "^3.1.2",
+        "html-webpack-plugin": "^5.5.0",
+        "react-hot-loader": "^4.13.0",
+        "sass-loader": "^13.0.0",
+        "style-loader": "^3.3.1",
+        "ts-loader": "^9.3.1",
+        "typescript": "^4.7.4",
+        "url-loader": "^4.1.1",
+        "webpack": "^5.73.0",
+        "webpack-cli": "^4.10.0",
+        "webpack-dev-server": "^4.9.2"
+      }
+    },
+    "prefix": "/home/sumanthyedoti/geekskool/slack-clone/apps/web"
+  },
+  "2 debug pnpm:context": {
+    "currentLockfileExists": false,
+    "storeDir": "/home/sumanthyedoti/.local/share/pnpm/store/v3",
+    "virtualStoreDir": "/home/sumanthyedoti/geekskool/slack-clone/apps/web/node_modules/.pnpm"
+  },
+  "3 debug pnpm:stage": {
+    "prefix": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "stage": "resolution_started"
+  },
+  "4 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/file-loader/6.2.0",
+    "wanted": {
+      "dependentId": ".",
+      "name": "file-loader",
+      "rawSpec": "^6.2.0"
+    }
+  },
+  "5 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/file-loader/6.2.0",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "resolved"
+  },
+  "6 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/file-loader/6.2.0",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "found_in_store"
+  },
+  "7 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@babel/plugin-transform-runtime/7.18.5",
+    "wanted": {
+      "dependentId": ".",
+      "name": "@babel/plugin-transform-runtime",
+      "rawSpec": "^7.18.5"
+    }
+  },
+  "8 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@babel/plugin-transform-runtime/7.18.5",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "resolved"
+  },
+  "9 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@babel/plugin-transform-runtime/7.18.5",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "found_in_store"
+  },
+  "10 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@babel/preset-typescript/7.17.12",
+    "wanted": {
+      "dependentId": ".",
+      "name": "@babel/preset-typescript",
+      "rawSpec": "^7.17.12"
+    }
+  },
+  "11 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@babel/preset-typescript/7.17.12",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "resolved"
+  },
+  "12 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/eslint-plugin-react/7.30.1",
+    "wanted": {
+      "dependentId": ".",
+      "name": "eslint-plugin-react",
+      "rawSpec": "^7.30.1"
+    }
+  },
+  "13 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/eslint-plugin-react/7.30.1",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "resolved"
+  },
+  "14 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@babel/preset-typescript/7.17.12",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "found_in_store"
+  },
+  "15 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/eslint-plugin-react/7.30.1",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "found_in_store"
+  },
+  "16 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/babel-loader/8.2.5",
+    "wanted": {
+      "dependentId": ".",
+      "name": "babel-loader",
+      "rawSpec": "^8.2.5"
+    }
+  },
+  "17 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/babel-loader/8.2.5",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "resolved"
+  },
+  "18 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/babel-loader/8.2.5",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "found_in_store"
+  },
+  "19 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/style-loader/3.3.1",
+    "wanted": {
+      "dependentId": ".",
+      "name": "style-loader",
+      "rawSpec": "^3.3.1"
+    }
+  },
+  "20 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/style-loader/3.3.1",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "resolved"
+  },
+  "21 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/style-loader/3.3.1",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "found_in_store"
+  },
+  "22 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/sass-loader/13.0.0",
+    "wanted": {
+      "dependentId": ".",
+      "name": "sass-loader",
+      "rawSpec": "^13.0.0"
+    }
+  },
+  "23 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/sass-loader/13.0.0",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "resolved"
+  },
+  "24 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/sass-loader/13.0.0",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "found_in_store"
+  },
+  "25 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@babel/preset-env/7.18.2",
+    "wanted": {
+      "dependentId": ".",
+      "name": "@babel/preset-env",
+      "rawSpec": "^7.18.2"
+    }
+  },
+  "26 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@babel/preset-env/7.18.2",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "resolved"
+  },
+  "27 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@babel/preset-env/7.18.2",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "found_in_store"
+  },
+  "28 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/html-webpack-plugin/5.5.0",
+    "wanted": {
+      "dependentId": ".",
+      "name": "html-webpack-plugin",
+      "rawSpec": "^5.5.0"
+    }
+  },
+  "29 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/html-webpack-plugin/5.5.0",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "resolved"
+  },
+  "30 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/url-loader/4.1.1",
+    "wanted": {
+      "dependentId": ".",
+      "name": "url-loader",
+      "rawSpec": "^4.1.1"
+    }
+  },
+  "31 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/url-loader/4.1.1",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "resolved"
+  },
+  "32 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/html-webpack-plugin/5.5.0",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "found_in_store"
+  },
+  "33 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/url-loader/4.1.1",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "found_in_store"
+  },
+  "34 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ts-loader/9.3.1",
+    "wanted": {
+      "dependentId": ".",
+      "name": "ts-loader",
+      "rawSpec": "^9.3.1"
+    }
+  },
+  "35 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/ts-loader/9.3.1",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "resolved"
+  },
+  "36 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/react/18.0.14",
+    "wanted": {
+      "dependentId": ".",
+      "name": "@types/react",
+      "rawSpec": "^18.0.14"
+    }
+  },
+  "37 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@types/react/18.0.14",
+    "requester": "/home/sumanthyedoti/geekskool/slack-clone/apps/web",
+    "status": "resolved"
+  },
+  "38 error pnpm": {
+    "code": "ERR_PNPM_NO_MATCHING_VERSION_INSIDE_WORKSPACE",
+    "pkgsStack": [],
+    "err": {
+      "name": "pnpm",
+      "message": "In : No matching version found for @libs/components@^1.0.0 inside the workspace",
+      "code": "ERR_PNPM_NO_MATCHING_VERSION_INSIDE_WORKSPACE",
+      "stack": "pnpm: In : No matching version found for @libs/components@^1.0.0 inside the workspace\n    at tryResolveFromWorkspace (/snapshot/dist/pnpm.cjs)\n    at resolveNpm (/snapshot/dist/pnpm.cjs)\n    at Object.resolve (/snapshot/dist/pnpm.cjs)\n    at /snapshot/dist/pnpm.cjs\n    at run (/snapshot/dist/pnpm.cjs)\n    at PQueue._tryToStartAnother (/snapshot/dist/pnpm.cjs)\n    at PQueue._next (/snapshot/dist/pnpm.cjs)\n    at run (/snapshot/dist/pnpm.cjs)\n    at runMicrotasks (<anonymous>)\n    at processTicksAndRejections (internal/process/task_queues.js:95:5)"
+    }
+  }
+}
