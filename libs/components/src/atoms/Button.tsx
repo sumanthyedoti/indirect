@@ -6,7 +6,7 @@ interface props {
 }
 
 const Button: FC<props> = ({ label }) => {
-  return <button className="button-primary">{label}</button>;
+  return <button className="button-primary">{label + "!"}</button>;
 };
 
 export default Button;
