@@ -1,12 +1,13 @@
 import React, { FC } from "react";
 import { Button } from "@libs/components";
-import img from "./images.jpeg";
 
-const App = () => {
+const img = require("./images.jpeg");
+
+const App: FC = () => {
   return (
     <div>
       <Button label="LAUNCH SLACK" />
-      <img src={img} width="500" alt="" srcset="" />
+      <img src={img} width="500" alt="" />
     </div>
   );
 };

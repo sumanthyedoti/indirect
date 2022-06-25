@@ -7,7 +7,7 @@ module.exports = {
   target: "web",
   mode: "development",
   entry: {
-    bundle: path.resolve(__dirname, "src/index.js"),
+    bundle: path.resolve(__dirname, "src/index.tsx"),
   },
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -20,13 +20,13 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)?$/,
+        test: /\.(ts|tsx)?$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"],
-          },
+          loader: "ts-loader",
+          // options: {
+          //   presets: ["@babel/preset-env", "@babel/preset-react"],
+          // },
         },
       },
       {
@@ -43,6 +43,7 @@ module.exports = {
     static: {
       directory: path.resolve(__dirname, "dist"),
     },
+    watchFiles: ["src/**/*"],
     port: 3000,
     hot: true,
     open: true,
@@ -55,6 +56,6 @@ module.exports = {
       filename: "index.html",
       template: path.resolve(__dirname, "src/index.html"),
     }),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
 };
