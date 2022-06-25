@@ -1,13 +1,10 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
 module.exports = {
   target: "web",
-  mode: "development",
   entry: {
-    bundle: path.resolve(__dirname, "src/main.tsx"),
+    bundle: path.resolve(__dirname, "src/index.tsx"),
   },
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -35,23 +32,10 @@ module.exports = {
         ],
       },
       {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"],
-      },
-      {
         test: /\.(png|webp|jpg|jpeg|gif)/i,
         type: "asset/resource",
       },
     ],
-  },
-  devServer: {
-    static: {
-      directory: path.resolve(__dirname, "dist"),
-    },
-    watchFiles: ["src/**/*"],
-    port: 3000,
-    hot: true,
-    open: true,
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],

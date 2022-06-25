@@ -3,10 +3,15 @@ import "@libs/style/lib/Button.css";
 
 interface props {
   label: string;
+  onClick?: () => void;
 }
 
-const Button: FC<props> = ({ label }) => {
-  return <button className="button-primary">{label + "!"}</button>;
+const Button: FC<props> = ({ label, onClick = () => {} }) => {
+  return (
+    <button className="button-primary" onClick={onClick}>
+      {label + "!"}
+    </button>
+  );
 };
 
 export default Button;
