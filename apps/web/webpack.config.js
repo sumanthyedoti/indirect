@@ -7,7 +7,7 @@ module.exports = {
   target: "web",
   mode: "development",
   entry: {
-    bundle: path.resolve(__dirname, "src/index.tsx"),
+    bundle: path.resolve(__dirname, "src/main.tsx"),
   },
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -22,12 +22,17 @@ module.exports = {
       {
         test: /\.(ts|tsx)?$/,
         exclude: /node_modules/,
-        use: {
-          loader: "ts-loader",
-          // options: {
-          //   presets: ["@babel/preset-env", "@babel/preset-react"],
+        use: [
+          // {
+          //   loader: "babel-loader",
+          //   options: {
+          //     presets: ["@babel/preset-env", "@babel/preset-react"],
+          //   },
           // },
-        },
+          {
+            loader: "ts-loader",
+          },
+        ],
       },
       {
         test: /\.css$/,
