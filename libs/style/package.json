@@ -5,14 +5,13 @@
   "main": "index.js",
   "scripts": {
     "lint": "stylelint './**/*.scss'",
-    "lint:fix": "yarn lint --fix",
     "pre-commit": "lint-staged",
     "build": "node scripts/build.js",
     "dev": "nodemon --watch src --exec pnpm build -e scss",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {
-    "./**/*.scss": "pnpm lint:fix"
+    "./**/*.scss": "pnpm lint --fix"
   },
   "keywords": [],
   "author": "",

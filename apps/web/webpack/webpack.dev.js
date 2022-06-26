@@ -1,10 +1,7 @@
-const { merge } = require("webpack-merge");
-const path = require("path");
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const { merge } = require("webpack-merge")
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin")
 
-const commonConfig = require("./webpack.common.js");
+const commonConfig = require("./webpack.common.js")
 
 module.exports = merge(
   {
@@ -40,10 +37,7 @@ module.exports = merge(
       hot: true,
       open: true,
     },
-    plugins: [
-      new ReactRefreshWebpackPlugin(),
-      // new BundleAnalyzerPlugin(),
-    ],
+    plugins: [new ReactRefreshWebpackPlugin()],
   },
   commonConfig
-);
+)

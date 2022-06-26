@@ -1,8 +1,10 @@
-const { merge } = require("webpack-merge");
-const TerserPlugin = require("terser-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { merge } = require("webpack-merge")
+const TerserPlugin = require("terser-webpack-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin
 
-const commonConfig = require("./webpack.common.js");
+const commonConfig = require("./webpack.common.js")
 
 module.exports = merge(
   {
@@ -30,7 +32,7 @@ module.exports = merge(
         },
       ],
     },
-    plugins: [new MiniCssExtractPlugin()],
+    plugins: [new MiniCssExtractPlugin(), new BundleAnalyzerPlugin()],
     optimization: {
       minimize: true,
       minimizer: [
@@ -49,4 +51,4 @@ module.exports = merge(
     },
   },
   commonConfig
-);
+)
