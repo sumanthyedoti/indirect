@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { Button } from "@libs/components";
 
 import img from "./image.png";

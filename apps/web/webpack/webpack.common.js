@@ -1,6 +1,5 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ForkTsCheckerNotifierWebpackPlugin = require("fork-ts-checker-notifier-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
@@ -26,10 +25,6 @@ module.exports = {
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin(),
-    new ForkTsCheckerNotifierWebpackPlugin({
-      title: "TypeScript",
-      excludeWarnings: false,
-    }),
     new HtmlWebpackPlugin({
       filename: "index.html",
       template: path.resolve(__dirname, "../src/index.html"),
