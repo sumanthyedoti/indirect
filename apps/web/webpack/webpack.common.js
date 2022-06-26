@@ -6,10 +6,10 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 module.exports = {
   target: "web",
   entry: {
-    bundle: path.resolve(__dirname, "src/index.tsx"),
+    bundle: path.resolve(__dirname, "../src/index.tsx"),
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "../dist"),
     filename: "[name][contenthash].js",
     publicPath: "/",
     clean: true,
@@ -35,7 +35,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       filename: "index.html",
-      template: path.resolve(__dirname, "src/index.html"),
+      template: path.resolve(__dirname, "../src/index.html"),
     }),
     // new BundleAnalyzerPlugin(),
   ],

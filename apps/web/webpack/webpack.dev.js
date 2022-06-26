@@ -8,7 +8,7 @@ const commonConfig = require("./webpack.common.js");
 module.exports = merge(
   {
     mode: "development",
-    devtool: "eval-cheap-source-map",
+    devtool: "eval-cheap-module-source-map",
     cache: true,
     module: {
       rules: [
@@ -33,7 +33,7 @@ module.exports = merge(
     },
     devServer: {
       static: {
-        directory: path.resolve(__dirname, "dist"),
+        directory: path.resolve(__dirname, "../dist"),
       },
       watchFiles: ["src/**/*"],
       port: 3000,

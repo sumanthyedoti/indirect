@@ -7,7 +7,8 @@ import logo from "./react-icon.svg";
 const App: FC = () => {
   return (
     <div>
-      <Button label="LAUNCH SLACK" />
+      <h1>{process.env.NODE_ENV}</h1>
+      <Button label="LAUNCH APP" />
       <img src={img} width="500" alt="" />
       <img src={logo} width="500" alt="" />
     </div>
