@@ -1,6 +1,6 @@
 const { merge } = require("webpack-merge");
 const path = require("path");
-// const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
@@ -14,11 +14,14 @@ module.exports = merge(
     module: {
       rules: [
         {
-          test: /\.(ts|tsx)?$/i,
+          test: /\.(ts|tsx|js|jsx)?$/i,
           exclude: /node_modules/,
           use: [
             {
-              loader: "babel-loader",
+              loader: require.resolve("babel-loader"),
+              options: {
+                plugins: [require.resolve("react-refresh/babel")],
+              },
             },
           ],
         },
@@ -33,16 +36,12 @@ module.exports = merge(
       ],
     },
     devServer: {
-      static: {
-        directory: path.resolve(__dirname, "../dist"),
-      },
-      watchFiles: ["src/**/*"],
       port: 3000,
       hot: true,
       open: true,
     },
     plugins: [
-      // new ReactRefreshWebpackPlugin(),
+      new ReactRefreshWebpackPlugin(),
       // new BundleAnalyzerPlugin(),
     ],
   },

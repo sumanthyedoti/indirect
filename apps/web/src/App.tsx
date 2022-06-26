@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import { Button } from "@libs/components";
 
 import img from "./image.png";
@@ -14,8 +14,8 @@ const App: FC = () => {
         label={`clicks: ${count}`}
         onClick={() => setCount((count) => count + 1)}
       />
-      <img src={img} width="500" alt="" />
-      <img src={logo} width="500" alt="" />
+      <img src={img} width="300" height="200" alt="" />
+      <img src={logo} width="200" height="200" alt="" />
     </div>
   );
 };
