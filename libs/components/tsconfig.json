@@ -5,6 +5,8 @@
     "jsx": "react",
     "lib": ["DOM", "ESNext"],
     "module": "esnext",
+    "sourceMap": true,
+    "incremental": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
     "noImplicitReturns": true,

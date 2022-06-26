@@ -8,9 +8,22 @@ const commonConfig = require("./webpack.common.js");
 module.exports = merge(
   {
     mode: "development",
-    // devtool: "source-map",
+    devtool: "eval-cheap-module-source-map",
     module: {
       rules: [
+        {
+          test: /\.(ts|tsx)?$/,
+          exclude: /node_modules/,
+          use: [
+            {
+              loader: "ts-loader",
+            },
+          ],
+        },
+        {
+          test: /\.(png|webp|jpg|jpeg|gif)/i,
+          type: "asset/resource",
+        },
         {
           test: /\.css$/,
           use: ["style-loader", "css-loader"],

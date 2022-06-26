@@ -1,5 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ForkTsCheckerNotifierWebpackPlugin = require("fork-ts-checker-notifier-webpack-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
   target: "web",
@@ -15,32 +17,17 @@ module.exports = {
   },
   // devtool: "source-map",
   module: {
-    rules: [
-      {
-        test: /\.(ts|tsx)?$/,
-        exclude: /node_modules/,
-        use: [
-          // {
-          //   loader: "babel-loader",
-          //   options: {
-          //     presets: ["@babel/preset-env", "@babel/preset-react"],
-          //   },
-          // },
-          {
-            loader: "ts-loader",
-          },
-        ],
-      },
-      {
-        test: /\.(png|webp|jpg|jpeg|gif)/i,
-        type: "asset/resource",
-      },
-    ],
+    rules: [],
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
   },
   plugins: [
+    new ForkTsCheckerWebpackPlugin(),
+    new ForkTsCheckerNotifierWebpackPlugin({
+      title: "TypeScript",
+      excludeWarnings: false,
+    }),
     new HtmlWebpackPlugin({
       filename: "index.html",
       template: path.resolve(__dirname, "src/index.html"),
