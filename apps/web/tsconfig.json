@@ -2,11 +2,11 @@
   "compilerOptions": {
     "target": "ESNext",
     "outDir": "lib",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "module": "ESNext",
     "moduleResolution": "node",
-    "noEmit": false,
+    "noEmit": true,
     "sourceMap": true,
     "incremental": true,
     "allowJs": false,

@@ -1,5 +1,6 @@
 const { merge } = require("webpack-merge");
 const path = require("path");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 
@@ -17,7 +18,12 @@ module.exports = merge(
           exclude: /node_modules/,
           use: [
             {
-              loader: "ts-loader",
+              loader: "babel-loader",
+              options: {
+                plugins: [require.resolve("react-refresh/babel")].filter(
+                  Boolean
+                ),
+              },
             },
           ],
         },
@@ -41,8 +47,9 @@ module.exports = merge(
       open: true,
     },
     plugins: [
+      new ReactRefreshWebpackPlugin(),
       // new BundleAnalyzerPlugin(),
-    ],
+    ].filter(Boolean),
   },
   commonConfig
 );
