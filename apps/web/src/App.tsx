@@ -9,7 +9,7 @@ const App: FC = () => {
   return (
     <div>
       <h1>{process.env.NODE_ENV}</h1>
-      <h1>My App !</h1>
+      <h1>My App</h1>
       <Button
         label={`clicks: ${count}`}
         onClick={() => setCount((count) => count + 1)}

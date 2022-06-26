@@ -5,9 +5,7 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 module.exports = {
   target: "web",
-  entry: {
-    bundle: path.resolve(__dirname, "../src/index.tsx"),
-  },
+  entry: path.resolve(__dirname, "../src/index.tsx"),
   output: {
     path: path.resolve(__dirname, "../dist"),
     filename: "[name][contenthash].js",
@@ -15,7 +13,6 @@ module.exports = {
     clean: true,
     assetModuleFilename: "[name][ext]",
   },
-  // devtool: "source-map",
   module: {
     rules: [
       {
