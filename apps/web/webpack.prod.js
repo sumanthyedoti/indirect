@@ -16,13 +16,6 @@ module.exports = merge(
           use: [
             {
               loader: "babel-loader",
-              options: {
-                presets: [
-                  "@babel/typescript",
-                  "@babel/preset-react",
-                  "@babel/preset-env",
-                ],
-              },
             },
           ],
         },

@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "stylelint './**/*.scss'",
+    "lint:fix": "yarn lint --fix",
     "pre-commit": "lint-staged",
     "build": "node scripts/build.js",
     "dev": "nodemon --watch src --exec pnpm build -e scss",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {
-    "**/*.scss": "pnpm lint:fix"
+    "./**/*.scss": "pnpm lint:fix"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +28,7 @@
     "stylelint": "^14.9.1",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-sass-guidelines": "^9.0.1",
+    "stylelint-config-standard": "^26.0.0",
     "stylelint-prettier": "^2.0.0"
   }
 }
