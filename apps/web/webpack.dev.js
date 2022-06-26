@@ -8,11 +8,12 @@ const commonConfig = require("./webpack.common.js");
 module.exports = merge(
   {
     mode: "development",
-    devtool: "eval-cheap-module-source-map",
+    devtool: "eval-cheap-source-map",
+    cache: true,
     module: {
       rules: [
         {
-          test: /\.(ts|tsx)?$/,
+          test: /\.(ts|tsx)?$/i,
           exclude: /node_modules/,
           use: [
             {
@@ -21,12 +22,12 @@ module.exports = merge(
           ],
         },
         {
-          test: /\.(png|webp|jpg|jpeg|gif)/i,
-          type: "asset/resource",
+          test: /\.css$/i,
+          use: ["style-loader", "css-loader"],
         },
         {
-          test: /\.css$/,
-          use: ["style-loader", "css-loader", "sass-loader"],
+          test: /\.(woff(2)?|eot|ttf|otf|svg)$/,
+          type: "asset/resource",
         },
       ],
     },

@@ -17,7 +17,12 @@ module.exports = {
   },
   // devtool: "source-map",
   module: {
-    rules: [],
+    rules: [
+      {
+        test: /\.(ico|png|webp|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
+      },
+    ],
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],

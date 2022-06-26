@@ -1,5 +1,5 @@
 const { merge } = require("webpack-merge");
-const path = require("path");
+const TerserPlugin = require("terser-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const commonConfig = require("./webpack.common.js");
@@ -7,11 +7,11 @@ const commonConfig = require("./webpack.common.js");
 module.exports = merge(
   {
     mode: "production",
+    cache: false,
     module: {
-      cache: false,
       rules: [
         {
-          test: /\.(ts|tsx)?$/,
+          test: /\.(ts|tsx)?$/i,
           exclude: /node_modules/,
           use: [
             {
@@ -20,16 +20,20 @@ module.exports = merge(
           ],
         },
         {
-          test: /\.(png|webp|jpg|jpeg|gif)/i,
-          type: "asset/resource",
-        },
-        {
           test: /\.css$/,
           use: [MiniCssExtractPlugin.loader, "css-loader"],
+        },
+        {
+          test: /\.(woff(2)?|eot|ttf|otf|svg)$/,
+          type: "asset/inline",
         },
       ],
     },
     plugins: [new MiniCssExtractPlugin()],
+    optimization: {
+      minimize: true,
+      minimizer: [new TerserPlugin()],
+    },
   },
   commonConfig
 );
