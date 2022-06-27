@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import "@libs/style/lib/Button.css";
 
 interface props {

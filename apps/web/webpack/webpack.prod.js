@@ -1,8 +1,8 @@
 const { merge } = require("webpack-merge")
-const TerserPlugin = require("terser-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-const BundleAnalyzerPlugin =
-  require("webpack-bundle-analyzer").BundleAnalyzerPlugin
+// const CompressionPlugin = require("compression-webpack-plugin")
+// const BundleAnalyzerPlugin =
+//   require("webpack-bundle-analyzer").BundleAnalyzerPlugin
 
 const commonConfig = require("./webpack.common.js")
 
@@ -32,23 +32,11 @@ module.exports = merge(
         },
       ],
     },
-    plugins: [new MiniCssExtractPlugin(), new BundleAnalyzerPlugin()],
-    optimization: {
-      minimize: true,
-      minimizer: [
-        new TerserPlugin({
-          terserOptions: {
-            format: {
-              comments: false,
-            },
-            compress: {
-              drop_console: true,
-            },
-          },
-          extractComments: false,
-        }),
-      ],
-    },
+    plugins: [
+      new MiniCssExtractPlugin(),
+      // new CompressionPlugin(),
+      // new BundleAnalyzerPlugin(),
+    ],
   },
   commonConfig
 )

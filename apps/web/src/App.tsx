@@ -1,5 +1,6 @@
-import { FC, useState } from "react"
+import React, { FC, useState } from "react"
 import { Button } from "@libs/components"
+const LazyComponent = React.lazy(() => import("./Load"))
 
 import img from "./image.png"
 import logo from "./react-icon.svg"
@@ -16,6 +17,9 @@ const App: FC = () => {
       />
       <img src={img} width="300" height="200" alt="" />
       <img src={logo} width="200" height="200" alt="" />
+      <React.Suspense>
+        <LazyComponent />
+      </React.Suspense>
     </div>
   )
 }
