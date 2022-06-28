@@ -1,9 +1,9 @@
-import React, { FC, useState } from "react"
-import { Button } from "@libs/components"
-const LazyComponent = React.lazy(() => import("./Load"))
+import React, { FC, useState } from 'react'
+import { Button } from '@libs/components'
+const LazyComponent = React.lazy(() => import('./Load'))
 
-import img from "./image.png"
-import logo from "./react-icon.svg"
+import img from './image.png'
+import logo from './react-icon.svg'
 
 const App: FC = () => {
   const [count, setCount] = useState<number>(0)
