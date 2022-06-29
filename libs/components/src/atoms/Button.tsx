@@ -1,5 +1,4 @@
 import { FC } from "react";
-import "@libs/style/lib/Button.css";
 
 interface props {
   label: string;
@@ -8,7 +7,10 @@ interface props {
 
 const Button: FC<props> = ({ label, onClick = () => {} }) => {
   return (
-    <button className="button-primary m-10" onClick={onClick}>
+    <button
+      className="bg-violet-600 text-white p-5 rounded m-10"
+      onClick={onClick}
+    >
       {label}!
     </button>
   );

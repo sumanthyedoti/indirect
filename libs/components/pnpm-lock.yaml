@@ -1,7 +1,6 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@libs/style': workspace:^1.0.0
   '@libs/tw-config': workspace:^1.0.0
   '@rollup/plugin-typescript': ^8.3.3
   '@types/react': ^18.0.14
@@ -14,7 +13,6 @@ specifiers:
   typescript: ^4.7.4
 
 dependencies:
-  '@libs/style': link:../style
   '@libs/tw-config': link:../tw-config
   react: 18.2.0
 
