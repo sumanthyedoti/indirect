@@ -1,15 +1,15 @@
-const { merge } = require("webpack-merge")
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const { merge } = require('webpack-merge')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const CompressionPlugin = require("compression-webpack-plugin")
 // const BundleAnalyzerPlugin =
 //   require("webpack-bundle-analyzer").BundleAnalyzerPlugin
 
-const commonConfig = require("./webpack.common.js")
+const commonConfig = require('./webpack.common.js')
 
 module.exports = merge(
   {
-    mode: "production",
-    devtool: "source-map",
+    mode: 'production',
+    devtool: 'source-map',
     cache: false,
     module: {
       rules: [
@@ -18,17 +18,17 @@ module.exports = merge(
           exclude: /node_modules/,
           use: [
             {
-              loader: "babel-loader",
+              loader: 'babel-loader',
             },
           ],
         },
         {
           test: /\.css$/i,
-          use: [MiniCssExtractPlugin.loader, "css-loader"],
+          use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
         },
         {
           test: /\.(woff(2)?|eot|ttf|otf|svg)$/,
-          type: "asset/inline",
+          type: 'asset/inline',
         },
       ],
     },

@@ -5,7 +5,9 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "pnpm build --watch",
+    "build:tw": "npx tailwindcss -i ./src/index.css -o ./lib/index.css --minify",
+    "dev:tw": "npx tailwindcss -i ./src/index.css -o ./lib/index.css --watch",
+    "dev": "concurrently \"tsc --watch\" \"pnpm dev:tw\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -14,12 +16,16 @@
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.3.3",
     "@types/react": "^18.0.14",
+    "autoprefixer": "^10.4.7",
+    "concurrently": "^7.2.2",
+    "postcss": "^8.4.14",
     "rollup": "^2.75.7",
+    "tailwindcss": "^3.1.4",
     "typescript": "^4.7.4"
   },
   "dependencies": {
     "@libs/style": "workspace:^1.0.0",
-    "add": "^2.0.6",
+    "@libs/tw-config": "workspace:^1.0.0",
     "react": "^18.2.0"
   }
 }

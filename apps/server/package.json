@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "@apps/server",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "dotenv": "^16.0.1",
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "pg": "^8.7.3"
   }
 }

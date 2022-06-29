@@ -8,8 +8,8 @@ interface props {
 
 const Button: FC<props> = ({ label, onClick = () => {} }) => {
   return (
-    <button className="button-primary" onClick={onClick}>
-      {label + "!"}
+    <button className="button-primary m-10" onClick={onClick}>
+      {label}!
     </button>
   );
 };

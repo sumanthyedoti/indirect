@@ -13,6 +13,7 @@ module.exports = {
   ],
   rules: {
     'no-unused-vars': 'off',
+    'no-console': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',

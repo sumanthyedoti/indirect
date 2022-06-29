@@ -1,12 +1,12 @@
-const { merge } = require("webpack-merge")
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin")
+const { merge } = require('webpack-merge')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 
-const commonConfig = require("./webpack.common.js")
+const commonConfig = require('./webpack.common.js')
 
 module.exports = merge(
   {
-    mode: "development",
-    devtool: "eval-cheap-module-source-map",
+    mode: 'development',
+    devtool: 'eval-cheap-module-source-map',
     cache: true,
     module: {
       rules: [
@@ -15,20 +15,20 @@ module.exports = merge(
           exclude: /node_modules/,
           use: [
             {
-              loader: require.resolve("babel-loader"),
+              loader: require.resolve('babel-loader'),
               options: {
-                plugins: [require.resolve("react-refresh/babel")],
+                plugins: [require.resolve('react-refresh/babel')],
               },
             },
           ],
         },
         {
           test: /\.css$/i,
-          use: ["style-loader", "css-loader"],
+          use: ['style-loader', 'css-loader', 'postcss-loader'],
         },
         {
           test: /\.(woff(2)?|eot|ttf|otf|svg)$/,
-          type: "asset/resource",
+          type: 'asset/resource',
         },
       ],
     },
