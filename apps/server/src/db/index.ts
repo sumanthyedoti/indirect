@@ -17,7 +17,7 @@ const connectDB = () => {
 
   dbClient
     .connect()
-    .then(() => console.log('db connected'))
+    .then(() => console.log('📙 DB connected'))
     .catch((e) => console.log(e))
     .finally(() => dbClient.end())
 }

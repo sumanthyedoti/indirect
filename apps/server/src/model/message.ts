@@ -1,4 +1,4 @@
-import db from '../../db'
+import db from '../db'
 
 type Message = {
   text?: string | null
@@ -8,13 +8,14 @@ type Message = {
 
 async function createMessage(message: Message) {
   const { text, file, user_id } = message
-  return await db('users')
+  const [id] = await db('messages')
     .insert({
       text,
       file,
       user_id,
     })
     .returning('id')
+  return id
 }
 
 export default {

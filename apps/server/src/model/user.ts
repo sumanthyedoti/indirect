@@ -2,17 +2,18 @@ import db from '../db'
 
 type User = {
   username: string
-  name: string
+  fullname: string
 }
 
 async function createUser(user: User) {
-  const { username, name } = user
-  return await db('users')
+  const { username, fullname } = user
+  const [id] = await db('users')
     .insert({
       username,
-      name,
+      fullname,
     })
     .returning('id')
+  return id
 }
 
 export default {
