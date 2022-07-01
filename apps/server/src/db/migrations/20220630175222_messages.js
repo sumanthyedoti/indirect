@@ -7,12 +7,7 @@ exports.up = function (knex) {
     table.increments('id').primary()
     table.text('text')
     table.string('file')
-    table
-      .integer('user_id')
-      .unsigned()
-      .index()
-      .references('id')
-      .inTable('users')
+    table.integer('user_id').unsigned().references('id').inTable('users')
     table.timestamps(true, true)
   })
 }

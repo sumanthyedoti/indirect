@@ -1,6 +1,6 @@
 import express, { Application } from 'express'
 import dotenv from 'dotenv'
-import { connectDB } from '../db'
+import { connectDB } from './db'
 
 import router from './router'
 

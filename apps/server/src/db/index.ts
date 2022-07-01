@@ -4,7 +4,6 @@ import { Client as DbClient } from 'pg'
 import knexfile from './knexfile'
 
 const environment = process.env.NODE_ENV || 'development'
-// @ts-ignore
 const db = knex(knexfile[environment])
 
 const connectDB = () => {
