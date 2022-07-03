@@ -5,10 +5,11 @@ export default {
   development: {
     client: 'postgresql',
     connection: {
+      host: '172.20.0.2',
+      port: 5432,
+      user: 'root',
+      password: 'root',
       database: 'indirect',
-      user: 'postgres',
-      password: 'password',
-      port: 5430,
     },
     pool: {
       min: 2,
@@ -35,19 +36,20 @@ export default {
   //   },
   // },
 
-  production: {
-    client: 'postgresql',
-    connection: {
-      database: process.env.DATABASE_URL,
-      user: process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASSWORD,
-    },
-    pool: {
-      min: 2,
-      max: 10,
-    },
-    migrations: {
-      tableName: 'knex_migrations',
-    },
-  },
+  // production: {
+  //   client: 'postgresql',
+  //   connection: {
+  //     database: process.env.DB_URL,
+  //     user: process.env.DB_USER,
+  //     password: process.env.DB_PASSWORD,
+  //     port: process.env.DB_PORT,
+  //   },
+  //   pool: {
+  //     min: 2,
+  //     max: 10,
+  //   },
+  //   migrations: {
+  //     tableName: 'knex_migrations',
+  //   },
+  // },
 }
