@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-import userModel from '../model/user'
+import userModel from './userModel'
 
 async function createPerson(req: Request, res: Response) {
   const { username, fullname } = req.body

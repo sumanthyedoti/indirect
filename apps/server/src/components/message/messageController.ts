@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-import messageModel from '../model/message'
+import messageModel from './messageModel'
 
 async function createMessage(req: Request, res: Response) {
   const { file, text, user_id } = req.body

@@ -1,12 +1,13 @@
 import { Request, Response } from 'express'
 import express from 'express'
 
-import userController from '../controller/user'
-import messageCotroller from '../controller/message'
+import userController from '../components/user'
+import messageCotroller from '../components/message'
 
 const router = express.Router()
 
 router.post('/user', userController.createPerson)
+
 router.post('/message', messageCotroller.createMessage)
 
 router.get('/ping', (req: Request, res: Response) => {
