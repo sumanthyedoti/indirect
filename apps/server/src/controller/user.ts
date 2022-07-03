@@ -6,9 +6,9 @@ async function createPerson(req: Request, res: Response) {
   const { username, fullname } = req.body
   console.log(username, fullname)
   try {
-    const res = await userModel.createUser({ username, fullname })
-    res.status(201).json({
-      ...res,
+    const result = await userModel.createUser({ username, fullname })
+    res.status(200).json({
+      ...result,
       message: 'Succfully added the message!',
     })
   } catch (err) {
