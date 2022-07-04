@@ -8,6 +8,7 @@ export async function seed(knex: Knex): Promise<void> {
   const query = knex('users').insert([
     { username: 'ysumanth', fullname: 'Yedoti Sumanth' },
     { username: 'suamnthy', fullname: 'Sumanth Yedoti' },
+    { username: 'johndoe', fullname: 'John Doe' },
   ])
   await query
 }
