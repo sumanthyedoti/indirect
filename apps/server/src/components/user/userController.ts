@@ -7,6 +7,7 @@ import {
   TypedRequest,
   User,
 } from '../../types.d'
+import logger from '../../config/logger'
 
 async function createUser(
   req: TypedRequestBody<{ username: string; fullname: string }>,
@@ -20,7 +21,7 @@ async function createUser(
       message: 'Successfully added the message!',
     })
   } catch (err) {
-    console.error(err)
+    // logger.error(err)
     res.status(500).send('Something went wrong!')
   }
 }
@@ -32,7 +33,7 @@ async function getUsers(req: Request, res: Response) {
       ...result,
     })
   } catch (err) {
-    console.error(err)
+    logger.error(err)
     res.status(500).send('Something went wrong!')
   }
 }
@@ -49,7 +50,7 @@ async function getUser(req: TypedRequestParams<{ id: string }>, res: Response) {
       ...result,
     })
   } catch (err) {
-    console.error(err)
+    logger.error(err)
     res.status(500).send('Something went wrong!')
   }
 }
@@ -72,7 +73,7 @@ async function updateUser(
       message: 'Updated Successfully',
     })
   } catch (err) {
-    console.error(err)
+    logger.error(err)
     res.status(500).send('Something went wrong!')
   }
 }
@@ -91,7 +92,7 @@ async function deleteUser(
     }
     res.sendStatus(204)
   } catch (err) {
-    console.error(err)
+    logger.error(err)
     res.status(500).send('Something went wrong!')
   }
 }
