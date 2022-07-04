@@ -37,10 +37,9 @@ async function getUsers(req: Request, res: Response) {
   }
 }
 
-async function getUser(req: TypedRequestParams<{ id: number }>, res: Response) {
+async function getUser(req: TypedRequestParams<{ id: string }>, res: Response) {
   try {
     const id = Number(req.params.id)
-    if (id === NaN) res.send(400).json({ message: "incorrect 'id'" })
     const result: User = await userModel.getUser(id)
     if (!result) {
       res.status(404).json({ id, message: 'User not found' })
@@ -56,7 +55,7 @@ async function getUser(req: TypedRequestParams<{ id: number }>, res: Response) {
 }
 
 async function updateUser(
-  req: TypedRequest<{ id: number }, { fullname: string }>,
+  req: TypedRequest<{ id: string }, { fullname: string }>,
   res: Response
 ) {
   try {
@@ -79,11 +78,12 @@ async function updateUser(
 }
 
 async function deleteUser(
-  req: TypedRequestParams<{ id: number }>,
+  req: TypedRequestParams<{ id: string }>,
   res: Response
 ) {
   try {
     const id = Number(req.params.id)
+
     const result = await userModel.deleteUser(id)
     if (!result) {
       res.status(404).json({ id, message: 'User not found' })
