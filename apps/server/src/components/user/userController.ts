@@ -89,7 +89,7 @@ async function deleteUser(
       res.status(404).json({ id, message: 'User not found' })
       return
     }
-    res.status(204).end()
+    res.sendStatus(204)
   } catch (err) {
     console.error(err)
     res.status(500).send('Something went wrong!')
