@@ -24,6 +24,13 @@ async function getUser(id: number): Promise<User> {
   return user[0]
 }
 
+async function getUserByUsername(username: string): Promise<User> {
+  const user: User[] = await db('users')
+    .select('id', 'username', 'fullname')
+    .where({ username })
+  return user[0]
+}
+
 async function updateUser(user: Omit<User, 'username'>): Promise<number> {
   const id: number = await db('users')
     .where({
@@ -48,6 +55,7 @@ export default {
   createUser,
   getUsers,
   getUser,
+  getUserByUsername,
   updateUser,
   deleteUser,
 }

@@ -15,6 +15,10 @@ async function createUser(
 ) {
   const { username, fullname } = req.body
   try {
+    const exisitingUser = await userModel.getUserByUsername(username)
+    if (exisitingUser) {
+      res.status(409).json({ error: 'Username taken' })
+    }
     const result = await userModel.createUser({ username, fullname })
     res.status(201).json({
       ...result,
@@ -43,7 +47,7 @@ async function getUser(req: TypedRequestParams<{ id: number }>, res: Response) {
     const id = req.params.id
     const result: User = await userModel.getUser(id)
     if (!result) {
-      res.status(404).json({ id, message: 'User not found' })
+      res.status(404).json({ id, error: 'User not found' })
       return
     }
     res.status(200).json({
@@ -64,7 +68,7 @@ async function updateUser(
     const { fullname } = req.body
     const result = await userModel.updateUser({ id, fullname })
     if (!result) {
-      res.status(404).json({ id, message: 'User not found' })
+      res.status(404).json({ id, error: 'User not found' })
       return
     }
     res.status(200).json({

@@ -4,6 +4,7 @@ import { createServer as createHTTPServer } from 'http'
 import { Server as SocketServer } from 'socket.io'
 import helmet from 'helmet'
 import cors from 'cors'
+import session from 'express-session'
 
 import router from './router'
 import userRouter from './components/user/user-router'
@@ -22,6 +23,32 @@ app.use(
     origin: whiteList,
   })
 )
+console.log(process.env.COOKIE_SECRET)
+
+// app.set('trust proxy', 1) // trust first proxy
+declare module 'express-session' {
+  interface SessionData {
+    // @ts-ignore
+    user: { [key: string]: any }
+  }
+}
+app.use(
+  session({
+    // @ts-ignore
+    secret: process.env.COOKIE_SECRET,
+    credentials: true,
+    name: 'sid',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true,
+      maxAge: 1 * 24 * 60 * 60 * 1000,
+      sameSite: 'strict',
+    },
+  })
+)
+
 app.use(router)
 app.use('/users', userRouter)
 
