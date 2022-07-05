@@ -1,13 +1,13 @@
 import { Response, Request, NextFunction } from 'express'
 import { ValidateFunction } from 'ajv'
 
-function validateId(req: Request, res: Response, next: NextFunction) {
+function validateIdParam(req: Request, res: Response, next: NextFunction) {
   const id = Number(req.params.id)
   if (!id) {
-    res.status(422).json({ message: "'id' is not valid" }).end()
-  } else {
-    next()
+    res.status(422).json({ message: "'id' is not valid" })
+    return
   }
+  next()
 }
 
 function validateSchema(ajvValidate: ValidateFunction) {
@@ -16,9 +16,10 @@ function validateSchema(ajvValidate: ValidateFunction) {
     if (!valid) {
       const errors = ajvValidate.errors
       res.status(422).json({ errors })
+      return
     }
     next()
   }
 }
 
-export { validateId, validateSchema }
+export { validateIdParam, validateSchema }

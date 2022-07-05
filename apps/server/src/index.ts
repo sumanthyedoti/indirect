@@ -6,7 +6,7 @@ import helmet from 'helmet'
 import cors from 'cors'
 
 import router from './router'
-import userRouter from './components/user/userRouter'
+import userRouter from './components/user/user-router'
 
 const port = process.env.PORT || 8000
 const wsPort = process.env.WS_PORT || 4000

@@ -1,7 +1,7 @@
 import express from 'express'
-import { validateId } from '../../middlewares'
+import { validateIdParam } from '../../middlewares'
 
-import userController from './userController'
+import userController from './user-controller'
 import { createUserSchemaValidator } from './user-schema'
 import { validateSchema } from '../../middlewares'
 
@@ -13,8 +13,8 @@ router.post(
   userController.createUser
 )
 router.get('/', userController.getUsers)
-router.get('/:id', validateId, userController.getUser)
-router.put('/:id', validateId, userController.updateUser)
-router.delete('/:id', validateId, userController.deleteUser)
+router.get('/:id', validateIdParam, userController.getUser)
+router.put('/:id', validateIdParam, userController.updateUser)
+router.delete('/:id', validateIdParam, userController.deleteUser)
 
 export default router

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import express from 'express'
 
-import messageCotroller from '../components/message/messageController'
+import messageCotroller from '../components/message/message-controller'
 
 const router = express.Router()
 

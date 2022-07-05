@@ -8,8 +8,8 @@ interface CreateUser {
 const createUserScheme: JSONSchemaType<CreateUser> = {
   type: 'object',
   properties: {
-    username: { type: 'string' },
-    fullname: { type: 'string' },
+    username: { type: 'string', minLength: 4, maxLength: 30 },
+    fullname: { type: 'string', minLength: 2, maxLength: 30 },
   },
   required: ['username', 'fullname'],
   additionalProperties: false,

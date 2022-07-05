@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-import userModel from './userModel'
+import userModel from './user-model'
 import {
   TypedRequestParams,
   TypedRequestBody,
