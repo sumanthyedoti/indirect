@@ -1,24 +1,29 @@
 import { Response, Request, NextFunction } from 'express'
 import { ValidateFunction } from 'ajv'
 
-function validateIdParam(req: Request, res: Response, next: NextFunction) {
+import { TypedRequestParams } from './types'
+
+function validateIdParam(
+  req: TypedRequestParams<{ id: number }>,
+  res: Response,
+  next: NextFunction
+) {
   const id = Number(req.params.id)
-  if (!id) {
-    res.status(422).json({ message: "'id' is not valid" })
-    return
+  if (id) {
+    req.params.id = id
+    return next()
   }
-  next()
+  res.status(422).json({ message: "'id' is not valid" })
 }
 
 function validateSchema(ajvValidate: ValidateFunction) {
   return (req: Request, res: Response, next: NextFunction) => {
     const valid = ajvValidate(req.body)
-    if (!valid) {
-      const errors = ajvValidate.errors
-      res.status(422).json({ errors })
-      return
+    if (valid) {
+      return next()
     }
-    next()
+    const errors = ajvValidate.errors
+    res.status(422).json({ errors })
   }
 }
 

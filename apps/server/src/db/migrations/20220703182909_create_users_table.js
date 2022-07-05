@@ -1,3 +1,7 @@
+const {
+  USERNAME_LENGTH,
+  FULLNAME_LENGTH,
+} = require('../../components/user/user-schema')
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
@@ -7,8 +11,8 @@ exports.up = function (knex) {
     if (!exists) {
       const query = knex.schema.createTable('users', (table) => {
         table.increments('id').unsigned().primary()
-        table.string('username').notNullable().unique()
-        table.string('fullname').notNullable()
+        table.string('username', USERNAME_LENGTH).notNullable().unique()
+        table.string('fullname', FULLNAME_LENGTH).notNullable()
         table.timestamps(true, true)
       })
       return query
