@@ -1,3 +1,4 @@
+import config from '../config/db'
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
@@ -5,11 +6,7 @@ export default {
   development: {
     client: 'postgresql',
     connection: {
-      host: '172.20.0.2',
-      port: 5432,
-      user: 'root',
-      password: 'root',
-      database: 'indirect',
+      ...config,
     },
     pool: {
       min: 2,
@@ -39,10 +36,7 @@ export default {
   // production: {
   //   client: 'postgresql',
   //   connection: {
-  //     database: process.env.DB_URL,
-  //     user: process.env.DB_USER,
-  //     password: process.env.DB_PASSWORD,
-  //     port: process.env.DB_PORT,
+  //     ...config,
   //   },
   //   pool: {
   //     min: 2,

@@ -5,8 +5,10 @@ import { Server as SocketServer } from 'socket.io'
 import helmet from 'helmet'
 import cors from 'cors'
 import session from 'express-session'
+import connectPgSession from 'connect-pg-simple'
 
 import router from './router'
+import { sessionPool } from './db'
 import userRouter from './components/user/user-router'
 
 const port = process.env.PORT || 8000
@@ -32,10 +34,16 @@ declare module 'express-session' {
     user: { [key: string]: any }
   }
 }
+
+const pgSession = connectPgSession(session)
 app.use(
   session({
     // @ts-ignore
     secret: process.env.COOKIE_SECRET,
+    store: new pgSession({
+      pool: sessionPool,
+      tableName: 'sessions',
+    }),
     credentials: true,
     name: 'sid',
     resave: false,

@@ -1,10 +1,19 @@
 import knex from 'knex'
-// import { Client as DbClient } from 'pg'
+import pg from 'pg'
 
 import knexfile from './knexfile'
+// import config from '../config/db'
 
 const environment = process.env.NODE_ENV || 'development'
 const db = knex(knexfile[environment])
+
+const sessionPool = new pg.Pool({
+  host: '172.20.0.2',
+  port: 5432,
+  database: 'indirect',
+  user: 'root',
+  password: 'root',
+})
 
 // const connectDB = () => {
 //   const dbClient = new DbClient({
@@ -22,4 +31,4 @@ const db = knex(knexfile[environment])
 //     .finally(() => dbClient.end())
 // }
 
-export { db as default }
+export { db as default, sessionPool }
