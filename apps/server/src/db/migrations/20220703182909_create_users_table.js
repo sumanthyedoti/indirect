@@ -4,7 +4,7 @@ const { DATA_LENGTH } = require('../../components/user/user-schema')
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-  return knex.schema.hasTable().then(function (exists) {
+  return knex.schema.hasTable('users').then(function (exists) {
     if (!exists) {
       const query = knex.schema.createTable('users', (table) => {
         table.increments('id').unsigned().primary()

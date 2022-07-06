@@ -1,12 +1,25 @@
-import config from '../config/db'
+import { PoolConfig } from 'pg'
+
+// import config from '../config/db'
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
+export const pgConfig: PoolConfig = {
+  host: '172.20.0.2',
+  port: 5432,
+  user: 'root',
+  password: 'root',
+  database: 'indirect',
+}
 export default {
   development: {
     client: 'postgresql',
     connection: {
-      ...config,
+      host: '172.20.0.2',
+      port: 5432,
+      user: 'root',
+      password: 'root',
+      database: 'indirect',
     },
     pool: {
       min: 2,
@@ -36,7 +49,6 @@ export default {
   // production: {
   //   client: 'postgresql',
   //   connection: {
-  //     ...config,
   //   },
   //   pool: {
   //     min: 2,
