@@ -10,20 +10,23 @@ export async function seed(knex: Knex): Promise<void> {
       username: 'ysumanth',
       fullname: 'Yedoti Sumanth',
       email: 'ysumanth@gmail.com',
-      password: 'password',
+      password_hash: 'passhash',
+      password_salt: 'salt',
     },
     {
-      username: 'suamnthy',
+      username: 'sumanthy',
       email: 'sumanthy@gmail.com',
       fullname: 'Sumanth Yedoti',
-      password: 'password',
+      password_hash: 'passhash',
+      password_salt: 'salt',
       quote: 'Keep Calm and Carry On',
     },
     {
       username: 'johndoe',
       fullname: 'John Doe',
       email: 'jdoe@gmail.com',
-      password: 'password',
+      password_hash: 'passhash',
+      password_salt: 'salt',
     },
   ])
   await query

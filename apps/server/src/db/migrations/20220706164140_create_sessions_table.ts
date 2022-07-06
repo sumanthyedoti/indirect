@@ -1,10 +1,6 @@
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
-
-const fs = require('fs')
-const path = require('path')
+import { Knex } from 'knex'
+import fs from 'fs'
+import path from 'path'
 
 const schemaFilePath = path.join(
   __dirname,
@@ -13,14 +9,15 @@ const schemaFilePath = path.join(
   'connect-pg-simple',
   'table.sql'
 )
-exports.up = function (knex) {
+
+export async function up(knex: Knex): Promise<void> {
   return knex.schema.hasTable('sessions').then(function (exists) {
     if (!exists) {
       let sql = fs.readFileSync(schemaFilePath, {
         encoding: 'utf8',
         flag: 'r',
       })
-      sql = sql.replaceAll('session', 'sessions')
+      sql = sql.replace(/session/g, 'sessions')
       console.log(sql)
       const query = knex.raw(sql)
       return query
@@ -28,10 +25,6 @@ exports.up = function (knex) {
   })
 }
 
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
-exports.down = function (knex) {
+export async function down(knex: Knex): Promise<void> {
   return knex.schema.dropTable('sessions')
 }
