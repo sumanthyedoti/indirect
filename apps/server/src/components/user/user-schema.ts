@@ -2,27 +2,35 @@ import ajv from '../../config/ajv'
 import { JSONSchemaType } from 'ajv'
 
 export const DATA_LENGTH = Object.freeze({
+  email: 100,
   username: 20,
   fullname: 40,
-  status: 100,
   quote: 100,
+  password: 40,
+  googleId: 100,
 })
 
 interface CreateUser {
-  fullname: string
+  email: string
   username: string
-  status: string
-  quote: string
+  fullname: string
+  password: string
+  google_id: string
 }
 const createUserScheme: JSONSchemaType<CreateUser> = {
   type: 'object',
   properties: {
+    email: { type: 'string', minLength: 2, maxLength: DATA_LENGTH.email },
     username: { type: 'string', minLength: 2, maxLength: DATA_LENGTH.username },
     fullname: { type: 'string', minLength: 2, maxLength: DATA_LENGTH.fullname },
-    status: { type: 'string', minLength: 2, maxLength: DATA_LENGTH.status },
-    quote: { type: 'string', minLength: 2, maxLength: DATA_LENGTH.quote },
+    password: { type: 'string', minLength: 2, maxLength: DATA_LENGTH.password },
+    google_id: {
+      type: 'string',
+      minLength: 2,
+      maxLength: DATA_LENGTH.googleId,
+    },
   },
-  required: ['username', 'fullname'],
+  required: ['username', 'fullname', 'email', 'password'],
   additionalProperties: false,
 }
 

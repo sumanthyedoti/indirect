@@ -6,14 +6,25 @@ export async function seed(knex: Knex): Promise<void> {
 
   // Inserts seed entries
   const query = knex('users').insert([
-    { username: 'ysumanth', fullname: 'Yedoti Sumanth' },
+    {
+      username: 'ysumanth',
+      fullname: 'Yedoti Sumanth',
+      email: 'ysumanth@gmail.com',
+      password: 'password',
+    },
     {
       username: 'suamnthy',
+      email: 'sumanthy@gmail.com',
       fullname: 'Sumanth Yedoti',
-      status: 'In a meeting',
+      password: 'password',
       quote: 'Keep Calm and Carry On',
     },
-    { username: 'johndoe', fullname: 'John Doe' },
+    {
+      username: 'johndoe',
+      fullname: 'John Doe',
+      email: 'jdoe@gmail.com',
+      password: 'password',
+    },
   ])
   await query
 }

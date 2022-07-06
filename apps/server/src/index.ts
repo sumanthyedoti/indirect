@@ -4,7 +4,9 @@ import { createServer as createHTTPServer } from 'http'
 import { Server as SocketServer } from 'socket.io'
 import helmet from 'helmet'
 import cors from 'cors'
+import passport from 'passport'
 import session from 'express-session'
+import csrf from 'csurf'
 import connectPgSession from 'connect-pg-simple'
 
 import router from './router'
@@ -25,15 +27,15 @@ app.use(
     origin: whiteList,
   })
 )
-console.log(process.env.COOKIE_SECRET)
 
 // app.set('trust proxy', 1) // trust first proxy
-declare module 'express-session' {
-  interface SessionData {
-    // @ts-ignore
-    user: { [key: string]: any }
-  }
-}
+
+// declare module 'express-session' {
+//   interface SessionData {
+//     // @ts-ignore
+//     user: { [key: string]: any }
+//   }
+// }
 
 const pgSession = connectPgSession(session)
 app.use(
@@ -46,8 +48,8 @@ app.use(
     }),
     credentials: true,
     name: 'sid',
-    resave: false,
-    saveUninitialized: false,
+    resave: false, // don't save session if unmodified
+    saveUninitialized: false, // don't create session until something stored
     cookie: {
       secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
@@ -56,6 +58,10 @@ app.use(
     },
   })
 )
+app.use(csrf())
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use(router)
 app.use('/users', userRouter)
