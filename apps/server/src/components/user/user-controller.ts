@@ -43,14 +43,19 @@ async function registerUser(
 async function loginUser(req: TypedRequestBody<T.LoginUser>, res: Response) {
   const { email, password } = req.body
 
+  console.log(req.user)
+  console.log(req.sessionID)
+  console.log(req.isAuthenticated())
   const user = await userModel.getUserByEmail(email)
+
   if (!user) {
-    return res.status(401).json({ error: 'email/password does not match!' })
+    res.status(401).json({ error: 'email/password does not match!' })
+    return
   }
   const authenticated = await bcrypt.compare(password, user.password_hash)
 
   if (!authenticated) {
-    res.status(401).json({ error: 'email/password does not match!' })
+    res.status(401)
     return
   }
 

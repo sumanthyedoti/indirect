@@ -1,13 +1,8 @@
 import express from 'express'
-import passport from 'passport'
-
 import { validateIdParam } from '../../middlewares'
 
 import userController from './user-controller'
-import {
-  createUserSchemaValidator,
-  loginUserSchemaValidator,
-} from './user-schema'
+import { createUserSchemaValidator } from './user-schema'
 import { validateSchema } from '../../middlewares'
 
 const router = express.Router()
@@ -18,12 +13,6 @@ router.post(
   userController.registerUser
 )
 
-router.post(
-  '/login',
-  validateSchema(loginUserSchemaValidator),
-  passport.authenticate('local'),
-  userController.loginUser
-)
 router.get('/', userController.getUsers)
 router.get('/:id', validateIdParam, userController.getUser)
 router.put('/:id', validateIdParam, userController.updateUser)

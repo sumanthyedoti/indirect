@@ -28,12 +28,11 @@ function validateSchema(ajvValidate: ValidateFunction) {
   }
 }
 
-function isLoggedIn(req: Request, res: Response, next: NextFunction) {
+const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
   if (req.isAuthenticated()) {
     return next()
   }
-  res.status(440).json({ message: 'Login failed' })
-  return
+  res.status(401).json({ message: 'Authentication required' })
 }
 
-export { validateIdParam, validateSchema, isLoggedIn }
+export { validateIdParam, validateSchema, isAuthenticated }

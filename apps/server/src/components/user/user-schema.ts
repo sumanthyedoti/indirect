@@ -40,8 +40,8 @@ interface LoginUser {
 const loginUserScheme: JSONSchemaType<LoginUser> = {
   type: 'object',
   properties: {
-    email: { type: 'string', minLength: 2, maxLength: DATA_LENGTH.email },
-    password: { type: 'string', minLength: 2, maxLength: DATA_LENGTH.password },
+    email: { type: 'string', minLength: 6, maxLength: DATA_LENGTH.email },
+    password: { type: 'string', minLength: 6, maxLength: DATA_LENGTH.password },
   },
   required: ['email', 'password'],
   additionalProperties: false,
