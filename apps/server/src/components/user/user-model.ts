@@ -8,7 +8,6 @@ async function createUser(user: T.CreateUser): Promise<number> {
       email,
       fullname,
       password_hash,
-      password_salt: 'salt',
     })
     .returning('id')
   return userCreated.id
@@ -28,7 +27,7 @@ async function getUser(id: number): Promise<T.GetUser> {
 
 async function getUserByEmail(email: string): Promise<T.GetUserByEmail> {
   const users: T.GetUserByEmail[] = await db('users')
-    .select('id', 'fullname', 'password_hash', 'password_salt')
+    .select('id', 'fullname', 'email', 'password_hash')
     .where({ email })
   return users[0]
 }

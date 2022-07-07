@@ -10,6 +10,7 @@ import connectPgSession from 'connect-pg-simple'
 
 import router from './router'
 import { sessionPool } from './db'
+import userRouter from './components/user/user-router'
 import passportConfig from './config/passport'
 
 const port = process.env.PORT || 8000
@@ -63,6 +64,7 @@ app.use(passport.session())
 passportConfig(passport)
 
 app.use(router)
+app.use('/users', userRouter)
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at ${port}`)

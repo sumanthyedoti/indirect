@@ -34,6 +34,8 @@ export default (passport: PassportStatic) => {
       async (username, password, done) => {
         try {
           const user = await userModel.getUserByEmail(username)
+          console.log('use', user)
+
           if (!user) {
             return done(null, false, { message: 'Login Failed' })
           }
@@ -41,6 +43,7 @@ export default (passport: PassportStatic) => {
             password,
             user.password_hash
           )
+          console.log('use', authenticated)
           if (!authenticated) {
             done(null, false, { message: 'Email/password does not match' })
           }
