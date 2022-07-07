@@ -23,7 +23,7 @@ async function registerUser(
       res.status(409).json({ error: 'email taken' })
       return
     }
-    const passHash = await bcrypt.hash(password, 6)
+    const passHash = await bcrypt.hash(password, 10)
 
     const newUserId = await userModel.createUser({
       email,
@@ -44,6 +44,9 @@ async function loginUser(req: TypedRequestBody<T.LoginUser>, res: Response) {
   const { email, password } = req.body
 
   const user = await userModel.getUserByEmail(email)
+  if (!user) {
+    return res.status(401).json({ error: 'email/password does not match!' })
+  }
   const authenticated = await bcrypt.compare(password, user.password_hash)
 
   if (!authenticated) {

@@ -14,6 +14,7 @@ function validateIdParam(
     return next()
   }
   res.status(422).json({ message: "'id' is not valid" })
+  return
 }
 
 function validateSchema(ajvValidate: ValidateFunction) {
@@ -27,4 +28,12 @@ function validateSchema(ajvValidate: ValidateFunction) {
   }
 }
 
-export { validateIdParam, validateSchema }
+function isLoggedIn(req: Request, res: Response, next: NextFunction) {
+  if (req.isAuthenticated()) {
+    return next()
+  }
+  res.status(440).json({ message: 'Login failed' })
+  return
+}
+
+export { validateIdParam, validateSchema, isLoggedIn }

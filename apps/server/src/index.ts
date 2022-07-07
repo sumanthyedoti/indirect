@@ -10,7 +10,7 @@ import connectPgSession from 'connect-pg-simple'
 
 import router from './router'
 import { sessionPool } from './db'
-import userRouter from './components/user/user-router'
+import passportConfig from './config/passport'
 
 const port = process.env.PORT || 8000
 const wsPort = process.env.WS_PORT || 4000
@@ -27,6 +27,13 @@ app.use(
     origin: whiteList,
   })
 )
+
+declare module 'express' {
+  interface User {
+    // @ts-ignore
+    user: { [key: string]: any }
+  }
+}
 
 // app.set('trust proxy', 1) // trust first proxy
 const pgSession = connectPgSession(session)
@@ -53,9 +60,9 @@ app.use(
 
 app.use(passport.initialize())
 app.use(passport.session())
+passportConfig(passport)
 
 app.use(router)
-app.use('/users', userRouter)
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at ${port}`)

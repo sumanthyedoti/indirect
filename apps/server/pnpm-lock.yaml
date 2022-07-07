@@ -30,6 +30,7 @@ specifiers:
   lint-staged: ^13.0.3
   passport: ^0.6.0
   passport-google-oauth20: ^2.0.0
+  passport-local: ^1.0.0
   pg: ^8.7.3
   prettier: ^2.7.1
   socket.io: ^4.5.1
@@ -52,6 +53,7 @@ dependencies:
   knex: 2.1.0_pg@8.7.3
   passport: 0.6.0
   passport-google-oauth20: 2.0.0
+  passport-local: 1.0.0
   pg: 8.7.3
   socket.io: 4.5.1
   uuid: 8.3.2
@@ -2004,6 +2006,13 @@ packages:
     engines: {node: '>= 0.4.0'}
     dependencies:
       passport-oauth2: 1.6.1
+    dev: false
+
+  /passport-local/1.0.0:
+    resolution: {integrity: sha512-9wCE6qKznvf9mQYYbgJ3sVOHmCWoUNMVFoZzNoznmISbhnNNPhN9xfY3sLmScHMetEJeoY7CXwfhCe7argfQow==}
+    engines: {node: '>= 0.4.0'}
+    dependencies:
+      passport-strategy: 1.0.0
     dev: false
 
   /passport-oauth2/1.6.1:

@@ -3,3 +3,4 @@ lib
 build
 dist
 .env*
+**/*.log
