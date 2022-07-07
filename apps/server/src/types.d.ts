@@ -18,9 +18,3 @@ export interface TypedRequest<Params, Body> extends Request {
 export interface TypedResponse<ResBody> extends Response {
   json: Send<ResBody, this>
 }
-
-export interface User {
-  id: number
-  username: string
-  fullname: string
-}

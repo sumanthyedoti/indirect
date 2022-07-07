@@ -6,7 +6,6 @@ import helmet from 'helmet'
 import cors from 'cors'
 import passport from 'passport'
 import session from 'express-session'
-import csrf from 'csurf'
 import connectPgSession from 'connect-pg-simple'
 
 import router from './router'
@@ -29,14 +28,6 @@ app.use(
 )
 
 // app.set('trust proxy', 1) // trust first proxy
-
-// declare module 'express-session' {
-//   interface SessionData {
-//     // @ts-ignore
-//     user: { [key: string]: any }
-//   }
-// }
-
 const pgSession = connectPgSession(session)
 app.use(
   session({
@@ -58,7 +49,6 @@ app.use(
     },
   })
 )
-app.use(csrf())
 
 app.use(passport.initialize())
 app.use(passport.session())

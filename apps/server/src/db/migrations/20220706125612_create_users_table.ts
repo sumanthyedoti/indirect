@@ -12,11 +12,6 @@ export async function up(knex: Knex): Promise<void> {
       const query = knex.schema.createTable('users', (table) => {
         table.increments('id').unsigned().primary()
         table.string('email', DATA_LENGTH.email).index().notNullable().unique()
-        table
-          .string('username', DATA_LENGTH.username)
-          .index()
-          .notNullable()
-          .unique()
         table.string('fullname', DATA_LENGTH.fullname).notNullable()
         table.string('password_hash', 100).notNullable()
         table.string('password_salt', 100).notNullable()

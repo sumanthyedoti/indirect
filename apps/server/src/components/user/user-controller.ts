@@ -5,27 +5,31 @@ import {
   TypedRequestParams,
   TypedRequestBody,
   TypedRequest,
-  User,
 } from '../../types.d'
+import { CreateUserT, GetUserT } from './user-types.d'
 import logger from '../../config/logger'
 
-async function createUser(
-  req: TypedRequestBody<{ username: string; fullname: string }>,
-  res: Response
-) {
-  const { username, fullname } = req.body
+async function createUser(req: TypedRequestBody<CreateUserT>, res: Response) {
+  const { email, fullname } = req.body
   try {
-    const exisitingUser = await userModel.getUserByUsername(username)
+    const exisitingUser = await userModel.getUserByEmail(email)
+
     if (exisitingUser) {
-      res.status(409).json({ error: 'Username taken' })
+      res.status(409).json({ error: 'email taken' })
+      return
     }
-    const result = await userModel.createUser({ username, fullname })
+    const result = await userModel.createUser({
+      email,
+      fullname,
+      password_hash: 'passhash',
+      password_salt: 'passsalt',
+    })
     res.status(201).json({
       ...result,
       message: 'Successfully added the message!',
     })
   } catch (err) {
-    // logger.error(err)
+    logger.error(err)
     res.status(500).send('Something went wrong!')
   }
 }
@@ -45,7 +49,7 @@ async function getUsers(req: Request, res: Response) {
 async function getUser(req: TypedRequestParams<{ id: number }>, res: Response) {
   try {
     const id = req.params.id
-    const result: User = await userModel.getUser(id)
+    const result: GetUserT = await userModel.getUser(id)
     if (!result) {
       res.status(404).json({ id, error: 'User not found' })
       return
