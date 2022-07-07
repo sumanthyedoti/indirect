@@ -6,6 +6,11 @@ interface InfoT {
   email: string
   fullname: string
 }
+
+export interface CreateUserBodyT extends InfoT {
+  password: string
+}
+
 export interface CreateUserT extends PasswordT, InfoT {}
 
 export interface GetUserT extends InfoT {

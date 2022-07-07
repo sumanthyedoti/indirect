@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import bcrypt from 'bcrypt'
 
 import userModel from './user-model'
 import {
@@ -6,11 +7,14 @@ import {
   TypedRequestBody,
   TypedRequest,
 } from '../../types.d'
-import { CreateUserT, GetUserT } from './user-types.d'
+import T from './user-types.d'
 import logger from '../../config/logger'
 
-async function createUser(req: TypedRequestBody<CreateUserT>, res: Response) {
-  const { email, fullname } = req.body
+async function createUser(
+  req: TypedRequestBody<T.CreateUserBodyT>,
+  res: Response
+) {
+  const { email, fullname, password } = req.body
   try {
     const exisitingUser = await userModel.getUserByEmail(email)
 
@@ -18,14 +22,16 @@ async function createUser(req: TypedRequestBody<CreateUserT>, res: Response) {
       res.status(409).json({ error: 'email taken' })
       return
     }
-    const result = await userModel.createUser({
+    const salt = await bcrypt.genSalt(6)
+    const passHash = await bcrypt.hash(password, salt)
+    const newUserId = await userModel.createUser({
       email,
       fullname,
-      password_hash: 'passhash',
-      password_salt: 'passsalt',
+      password_hash: passHash,
+      password_salt: salt,
     })
     res.status(201).json({
-      ...result,
+      id: newUserId,
       message: 'Successfully added the message!',
     })
   } catch (err) {
@@ -49,7 +55,7 @@ async function getUsers(req: Request, res: Response) {
 async function getUser(req: TypedRequestParams<{ id: number }>, res: Response) {
   try {
     const id = req.params.id
-    const result: GetUserT = await userModel.getUser(id)
+    const result: T.GetUserT = await userModel.getUser(id)
     if (!result) {
       res.status(404).json({ id, error: 'User not found' })
       return
