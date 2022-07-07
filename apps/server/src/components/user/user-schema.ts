@@ -9,13 +9,13 @@ export const DATA_LENGTH = Object.freeze({
   googleId: 100,
 })
 
-interface CreateUser {
+interface RegisterUser {
   email: string
   fullname: string
   password: string
   google_id: string
 }
-const createUserScheme: JSONSchemaType<CreateUser> = {
+const registerUserScheme: JSONSchemaType<RegisterUser> = {
   type: 'object',
   properties: {
     email: { type: 'string', minLength: 2, maxLength: DATA_LENGTH.email },
@@ -31,4 +31,20 @@ const createUserScheme: JSONSchemaType<CreateUser> = {
   additionalProperties: false,
 }
 
-export const createUserSchemaValidator = ajv.compile(createUserScheme)
+export const createUserSchemaValidator = ajv.compile(registerUserScheme)
+
+interface LoginUser {
+  email: string
+  password: string
+}
+const loginUserScheme: JSONSchemaType<LoginUser> = {
+  type: 'object',
+  properties: {
+    email: { type: 'string', minLength: 2, maxLength: DATA_LENGTH.email },
+    password: { type: 'string', minLength: 2, maxLength: DATA_LENGTH.password },
+  },
+  required: ['email', 'password'],
+  additionalProperties: false,
+}
+
+export const loginUserSchemaValidator = ajv.compile(loginUserScheme)

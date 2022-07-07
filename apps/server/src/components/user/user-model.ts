@@ -1,26 +1,26 @@
 import db from '../../db'
 import T from './user-types.d'
 
-async function createUser(user: T.CreateUserT): Promise<{ id: number }> {
-  const { email, fullname, password_hash, password_salt } = user
-  const [id] = await db('users')
+async function createUser(user: T.CreateUser): Promise<number> {
+  const { email, fullname, password_hash } = user
+  const [userCreated]: { id: number }[] = await db('users')
     .insert({
       email,
       fullname,
       password_hash,
-      password_salt,
+      password_salt: 'salt',
     })
     .returning('id')
-  return id
+  return userCreated.id
 }
 
-async function getUsers(): Promise<T.GetUserT[]> {
+async function getUsers(): Promise<T.GetUser[]> {
   const users = await db('users').select('id', 'email', 'fullname')
   return users
 }
 
-async function getUser(id: number): Promise<T.GetUserT> {
-  const user: T.GetUserT[] = await db('users')
+async function getUser(id: number): Promise<T.GetUser> {
+  const user: T.GetUser[] = await db('users')
     .select('id', 'email', 'fullname')
     .where({ id })
   return user[0]
@@ -33,7 +33,7 @@ async function getUserByEmail(email: string): Promise<T.GetUserByEmail> {
   return users[0]
 }
 
-async function updateUser(user: T.UpdateUserT): Promise<number> {
+async function updateUser(user: T.UpdateUser): Promise<number> {
   const id: number = await db('users')
     .where({
       id: user.id,

@@ -2,7 +2,10 @@ import express from 'express'
 import { validateIdParam } from '../../middlewares'
 
 import userController from './user-controller'
-import { createUserSchemaValidator } from './user-schema'
+import {
+  createUserSchemaValidator,
+  loginUserSchemaValidator,
+} from './user-schema'
 import { validateSchema } from '../../middlewares'
 
 const router = express.Router()
@@ -10,7 +13,13 @@ const router = express.Router()
 router.post(
   '/',
   validateSchema(createUserSchemaValidator),
-  userController.createUser
+  userController.registerUser
+)
+
+router.post(
+  '/login',
+  validateSchema(loginUserSchemaValidator),
+  userController.loginUser
 )
 router.get('/', userController.getUsers)
 router.get('/:id', validateIdParam, userController.getUser)

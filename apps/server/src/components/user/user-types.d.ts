@@ -1,26 +1,31 @@
-interface PasswordT {
-  password_hash: string
-  password_salt: string
-}
-interface InfoT {
+interface Info {
   email: string
   fullname: string
 }
 
-export interface CreateUserBodyT extends InfoT {
+export interface CreateUser extends Info, InfoT {
+  password_hash: string
+}
+
+export interface RegisterUser extends Info {
+  password: string
+  google_id: string
+}
+
+export interface LoginUser {
+  email: string
   password: string
 }
 
-export interface CreateUserT extends PasswordT, InfoT {}
-
-export interface GetUserT extends InfoT {
+export interface GetUser extends Info {
   id: number
 }
 
-export interface GetUserByEmail extends PasswordT, InfoT {
+export interface GetUserByEmail extends Info {
   id: number
+  password_hash: string
 }
 
-export interface UpdateUserT extends Omit<InfoT, 'email'> {
+export interface UpdateUser extends Omit<Info, 'email'> {
   id: number
 }

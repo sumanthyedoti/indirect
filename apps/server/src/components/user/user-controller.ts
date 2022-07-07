@@ -10,11 +10,12 @@ import {
 import T from './user-types.d'
 import logger from '../../config/logger'
 
-async function createUser(
-  req: TypedRequestBody<T.CreateUserBodyT>,
+async function registerUser(
+  req: TypedRequestBody<T.RegisterUser>,
   res: Response
 ) {
   const { email, fullname, password } = req.body
+
   try {
     const exisitingUser = await userModel.getUserByEmail(email)
 
@@ -22,13 +23,12 @@ async function createUser(
       res.status(409).json({ error: 'email taken' })
       return
     }
-    const salt = await bcrypt.genSalt(6)
-    const passHash = await bcrypt.hash(password, salt)
+    const passHash = await bcrypt.hash(password, 6)
+
     const newUserId = await userModel.createUser({
       email,
       fullname,
       password_hash: passHash,
-      password_salt: salt,
     })
     res.status(201).json({
       id: newUserId,
@@ -38,6 +38,24 @@ async function createUser(
     logger.error(err)
     res.status(500).send('Something went wrong!')
   }
+}
+
+async function loginUser(req: TypedRequestBody<T.LoginUser>, res: Response) {
+  const { email, password } = req.body
+
+  const user = await userModel.getUserByEmail(email)
+  const authenticated = await bcrypt.compare(password, user.password_hash)
+
+  if (!authenticated) {
+    res.status(401).json({ error: 'email/password does not match!' })
+    return
+  }
+
+  res.status(200).json({
+    id: user.id,
+    email: user.email,
+    fullname: user.fullname,
+  })
 }
 
 async function getUsers(req: Request, res: Response) {
@@ -55,7 +73,7 @@ async function getUsers(req: Request, res: Response) {
 async function getUser(req: TypedRequestParams<{ id: number }>, res: Response) {
   try {
     const id = req.params.id
-    const result: T.GetUserT = await userModel.getUser(id)
+    const result: T.GetUser = await userModel.getUser(id)
     if (!result) {
       res.status(404).json({ id, error: 'User not found' })
       return
@@ -112,7 +130,8 @@ async function deleteUser(
 }
 
 export default {
-  createUser,
+  registerUser,
+  loginUser,
   getUsers,
   getUser,
   updateUser,
