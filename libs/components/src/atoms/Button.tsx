@@ -8,7 +8,7 @@ interface props {
 const Button: FC<props> = ({ label, onClick = () => {} }) => {
   return (
     <button
-      className="bg-violet-600 text-white p-5 rounded m-10"
+      className="p-5 m-10 text-white rounded bg-violet-600"
       onClick={onClick}
     >
       {label}!
