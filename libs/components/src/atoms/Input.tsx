@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-type InputType =
+export type InputType =
   | "date"
   | "datetime-local"
   | "email"
@@ -20,10 +20,19 @@ type InputType =
 
 interface Props {
   type: InputType;
+  id?: string;
+  placeholder?: string;
 }
 
-const Input: FC<Props> = ({ type }) => {
-  return <input type={type} />;
+const Input: FC<Props> = ({ type, id, placeholder }) => {
+  return (
+    <input
+      className="px-4 py-2 outline-none rounded-md focus:ring ring-offset-2"
+      placeholder={placeholder}
+      id={id}
+      type={type}
+    />
+  );
 };
 
 export default Input;

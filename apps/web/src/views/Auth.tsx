@@ -1,13 +1,24 @@
 import { FC } from 'react'
 import { Outlet } from 'react-router-dom'
 
-import { Atoms } from '@libs/components'
+import { Atoms, Molecules } from '@libs/components'
 
 const AuthView: FC = () => {
   return (
-    <div className="flex items-center justify-center h-screen bg-teal-300">
-      <h1>hello</h1>
-      <Atoms.Button label="Click" />
+    <div className="flex flex-col items-center justify-center h-screen bg-emerald-400">
+      <h2>Login</h2>
+      <form className="flex flex-col items-center">
+        <Molecules.LabelledInput
+          label="Email"
+          field={<Atoms.Input type="text" />}
+        />
+        <Molecules.LabelledInput
+          label="Password"
+          field={<Atoms.Input type="password" />}
+        />
+        <Atoms.Button type="submit" label="Login" />
+      </form>
+
       <Outlet />
     </div>
   )
