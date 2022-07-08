@@ -1,16 +1,12 @@
-import React, { FC, useState } from 'react'
+import { FC } from 'react'
 import { io } from 'socket.io-client'
+import { Routes, Route } from 'react-router-dom'
+
+import { Auth } from './views'
 
 const socket = io('ws://localhost:4000')
 
-import { Button } from '@libs/components'
-const LazyComponent = React.lazy(() => import('./Load'))
-
-import img from './image.png'
-import logo from './react-icon.svg'
-
 const App: FC = () => {
-  const [count, setCount] = useState<number>(0)
   socket.on('connect', () => {
     console.log('socket connected - ' + socket.id)
   })
@@ -18,19 +14,10 @@ const App: FC = () => {
     console.log('socket disconnected - ' + socket.id)
   })
   return (
-    <div>
-      <h1>{process.env.NODE_ENV}</h1>
-      <h1 className="text-3xl">My App</h1>
-      <Button
-        label={`clicks: ${count}`}
-        onClick={() => setCount((count) => count + 1)}
-      />
-      <img src={img} width="300" height="200" alt="" />
-      <img src={logo} width="200" height="200" alt="" />
-      <React.Suspense>
-        <LazyComponent />
-      </React.Suspense>
-    </div>
+    <Routes>
+      <Route path="/" element={<h1>Home</h1>} />
+      <Route path="auth" element={<Auth />} />
+    </Routes>
   )
 }
 

@@ -1,14 +1,18 @@
-import { Request, Response } from 'express'
+import { Response } from 'express'
 
 import messageModel from './message-model'
+import T from './message-types.d'
+import { TypedRequestBody } from '../../types.d'
 
-async function createMessage(req: Request, res: Response) {
-  const { file, text, user_id } = req.body
+async function createMessage(
+  req: TypedRequestBody<T.CreateMessage>,
+  res: Response
+) {
+  const { text, sender_id } = req.body
   try {
-    const id = await messageModel.createMessage({ file, text, user_id })
-    console.log(id)
+    const id = await messageModel.createMessage({ text, sender_id })
     res.status(201).json({
-      ...id,
+      id,
       message: 'Created user successfully!',
     })
   } catch (err) {

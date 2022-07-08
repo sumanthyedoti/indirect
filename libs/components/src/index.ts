@@ -1,3 +1,3 @@
-import Button from "./atoms/Button";
+import * as Atoms from "./atoms";
 
-export { Button };
+export { Atoms };

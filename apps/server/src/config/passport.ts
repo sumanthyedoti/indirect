@@ -54,6 +54,7 @@ export default (passport: PassportStatic) => {
   })
 
   passport.deserializeUser(async (id: number, done) => {
+    console.log('deserializeUser')
     try {
       const user = await userModel.getUser(id)
       if (!user) return done(null, false)

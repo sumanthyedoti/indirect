@@ -8,7 +8,7 @@ specifiers:
   '@babel/preset-typescript': ^7.17.12
   '@babel/runtime': ^7.18.3
   '@libs/components': workspace:^1.0.0
-  '@libs/tw-config': workspace:^1.0.0
+  '@libs/styles': workspace:^1.0.0
   '@pmmmwh/react-refresh-webpack-plugin': ^0.5.7
   '@types/node': ^18.0.0
   '@types/react': ^18.0.14
@@ -52,7 +52,7 @@ specifiers:
 
 dependencies:
   '@libs/components': link:../../libs/components
-  '@libs/tw-config': link:../../libs/tw-config
+  '@libs/styles': link:../../libs/styles
   add: 2.0.6
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0

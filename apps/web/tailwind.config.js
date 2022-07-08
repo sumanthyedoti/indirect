@@ -1,1 +1,1 @@
-module.exports = require('@libs/tw-config')
+module.exports = require('@libs/styles')

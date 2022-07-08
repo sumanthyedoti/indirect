@@ -1,21 +1,15 @@
 import db from '../../db'
+import T from './message-types.d'
 
-type Message = {
-  text?: string | null
-  user_id: number
-  file?: string | null
-}
-
-async function createMessage(message: Message) {
-  const { text, file, user_id } = message
-  const [id] = await db('messages')
+async function createMessage(message: T.CreateMessage): Promise<number> {
+  const { text, sender_id } = message
+  const [savedMessage]: T.GetMessage[] = await db('messages')
     .insert({
       text,
-      file,
-      user_id,
+      sender_id,
     })
     .returning('id')
-  return id
+  return savedMessage.id
 }
 
 export default {

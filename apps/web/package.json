@@ -22,7 +22,7 @@
   "license": "ISC",
   "dependencies": {
     "@libs/components": "workspace:^1.0.0",
-    "@libs/tw-config": "workspace:^1.0.0",
+    "@libs/styles": "workspace:^1.0.0",
     "add": "^2.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

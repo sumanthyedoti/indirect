@@ -1,34 +1,34 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
 module.exports = {
-  target: "web",
-  entry: path.resolve(__dirname, "../src/index.tsx"),
+  target: 'web',
+  entry: path.resolve(__dirname, '../src/index.tsx'),
   output: {
-    path: path.resolve(__dirname, "../dist"),
-    filename: "[name][contenthash].js",
+    path: path.resolve(__dirname, '../dist'),
+    filename: '[name][contenthash].js',
     // publicPath: "/",
     clean: true,
-    assetModuleFilename: "[name][ext]",
+    assetModuleFilename: '[name][ext]',
   },
   module: {
     rules: [
       {
         test: /\.(ico|png|webp|jpg|jpeg|gif)$/i,
-        type: "asset/resource",
+        type: 'asset/resource',
       },
     ],
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"],
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin(),
     new HtmlWebpackPlugin({
-      filename: "index.html",
-      template: path.resolve(__dirname, "../src/index.html"),
+      filename: 'index.html',
+      template: path.resolve(__dirname, '../src/index.html'),
     }),
     // new BundleAnalyzerPlugin(),
   ],
-};
+}
