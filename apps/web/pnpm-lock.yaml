@@ -32,6 +32,7 @@ specifiers:
   lint-staged: ^13.0.2
   mini-css-extract-plugin: ^2.6.1
   postcss: ^8.4.14
+  postcss-import: ^14.1.0
   postcss-loader: ^7.0.0
   prettier: ^2.7.1
   react: ^18.2.0
@@ -88,6 +89,7 @@ devDependencies:
   lint-staged: 13.0.3
   mini-css-extract-plugin: 2.6.1_webpack@5.73.0
   postcss: 8.4.14
+  postcss-import: 14.1.0_postcss@8.4.14
   postcss-loader: 7.0.0_mepnsno3xmng6eyses4tepu7bu
   prettier: 2.7.1
   react-refresh: 0.14.0

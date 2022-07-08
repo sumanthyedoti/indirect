@@ -6,7 +6,7 @@ import { Atoms, Molecules } from '@libs/components'
 const AuthView: FC = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-emerald-400">
-      <h2>Login</h2>
+      <h1>Login</h1>
       <form className="flex flex-col items-center">
         <Molecules.LabelledInput
           label="Email"

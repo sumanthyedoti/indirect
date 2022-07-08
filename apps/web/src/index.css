@@ -1,3 +1,4 @@
-@tailwind base;
+@import '@libs/styles/lib/index.css';
+@import '@libs/components/lib/index.css';
 @tailwind components;
 @tailwind utilities;
