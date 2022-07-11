@@ -2,16 +2,11 @@ import express from 'express'
 import { validateIdParam } from '../../middlewares'
 
 import userController from './user-controller'
-import { createUserSchemaValidator } from './user-schema'
-import { validateSchema } from '../../middlewares'
+import { isAuthenticated } from '../../middlewares'
 
 const router = express.Router()
 
-router.post(
-  '/',
-  validateSchema(createUserSchemaValidator),
-  userController.registerUser
-)
+router.use(isAuthenticated)
 
 router.get('/', userController.getUsers)
 router.get('/:id', validateIdParam, userController.getUser)

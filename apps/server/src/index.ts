@@ -26,6 +26,8 @@ app.use(express.json())
 app.use(
   cors({
     origin: whiteList,
+    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+    credentials: true,
   })
 )
 
@@ -73,7 +75,7 @@ app.listen(port, () => {
 /* web sockets */
 const httpServer = createHTTPServer(app)
 const io = new SocketServer(httpServer, {
-  cors: { origin: whiteList },
+  cors: { origin: whiteList, credentials: true },
 })
 
 io.on('connection', (socket) => {

@@ -1,23 +1,28 @@
-import { FC } from 'react'
-import { io } from 'socket.io-client'
+import { useState, useEffect, FC } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
-import { Auth } from './views'
-
-const socket = io('ws://localhost:4000')
+import { Login, Register, Space } from './views'
+import { useSocket } from './hooks'
 
 const App: FC = () => {
-  socket.on('connect', () => {
-    console.log('socket connected - ' + socket.id)
-  })
-  socket.on('disconnect', () => {
-    console.log('socket disconnected - ' + socket.id)
-  })
+  const [id, setId] = useState('')
+  const socket = useSocket()
+  useEffect(() => {
+    socket.on('connect', () => {
+      setId(socket.id)
+      console.log(socket.id)
+    })
+  }, [])
+
   return (
-    <Routes>
-      <Route path="/" element={<h1>Home</h1>} />
-      <Route path="auth" element={<Auth />} />
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<h1>id:{id}</h1>} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/space" element={<Space />} />
+      </Routes>
+    </>
   )
 }
 

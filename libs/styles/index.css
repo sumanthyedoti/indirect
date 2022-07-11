@@ -3,17 +3,26 @@
 @tailwind utilities;
 
 @layer base {
+  body {
+    @apply bg-slate-700 text-slate-50;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply mb-3 font-medium;
+  }
   h1 {
-    @apply mb-2 text-6xl;
+    @apply text-6xl;
   }
   h2 {
-    @apply mb-2 text-2xl;
+    @apply text-2xl;
   }
   h3 {
-    @apply mb-2 text-2xl;
+    @apply text-2xl;
   }
   h4 {
-    @apply mb-2 text-xl;
+    @apply text-xl;
   }
   a {
     @apply text-blue-600 underline;

@@ -4,3 +4,4 @@
 {"level":"error","service":"user-service"}
 {"level":"error","service":"user-service"}
 {"level":"error","service":"user-service"}
+{"code":"22P02","file":"numutils.c","length":146,"level":"error","line":"320","name":"error","routine":"pg_strtoint32","service":"user-service","severity":"ERROR","where":"unnamed portal parameter $1 = '...'"}

@@ -18,7 +18,6 @@ export async function up(knex: Knex): Promise<void> {
         flag: 'r',
       })
       sql = sql.replace(/session/g, 'sessions')
-      console.log(sql)
       const query = knex.raw(sql)
       return query
     }

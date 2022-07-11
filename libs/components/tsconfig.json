@@ -15,10 +15,12 @@
     "noUnusedParameters": true,
     "declaration": true,
     "moduleResolution": "node",
+    "preserveWatchOutput": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "lib"]
