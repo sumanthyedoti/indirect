@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { io } from 'socket.io-client'
+// import userStore from '../store/userStore'
 
 const socket = io('ws://localhost:4000', {
   autoConnect: false,
@@ -7,10 +8,11 @@ const socket = io('ws://localhost:4000', {
 })
 
 const useSocket = () => {
+  // const store = userStore()
   useEffect(() => {
-    socket.connect()
     socket.on('connect_error', () => {
       console.log('error connecting to socket')
+      // store.logout()
     })
 
     return () => {

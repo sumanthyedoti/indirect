@@ -27,7 +27,7 @@ router.post(
   validateSchema(loginUserSchemaValidator),
   passport.authenticate('local'),
   (req: Request, res: Response) => {
-    res.json(req.user)
+    res.end(JSON.stringify(req.user))
   }
 )
 

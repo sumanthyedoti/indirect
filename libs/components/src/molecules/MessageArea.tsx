@@ -1,11 +1,19 @@
-import { FC } from "react";
+import { FC, ChangeEvent } from "react";
 
-// interface MessageArProps {}
-const MessageArea: FC = ({ ...props }) => {
+interface MessageAreaProps {
+  text: string;
+  onInput?: (e: ChangeEvent<HTMLDivElement>) => void;
+}
+const MessageArea: FC<MessageAreaProps> = ({
+  text = "",
+  onInput,
+  ...props
+}) => {
   return (
     <div
       {...props}
       contentEditable={true}
+      onInput={onInput}
       data-placeholder="Message"
       className={`
         bg-slate-800
@@ -15,7 +23,8 @@ const MessageArea: FC = ({ ...props }) => {
         outline-none
         rounded
       `}
-    ></div>
+      dangerouslySetInnerHTML={{ __html: text }}
+    />
   );
 };
 

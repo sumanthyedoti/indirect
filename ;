@@ -1,12 +1,12 @@
 import { useEffect, FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 import { Atoms, Molecules } from '@libs/components'
 import userStore from '../store/userStore'
-import { useSocket } from '../hooks'
 import api from '../axios'
 
 const schema = yup.object().shape({
@@ -20,12 +20,25 @@ interface FormInputs {
   email: string
   password: string
 }
+// type LoginResult = {
+//   email: string
+//   fullname: string
+//   id: number
+// }
 
 const Login: FC = () => {
-  const socket = useSocket()
   const navigate = useNavigate()
-  const login = userStore((store) => store.login)
+  // const login = userStore((store) => store.login)
   const { isLoggedIn } = userStore()
+
+  const loginQuery = useQuery(['login', id], () => api.get('/users' + id))
+  const userMutation = useMutation((data: FormInputs) => {
+    return api.post('/login', data)
+  })
+
+  useEffect(() => {
+    console.log(userMutation.data)
+  }, [userMutation.data])
 
   const {
     register,
@@ -39,9 +52,7 @@ const Login: FC = () => {
     if (isLoggedIn) navigate('/')
   }, [isLoggedIn])
   const onSubmit = async (input: FormInputs) => {
-    const { data } = await api.post('/login', input)
-    login(data)
-    socket.connect()
+    userMutation.mutate(input)
   }
 
   return (

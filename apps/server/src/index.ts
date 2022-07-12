@@ -5,13 +5,11 @@ import { Server as SocketServer } from 'socket.io'
 import helmet from 'helmet'
 import cors from 'cors'
 import passport from 'passport'
-import session from 'express-session'
-import connectPgSession from 'connect-pg-simple'
 
 import router from './router'
-import { sessionPool } from './db'
 import userRouter from './components/user/user-router'
 import passportConfig from './config/passport'
+import { expressSessionMiddleware, socketAuthentication } from './middlewares'
 
 const port = process.env.PORT || 8000
 const wsPort = process.env.WS_PORT || 4000
@@ -39,27 +37,7 @@ declare module 'express' {
 }
 
 // app.set('trust proxy', 1) // trust first proxy
-const pgSession = connectPgSession(session)
-app.use(
-  session({
-    // @ts-ignore
-    secret: process.env.COOKIE_SECRET,
-    store: new pgSession({
-      pool: sessionPool,
-      tableName: 'sessions',
-    }),
-    credentials: true,
-    name: 'sid',
-    resave: false, // don't save session if unmodified
-    saveUninitialized: false, // don't create session until something stored
-    cookie: {
-      secure: process.env.NODE_ENV === 'production',
-      httpOnly: true,
-      maxAge: 1 * 24 * 60 * 60 * 1000,
-      sameSite: 'strict',
-    },
-  })
-)
+app.use(expressSessionMiddleware)
 
 app.use(passport.initialize())
 app.use(passport.session())
@@ -73,10 +51,27 @@ app.listen(port, () => {
 })
 
 /* web sockets */
+
 const httpServer = createHTTPServer(app)
 const io = new SocketServer(httpServer, {
   cors: { origin: whiteList, credentials: true },
 })
+
+const wrap =
+  //@ts-ignore
+  (middleware) => (socket, next) => {
+    return middleware(socket.request, {}, next)
+  }
+
+// -- connect express-session and passport to socket.io middlewares
+//@ts-nocheck
+io.use(wrap(expressSessionMiddleware))
+io.use(wrap(passport.initialize()))
+io.use(wrap(passport.session()))
+
+// -- authenticate with express session
+// @ts-ignore
+io.use(socketAuthentication)
 
 io.on('connection', (socket) => {
   console.log('a user connected ', socket.id)

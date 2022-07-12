@@ -1,9 +1,32 @@
 import { Response, Request, NextFunction } from 'express'
 import { ValidateFunction } from 'ajv'
+import connectPgSession from 'connect-pg-simple'
+import session from 'express-session'
 
-import { TypedRequestParams } from './types'
+import { TypedRequestParams, SocketRequest } from './types'
+import { sessionPool } from './db'
 
-function validateIdParam(
+const pgSession = connectPgSession(session)
+export const expressSessionMiddleware = session({
+  // @ts-ignore
+  secret: process.env.COOKIE_SECRET,
+  store: new pgSession({
+    pool: sessionPool,
+    tableName: 'sessions',
+  }),
+  credentials: true,
+  name: 'sid',
+  resave: false, // don't save session if unmodified
+  saveUninitialized: false, // don't create session until something stored
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 1 * 24 * 60 * 60 * 1000,
+    sameSite: 'strict',
+  },
+})
+
+export function validateIdParam(
   req: TypedRequestParams<{ id: number }>,
   res: Response,
   next: NextFunction
@@ -17,7 +40,7 @@ function validateIdParam(
   return
 }
 
-function validateSchema(ajvValidate: ValidateFunction) {
+export function validateSchema(ajvValidate: ValidateFunction) {
   return (req: Request, res: Response, next: NextFunction) => {
     const valid = ajvValidate(req.body)
     if (valid) {
@@ -28,11 +51,26 @@ function validateSchema(ajvValidate: ValidateFunction) {
   }
 }
 
-const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
+export const isAuthenticated = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   if (req.isAuthenticated()) {
     return next()
   }
   res.status(401).json({ message: 'Authentication required' })
 }
 
-export { validateIdParam, validateSchema, isAuthenticated }
+export const socketAuthentication = (
+  socket: SocketRequest,
+  next: NextFunction
+) => {
+  const req = socket.request
+  //@ts-ignore
+  if (req.isAuthenticated && req.isAuthenticated()) {
+    next()
+  } else {
+    next(new Error('unauthorized'))
+  }
+}
