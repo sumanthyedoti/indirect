@@ -8,8 +8,10 @@ import passport from 'passport'
 
 import router from './router'
 import userRouter from './components/user/user-router'
+import messageRouter from './components/message/message-router'
 import passportConfig from './config/passport'
 import { expressSessionMiddleware, socketAuthentication } from './middlewares'
+import messageServer from './message-server'
 
 const port = process.env.PORT || 8000
 const wsPort = process.env.WS_PORT || 4000
@@ -45,6 +47,7 @@ passportConfig(passport)
 
 app.use(router)
 app.use('/users', userRouter)
+app.use('/messages', messageRouter)
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at ${port}`)
@@ -73,9 +76,7 @@ io.use(wrap(passport.session()))
 // @ts-ignore
 io.use(socketAuthentication)
 
-io.on('connection', (socket) => {
-  console.log('a user connected ', socket.id)
-})
+messageServer(io)
 
 httpServer.listen(wsPort, () => {
   console.log('💬 Message server running at ' + wsPort)

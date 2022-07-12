@@ -7,3 +7,8 @@ export interface CreateMessage extends Info {}
 export interface GetMessage extends Info {
   id: number
 }
+
+export interface GetMessages extends Info {
+  text: string
+  sender_id: number
+}

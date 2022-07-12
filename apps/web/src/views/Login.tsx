@@ -6,7 +6,6 @@ import * as yup from 'yup'
 
 import { Atoms, Molecules } from '@libs/components'
 import userStore from '../store/userStore'
-import { useSocket } from '../hooks'
 import api from '../axios'
 
 const schema = yup.object().shape({
@@ -22,7 +21,6 @@ interface FormInputs {
 }
 
 const Login: FC = () => {
-  const socket = useSocket()
   const navigate = useNavigate()
   const login = userStore((store) => store.login)
   const { isLoggedIn } = userStore()
@@ -41,7 +39,6 @@ const Login: FC = () => {
   const onSubmit = async (input: FormInputs) => {
     const { data } = await api.post('/login', input)
     login(data)
-    socket.connect()
   }
 
   return (

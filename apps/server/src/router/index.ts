@@ -5,13 +5,10 @@ import passport from 'passport'
 import { loginUserSchemaValidator } from '../components/user/user-schema'
 import { createUserSchemaValidator } from '../components/user/user-schema'
 import userController from '../components/user/user-controller'
-import messageCotroller from '../components/message/message-controller'
 import { isAuthenticated, validateSchema } from '../middlewares'
 import { logger } from '../config'
 
 const router = express.Router()
-
-router.post('/message', messageCotroller.createMessage)
 
 router.get('/ping', (req: Request, res: Response) => {
   res.status(200).send('Hello from inDirect')

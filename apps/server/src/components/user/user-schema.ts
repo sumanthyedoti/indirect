@@ -18,9 +18,9 @@ interface RegisterUser {
 const registerUserScheme: JSONSchemaType<RegisterUser> = {
   type: 'object',
   properties: {
-    email: { type: 'string', minLength: 2, maxLength: DATA_LENGTH.email },
+    email: { type: 'string', minLength: 4, maxLength: DATA_LENGTH.email },
     fullname: { type: 'string', minLength: 2, maxLength: DATA_LENGTH.fullname },
-    password: { type: 'string', minLength: 2, maxLength: DATA_LENGTH.password },
+    password: { type: 'string', minLength: 6, maxLength: DATA_LENGTH.password },
     google_id: {
       type: 'string',
       minLength: 2,
@@ -28,7 +28,7 @@ const registerUserScheme: JSONSchemaType<RegisterUser> = {
     },
   },
   required: ['fullname', 'email', 'password'],
-  additionalProperties: false,
+  // additionalProperties: false,
 }
 
 export const createUserSchemaValidator = ajv.compile(registerUserScheme)
@@ -44,7 +44,7 @@ const loginUserScheme: JSONSchemaType<LoginUser> = {
     password: { type: 'string', minLength: 6, maxLength: DATA_LENGTH.password },
   },
   required: ['email', 'password'],
-  additionalProperties: false,
+  // additionalProperties: false,
 }
 
 export const loginUserSchemaValidator = ajv.compile(loginUserScheme)

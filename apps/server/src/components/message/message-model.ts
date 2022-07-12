@@ -12,6 +12,16 @@ async function createMessage(message: T.CreateMessage): Promise<number> {
   return savedMessage.id
 }
 
+async function getMessages(): Promise<T.GetMessages[]> {
+  const messages: T.GetMessages[] = await db('messages').select(
+    'id',
+    'text',
+    'sender_id'
+  )
+  return messages
+}
+
 export default {
   createMessage,
+  getMessages,
 }

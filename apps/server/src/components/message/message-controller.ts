@@ -9,6 +9,7 @@ async function createMessage(
   res: Response
 ) {
   const { text, sender_id } = req.body
+
   try {
     const id = await messageModel.createMessage({ text, sender_id })
     res.status(201).json({
@@ -21,6 +22,23 @@ async function createMessage(
   }
 }
 
+async function getMessages(
+  req: TypedRequestBody<T.CreateMessage>,
+  res: Response
+) {
+  try {
+    const messages = await messageModel.getMessages()
+    res.status(201).json({
+      messages,
+      message: 'Created user successfully!',
+    })
+  } catch (err) {
+    console.error(err)
+    res.send('Something went wrong!')
+  }
+}
+
 export default {
   createMessage,
+  getMessages,
 }

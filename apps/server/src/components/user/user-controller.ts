@@ -42,10 +42,6 @@ async function registerUser(
 
 async function loginUser(req: TypedRequestBody<T.LoginUser>, res: Response) {
   const { email, password } = req.body
-
-  console.log('r.u', req.user)
-  console.log('r.s', req.sessionID)
-  console.log('r.a', req.isAuthenticated())
   const user = await userModel.getUserByEmail(email)
 
   if (!user) {

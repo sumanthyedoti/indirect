@@ -3,9 +3,14 @@ import { Routes, Route } from 'react-router-dom'
 
 import { Login, Register, Space } from './views'
 import { useSocket } from './hooks'
+import userStore from './store/userStore'
 
 const App: FC = () => {
   const socket = useSocket()
+  const { isLoggedIn } = userStore()
+  useEffect(() => {
+    if (isLoggedIn) socket.connect()
+  }, [isLoggedIn])
   useEffect(() => {
     socket.on('connect', () => {
       console.log(socket.id)
