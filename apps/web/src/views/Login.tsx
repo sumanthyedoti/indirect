@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Outlet } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -26,7 +25,7 @@ const Login: FC = () => {
   const login = userStore((store) => store.login)
   const { isLoggedIn } = userStore()
   if (isLoggedIn) {
-    navigate('/space')
+    navigate('/')
   }
 
   const {
@@ -40,7 +39,7 @@ const Login: FC = () => {
   const onSubmit = async (data: FormInputs) => {
     await api.post('/login', data)
     login()
-    navigate('/space')
+    navigate('/')
   }
 
   return (
@@ -49,7 +48,7 @@ const Login: FC = () => {
         <h1 className="mb-8">Login</h1>
         <Molecules.FormInput
           label="Email"
-          field={<Atoms.Input {...register('email')} type="text" />}
+          field={<Atoms.Input {...register('email')} type="email" />}
           error={errors.email?.message}
         />
         <Molecules.FormInput
@@ -59,8 +58,6 @@ const Login: FC = () => {
         />
         <Atoms.Button type="submit" label="Login" />
       </Atoms.AuthForm>
-
-      <Outlet />
     </div>
   )
 }

@@ -1,5 +1,4 @@
 import { FC } from 'react'
-import { Outlet } from 'react-router-dom'
 
 import { Atoms, Molecules } from '@libs/components'
 
@@ -9,12 +8,12 @@ const Register: FC = () => {
       <Atoms.AuthForm>
         <h1>Register</h1>
         <Molecules.FormInput
-          label="Email"
+          label="Full Name"
           field={<Atoms.Input type="text" />}
         />
         <Molecules.FormInput
-          label="Full Name"
-          field={<Atoms.Input type="text" />}
+          label="Email"
+          field={<Atoms.Input type="email" />}
         />
         <Molecules.FormInput
           label="Password"
@@ -26,8 +25,6 @@ const Register: FC = () => {
         />
         <Atoms.Button type="submit" label="Register" />
       </Atoms.AuthForm>
-
-      <Outlet />
     </div>
   )
 }
