@@ -2,7 +2,7 @@
 
 @tailwind components;
 @layer components {
-  [contenteditable='true']:empty:not(:focus):before {
+  [contenteditable='true']:empty:before {
     content: attr(data-placeholder);
     @apply text-gray-500;
   }

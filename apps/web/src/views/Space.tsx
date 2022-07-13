@@ -1,7 +1,9 @@
-import { useState, FC, ChangeEvent } from 'react'
+import { useState, useEffect, FC } from 'react'
 import { MessageArea } from '../components/molecules'
 
 import userStore from '../store/userStore'
+import api from '../axios'
+import useSocket from '../hooks/useSocket'
 
 type Message = {
   text: string
@@ -11,10 +13,23 @@ type Message = {
 
 const Space: FC = () => {
   const { user } = userStore()
-  const [text] = useState('')
-  const [messages] = useState<Message[]>([])
-  const handleInput = (e: ChangeEvent<HTMLDivElement>) => {
-    console.log(e.target.innerHTML)
+  const socket = useSocket()
+  const [messages, setMessages] = useState<Message[]>([])
+  useEffect(() => {
+    socket.on('message_received', (msg) => {
+      console.log({ msg })
+    })
+    fetchMessages()
+  }, [])
+  const fetchMessages = async () => {
+    const { data } = await api.get('/messages')
+    setMessages(data.data)
+  }
+  const onMessageSubmit = async (text: string) => {
+    await api.post('/messages', {
+      sender_id: user?.id,
+      text,
+    })
   }
   return (
     <div
@@ -26,12 +41,12 @@ const Space: FC = () => {
         `}
     >
       <span className="absolute top-0, right-0">{user?.fullname}</span>
-      <div className="h-full mb-2">
+      <div className="h-full mb-2 overflow-y-auto">
         {messages.map((m) => {
           return <p key={m.id}>{m.text}</p>
         })}
       </div>
-      <MessageArea onInput={handleInput} text={text} />
+      <MessageArea onSubmit={onMessageSubmit} />
     </div>
   )
 }

@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import { Login, Register, Space } from './views'
 import { useSocket } from './hooks'
 import userStore from './store/userStore'
+import { PrivateRoute } from './routes'
 
 const App: FC = () => {
   const socket = useSocket()
@@ -20,7 +21,9 @@ const App: FC = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Space />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/" element={<Space />} />
+        </Route>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
       </Routes>
