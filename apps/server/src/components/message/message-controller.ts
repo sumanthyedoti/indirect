@@ -3,6 +3,7 @@ import { Response } from 'express'
 import messageModel from './message-model'
 import T from './message-types.d'
 import { TypedRequestBody } from '../../types.d'
+import { broadcastMessage } from '../../message-server'
 
 async function createMessage(
   req: TypedRequestBody<T.CreateMessage>,
@@ -11,11 +12,17 @@ async function createMessage(
   const { text, sender_id } = req.body
 
   try {
-    const id = await messageModel.createMessage({ text, sender_id })
+    const message: T.Message = await messageModel.createMessage({
+      text,
+      sender_id,
+    })
     res.status(201).json({
-      id,
+      data: {
+        id: message.id,
+      },
       message: 'Created user successfully!',
     })
+    broadcastMessage(message)
   } catch (err) {
     console.error(err)
     res.send('Something went wrong!')
@@ -29,7 +36,7 @@ async function getMessages(
   try {
     const messages = await messageModel.getMessages()
     res.status(201).json({
-      messages,
+      data: messages,
       message: 'Created user successfully!',
     })
   } catch (err) {

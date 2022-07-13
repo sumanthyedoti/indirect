@@ -1,9 +1,14 @@
-import { Socket, Server } from 'socket.io'
+import { Server } from 'socket.io'
+import { Message } from './components/message/message-types'
 
-const messageServer = (io: Server) => {
-  io.on('connection', (socket: Socket) => {
-    console.log('a user connected ', socket.id)
-  })
+let io: Server | null = null
+
+const messageServer = (socketio: Server) => {
+  io = socketio
+}
+
+export const broadcastMessage = (message: Message) => {
+  io?.emit('message_received', message)
 }
 
 export default messageServer

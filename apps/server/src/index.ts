@@ -76,6 +76,9 @@ io.use(wrap(passport.session()))
 // @ts-ignore
 io.use(socketAuthentication)
 
+io.on('connection', (socket) => {
+  console.log('a user connected ', socket.id)
+})
 messageServer(io)
 
 httpServer.listen(wsPort, () => {

@@ -31,7 +31,7 @@ async function registerUser(
       password_hash: passHash,
     })
     res.status(201).json({
-      id: newUserId,
+      data: { id: newUserId },
       message: 'Successfully added the message!',
     })
   } catch (err) {
@@ -56,9 +56,12 @@ async function loginUser(req: TypedRequestBody<T.LoginUser>, res: Response) {
   }
 
   res.status(200).json({
-    id: user.id,
-    email: user.email,
-    fullname: user.fullname,
+    data: {
+      id: user.id,
+      email: user.email,
+      fullname: user.fullname,
+    },
+    message: 'Logged in successfully!',
   })
 }
 
@@ -66,7 +69,7 @@ async function getUsers(req: Request, res: Response) {
   try {
     const result = await userModel.getUsers()
     res.status(200).json({
-      ...result,
+      data: result,
     })
   } catch (err) {
     logger.error(err)
@@ -83,7 +86,7 @@ async function getUser(req: TypedRequestParams<{ id: number }>, res: Response) {
       return
     }
     res.status(200).json({
-      ...result,
+      data: result,
     })
   } catch (err) {
     logger.error(err)
@@ -104,9 +107,12 @@ async function updateUser(
       return
     }
     res.status(200).json({
-      id,
-      fullname,
-      message: 'Updated Successfully',
+      data: {
+        id,
+        fullname,
+        message: 'Updated Successfully',
+      },
+      message: 'Updated the user successfully!',
     })
   } catch (err) {
     logger.error(err)
