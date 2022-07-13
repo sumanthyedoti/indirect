@@ -1,14 +1,17 @@
-import { FC, ChangeEvent } from "react";
+import { useState, FC, ChangeEvent } from 'react'
 
 interface MessageAreaProps {
-  text: string;
-  onInput?: (e: ChangeEvent<HTMLDivElement>) => void;
+  text: string
+  onInput?: (e: ChangeEvent<HTMLDivElement>) => void
 }
 const MessageArea: FC<MessageAreaProps> = ({
-  text = "",
+  text = '',
   onInput,
   ...props
 }) => {
+  const [count] = useState(0)
+  console.log(count)
+
   return (
     <div
       {...props}
@@ -25,7 +28,7 @@ const MessageArea: FC<MessageAreaProps> = ({
       `}
       dangerouslySetInnerHTML={{ __html: text }}
     />
-  );
-};
+  )
+}
 
-export default MessageArea;
+export default MessageArea

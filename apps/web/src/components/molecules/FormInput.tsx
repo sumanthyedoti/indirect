@@ -1,12 +1,12 @@
-import { FC, ReactElement } from "react";
+import { FC, ReactElement } from 'react'
 
-import { FormFieldError } from "../atoms";
+import { FormFieldError } from '../atoms'
 
 interface FormInputProps {
-  label: string;
-  id?: string;
-  field: ReactElement;
-  error?: string;
+  label: string
+  id?: string
+  field: ReactElement
+  error?: string
 }
 
 const FormInput: FC<FormInputProps> = ({ label, id, field, error }) => {
@@ -18,7 +18,7 @@ const FormInput: FC<FormInputProps> = ({ label, id, field, error }) => {
       {field}
       <FormFieldError>{error}</FormFieldError>
     </div>
-  );
-};
+  )
+}
 
-export default FormInput;
+export default FormInput

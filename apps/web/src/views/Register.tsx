@@ -1,30 +1,19 @@
 import { FC } from 'react'
 
-import { Atoms, Molecules } from '@libs/components'
+import { AuthForm, Input, Button } from '../components/atoms'
+import { FormInput } from '../components/molecules'
 
 const Register: FC = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <Atoms.AuthForm>
+      <AuthForm>
         <h1>Register</h1>
-        <Molecules.FormInput
-          label="Full Name"
-          field={<Atoms.Input type="text" />}
-        />
-        <Molecules.FormInput
-          label="Email"
-          field={<Atoms.Input type="email" />}
-        />
-        <Molecules.FormInput
-          label="Password"
-          field={<Atoms.Input type="password" />}
-        />
-        <Molecules.FormInput
-          label="Confirm Password"
-          field={<Atoms.Input type="password" />}
-        />
-        <Atoms.Button type="submit" label="Register" />
-      </Atoms.AuthForm>
+        <FormInput label="Full Name" field={<Input type="text" />} />
+        <FormInput label="Email" field={<Input type="email" />} />
+        <FormInput label="Password" field={<Input type="password" />} />
+        <FormInput label="Confirm Password" field={<Input type="password" />} />
+        <Button type="submit" label="Register" />
+      </AuthForm>
     </div>
   )
 }

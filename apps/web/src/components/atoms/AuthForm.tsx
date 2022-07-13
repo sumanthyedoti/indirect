@@ -1,8 +1,8 @@
-import React, { FC } from "react";
+import React, { FC } from 'react'
 
 interface AuthFormProps {
-  children: React.ReactNode;
-  onSubmit?: (e: any) => void;
+  children: React.ReactNode
+  onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
 const AuthForm: FC<AuthFormProps> = ({ children, onSubmit }) => {
@@ -14,7 +14,7 @@ const AuthForm: FC<AuthFormProps> = ({ children, onSubmit }) => {
     >
       {children}
     </form>
-  );
-};
+  )
+}
 
-export default AuthForm;
+export default AuthForm

@@ -8,7 +8,6 @@ specifiers:
   '@babel/preset-typescript': ^7.17.12
   '@babel/runtime': ^7.18.3
   '@hookform/resolvers': ^2.9.5
-  '@libs/components': workspace:^1.0.0
   '@libs/styles': workspace:^1.0.0
   '@pmmmwh/react-refresh-webpack-plugin': ^0.5.7
   '@types/node': ^18.0.0
@@ -20,6 +19,7 @@ specifiers:
   autoprefixer: ^10.4.7
   axios: ^0.27.2
   babel-loader: ^8.2.5
+  classnames: ^2.3.1
   compression-webpack-plugin: ^10.0.0
   css-loader: ^6.7.1
   cssnano: ^5.1.12
@@ -58,10 +58,10 @@ specifiers:
 
 dependencies:
   '@hookform/resolvers': 2.9.5_react-hook-form@7.33.1
-  '@libs/components': link:../../libs/components
   '@libs/styles': link:../../libs/styles
   add: 2.0.6
   axios: 0.27.2
+  classnames: 2.3.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.33.1_react@18.2.0
@@ -2468,6 +2468,10 @@ packages:
     resolution: {integrity: sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==}
     engines: {node: '>=6.0'}
     dev: true
+
+  /classnames/2.3.1:
+    resolution: {integrity: sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==}
+    dev: false
 
   /clean-css/5.3.0:
     resolution: {integrity: sha512-YYuuxv4H/iNb1Z/5IbMRoxgrzjWGhOEFfd+groZ5dMCVkpENiMZmwspdrzBo9286JjM1gZJPAyL7ZIdzuvu2AQ==}

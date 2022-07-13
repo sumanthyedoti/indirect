@@ -1,29 +1,29 @@
-import { FC, forwardRef } from "react";
-import classnames from "classnames";
+import { FC, forwardRef } from 'react'
+import classnames from 'classnames'
 
 export type InputType =
-  | "date"
-  | "datetime-local"
-  | "email"
-  | "file"
-  | "hidden"
-  | "image"
-  | "month"
-  | "number"
-  | "password"
-  | "reset"
-  | "search"
-  | "tel"
-  | "text"
-  | "time"
-  | "url"
-  | "week";
+  | 'date'
+  | 'datetime-local'
+  | 'email'
+  | 'file'
+  | 'hidden'
+  | 'image'
+  | 'month'
+  | 'number'
+  | 'password'
+  | 'reset'
+  | 'search'
+  | 'tel'
+  | 'text'
+  | 'time'
+  | 'url'
+  | 'week'
 
 interface Props {
-  type: InputType;
-  id?: string;
-  placeholder?: string;
-  className?: string;
+  type: InputType
+  id?: string
+  placeholder?: string
+  className?: string
 }
 
 const Input: FC<Props> = forwardRef<HTMLInputElement, Props>(
@@ -42,8 +42,9 @@ const Input: FC<Props> = forwardRef<HTMLInputElement, Props>(
         type={type}
         {...props}
       />
-    );
+    )
   }
-);
+)
 
-export default Input;
+Input.displayName = 'Input'
+export default Input

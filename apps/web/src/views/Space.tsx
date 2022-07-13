@@ -1,5 +1,5 @@
 import { useState, FC, ChangeEvent } from 'react'
-import { Molecules } from '@libs/components'
+import { MessageArea } from '../components/molecules'
 
 import userStore from '../store/userStore'
 
@@ -31,7 +31,7 @@ const Space: FC = () => {
           return <p key={m.id}>{m.text}</p>
         })}
       </div>
-      <Molecules.MessageArea onInput={handleInput} text={text} />
+      <MessageArea onInput={handleInput} text={text} />
     </div>
   )
 }

@@ -4,7 +4,8 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
-import { Atoms, Molecules } from '@libs/components'
+import { AuthForm, Input, Button } from '../components/atoms'
+import { FormInput } from '../components/molecules'
 import userStore from '../store/userStore'
 import api from '../axios'
 
@@ -43,20 +44,20 @@ const Login: FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <Atoms.AuthForm onSubmit={handleSubmit(onSubmit)}>
+      <AuthForm onSubmit={handleSubmit(onSubmit)}>
         <h1 className="mb-8">Login</h1>
-        <Molecules.FormInput
+        <FormInput
           label="Email"
-          field={<Atoms.Input {...register('email')} type="email" />}
+          field={<Input {...register('email')} type="email" />}
           error={errors.email?.message}
         />
-        <Molecules.FormInput
+        <FormInput
           label="Password"
-          field={<Atoms.Input {...register('password')} type="password" />}
+          field={<Input {...register('password')} type="password" />}
           error={errors.password?.message}
         />
-        <Atoms.Button type="submit" label="Login" />
-      </Atoms.AuthForm>
+        <Button type="submit" label="Login" />
+      </AuthForm>
     </div>
   )
 }

@@ -1,4 +1,11 @@
 @import '@libs/styles/lib/index.css';
-@import '@libs/components/lib/index.css';
+
 @tailwind components;
+@layer components {
+  [contenteditable='true']:empty:not(:focus):before {
+    content: attr(data-placeholder);
+    @apply text-gray-500;
+  }
+}
+
 @tailwind utilities;

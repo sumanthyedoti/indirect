@@ -1,12 +1,12 @@
-import { FC } from "react";
+import { FC } from 'react'
 
 interface props {
-  label: string;
-  type?: "button" | "submit" | "reset";
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  label: string
+  type?: 'button' | 'submit' | 'reset'
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-const Button: FC<props> = ({ label, type = "button", onClick = () => {} }) => {
+const Button: FC<props> = ({ label, type = 'button', onClick }) => {
   return (
     <button
       type={type}
@@ -18,7 +18,7 @@ const Button: FC<props> = ({ label, type = "button", onClick = () => {} }) => {
     >
       {label}!
     </button>
-  );
-};
+  )
+}
 
-export default Button;
+export default Button
