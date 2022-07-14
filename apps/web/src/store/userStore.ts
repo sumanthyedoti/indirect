@@ -1,5 +1,6 @@
 import create from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
+import { doesHttpOnlyCookieExist } from '../utils'
 
 type User = {
   email: string
@@ -10,26 +11,35 @@ type User = {
 interface UserData {
   user: User | null
   isLoggedIn: boolean
-  id: number
   login: (user: User) => void
   logout: () => void
 }
 
-// @ts-ignore
-const store = (set) => ({
+const initialState = {
   isLoggedIn: false,
   user: null,
+}
+
+// @ts-ignore
+const store = (set) => ({
+  ...initialState,
   login: (user: UserData) =>
-    set(() => ({ isLoggedIn: true, user: { ...user }, id: user.id })),
+    set(() => ({ isLoggedIn: true, user: { ...user } })),
   logout: () => set(() => ({ isLoggedIn: false, user: null, id: null })),
 })
-const pipedStore = devtools(
+const storeThroughtMiddlewares = devtools(
   // @ts-ignore
   persist<UserData>(store, {
     name: 'user-store',
     getStorage: () => localStorage,
+    serialize: (state) => JSON.stringify(state),
+    deserialize: (str) => {
+      const cookieExists = doesHttpOnlyCookieExist('sid')
+      if (cookieExists) return JSON.parse(str)
+      return initialState
+    },
   })
 )
 // @ts-ignore
-const useStore = create<UserData>(pipedStore)
+const useStore = create<UserData>(storeThroughtMiddlewares)
 export default useStore

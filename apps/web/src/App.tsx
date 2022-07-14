@@ -22,11 +22,11 @@ const App: FC = () => {
   return (
     <>
       <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Space />} />
         </Route>
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
       </Routes>
       <ToastContainer />
     </>
