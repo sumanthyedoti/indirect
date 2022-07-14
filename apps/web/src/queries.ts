@@ -9,4 +9,11 @@ function useQueryUsers() {
   })
 }
 
-export { useQueryUsers }
+function useQueryUserLoggedIn(id: number) {
+  return useQuery<T.User[]>('user-logged-in', async () => {
+    const { data } = await api.get(`/users/${id}`)
+    return data.data
+  })
+}
+
+export { useQueryUsers, useQueryUserLoggedIn }

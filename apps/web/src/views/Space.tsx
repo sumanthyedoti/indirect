@@ -1,15 +1,17 @@
-import { useState, useEffect, FC } from 'react'
+import { useState, useEffect, memo, FC } from 'react'
+import { toast } from 'react-toastify'
+
 import {
   MessageInput,
   MessagesContainer,
   Message,
 } from '../components/molecules'
-
 import userStore from '../store/userStore'
 import api from '../axios'
 import { useQueryUsers } from '../queries'
 import useSocket from '../hooks/useSocket'
 import T from '../types.d'
+import { errorToastOptions } from '../utils'
 
 const Space: FC = () => {
   const { user } = userStore()
@@ -24,11 +26,20 @@ const Space: FC = () => {
 
     return () => {
       socket.off('message_received')
+      toast.dismiss()
     }
   }, [])
   const fetchMessages = async () => {
-    const { data } = await api.get('/messages')
-    setMessages(data.data)
+    try {
+      const { data } = await api.get('/messages')
+      setMessages(data.data)
+    } catch (err) {
+      console.log('errrrrr')
+      toast.dark('Error fetching messages', {
+        ...errorToastOptions,
+        toastId: 'get-messages',
+      })
+    }
   }
   const onMessageSubmit = async (text: string) => {
     await api.post('/messages', {
@@ -61,4 +72,4 @@ const Space: FC = () => {
     </div>
   )
 }
-export default Space
+export default memo(Space, () => true)

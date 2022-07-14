@@ -1,3 +1,4 @@
+@import 'react-toastify/dist/ReactToastify.css';
 @import '@libs/styles/lib/index.css';
 
 @tailwind components;
@@ -5,6 +6,32 @@
   [contenteditable='true']:empty:before {
     content: attr(data-placeholder);
     @apply text-gray-500;
+  }
+  .toast-enter {
+    animation: toast-enter 0.2s ease-out both;
+  }
+  @keyframes toast-enter {
+    0% {
+      opacity: 0.3;
+      transform: translateY(2rem);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0rem);
+    }
+  }
+  .toast-exit {
+    animation: toast-exit 0.2s ease-out both;
+  }
+  @keyframes toast-exit {
+    0% {
+      opacity: 1;
+      transform: translateY(0rem);
+    }
+    100% {
+      opacity: 0.3;
+      transform: translateY(2rem);
+    }
   }
 }
 

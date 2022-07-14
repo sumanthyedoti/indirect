@@ -1,5 +1,6 @@
 import { useEffect, FC } from 'react'
 import { Routes, Route } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 
 import { Login, Register, Space } from './views'
 import { useSocket } from './hooks'
@@ -10,13 +11,13 @@ const App: FC = () => {
   const socket = useSocket()
   const { isLoggedIn } = userStore()
   useEffect(() => {
-    if (isLoggedIn) socket.connect()
-  }, [isLoggedIn])
-  useEffect(() => {
     socket.on('connect', () => {
       console.log(socket.id)
     })
   }, [])
+  useEffect(() => {
+    if (isLoggedIn) socket.connect()
+  }, [isLoggedIn])
 
   return (
     <>
@@ -27,6 +28,7 @@ const App: FC = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
       </Routes>
+      <ToastContainer />
     </>
   )
 }
