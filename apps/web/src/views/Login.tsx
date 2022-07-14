@@ -1,5 +1,5 @@
 import { useEffect, FC } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -10,11 +10,11 @@ import userStore from '../store/userStore'
 import api from '../axios'
 
 const schema = yup.object().shape({
-  email: yup.string().email('Invalid Emial!').required('Email required!'),
+  email: yup.string().email('Invalid Email').required('Email required!'),
   password: yup
     .string()
-    .required('Password required!')
-    .min(6, 'Password should be atleast 6 characters!'),
+    .required('Password required')
+    .min(6, 'Password should be atleast 6 characters'),
 })
 interface FormInputs {
   email: string
@@ -45,19 +45,30 @@ const Login: FC = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <AuthForm onSubmit={handleSubmit(onSubmit)}>
-        <h1 className="mb-8">Login</h1>
+        <h1>Welcome back!</h1>
         <FormInput
           label="Email"
+          id="email"
           field={<Input {...register('email')} type="email" />}
           error={errors.email?.message}
         />
         <FormInput
           label="Password"
+          id="password"
           field={<Input {...register('password')} type="password" />}
           error={errors.password?.message}
         />
-        <Button type="submit" label="Login" />
+        <Button className="w-full mt-5" type="submit" label="Login" />
       </AuthForm>
+      <p>
+        Need an account?&nbsp;&nbsp;
+        <Link
+          to="/register"
+          className="outline-none focus:ring ring-blue-300 ring-offset ring-offset-slate-700"
+        >
+          <b className="font-medium">Register</b>
+        </Link>
+      </p>
     </div>
   )
 }

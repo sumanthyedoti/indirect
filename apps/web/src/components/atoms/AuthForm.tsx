@@ -9,8 +9,8 @@ const AuthForm: FC<AuthFormProps> = ({ children, onSubmit }) => {
   return (
     <form
       onSubmit={onSubmit}
-      className={`flex flex-col items-center
-                px-20 py-10 rounded`}
+      className={`md:w-2/3 lg:w-2/5 xl:w-1/3 flex flex-col items-center
+                p-10 rounded`}
     >
       {children}
     </form>

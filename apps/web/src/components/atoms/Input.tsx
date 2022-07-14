@@ -32,8 +32,8 @@ const Input: FC<Props> = forwardRef<HTMLInputElement, Props>(
       <input
         ref={ref}
         className={classnames([
-          `px-4 py-3 mb-1
-          outline-none w-72 md:w-96 bg-gray-800
+          `px-4 py-2.5 mb-1
+          outline-none bg-gray-800
           rounded-md focus:ring ring-sky-500`,
           className,
         ])}

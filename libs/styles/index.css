@@ -4,19 +4,19 @@
 
 @layer base {
   body {
-    @apply text-neutral-100 bg-slate-700;
+    @apply tracking-tight text-neutral-100 bg-slate-700;
   }
   h1,
   h2,
   h3,
   h4 {
-    @apply mb-3 font-medium;
+    @apply mb-6 font-medium;
   }
   h1 {
-    @apply text-6xl;
+    @apply text-5xl;
   }
   h2 {
-    @apply text-2xl;
+    @apply text-4xl;
   }
   h3 {
     @apply text-2xl;
@@ -25,7 +25,7 @@
     @apply text-xl;
   }
   a {
-    @apply text-blue-600 underline;
+    @apply text-blue-300 no-underline hover:underline;
   }
   ::-webkit-scrollbar {
     @apply w-1;

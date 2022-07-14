@@ -5,7 +5,7 @@ interface Props {
 }
 
 const FormFieldError: FC<Props> = ({ children }) => {
-  return <p className="text-sm text-red-500">{children}</p>
+  return <em className="text-sm text-red-500">{children}</em>
 }
 
 export default FormFieldError
