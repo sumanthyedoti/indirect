@@ -7,7 +7,7 @@ import * as yup from 'yup'
 import { AuthForm, Input, Button } from '../components/atoms'
 import { FormInput } from '../components/molecules'
 import userStore from '../store/userStore'
-// import api from '../axios'
+import api from '../axios'
 
 const schema = yup.object().shape({
   fullname: yup.string().required('Email required'),
@@ -43,11 +43,9 @@ const Register: FC = () => {
   }, [isLoggedIn])
 
   const onSubmit = async (input: FormInputs) => {
-    console.log(input)
-
-    // const { data } = await api.post('/register', input)
-    // console.log(data)
-    // navigate('/login')
+    const { data } = await api.post('/register', input)
+    console.log(data)
+    navigate('/login')
   }
   return (
     <div className="flex flex-col items-center justify-center h-screen">

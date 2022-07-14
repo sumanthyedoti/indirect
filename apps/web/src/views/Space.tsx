@@ -51,7 +51,7 @@ const Space: FC = () => {
           return (
             <Message
               key={m.id}
-              senderName={user && users[user.id].fullname}
+              senderName={user && users[m.sender_id].fullname}
               message={m}
             />
           )
