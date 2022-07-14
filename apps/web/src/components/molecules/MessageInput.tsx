@@ -11,6 +11,7 @@ const MessageArea: FC<MessageAreaProps> = ({ onSubmit, ...props }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     onSubmit && onSubmit(text)
+    setText('')
   }
   return (
     <form onSubmit={handleSubmit}>

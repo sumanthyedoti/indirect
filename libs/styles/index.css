@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-slate-700 text-slate-50;
+    @apply text-neutral-100 bg-slate-700;
   }
   h1,
   h2,
@@ -26,5 +26,19 @@
   }
   a {
     @apply text-blue-600 underline;
+  }
+  ::-webkit-scrollbar {
+    @apply w-1;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply rounded shadow-inner bg-stone-800;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-700 rounded shadow-inner cursor-pointer hover:bg-gray-600;
+  }
+  ::-webkit-scrollbar-thumb:window-inactive {
+    @apply bg-gray-600;
   }
 }

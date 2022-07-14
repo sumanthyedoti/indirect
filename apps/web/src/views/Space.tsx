@@ -1,25 +1,30 @@
 import { useState, useEffect, FC } from 'react'
-import { MessageArea } from '../components/molecules'
+import {
+  MessageInput,
+  MessagesContainer,
+  Message,
+} from '../components/molecules'
 
 import userStore from '../store/userStore'
 import api from '../axios'
+import { useQueryUsers } from '../queries'
 import useSocket from '../hooks/useSocket'
-
-type Message = {
-  text: string
-  sender_id: number
-  id: number
-}
+import T from '../types.d'
 
 const Space: FC = () => {
   const { user } = userStore()
   const socket = useSocket()
-  const [messages, setMessages] = useState<Message[]>([])
+  const { data: users, isSuccess } = useQueryUsers()
+  const [messages, setMessages] = useState<T.Message[]>([])
   useEffect(() => {
     socket.on('message_received', (msg) => {
-      console.log({ msg })
+      setMessages((messages) => [...messages, msg])
     })
     fetchMessages()
+
+    return () => {
+      socket.off('message_received')
+    }
   }, [])
   const fetchMessages = async () => {
     const { data } = await api.get('/messages')
@@ -31,22 +36,23 @@ const Space: FC = () => {
       text,
     })
   }
+  if (!isSuccess) return null
   return (
     <div
       className={`
         flex flex-col w-5/6 w-11/12 relative
-        h-screen p-2 mx-auto
+        h-screen p-3 mx-auto
         lg:w-2/3 bg-slate-800
         shadow-xl shadow-slate-700/60
         `}
     >
-      <span className="absolute top-0, right-0">{user?.fullname}</span>
-      <div className="h-full mb-2 overflow-y-auto">
+      <MessagesContainer>
         {messages.map((m) => {
-          return <p key={m.id}>{m.text}</p>
+          const user = users?.find((user) => user.id === m.sender_id)
+          return <Message key={m.id} senderName={user?.fullname} message={m} />
         })}
-      </div>
-      <MessageArea onSubmit={onMessageSubmit} />
+      </MessagesContainer>
+      <MessageInput onSubmit={onMessageSubmit} />
     </div>
   )
 }
