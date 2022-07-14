@@ -48,8 +48,13 @@ const Space: FC = () => {
     >
       <MessagesContainer>
         {messages.map((m) => {
-          const user = users?.find((user) => user.id === m.sender_id)
-          return <Message key={m.id} senderName={user?.fullname} message={m} />
+          return (
+            <Message
+              key={m.id}
+              senderName={user && users[user.id].fullname}
+              message={m}
+            />
+          )
         })}
       </MessagesContainer>
       <MessageInput onSubmit={onMessageSubmit} />

@@ -32,7 +32,7 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply rounded shadow-inner bg-stone-800;
+    @apply rounded shadow-lg bg-slate-900 bg-opacity-20;
   }
 
   ::-webkit-scrollbar-thumb {

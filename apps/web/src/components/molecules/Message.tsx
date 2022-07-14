@@ -2,7 +2,7 @@ import { FC } from 'react'
 import T from '../../types.d'
 
 interface MessageProps {
-  senderName: string | undefined
+  senderName: string | null
   message: T.Message
 }
 
