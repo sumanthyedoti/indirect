@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import classnames from 'classnames'
 import T from '../../types.d'
 
 interface MessageProps {
@@ -7,13 +8,12 @@ interface MessageProps {
 }
 
 const Message: FC<MessageProps> = ({ senderName, message }) => {
+  const senderClassNames = classnames('text-sm', {
+    'text-neutral-400': !senderName,
+  })
   return (
     <div className="flex flex-col my-3">
-      {senderName ? (
-        <b className="text-sm">{senderName}</b>
-      ) : (
-        <b className="text-sm text-neutral-400">Unknow User</b>
-      )}
+      <b className={senderClassNames}>{senderName || 'Unknow User'}</b>
       <p className="leading-5">{message.text}</p>
     </div>
   )
