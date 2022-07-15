@@ -11,7 +11,8 @@ interface MessageProps {
 }
 
 const Message: FC<MessageProps> = ({ senderName, message, createdAt }) => {
-  const senderClassNames = classnames('text-sm', {
+  const senderClassNames = classnames('text-sm font-medium', {
+    'text-sky-400': senderName,
     'text-neutral-400': !senderName,
   })
   const getDate = () => {
