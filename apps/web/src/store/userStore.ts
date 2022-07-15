@@ -11,12 +11,14 @@ type User = {
 interface UserData {
   user: User | null
   isLoggedIn: boolean
+  isSessionExpired?: boolean
   login: (user: User) => void
   logout: () => void
 }
 
 const initialState = {
   isLoggedIn: false,
+  isSessionExpired: false,
   user: null,
 }
 

@@ -27,7 +27,7 @@ const Login: FC = () => {
   const locationState = location.state as { isRegister: boolean }
 
   const login = userStore((store) => store.login)
-  const { isLoggedIn } = userStore()
+  const { isLoggedIn, isSessionExpired } = userStore()
 
   const {
     register,
@@ -48,7 +48,11 @@ const Login: FC = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <AuthForm onSubmit={handleSubmit(onSubmit)}>
-        <h1>{locationState?.isRegister ? 'Welcome!' : 'Welcome back!'}</h1>
+        {isSessionExpired ? (
+          <h1>Please log in again</h1>
+        ) : (
+          <h1>{locationState?.isRegister ? 'Welcome!' : 'Welcome back!'}</h1>
+        )}
         <FormInput
           label="Email"
           id="email"

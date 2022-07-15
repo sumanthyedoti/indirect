@@ -18,24 +18,38 @@ const top = cssTransition({
   exit: 'toast-top-exit',
 })
 
+const toastOptions: ToastOptions = {
+  hideProgressBar: true,
+  position: toast.POSITION.BOTTOM_RIGHT,
+  pauseOnHover: false,
+}
+
 const errorToastOptions: ToastOptions = {
   autoClose: 5000,
   type: toast.TYPE.ERROR,
-  hideProgressBar: true,
   position: toast.POSITION.BOTTOM_RIGHT,
-  progress: 0,
-  pauseOnHover: true,
   transition: bottom,
+  ...toastOptions,
 }
 const successToastOptions: ToastOptions = {
   autoClose: 3000,
   type: toast.TYPE.SUCCESS,
-  hideProgressBar: true,
-  closeOnClick: true,
   position: toast.POSITION.TOP_LEFT,
-  progress: 0,
-  pauseOnHover: true,
   transition: top,
+  ...toastOptions,
 }
 
-export { doesHttpOnlyCookieExist, errorToastOptions, successToastOptions }
+const warningToastOptions: ToastOptions = {
+  autoClose: 3000,
+  type: toast.TYPE.WARNING,
+  position: toast.POSITION.TOP_LEFT,
+  transition: top,
+  ...toastOptions,
+}
+
+export {
+  doesHttpOnlyCookieExist,
+  errorToastOptions,
+  successToastOptions,
+  warningToastOptions,
+}

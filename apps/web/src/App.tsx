@@ -4,6 +4,8 @@ import { toast } from 'react-toastify'
 import dayjs from 'dayjs'
 import isToday from 'dayjs/plugin/isToday'
 import isYesterday from 'dayjs/plugin/isYesterday'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
 
 import { Login, Register, Space } from './views'
 import { Logout } from './icons'
@@ -15,6 +17,9 @@ import { errorToastOptions } from './utils'
 
 dayjs.extend(isToday)
 dayjs.extend(isYesterday)
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.tz.guess()
 
 const App: FC = () => {
   const socket = useSocket()

@@ -13,9 +13,9 @@ const MessagesContainer: FC<Props> = ({ children }) => {
   })
 
   return (
-    <div ref={containerRef} className="h-full mb-2 overflow-y-auto">
+    <article ref={containerRef} className="h-full mb-2 overflow-y-auto">
       {children}
-    </div>
+    </article>
   )
 }
 
