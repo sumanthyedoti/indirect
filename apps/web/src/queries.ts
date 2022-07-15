@@ -11,8 +11,14 @@ function useQueryUsers() {
 
 function useQueryUserLoggedIn(id: number) {
   return useQuery<T.User[]>('user-logged-in', async () => {
-    const { data } = await api.get(`/users/${id}`)
-    return data.data
+    try {
+      const { data } = await api.get(`/users/${id}`)
+      return data.data
+    } catch (err) {
+      console.log('ew')
+
+      console.log(err)
+    }
   })
 }
 

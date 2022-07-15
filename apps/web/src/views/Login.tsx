@@ -1,5 +1,5 @@
 import { useEffect, FC } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, useLocation } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -23,6 +23,9 @@ interface FormInputs {
 
 const Login: FC = () => {
   const navigate = useNavigate()
+  const location = useLocation()
+  const locationState = location.state as { isRegister: boolean }
+
   const login = userStore((store) => store.login)
   const { isLoggedIn } = userStore()
 
@@ -45,7 +48,7 @@ const Login: FC = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <AuthForm onSubmit={handleSubmit(onSubmit)}>
-        <h1>Welcome back!</h1>
+        <h1>{locationState?.isRegister ? 'Welcome!' : 'Welcome back!'}</h1>
         <FormInput
           label="Email"
           id="email"

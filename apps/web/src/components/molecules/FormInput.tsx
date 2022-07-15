@@ -1,7 +1,5 @@
 import { cloneElement, FC, ReactElement } from 'react'
 
-import { FormFieldError } from '../atoms'
-
 interface FormInputProps {
   label: string
   id?: string
@@ -17,7 +15,7 @@ const FormInput: FC<FormInputProps> = ({ label, id, field, error }) => {
           {label.toUpperCase()}
         </label>
         {error && <span className="self-center">&nbsp;-&nbsp;</span>}
-        <FormFieldError>{error}</FormFieldError>
+        <em className="text-sm text-red-400">{error}</em>
       </div>
       {cloneElement(field, {
         id,

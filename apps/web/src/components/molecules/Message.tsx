@@ -9,7 +9,11 @@ interface MessageProps {
 const Message: FC<MessageProps> = ({ senderName, message }) => {
   return (
     <div className="flex flex-col my-3">
-      <b className="text-sm">{senderName}</b>
+      {senderName ? (
+        <b className="text-sm">{senderName}</b>
+      ) : (
+        <b className="text-sm text-neutral-400">Unknow User</b>
+      )}
       <p className="leading-5">{message.text}</p>
     </div>
   )

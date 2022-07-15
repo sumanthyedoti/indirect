@@ -34,26 +34,34 @@ const Space: FC = () => {
       const { data } = await api.get('/messages')
       setMessages(data.data)
     } catch (err) {
-      console.log('errrrrr')
-      toast.dark('Error fetching messages', {
+      console.log(err)
+      toast('Error fetching messages', {
         ...errorToastOptions,
         toastId: 'get-messages',
       })
     }
   }
   const onMessageSubmit = async (text: string) => {
-    await api.post('/messages', {
-      sender_id: user?.id,
-      text,
-    })
+    try {
+      await api.post('/messages', {
+        sender_id: user?.id,
+        text,
+      })
+    } catch (err) {
+      console.log(err)
+      toast('Error sending messages', {
+        ...errorToastOptions,
+        toastId: 'post-message',
+      })
+    }
   }
   if (!isSuccess) return null
   return (
     <div
       className={`
-        flex flex-col w-5/6 w-11/12 relative
+        flex flex-col md:w-11/12 lg:w-4/5 2xl:w-3/5 relative
         h-screen p-3 mx-auto
-        lg:w-2/3 bg-slate-800
+        bg-slate-800
         shadow-xl shadow-slate-700/60
         `}
     >
@@ -62,7 +70,7 @@ const Space: FC = () => {
           return (
             <Message
               key={m.id}
-              senderName={user && users[m.sender_id].fullname}
+              senderName={user && users[m.sender_id]?.fullname}
               message={m}
             />
           )

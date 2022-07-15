@@ -10,6 +10,7 @@ specifiers:
   '@hookform/resolvers': ^2.9.5
   '@libs/styles': workspace:^1.0.0
   '@pmmmwh/react-refresh-webpack-plugin': ^0.5.7
+  '@tailwindcss/nesting': 0.0.0-insiders.565cd3e
   '@types/node': ^18.0.0
   '@types/react': ^18.0.14
   '@types/react-dom': ^18.0.5
@@ -83,6 +84,7 @@ devDependencies:
   '@babel/preset-typescript': 7.17.12_@babel+core@7.18.5
   '@babel/runtime': 7.18.3
   '@pmmmwh/react-refresh-webpack-plugin': 0.5.7_g5otyhka3xgu4m6o2r25nvx6tm
+  '@tailwindcss/nesting': 0.0.0-insiders.565cd3e_postcss@8.4.14
   '@types/node': 18.0.0
   '@types/react': 18.0.14
   '@types/react-dom': 18.0.5
@@ -1552,6 +1554,15 @@ packages:
   /@socket.io/component-emitter/3.1.0:
     resolution: {integrity: sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg==}
     dev: false
+
+  /@tailwindcss/nesting/0.0.0-insiders.565cd3e_postcss@8.4.14:
+    resolution: {integrity: sha512-WhHoFBx19TnH/c+xLwT/sxei6+4RpdfiyG3MYXfmLaMsADmVqBkF7B6lDalgZD9YdM459MF7DtxVbWkOrV7IaQ==}
+    peerDependencies:
+      postcss: ^8.2.15
+    dependencies:
+      postcss: 8.4.14
+      postcss-nested: 5.0.6_postcss@8.4.14
+    dev: true
 
   /@trysound/sax/0.2.0:
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}

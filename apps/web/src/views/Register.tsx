@@ -2,11 +2,13 @@ import { useEffect, FC } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { toast } from 'react-toastify'
 import * as yup from 'yup'
 
 import { AuthForm, Input, Button } from '../components/atoms'
 import { FormInput } from '../components/molecules'
 import userStore from '../store/userStore'
+import { errorToastOptions } from '../utils'
 import api from '../axios'
 
 const schema = yup.object().shape({
@@ -43,9 +45,15 @@ const Register: FC = () => {
   }, [isLoggedIn])
 
   const onSubmit = async (input: FormInputs) => {
-    const { data } = await api.post('/register', input)
-    console.log(data)
-    navigate('/login')
+    try {
+      await api.post('/register', input)
+      navigate('/login', { state: { isRegister: true } })
+    } catch (err) {
+      toast('Error while registering', {
+        ...errorToastOptions,
+        toastId: 'register-error',
+      })
+    }
   }
   return (
     <div className="flex flex-col items-center justify-center h-screen">

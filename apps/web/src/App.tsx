@@ -1,15 +1,15 @@
 import { useEffect, FC } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
 
 import { Login, Register, Space } from './views'
+import { Logout } from './icons'
 import { useSocket } from './hooks'
 import userStore from './store/userStore'
 import { PrivateRoute } from './routes'
 
 const App: FC = () => {
   const socket = useSocket()
-  const { isLoggedIn } = userStore()
+  const { isLoggedIn, logout } = userStore()
   useEffect(() => {
     socket.on('connect', () => {
       console.log(socket.id)
@@ -28,7 +28,15 @@ const App: FC = () => {
           <Route path="/" element={<Space />} />
         </Route>
       </Routes>
-      <ToastContainer />
+      {isLoggedIn && (
+        <button
+          onClick={logout}
+          className="absolute top-4 right-6"
+          aria-label="Log out"
+        >
+          <Logout />
+        </button>
+      )}
     </>
   )
 }

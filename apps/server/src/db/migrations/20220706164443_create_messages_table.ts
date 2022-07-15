@@ -13,7 +13,6 @@ export async function up(knex: Knex): Promise<void> {
         table
           .integer('sender_id')
           .unsigned()
-          .notNullable()
           .references('id')
           .inTable('users')
           .onDelete('SET NULL')
