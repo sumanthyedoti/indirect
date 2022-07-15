@@ -28,7 +28,7 @@ router.post(
   }
 )
 
-router.get('/logout', isAuthenticated, (req: Request, res: Response) => {
+router.delete('/logout', isAuthenticated, (req: Request, res: Response) => {
   req.logout((err) => {
     if (err) logger.error(err)
   })

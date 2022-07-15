@@ -37,7 +37,7 @@ const Space: FC = () => {
       console.log(err)
       toast('Error fetching messages', {
         ...errorToastOptions,
-        toastId: 'get-messages',
+        toastId: 'get-messages-error',
       })
     }
   }
@@ -51,7 +51,7 @@ const Space: FC = () => {
       console.log(err)
       toast('Error sending messages', {
         ...errorToastOptions,
-        toastId: 'post-message',
+        toastId: 'post-message-error',
       })
     }
   }
@@ -70,6 +70,7 @@ const Space: FC = () => {
           return (
             <Message
               key={m.id}
+              createdAt={m.created_at}
               senderName={user && users[m.sender_id]?.fullname}
               message={m}
             />

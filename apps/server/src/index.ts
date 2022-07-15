@@ -26,7 +26,7 @@ app.use(express.json())
 app.use(
   cors({
     origin: whiteList,
-    methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD'],
     credentials: true,
   })
 )

@@ -16,7 +16,8 @@ async function getMessages(): Promise<T.Message[]> {
   const messages: T.Message[] = await db('messages').select(
     'id',
     'text',
-    'sender_id'
+    'sender_id',
+    'created_at'
   )
   return messages
 }

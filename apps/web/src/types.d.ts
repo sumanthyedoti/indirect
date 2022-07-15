@@ -4,8 +4,9 @@ export type User = {
   email: string
 }
 
-export type Message = {
+export interface Message {
   id: number
   sender_id: number
+  created_at: Date
   text: string
 }

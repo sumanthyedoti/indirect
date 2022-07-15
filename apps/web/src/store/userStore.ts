@@ -25,7 +25,7 @@ const store = (set) => ({
   ...initialState,
   login: (user: UserData) =>
     set(() => ({ isLoggedIn: true, user: { ...user } })),
-  logout: () => set(() => ({ isLoggedIn: false, user: null, id: null })),
+  logout: () => set(() => ({ isLoggedIn: false, user: null })),
 })
 const storeThroughtMiddlewares = devtools(
   // @ts-ignore
