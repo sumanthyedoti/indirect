@@ -17,14 +17,19 @@ const warningToastOptions: ToastOptions = {
   duration: 4000,
   position: 'bottom-right',
 }
-const errorToastOptions: ToastOptions = {
+const userErrorToastOptions: ToastOptions = {
+  duration: 5000,
+  position: 'top-center',
+}
+const appErrorToastOptions: ToastOptions = {
   duration: 5000,
   position: 'bottom-right',
 }
 
 export {
   doesHttpOnlyCookieExist,
-  errorToastOptions,
+  userErrorToastOptions,
+  appErrorToastOptions,
   successToastOptions,
   warningToastOptions,
 }

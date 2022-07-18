@@ -11,7 +11,7 @@ import api from '../axios'
 import { useQueryUsers } from '../queries'
 import useSocket from '../hooks/useSocket'
 import T from '../types.d'
-import { errorToastOptions } from '../utils'
+import { appErrorToastOptions } from '../utils'
 
 const Space: FC = () => {
   const { user } = userStore()
@@ -36,7 +36,7 @@ const Space: FC = () => {
     } catch (err) {
       console.log(err)
       toast.error('Error fetching messages', {
-        ...errorToastOptions,
+        ...appErrorToastOptions,
         id: 'get-messages-error',
       })
     }
@@ -50,7 +50,7 @@ const Space: FC = () => {
     } catch (err) {
       console.log(err)
       toast.error('Error sending message', {
-        ...errorToastOptions,
+        ...appErrorToastOptions,
         id: 'post-messages-error',
       })
     }

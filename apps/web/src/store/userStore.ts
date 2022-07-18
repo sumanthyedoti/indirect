@@ -1,6 +1,6 @@
 import create from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
-// import { doesHttpOnlyCookieExist } from '../utils'
+import { doesHttpOnlyCookieExist } from '../utils'
 
 type User = {
   email: string
@@ -35,11 +35,14 @@ const storeThroughtMiddlewares = devtools(
     name: 'user-store',
     getStorage: () => localStorage,
     serialize: (state) => JSON.stringify(state),
-    // deserialize: (str) => {
-    //   const cookieExists = doesHttpOnlyCookieExist('sid')
-    //   if (cookieExists) return JSON.parse(str)
-    //   return initialState
-    // },
+    deserialize: (str) => {
+      const cookieExists = doesHttpOnlyCookieExist('sid')
+      if (cookieExists) return JSON.parse(str)
+      return {
+        ...initialState,
+        isSessionExpired: true,
+      }
+    },
   })
 )
 // @ts-ignore

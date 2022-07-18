@@ -1,6 +1,7 @@
 import { useEffect, FC } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { AxiosError } from 'axios'
 import { yupResolver } from '@hookform/resolvers/yup'
 import toast from 'react-hot-toast'
 import * as yup from 'yup'
@@ -8,8 +9,9 @@ import * as yup from 'yup'
 import { AuthForm, Input, Button } from '../components/atoms'
 import { FormInput } from '../components/molecules'
 import userStore from '../store/userStore'
-import { errorToastOptions } from '../utils'
+import { appErrorToastOptions, userErrorToastOptions } from '../utils'
 import api from '../axios'
+import { useToastLimit } from '../hooks'
 
 const schema = yup.object().shape({
   fullname: yup.string().required('Email required'),
@@ -38,6 +40,7 @@ const Register: FC = () => {
     resolver: yupResolver(schema),
     mode: 'onBlur',
   })
+  useToastLimit()
   const navigate = useNavigate()
   const { isLoggedIn } = userStore()
   useEffect(() => {
@@ -48,8 +51,13 @@ const Register: FC = () => {
     try {
       await api.post('/register', input)
       navigate('/login', { state: { isRegister: true } })
-    } catch (err) {
-      toast.error('Error while registering', errorToastOptions)
+    } catch (error) {
+      const err = error as AxiosError
+      if (err.response?.status === 409) {
+        toast.error('Email already exists!', userErrorToastOptions)
+      } else {
+        toast.error('Something when wrong', appErrorToastOptions)
+      }
     }
   }
   return (

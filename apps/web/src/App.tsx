@@ -13,7 +13,7 @@ import { useSocket } from './hooks'
 import userStore from './store/userStore'
 import { PrivateRoute } from './routes'
 import api from './axios'
-import { errorToastOptions } from './utils'
+import { userErrorToastOptions } from './utils'
 
 dayjs.extend(isToday)
 dayjs.extend(isYesterday)
@@ -38,7 +38,7 @@ const App: FC = () => {
       await api.delete('/logout')
       logout()
     } catch (err) {
-      toast.error('Failed to logout. Plese try again', errorToastOptions)
+      toast.error('Failed to logout. Please try again', userErrorToastOptions)
     }
   }
 
