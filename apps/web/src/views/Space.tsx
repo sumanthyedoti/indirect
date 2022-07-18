@@ -1,5 +1,5 @@
 import { useState, useEffect, memo, FC } from 'react'
-import { toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 
 import {
   MessageInput,
@@ -35,9 +35,9 @@ const Space: FC = () => {
       setMessages(data.data)
     } catch (err) {
       console.log(err)
-      toast('Error fetching messages', {
+      toast.error('Error fetching messages', {
         ...errorToastOptions,
-        toastId: 'get-messages-error',
+        id: 'get-messages-error',
       })
     }
   }
@@ -49,9 +49,9 @@ const Space: FC = () => {
       })
     } catch (err) {
       console.log(err)
-      toast('Error sending messages', {
+      toast.error('Error sending message', {
         ...errorToastOptions,
-        toastId: 'post-message-error',
+        id: 'post-messages-error',
       })
     }
   }

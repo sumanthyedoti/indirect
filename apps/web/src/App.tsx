@@ -1,6 +1,6 @@
 import { useEffect, FC } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 import dayjs from 'dayjs'
 import isToday from 'dayjs/plugin/isToday'
 import isYesterday from 'dayjs/plugin/isYesterday'
@@ -38,10 +38,7 @@ const App: FC = () => {
       await api.delete('/logout')
       logout()
     } catch (err) {
-      toast('Failed to logout. Plese try again', {
-        ...errorToastOptions,
-        toastId: 'logout-error',
-      })
+      toast.error('Failed to logout. Plese try again', errorToastOptions)
     }
   }
 

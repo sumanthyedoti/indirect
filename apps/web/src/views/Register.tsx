@@ -2,7 +2,7 @@ import { useEffect, FC } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { toast } from 'react-toastify'
+import toast from 'react-hot-toast'
 import * as yup from 'yup'
 
 import { AuthForm, Input, Button } from '../components/atoms'
@@ -49,10 +49,7 @@ const Register: FC = () => {
       await api.post('/register', input)
       navigate('/login', { state: { isRegister: true } })
     } catch (err) {
-      toast('Error while registering', {
-        ...errorToastOptions,
-        toastId: 'register-error',
-      })
+      toast.error('Error while registering', errorToastOptions)
     }
   }
   return (

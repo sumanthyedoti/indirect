@@ -10,6 +10,7 @@ import { AuthForm, Input, Button } from '../components/atoms'
 import { FormInput } from '../components/molecules'
 import userStore from '../store/userStore'
 import api from '../axios'
+import { errorToastOptions } from '../utils'
 import { useToastLimit } from '../hooks'
 
 const schema = yup.object().shape({
@@ -51,9 +52,9 @@ const Login: FC = () => {
     } catch (error) {
       const err = error as AxiosError
       if (err.response?.status === 401) {
-        toast.error('Email/password invalid!')
+        toast.error('Email/password invalid!', errorToastOptions)
       } else {
-        toast.error('Something went wrong. Please try again')
+        toast.error('Something went wrong. Please try again', errorToastOptions)
       }
     }
   }
