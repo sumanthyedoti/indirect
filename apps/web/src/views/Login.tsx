@@ -1,5 +1,7 @@
 import { useEffect, FC } from 'react'
 import { useNavigate, Link, useLocation } from 'react-router-dom'
+import toast from 'react-hot-toast'
+import { AxiosError } from 'axios'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -41,8 +43,17 @@ const Login: FC = () => {
     if (isLoggedIn) navigate('/')
   }, [isLoggedIn])
   const onSubmit = async (input: FormInputs) => {
-    const { data } = await api.post('/login', input)
-    login(data)
+    try {
+      const { data } = await api.post('/login', input)
+      login(data)
+    } catch (error) {
+      const err = error as AxiosError
+      if (err.response?.status === 401) {
+        toast.error('Email/password invlid!')
+      } else {
+        toast.error('Something went wrong. Please try again')
+      }
+    }
   }
 
   return (

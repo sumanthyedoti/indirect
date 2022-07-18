@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
+import { Toaster } from 'react-hot-toast'
 import { ToastContainer } from 'react-toastify'
 import { BrowserRouter } from 'react-router-dom'
 import { QueryClientProvider, QueryClient } from 'react-query'
@@ -18,6 +19,7 @@ root.render(
       <QueryClientProvider client={queryClient}>
         <App />
         <ToastContainer />
+        <Toaster />
         <ReactQueryDevtools />
       </QueryClientProvider>
     </BrowserRouter>

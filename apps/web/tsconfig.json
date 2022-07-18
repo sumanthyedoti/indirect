@@ -19,6 +19,7 @@
     "declaration": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
+    "useUnknownInCatchVariables": false,
     "isolatedModules": true,
     "resolveJsonModule": true,
     "esModuleInterop": false,
