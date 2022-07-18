@@ -10,6 +10,7 @@ import { AuthForm, Input, Button } from '../components/atoms'
 import { FormInput } from '../components/molecules'
 import userStore from '../store/userStore'
 import api from '../axios'
+import { useToastLimit } from '../hooks'
 
 const schema = yup.object().shape({
   email: yup.string().email('Invalid Email').required('Email required!'),
@@ -26,6 +27,7 @@ interface FormInputs {
 const Login: FC = () => {
   const navigate = useNavigate()
   const location = useLocation()
+  useToastLimit()
   const locationState = location.state as { isRegister: boolean }
 
   const login = userStore((store) => store.login)
@@ -49,7 +51,7 @@ const Login: FC = () => {
     } catch (error) {
       const err = error as AxiosError
       if (err.response?.status === 401) {
-        toast.error('Email/password invlid!')
+        toast.error('Email/password invalid!')
       } else {
         toast.error('Something went wrong. Please try again')
       }
