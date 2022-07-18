@@ -9,59 +9,6 @@
   .toast-bottom-enter {
     animation: toast-bottom-enter 0.2s ease-out both;
   }
-  @keyframes toast-bottom-enter {
-    0% {
-      opacity: 0.3;
-      transform: translateY(2rem);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0rem);
-    }
-  }
-  .toast-botttom-exit {
-    animation: toast-bottom-exit 0.2s ease-out both;
-  }
-  @keyframes toast-bottom-exit {
-    0% {
-      opacity: 1;
-      transform: translateY(0rem);
-    }
-    100% {
-      opacity: 0.3;
-      transform: translateY(2rem);
-    }
-  }
-  .toast-top-enter {
-    animation: toast-enter 0.2s ease-out both;
-  }
-  @keyframes toast-top-enter {
-    0% {
-      opacity: 0.3;
-      transform: translateY(-2rem);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0rem);
-    }
-  }
-  .toast-top-exit {
-    animation: toast-exit 0.2s ease-out both;
-  }
-  @keyframes toast-top-exit {
-    0% {
-      opacity: 1;
-      transform: translateY(0rem);
-    }
-    100% {
-      opacity: 0.3;
-      transform: translateY(-2rem);
-    }
-  }
-  /* icons */
-  .icon-log-out {
-    @apply hover:stroke-red-600;
-  }
   .message-date {
     &::before {
       position: absolute;
@@ -74,6 +21,10 @@
       top: 49%;
       @apply bg-gray-500;
     }
+  }
+  /* icons */
+  .icon-log-out {
+    @apply hover:stroke-red-600;
   }
 }
 
