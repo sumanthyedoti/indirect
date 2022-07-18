@@ -62,6 +62,19 @@
   .icon-log-out {
     @apply hover:stroke-red-600;
   }
+  .message-date {
+    &::before {
+      position: absolute;
+      z-index: 0;
+      content: '';
+      height: 1px;
+      width: 100%;
+      right: 0;
+      left: 0;
+      top: 49%;
+      @apply bg-gray-500;
+    }
+  }
 }
 
 @tailwind utilities;

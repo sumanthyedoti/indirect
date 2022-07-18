@@ -15,20 +15,17 @@ const Message: FC<MessageProps> = ({ senderName, message, createdAt }) => {
     'text-sky-300': senderName,
     'text-stone-400': !senderName,
   })
-  const getDate = () => {
-    const datetime = dayjs(createdAt)
-    const time = datetime.format('HH:mm')
-    if (datetime.isYesterday()) return 'Yesterday, ' + time
-    if (datetime.isToday()) return 'Today, ' + time
-    return datetime.format('DD/MM/YY, HH:mm')
-  }
+  const time = dayjs(createdAt)
   return (
     <section className="flex flex-col my-3">
       <p>
         <b className={senderClassNames}>{senderName || 'Unknow User'}</b>
-        <span className="pl-2 text-xs font-light text-neutral-400">
-          {getDate()}
-        </span>
+        <time
+          dateTime={time.format('HH:mm')}
+          className="pl-2 text-xs font-light text-neutral-400"
+        >
+          {time.format('hh:mm a')}
+        </time>
       </p>
       <p className="leading-5">{message.text}</p>
     </section>

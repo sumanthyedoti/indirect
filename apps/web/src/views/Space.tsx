@@ -8,6 +8,7 @@ import {
 } from '../components/molecules'
 import userStore from '../store/userStore'
 import api from '../axios'
+import { MessageDate } from '../components/atoms'
 import { useQueryUsers } from '../queries'
 import useSocket from '../hooks/useSocket'
 import T from '../types.d'
@@ -56,6 +57,8 @@ const Space: FC = () => {
     }
   }
   if (!isSuccess) return null
+  // console.log(messages)
+
   return (
     <div
       className={`
@@ -65,15 +68,27 @@ const Space: FC = () => {
         shadow-xl shadow-slate-700/60
         `}
     >
+      {messages[1] && <MessageDate timestamp={messages[1].created_at} />}
       <MessagesContainer>
-        {messages.map((m) => {
+        {messages.map((m, i) => {
+          const currentDate = new Date(m.created_at).getDate()
+          const nextDate = messages[i + 1]
+            ? new Date(messages[i + 1].created_at).getDate()
+            : currentDate
+          // console.log({ m })
+
           return (
-            <Message
-              key={m.id}
-              createdAt={m.created_at}
-              senderName={user && users[m.sender_id]?.fullname}
-              message={m}
-            />
+            <>
+              {currentDate !== nextDate && (
+                <MessageDate timestamp={messages[i + 1].created_at} />
+              )}
+              <Message
+                key={m.id}
+                createdAt={m.created_at}
+                senderName={user && users[m.sender_id]?.fullname}
+                message={m}
+              />
+            </>
           )
         })}
       </MessagesContainer>
