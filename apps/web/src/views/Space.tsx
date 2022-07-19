@@ -1,10 +1,10 @@
-import { useState, useEffect, useRef, memo, FC } from 'react'
+import { useState, useEffect, memo, FC } from 'react'
 import toast from 'react-hot-toast'
 
-import { MessageInput, MessagesContainer } from '../components/molecules'
+import { MessageInput } from '../components/molecules'
+import { ChannelMessages } from '../components'
 import userStore from '../store/userStore'
 import api from '../axios'
-import { MessagesOfADay } from '../components/organisms'
 import useSocket from '../hooks/useSocket'
 import T from '../types.d'
 import { appErrorToastOptions } from '../utils'
@@ -12,7 +12,6 @@ import { appErrorToastOptions } from '../utils'
 const Space: FC = () => {
   const { user } = userStore()
   const socket = useSocket()
-  const messagesContainerRef = useRef<HTMLDivElement>(null)
   const [messages, setMessages] = useState<T.Message[]>([])
   useEffect(() => {
     socket.on('message_received', (msg) => {
@@ -52,8 +51,6 @@ const Space: FC = () => {
       })
     }
   }
-  let messagesOfADay: T.Message[] = []
-  let isFirstDay = true
   return (
     <div
       className={`
@@ -63,28 +60,7 @@ const Space: FC = () => {
         shadow-xl shadow-slate-700/60
         `}
     >
-      <MessagesContainer ref={messagesContainerRef}>
-        {messages.map((m, i) => {
-          const currentDate = new Date(m.created_at).getDate()
-          const nextDate = new Date(messages[i + 1]?.created_at).getDate()
-          if (currentDate !== nextDate) {
-            messagesOfADay.push(m)
-            const Messages = (
-              <MessagesOfADay
-                containerRef={messagesContainerRef}
-                isFirstDay={isFirstDay}
-                messages={messagesOfADay}
-              />
-            )
-            isFirstDay = false
-            messagesOfADay = []
-            return Messages
-          } else {
-            messagesOfADay.push(m)
-            return null
-          }
-        })}
-      </MessagesContainer>
+      <ChannelMessages messages={messages} />
       <MessageInput className="-ml-1 -mr-1" onSubmit={onMessageSubmit} />
     </div>
   )
