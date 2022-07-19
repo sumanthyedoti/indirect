@@ -80,6 +80,7 @@ const Space: FC = () => {
             <>
               <Message
                 key={m.id}
+                className={i === 0 ? 'mt-auto' : ''}
                 createdAt={m.created_at}
                 senderName={user && users[m.sender_id]?.fullname}
                 message={m}

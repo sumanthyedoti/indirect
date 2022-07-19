@@ -8,16 +8,22 @@ interface MessageProps {
   senderName: string | null
   createdAt: Date
   message: T.Message
+  className?: string
 }
 
-const Message: FC<MessageProps> = ({ senderName, message, createdAt }) => {
+const Message: FC<MessageProps> = ({
+  senderName,
+  message,
+  createdAt,
+  className,
+}) => {
   const senderClassNames = classnames('text-sm font-medium', {
     'text-sky-300': senderName,
     'text-stone-400': !senderName,
   })
   const time = dayjs(createdAt)
   return (
-    <section className="flex flex-col my-3">
+    <section className={classnames('flex flex-col my-3', className)}>
       <p>
         <b className={senderClassNames}>{senderName || 'Unknow User'}</b>
         <time
