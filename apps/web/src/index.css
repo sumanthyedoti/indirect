@@ -9,18 +9,9 @@
   .toast-bottom-enter {
     animation: toast-bottom-enter 0.2s ease-out both;
   }
-  .message-date {
-    &::before {
-      position: absolute;
-      z-index: 0;
-      content: '';
-      height: 1px;
-      width: 100%;
-      right: 0;
-      left: 0;
-      top: 49%;
-      @apply bg-gray-600;
-    }
+  .messages-date {
+    margin-top: -12px;
+    @apply sticky top-0 z-10;
   }
   /* icons */
   .icon-log-out {

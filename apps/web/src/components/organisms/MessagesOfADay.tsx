@@ -7,7 +7,6 @@ import { Message } from '../molecules'
 import { useQueryUsers } from '../../queries'
 
 interface MessagedOfADayProps {
-  // isFirstDay: boolean
   messages: T.Message[]
 }
 
@@ -17,7 +16,7 @@ const MessagedOfADay: FC<MessagedOfADayProps> = ({ messages }) => {
 
   if (!isSuccess) return null
   return (
-    <div>
+    <div className="relative pb-2 mt-3 border-t border-gray-500">
       <MessageDate timestamp={messages[0].created_at} />
       {messages.map((m) => {
         return (
