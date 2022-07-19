@@ -6,8 +6,8 @@ export async function seed(knex: Knex): Promise<void> {
 
   // Inserts seed entries
   const query = knex('messages').insert([
-    { text: 'message from ysumanth', sender_id: 1 },
-    { text: 'message from sumanthy', sender_id: 2 },
+    { text: 'message 1', sender_id: 1, channel_id: 1 },
+    { text: 'message 2', sender_id: 2, channel_id: 1 },
   ])
   await query
 }

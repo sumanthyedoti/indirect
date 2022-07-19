@@ -5,23 +5,23 @@
 import { Knex } from 'knex'
 
 export async function up(knex: Knex): Promise<void> {
-  return knex.schema.hasTable('channel_members').then(function (exists) {
+  return knex.schema.hasTable('channel_users').then(function (exists) {
     if (!exists) {
-      const query = knex.schema.createTable('channel_members', (table) => {
+      const query = knex.schema.createTable('channel_users', (table) => {
         table.increments('id').unsigned().primary()
         table
           .integer('channel_id')
           .unsigned()
           .notNullable()
           .references('id')
-          .inTable('spaces')
+          .inTable('channels')
           .onDelete('CASCADE')
         table
           .integer('user_id')
           .unsigned()
           .notNullable()
           .references('id')
-          .inTable('spaces')
+          .inTable('users')
           .onDelete('SET NULL')
       })
       return query
@@ -30,5 +30,5 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-  return knex.schema.dropTable('channel_members')
+  return knex.schema.dropTable('channel_users')
 }

@@ -20,7 +20,7 @@ export async function up(knex: Knex): Promise<void> {
           .unsigned()
           .notNullable()
           .references('id')
-          .inTable('users')
+          .inTable('channels')
           .onDelete('CASCADE')
         table.text('text').nullable()
         table.text('is_files_attached').defaultTo(false)
