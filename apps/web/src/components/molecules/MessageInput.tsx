@@ -2,8 +2,13 @@ import React, { useState, FC } from 'react'
 
 interface MessageAreaProps {
   onSubmit?: (text: string) => void
+  className?: string
 }
-const MessageArea: FC<MessageAreaProps> = ({ onSubmit, ...props }) => {
+const MessageArea: FC<MessageAreaProps> = ({
+  onSubmit,
+  className,
+  ...props
+}) => {
   const [text, setText] = useState('')
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value)
@@ -14,7 +19,7 @@ const MessageArea: FC<MessageAreaProps> = ({ onSubmit, ...props }) => {
     setText('')
   }
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className={className}>
       <input
         {...props}
         onChange={handleInput}

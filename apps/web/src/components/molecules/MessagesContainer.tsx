@@ -15,7 +15,7 @@ const MessagesContainer: FC<Props> = ({ children }) => {
   return (
     <article
       ref={containerRef}
-      className={`h-full mb-2 overflow-y-auto
+      className={`h-full pb-2 overflow-y-auto
         flex flex-col
       `}
     >

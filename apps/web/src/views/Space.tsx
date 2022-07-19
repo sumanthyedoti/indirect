@@ -75,7 +75,7 @@ const Space: FC = () => {
           }
         })}
       </MessagesContainer>
-      <MessageInput onSubmit={onMessageSubmit} />
+      <MessageInput className="-ml-1 -mr-1" onSubmit={onMessageSubmit} />
     </div>
   )
 }
