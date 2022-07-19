@@ -1,4 +1,4 @@
-import { useState, useEffect, memo, FC } from 'react'
+import { useState, useEffect, useRef, memo, FC } from 'react'
 import toast from 'react-hot-toast'
 
 import { MessageInput, MessagesContainer } from '../components/molecules'
@@ -12,6 +12,7 @@ import { appErrorToastOptions } from '../utils'
 const Space: FC = () => {
   const { user } = userStore()
   const socket = useSocket()
+  const messagesContainerRef = useRef<HTMLDivElement>(null)
   const [messages, setMessages] = useState<T.Message[]>([])
   useEffect(() => {
     socket.on('message_received', (msg) => {
@@ -62,7 +63,7 @@ const Space: FC = () => {
         shadow-xl shadow-slate-700/60
         `}
     >
-      <MessagesContainer>
+      <MessagesContainer ref={messagesContainerRef}>
         {messages.map((m, i) => {
           const currentDate = new Date(m.created_at).getDate()
           const nextDate = new Date(messages[i + 1]?.created_at).getDate()
@@ -70,6 +71,7 @@ const Space: FC = () => {
             messagesOfADay.push(m)
             const Messages = (
               <MessagesOfADay
+                containerRef={messagesContainerRef}
                 isFirstDay={isFirstDay}
                 messages={messagesOfADay}
               />

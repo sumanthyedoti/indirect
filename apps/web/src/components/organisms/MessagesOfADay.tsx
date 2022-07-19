@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { useEffect, FC, RefObject } from 'react'
 
 import T from '../../types.d'
 import userStore from '../../store/userStore'
@@ -8,12 +8,23 @@ import { useQueryUsers } from '../../queries'
 
 interface MessagedOfADayProps {
   isFirstDay: boolean
+  containerRef: RefObject<HTMLDivElement>
   messages: T.Message[]
 }
 
-const MessagedOfADay: FC<MessagedOfADayProps> = ({ messages, isFirstDay }) => {
+const MessagedOfADay: FC<MessagedOfADayProps> = ({
+  messages,
+  isFirstDay,
+  containerRef,
+}) => {
   const { user } = userStore()
   const { data: users, isSuccess } = useQueryUsers()
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight
+    }
+  })
 
   if (!isSuccess) return null
   return (

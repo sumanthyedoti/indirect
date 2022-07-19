@@ -1,27 +1,22 @@
-import React, { useRef, useEffect, FC } from 'react'
+import React from 'react'
 
 interface Props {
   children: React.ReactNode
 }
 
-const MessagesContainer: FC<Props> = ({ children }) => {
-  const containerRef = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight
-    }
-  })
-
-  return (
-    <article
-      ref={containerRef}
-      className={`h-full pb-2 overflow-y-auto
+const MessagesContainer = React.forwardRef<HTMLDivElement, Props>(
+  ({ children }, ref) => {
+    return (
+      <article
+        ref={ref}
+        className={`h-full pb-2 overflow-y-auto
         flex flex-col
       `}
-    >
-      {children}
-    </article>
-  )
-}
-
+      >
+        {children}
+      </article>
+    )
+  }
+)
+MessagesContainer.displayName = 'MessagesContainer'
 export default MessagesContainer
