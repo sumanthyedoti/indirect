@@ -1,3 +1,7 @@
+/*
+ * create sessions table
+ */
+
 import { Knex } from 'knex'
 import fs from 'fs'
 import path from 'path'

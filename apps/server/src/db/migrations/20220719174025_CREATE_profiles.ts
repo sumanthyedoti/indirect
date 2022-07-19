@@ -1,5 +1,5 @@
 /*
- * create profiles table
+ * create profiles(space-users) table
  */
 
 import { Knex } from 'knex'
@@ -22,13 +22,13 @@ export async function up(knex: Knex): Promise<void> {
           .references('id')
           .inTable('users')
           .onDelete('CASCADE')
-        // table
-        //   .integer('space_id')
-        //   .unsigned()
-        //   .notNullable()
-        //   .references('id')
-        //   .inTable('spaces')
-        //   .onDelete('CASCADE')
+        table
+          .integer('space_id')
+          .unsigned()
+          .notNullable()
+          .references('id')
+          .inTable('spaces')
+          .onDelete('CASCADE')
         table.string('display_picture', 200).nullable()
         table.string('display_name', 40).nullable()
         table.string('status_emoji_id', 40).nullable()
