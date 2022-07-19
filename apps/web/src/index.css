@@ -19,7 +19,7 @@
       right: 0;
       left: 0;
       top: 49%;
-      @apply bg-gray-500;
+      @apply bg-gray-600;
     }
   }
   /* icons */

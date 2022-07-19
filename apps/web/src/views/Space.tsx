@@ -75,19 +75,18 @@ const Space: FC = () => {
           const nextDate = messages[i + 1]
             ? new Date(messages[i + 1].created_at).getDate()
             : currentDate
-          // console.log({ m })
 
           return (
             <>
-              {currentDate !== nextDate && (
-                <MessageDate timestamp={messages[i + 1].created_at} />
-              )}
               <Message
                 key={m.id}
                 createdAt={m.created_at}
                 senderName={user && users[m.sender_id]?.fullname}
                 message={m}
               />
+              {currentDate !== nextDate && (
+                <MessageDate timestamp={messages[i + 1].created_at} />
+              )}
             </>
           )
         })}

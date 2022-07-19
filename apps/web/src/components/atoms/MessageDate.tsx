@@ -11,8 +11,8 @@ const MessageDay: FC<MessageDayProps> = ({ timestamp }) => {
     <div className="relative message-date">
       <time
         className={`px-3 py-0.5 bg-slate-800 mx-auto block w-fit
-          border border-gray-500 rounded-full
-          relative z-10 shadow shadow-gray-600`}
+          text-xs text-gray-400
+          relative z-10`}
         dateTime={date.format('YYYY-MM-DD')}
       >
         {date.isToday()
