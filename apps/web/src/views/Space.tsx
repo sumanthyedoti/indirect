@@ -27,6 +27,7 @@ const Space: FC = () => {
   const fetchMessages = async () => {
     try {
       const { data } = await api.get('/messages')
+
       setMessages(data.data)
     } catch (err) {
       console.log(err)
@@ -51,6 +52,7 @@ const Space: FC = () => {
     }
   }
   let messagesOfADay: T.Message[] = []
+  let isFirstDay = true
   return (
     <div
       className={`
@@ -66,9 +68,15 @@ const Space: FC = () => {
           const nextDate = new Date(messages[i + 1]?.created_at).getDate()
           if (currentDate !== nextDate) {
             messagesOfADay.push(m)
-            const messagesOfTheDay = messagesOfADay
+            const Messages = (
+              <MessagesOfADay
+                isFirstDay={isFirstDay}
+                messages={messagesOfADay}
+              />
+            )
+            isFirstDay = false
             messagesOfADay = []
-            return <MessagesOfADay messages={messagesOfTheDay} />
+            return Messages
           } else {
             messagesOfADay.push(m)
             return null
