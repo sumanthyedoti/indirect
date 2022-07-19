@@ -8,7 +8,7 @@ interface MessageProps {
   senderName: string | null
   createdAt: Date
   message: T.Message
-  className?: string
+  className?: string | null
 }
 
 const Message: FC<MessageProps> = ({

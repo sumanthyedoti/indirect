@@ -1,15 +1,10 @@
 import { useState, useEffect, memo, FC } from 'react'
 import toast from 'react-hot-toast'
 
-import {
-  MessageInput,
-  MessagesContainer,
-  Message,
-} from '../components/molecules'
+import { MessageInput, MessagesContainer } from '../components/molecules'
 import userStore from '../store/userStore'
 import api from '../axios'
-import { MessageDate } from '../components/atoms'
-import { useQueryUsers } from '../queries'
+import { MessagesOfADay } from '../components/organisms'
 import useSocket from '../hooks/useSocket'
 import T from '../types.d'
 import { appErrorToastOptions } from '../utils'
@@ -17,7 +12,6 @@ import { appErrorToastOptions } from '../utils'
 const Space: FC = () => {
   const { user } = userStore()
   const socket = useSocket()
-  const { data: users, isSuccess } = useQueryUsers()
   const [messages, setMessages] = useState<T.Message[]>([])
   useEffect(() => {
     socket.on('message_received', (msg) => {
@@ -56,9 +50,7 @@ const Space: FC = () => {
       })
     }
   }
-  if (!isSuccess) return null
-  // console.log(messages)
-
+  let messagesOfADay: T.Message[] = []
   return (
     <div
       className={`
@@ -68,28 +60,19 @@ const Space: FC = () => {
         shadow-xl shadow-slate-700/60
         `}
     >
-      {messages[1] && <MessageDate timestamp={messages[1].created_at} />}
       <MessagesContainer>
         {messages.map((m, i) => {
           const currentDate = new Date(m.created_at).getDate()
-          const nextDate = messages[i + 1]
-            ? new Date(messages[i + 1].created_at).getDate()
-            : currentDate
-
-          return (
-            <>
-              <Message
-                key={m.id}
-                className={i === 0 ? 'mt-auto' : ''}
-                createdAt={m.created_at}
-                senderName={user && users[m.sender_id]?.fullname}
-                message={m}
-              />
-              {currentDate !== nextDate && (
-                <MessageDate timestamp={messages[i + 1].created_at} />
-              )}
-            </>
-          )
+          const nextDate = new Date(messages[i + 1]?.created_at).getDate()
+          if (currentDate !== nextDate) {
+            messagesOfADay.push(m)
+            const messagesOfTheDay = messagesOfADay
+            messagesOfADay = []
+            return <MessagesOfADay messages={messagesOfTheDay} />
+          } else {
+            messagesOfADay.push(m)
+            return null
+          }
         })}
       </MessagesContainer>
       <MessageInput onSubmit={onMessageSubmit} />
