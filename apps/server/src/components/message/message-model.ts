@@ -1,5 +1,5 @@
+import T from '@libs/types/messages'
 import db from '../../db'
-import T from './message-types.d'
 
 async function createMessage(message: T.CreateMessage): Promise<T.Message> {
   const { text, sender_id } = message

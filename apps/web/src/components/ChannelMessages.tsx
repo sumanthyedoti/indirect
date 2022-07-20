@@ -1,6 +1,6 @@
 import { useRef, FC } from 'react'
 
-import T from '../types.d'
+import T from '@libs/types/messages'
 import { MessagesOfADay } from './organisms'
 import { MessagesContainer } from './molecules'
 

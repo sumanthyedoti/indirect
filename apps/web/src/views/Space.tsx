@@ -1,12 +1,12 @@
 import { useState, useEffect, memo, FC } from 'react'
 import toast from 'react-hot-toast'
 
+import T from '@libs/types/messages'
 import { MessageInput } from '../components/molecules'
 import { ChannelMessages } from '../components'
 import userStore from '../store/userStore'
 import api from '../axios'
 import useSocket from '../hooks/useSocket'
-import T from '../types.d'
 import { appErrorToastOptions } from '../utils'
 
 const Space: FC = () => {

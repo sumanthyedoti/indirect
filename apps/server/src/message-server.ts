@@ -1,5 +1,5 @@
 import { Server } from 'socket.io'
-import { Message } from './components/message/message-types'
+import { Message } from '@libs/types/messages'
 
 let io: Server | null = null
 

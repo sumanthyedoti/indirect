@@ -1,13 +1,13 @@
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
 
+import T from '@libs/types/users'
 import userModel from './user-model'
 import {
   TypedRequestParams,
   TypedRequestBody,
   TypedRequest,
 } from '../../types.d'
-import T from './user-types.d'
 import logger from '../../config/logger'
 
 async function registerUser(

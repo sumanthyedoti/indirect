@@ -1,5 +1,5 @@
+import T from '@libs/types/users'
 import db from '../../db'
-import T from './user-types.d'
 
 async function createUser(user: T.CreateUser): Promise<number> {
   const { email, fullname, password_hash } = user

@@ -1,5 +1,7 @@
-import ajv from '../../config/ajv'
 import { JSONSchemaType } from 'ajv'
+
+import ajv from '../../config/ajv'
+import { RegisterUser, LoginUser } from '@libs/types/users'
 
 export const DATA_LENGTH = Object.freeze({
   email: 100,
@@ -9,12 +11,6 @@ export const DATA_LENGTH = Object.freeze({
   googleId: 100,
 })
 
-interface RegisterUser {
-  email: string
-  fullname: string
-  password: string
-  google_id: string
-}
 const registerUserScheme: JSONSchemaType<RegisterUser> = {
   type: 'object',
   properties: {
@@ -33,10 +29,6 @@ const registerUserScheme: JSONSchemaType<RegisterUser> = {
 
 export const createUserSchemaValidator = ajv.compile(registerUserScheme)
 
-interface LoginUser {
-  email: string
-  password: string
-}
 const loginUserScheme: JSONSchemaType<LoginUser> = {
   type: 'object',
   properties: {

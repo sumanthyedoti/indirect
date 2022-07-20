@@ -1,14 +1,12 @@
-import ajv from '../../config/ajv'
 import { JSONSchemaType } from 'ajv'
+
+import ajv from '../../config/ajv'
+import { CreateMessage } from '@libs/types/messages'
 
 export const DATA_LENGTH = Object.freeze({
   text: 3000,
 })
 
-interface CreateMessage {
-  text: string
-  sender_id: number
-}
 const createMessageScheme: JSONSchemaType<CreateMessage> = {
   type: 'object',
   properties: {

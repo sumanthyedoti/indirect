@@ -1,6 +1,6 @@
 import { useEffect, FC, RefObject } from 'react'
 
-import T from '../../types.d'
+import T from '@libs/types/messages'
 import userStore from '../../store/userStore'
 import { MessageDate } from '../atoms'
 import { Message } from '../molecules'
