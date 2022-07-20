@@ -23,6 +23,7 @@ const ChannelMessages: FC<ChannelMessagesProps> = ({ messages }) => {
           messagesOfADay.push(m)
           const Messages = (
             <MessagesOfADay
+              key={m.created_at.toString()}
               containerRef={messagesContainerRef}
               isFirstDay={isFirstDay}
               messages={messagesOfADay}

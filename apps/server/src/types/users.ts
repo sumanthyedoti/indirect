@@ -31,9 +31,11 @@ export interface UpdateUser extends Omit<Info, 'email'> {
 }
 
 export enum Constraints {
-  email = 100,
+  emailMin = 6,
+  emailMax = 100,
   fullname = 40,
   quote = 100,
-  password = 40,
+  passwordMin = 6,
+  passwordMax = 40,
   googleId = 100,
 }

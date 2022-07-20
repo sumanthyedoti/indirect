@@ -9,6 +9,7 @@
     "pre-commit": "lint-staged",
     "start": "webpack serve --env env=dev",
     "build": "webpack --env env=prod",
+    "clean": "rm -rf ./dist",
     "serve": "serve ./dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
