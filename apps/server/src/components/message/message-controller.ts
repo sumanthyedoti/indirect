@@ -1,6 +1,6 @@
 import { Response } from 'express'
 
-import T from '@libs/types/messages'
+import * as T from '@api-types/messages'
 import messageModel from './message-model'
 import { TypedRequestBody } from '../../types.d'
 import { broadcastMessage } from '../../message-server'

@@ -2,7 +2,7 @@ import { FC } from 'react'
 import dayjs from 'dayjs'
 import classnames from 'classnames'
 
-import T from '@libs/types/messages'
+import * as T from '@api-types/messages'
 
 interface MessageProps {
   senderName: string | null

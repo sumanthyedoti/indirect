@@ -1,4 +1,4 @@
-import { Response, Request, NextFunction } from 'express'
+import { Response, Request, NextFunction, RequestHandler } from 'express'
 import { ValidateFunction } from 'ajv'
 import connectPgSession from 'connect-pg-simple'
 import session from 'express-session'
@@ -7,7 +7,7 @@ import { TypedRequestParams, SocketRequest } from './types'
 import { sessionPool } from './db'
 
 const pgSession = connectPgSession(session)
-export const expressSessionMiddleware = session({
+export const expressSessionMiddleware: RequestHandler = session({
   // @ts-ignore
   secret: process.env.COOKIE_SECRET,
   store: new pgSession({

@@ -1,4 +1,4 @@
-import T from '@libs/types/messages'
+import * as T from '@api-types/messages'
 import db from '../../db'
 
 async function createMessage(message: T.CreateMessage): Promise<T.Message> {

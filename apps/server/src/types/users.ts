@@ -1,0 +1,39 @@
+interface Info {
+  email: string
+  fullname: string
+}
+
+export interface CreateUser extends Info {
+  password_hash: string
+}
+
+export interface RegisterUser extends Info {
+  password: string
+  google_id: string
+}
+
+export interface LoginUser {
+  email: string
+  password: string
+}
+
+export interface GetUser extends Info {
+  id: number
+}
+
+export interface GetUserByEmail extends Info {
+  id: number
+  password_hash: string
+}
+
+export interface UpdateUser extends Omit<Info, 'email'> {
+  id: number
+}
+
+export enum Constraints {
+  email = 100,
+  fullname = 40,
+  quote = 100,
+  password = 40,
+  googleId = 100,
+}

@@ -1,3 +1,4 @@
+require('module-alias/register')
 import express, { Application } from 'express'
 import dotenv from 'dotenv'
 import { createServer as createHTTPServer } from 'http'
@@ -9,6 +10,7 @@ import passport from 'passport'
 import router from './router'
 import userRouter from './components/user/user-router'
 import messageRouter from './components/message/message-router'
+import spaceRouter from './components/spaces/space-router'
 import passportConfig from './config/passport'
 import { expressSessionMiddleware, socketAuthentication } from './middlewares'
 import messageServer from './message-server'
@@ -48,6 +50,7 @@ passportConfig(passport)
 app.use(router)
 app.use('/users', userRouter)
 app.use('/messages', messageRouter)
+app.use('/spaces', spaceRouter)
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at ${port}`)

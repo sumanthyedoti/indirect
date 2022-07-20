@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
+  "files": [
+    "src",
+    "types"
+  ],
+  "_moduleAliases": {
+    "@api-types": "dist/types"
+  },
   "scripts": {
     "lint": "eslint \"./src/**/*.{js,ts,json}\"",
     "format": "prettier --write \"./src/**/*.{js,ts,json,md}\"",
@@ -12,8 +19,8 @@
     "knex:rollback": "env $(cat .env) knex migrate:rollback --knexfile ./src/db/knexfile.ts",
     "knex:seed": "env $(cat .env) knex seed:run --knexfile ./src/db/knexfile.ts",
     "build": "tsc",
-    "start": "tsc && node dist/index.js",
-    "dev": "ts-node-dev ./src/index.ts",
+    "serve": "tsc && node dist/index.js",
+    "dev": "ts-node-dev -r tsconfig-paths/register ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {
@@ -30,6 +37,7 @@
     "@types/connect-pg-simple": "^7.0.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
+    "@types/express-serve-static-core": "^4.17.29",
     "@types/express-session": "^1.17.4",
     "@types/node": "^18.0.0",
     "@types/passport": "^1.0.9",
@@ -46,10 +54,10 @@
     "prettier": "^2.7.1",
     "ts-node": "^10.8.2",
     "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.0.0",
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "@libs/types": "workspace:^1.0.0",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
     "bcrypt": "^5.0.1",

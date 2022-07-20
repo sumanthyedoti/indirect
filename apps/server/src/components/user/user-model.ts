@@ -1,4 +1,4 @@
-import T from '@libs/types/users'
+import * as T from '@api-types/users'
 import db from '../../db'
 
 async function createUser(user: T.CreateUser): Promise<number> {

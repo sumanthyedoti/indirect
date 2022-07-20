@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query'
 import api from './axios'
-import { GetUser } from '@libs/types/users'
+import { GetUser } from '@api-types/users'
 
 function useQueryUsers() {
   return useQuery<GetUser[]>('users', async () => {

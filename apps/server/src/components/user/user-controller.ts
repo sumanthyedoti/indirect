@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
 
-import T from '@libs/types/users'
+import * as T from '@api-types/users'
 import userModel from './user-model'
 import {
   TypedRequestParams,

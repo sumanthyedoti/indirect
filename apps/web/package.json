@@ -9,6 +9,7 @@
     "pre-commit": "lint-staged",
     "start": "webpack serve --env env=dev",
     "build": "webpack --env env=prod",
+    "serve": "serve ./dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {
@@ -74,6 +75,7 @@
     "prettier": "^2.7.1",
     "react-refresh": "^0.14.0",
     "sass-loader": "^13.0.0",
+    "serve": "^14.0.1",
     "style-loader": "^3.3.1",
     "tailwindcss": "^3.1.4",
     "ts-loader": "^9.3.1",

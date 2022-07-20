@@ -1,6 +1,6 @@
 import { useEffect, FC, RefObject } from 'react'
 
-import T from '@libs/types/messages'
+import * as T from '@api-types/messages'
 import userStore from '../../store/userStore'
 import { MessageDate } from '../atoms'
 import { Message } from '../molecules'

@@ -1,7 +1,7 @@
 import { useState, useEffect, memo, FC } from 'react'
 import toast from 'react-hot-toast'
 
-import T from '@libs/types/messages'
+import * as T from '@api-types/messages'
 import { MessageInput } from '../components/molecules'
 import { ChannelMessages } from '../components'
 import userStore from '../store/userStore'

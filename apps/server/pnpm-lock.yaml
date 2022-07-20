@@ -1,11 +1,11 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@libs/types': workspace:^1.0.0
   '@types/bcrypt': ^5.0.0
   '@types/connect-pg-simple': ^7.0.0
   '@types/cors': ^2.8.12
   '@types/express': ^4.17.13
+  '@types/express-serve-static-core': ^4.17.29
   '@types/express-session': ^1.17.4
   '@types/node': ^18.0.0
   '@types/passport': ^1.0.9
@@ -29,6 +29,7 @@ specifiers:
   helmet: ^5.1.0
   knex: ^2.1.0
   lint-staged: ^13.0.3
+  module-alias: ^2.2.2
   passport: ^0.6.0
   passport-google-oauth20: ^2.0.0
   passport-local: ^1.0.0
@@ -37,12 +38,12 @@ specifiers:
   socket.io: ^4.5.1
   ts-node: ^10.8.2
   ts-node-dev: ^2.0.0
+  tsconfig-paths: ^4.0.0
   typescript: ^4.7.4
   uuid: ^8.3.2
   winston: ^3.8.1
 
 dependencies:
-  '@libs/types': link:../../libs/types
   ajv: 8.11.0
   ajv-formats: 2.1.1
   bcrypt: 5.0.1
@@ -66,6 +67,7 @@ devDependencies:
   '@types/connect-pg-simple': 7.0.0
   '@types/cors': 2.8.12
   '@types/express': 4.17.13
+  '@types/express-serve-static-core': 4.17.29
   '@types/express-session': 1.17.4
   '@types/node': 18.0.0
   '@types/passport': 1.0.9
@@ -79,9 +81,11 @@ devDependencies:
   eslint-config-prettier: 8.5.0_eslint@8.18.0
   eslint-plugin-prettier: 4.1.0_xu6ewijrtliw5q5lksq5uixwby
   lint-staged: 13.0.3
+  module-alias: 2.2.2
   prettier: 2.7.1
   ts-node: 10.8.2_qiyc72axg2v44xl4yovan2v55u
   ts-node-dev: 2.0.0_qiyc72axg2v44xl4yovan2v55u
+  tsconfig-paths: 4.0.0
   typescript: 4.7.4
 
 packages:
@@ -1615,6 +1619,12 @@ packages:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
     dev: true
 
+  /json5/2.2.1:
+    resolution: {integrity: sha512-1hqLFMSrGHRHxav9q9gNjJ5EXznIxGVO09xQRrwplcS8qs28pZ8s8hupZAmqDwZUmVZ2Qb2jnyPOWcDH8m8dlA==}
+    engines: {node: '>=6'}
+    hasBin: true
+    dev: true
+
   /knex/2.1.0_pg@8.7.3:
     resolution: {integrity: sha512-vVsnD6UJdSJy55TvCXfFF9syfwyXNxfE9mvr2hJL/4Obciy2EPGoqjDpgRSlMruHuPWDOeYAG25nyrGvU+jJog==}
     engines: {node: '>=12'}
@@ -1853,6 +1863,10 @@ packages:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
     engines: {node: '>=10'}
     hasBin: true
+
+  /module-alias/2.2.2:
+    resolution: {integrity: sha512-A/78XjoX2EmNvppVWEhM2oGk3x4lLxnkEA4jTbaK97QKSDjkIoOsKQlfylt/d3kKKi596Qy3NP5XrXJ6fZIC9Q==}
+    dev: true
 
   /ms/2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
@@ -2679,6 +2693,14 @@ packages:
       typescript: 4.7.4
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
+    dev: true
+
+  /tsconfig-paths/4.0.0:
+    resolution: {integrity: sha512-SLBg2GBKlR6bVtMgJJlud/o3waplKtL7skmLkExomIiaAtLGtVsoXIqP3SYdjbcH9lq/KVv7pMZeCBpLYOit6Q==}
+    dependencies:
+      json5: 2.2.1
+      minimist: 1.2.6
+      strip-bom: 3.0.0
     dev: true
 
   /tsconfig/7.0.0:
