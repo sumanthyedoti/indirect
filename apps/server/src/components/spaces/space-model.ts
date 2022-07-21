@@ -29,6 +29,17 @@ async function getSpaceChannels(id: number): Promise<ChannelT[]> {
   return result
 }
 
+async function getSpaceUsers(id: number): Promise<T.SpaceUser[]> {
+  console.log({ id })
+  const result: T.SpaceUser[] = await db.raw(`
+    SELECT p.*, u.email, u.fullname
+      FROM profiles as p JOIN users as u
+      ON p.user_id = u.id
+      WHERE p.space_id = ${id}
+    `)
+  return result
+}
+
 async function updateSpace(id: number, space: T.UpdateSpace): Promise<number> {
   const spaceId: number = await db('spaces')
     .where({
@@ -55,6 +66,7 @@ export default {
   createSpace,
   getSpace,
   getSpaceChannels,
+  getSpaceUsers,
   updateSpace,
   deleteSpace,
 }

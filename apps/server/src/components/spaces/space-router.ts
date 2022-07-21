@@ -16,7 +16,13 @@ router.post(
 )
 router.get('/:id', validateIdParam, spaceController.getSpace)
 router.get('/:id/channels', validateIdParam, spaceController.getSpaceChannels)
-router.put('/:id', validateIdParam, spaceController.updateSpace)
+router.get('/:id/users', validateIdParam, spaceController.getSpaceUsers)
+router.put(
+  '/:id',
+  // @ts-ignore
+  [validateIdParam, validateSchema(createSpaceSchemaValidator)],
+  spaceController.updateSpace
+)
 router.delete('/:id', validateIdParam, spaceController.deleteSpace)
 
 export default router
