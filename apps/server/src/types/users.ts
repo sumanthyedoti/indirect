@@ -26,8 +26,8 @@ export interface GetUserByEmail extends Info {
   password_hash: string
 }
 
-export interface UpdateUser extends Omit<Info, 'email'> {
-  id: number
+export interface UpdateUser {
+  fullname: string
 }
 
 export enum Constraints {

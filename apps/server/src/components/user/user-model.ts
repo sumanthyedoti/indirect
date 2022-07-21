@@ -32,15 +32,15 @@ async function getUserByEmail(email: string): Promise<T.GetUserByEmail> {
   return users[0]
 }
 
-async function updateUser(user: T.UpdateUser): Promise<number> {
-  const id: number = await db('users')
+async function updateUser(id: number, user: T.UpdateUser): Promise<number> {
+  const userId: number = await db('users')
     .where({
-      id: user.id,
+      id,
     })
     .update({
       fullname: user.fullname,
     })
-  return id
+  return userId
 }
 
 async function deleteUser(id: number): Promise<number> {

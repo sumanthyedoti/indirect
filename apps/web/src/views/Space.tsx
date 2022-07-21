@@ -38,6 +38,8 @@ const Space: FC = () => {
     }
   }
   const onMessageSubmit = async (text: string) => {
+    console.log({ text })
+
     try {
       await api.post('/messages', {
         sender_id: user?.id,

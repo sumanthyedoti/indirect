@@ -1,16 +1,16 @@
 interface Info {
   name: string
-  tagline?: string
-  description?: string
+  tagline?: string | null
+  description?: string | null
 }
+
 export interface CreateSpace extends Info {}
 
-export interface Space {
+export interface Space extends Info {
   id: number
-  name: string
-  tagline?: string
-  description?: string
 }
+
+export interface UpdateSpace extends Info {}
 
 export enum Constraints {
   name = 60,

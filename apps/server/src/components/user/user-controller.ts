@@ -117,7 +117,7 @@ async function updateUser(
   try {
     const id = req.params.id
     const { fullname } = req.body
-    const result = await userModel.updateUser({ id, fullname })
+    const result = await userModel.updateUser(id, { fullname })
     if (!result) {
       res.status(404).json({ id, error: 'User not found' })
       return
