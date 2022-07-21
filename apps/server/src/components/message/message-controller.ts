@@ -20,7 +20,7 @@ async function createMessage(
       data: {
         id: message.id,
       },
-      message: 'Created user successfully!',
+      message: 'Created message successfully!',
     })
     broadcastMessage(message)
   } catch (err) {

@@ -43,12 +43,12 @@ async function updateSpace(id: number, space: T.UpdateSpace): Promise<number> {
 }
 
 async function deleteSpace(id: number): Promise<number> {
-  const user = await db('spaces')
+  const channel = await db('spaces')
     .where({
       id,
     })
     .del()
-  return user
+  return channel
 }
 
 export default {

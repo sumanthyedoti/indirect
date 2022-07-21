@@ -11,6 +11,8 @@ import router from './router'
 import userRouter from './components/user/user-router'
 import messageRouter from './components/message/message-router'
 import spaceRouter from './components/spaces/space-router'
+import channelRouter from './components/channels/channel-router'
+
 import passportConfig from './config/passport'
 import { expressSessionMiddleware, socketAuthentication } from './middlewares'
 import messageServer from './message-server'
@@ -51,6 +53,7 @@ app.use(router)
 app.use('/users', userRouter)
 app.use('/messages', messageRouter)
 app.use('/spaces', spaceRouter)
+app.use('/channels', channelRouter)
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at ${port}`)

@@ -14,7 +14,6 @@ async function createSpace(
   res: Response
 ) {
   const { name, tagline, description } = req.body
-  console.log(name)
 
   try {
     const space = await spaceModel.createSpace({

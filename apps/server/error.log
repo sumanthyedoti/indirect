@@ -12,3 +12,10 @@
 {"code":"42P01","file":"parse_relation.c","length":112,"level":"error","line":"3553","name":"error","position":"30","routine":"errorMissingRTE","service":"user-service","severity":"ERROR"}
 {"code":"42P01","file":"parse_relation.c","length":112,"level":"error","line":"3553","name":"error","position":"30","routine":"errorMissingRTE","service":"user-service","severity":"ERROR"}
 {"code":"42P01","file":"parse_relation.c","length":112,"level":"error","line":"3553","name":"error","position":"30","routine":"errorMissingRTE","service":"user-service","severity":"ERROR"}
+{"level":"error","service":"user-service"}
+{"level":"error","service":"user-service"}
+{"level":"error","service":"user-service"}
+{"level":"error","service":"user-service"}
+{"level":"error","service":"user-service"}
+{"level":"error","service":"user-service"}
+{"code":"23502","column":"name","detail":"Failing row contains (3, 1, null, null, f, 2022-07-21 06:57:36.404891+00, 2022-07-21 06:57:36.404891+00).","file":"execMain.c","length":273,"level":"error","line":"1883","name":"error","routine":"ExecConstraints","schema":"public","service":"user-service","severity":"ERROR","table":"channels"}
