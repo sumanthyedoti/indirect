@@ -1,12 +1,18 @@
 import { FC } from 'react'
 
 // import api from '../axios'
+import userStore from '../store/userStore'
+import { useQueryChannels } from '../queries'
 
 interface SidePanelProps {
   dummy?: null
 }
 
 const SidePanel: FC<SidePanelProps> = () => {
+  const { spaceId } = userStore()
+  const { data: channels, isSuccess } = useQueryChannels(spaceId)
+  if (!isSuccess) return null
+
   return (
     <aside
       className={`w-1/4 md:w-1/5 h-full
@@ -15,6 +21,14 @@ const SidePanel: FC<SidePanelProps> = () => {
      `}
     >
       <h4>Channels</h4>
+      {channels?.map((c) => {
+        return (
+          <span key={c.id}>
+            <span className="text-neutral-400"># </span>
+            {c.name}
+          </span>
+        )
+      })}
     </aside>
   )
 }

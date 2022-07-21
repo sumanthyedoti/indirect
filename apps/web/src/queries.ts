@@ -1,6 +1,8 @@
 import { useQuery } from 'react-query'
-import api from './axios'
+
 import { SpaceUser } from '@api-types/spaces'
+import { Channel } from '@api-types/channels'
+import api from './axios'
 
 // const stateTime = (hrs: number) => hrs * 60 * 60 * 1000
 
@@ -18,7 +20,7 @@ function useQueryUsers(space_id: number) {
 }
 
 function useQueryChannels(space_id: number) {
-  return useQuery<SpaceUser[]>(
+  return useQuery<Channel[]>(
     ['channels', space_id],
     async () => {
       const { data } = await api.get(`/spaces/${space_id}/channels`)
