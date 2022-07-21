@@ -8,8 +8,18 @@ const createMessageScheme: JSONSchemaType<CreateMessage> = {
   properties: {
     text: { type: 'string', minLength: 1, maxLength: Constraints.text },
     sender_id: { type: 'number' },
+    channel_id: { type: 'number' },
+    personal_channel_id: { type: 'number' },
   },
   required: ['text', 'sender_id'],
+  oneOf: [
+    {
+      required: ['channel_id'],
+    },
+    {
+      required: ['personal_channel_id'],
+    },
+  ],
   // additionalProperties: false,
 }
 

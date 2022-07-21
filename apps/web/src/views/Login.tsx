@@ -80,7 +80,7 @@ const Login: FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <AuthForm onSubmit={handleSubmit(onSubmit)}>
+      <AuthForm autoComplete="on" onSubmit={handleSubmit(onSubmit)}>
         {isSessionExpired ? (
           <h1>Please log in again</h1>
         ) : (
@@ -95,7 +95,13 @@ const Login: FC = () => {
         <FormInput
           label="Password"
           id="password"
-          field={<Input {...register('password')} type="password" />}
+          field={
+            <Input
+              autoComplete="on"
+              {...register('password')}
+              type="password"
+            />
+          }
           error={errors.password?.message}
         />
         <Button className="w-full mt-5" type="submit" label="Login" />

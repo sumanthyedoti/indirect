@@ -1,13 +1,13 @@
 interface Info {
   text: string | null
   sender_id: number
+  channel_id: number | null
+  personal_channel_id: number | null
 }
 export interface CreateMessage extends Info {}
 
 export interface Message extends Info {
   id: number
-  channel_id: number | null
-  conversation_id: number | null
   created_at: Date
 }
 

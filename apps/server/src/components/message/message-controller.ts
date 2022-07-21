@@ -9,12 +9,20 @@ async function createMessage(
   req: TypedRequestBody<T.CreateMessage>,
   res: Response
 ) {
-  const { text, sender_id } = req.body
+  const {
+    text,
+    sender_id,
+    channel_id = null,
+    personal_channel_id = null,
+  } = req.body
+  console.log(req.body)
 
   try {
     const message: T.Message = await messageModel.createMessage({
       text,
       sender_id,
+      channel_id,
+      personal_channel_id,
     })
     res.status(201).json({
       data: {

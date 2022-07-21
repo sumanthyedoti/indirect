@@ -22,12 +22,13 @@ export type InputType =
 interface Props {
   type: InputType
   id?: string
+  autoComplete?: 'on' | 'off'
   placeholder?: string
   className?: string
 }
 
 const Input: FC<Props> = forwardRef<HTMLInputElement, Props>(
-  ({ type, id, placeholder, className, ...props }, ref) => {
+  ({ className, ...props }, ref) => {
     return (
       <input
         ref={ref}
@@ -37,9 +38,6 @@ const Input: FC<Props> = forwardRef<HTMLInputElement, Props>(
           rounded-md focus:ring ring-sky-500`,
           className,
         ])}
-        placeholder={placeholder}
-        id={id}
-        type={type}
         {...props}
       />
     )

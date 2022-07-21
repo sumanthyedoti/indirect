@@ -98,13 +98,25 @@ const Register: FC = () => {
         <FormInput
           label="Password"
           id="password"
-          field={<Input {...register('password')} type="password" />}
+          field={
+            <Input
+              autoComplete="off"
+              {...register('password')}
+              type="password"
+            />
+          }
           error={errors.password?.message}
         />
         <FormInput
           label="Confirm Password"
           id="confirm-password"
-          field={<Input {...register('confirmPassword')} type="password" />}
+          field={
+            <Input
+              autoComplete="off"
+              {...register('confirmPassword')}
+              type="password"
+            />
+          }
           error={errors.confirmPassword?.message}
         />
         <Button className="w-full mt-5" type="submit" label="Register" />
