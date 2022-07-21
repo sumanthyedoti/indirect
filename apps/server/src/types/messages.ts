@@ -6,6 +6,8 @@ export interface CreateMessage extends Info {}
 
 export interface Message extends Info {
   id: number
+  channel_id: number | null
+  conversation_id: number | null
   created_at: Date
 }
 

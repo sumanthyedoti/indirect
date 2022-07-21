@@ -25,7 +25,7 @@ async function getSpaceChannels(id: number): Promise<ChannelT[]> {
   const result: ChannelT[] = await db
     .select()
     .from<ChannelT>('channels')
-    .where({ id })
+    .where({ space_id: id })
   return result
 }
 

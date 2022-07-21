@@ -18,6 +18,11 @@ router.post(
   channelController.createChannel
 )
 router.get('/:id', validateIdParam, channelController.getChannel)
+router.get(
+  '/:id/messages',
+  validateIdParam,
+  channelController.getChannelMessages
+)
 router.put(
   '/:id',
   // @ts-ignore

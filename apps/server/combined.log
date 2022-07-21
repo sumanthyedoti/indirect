@@ -28,3 +28,5 @@
 {"code":"42601","file":"scan.l","length":90,"level":"error","line":"1176","name":"error","position":"18","routine":"scanner_yyerror","service":"user-service","severity":"ERROR"}
 {"code":"42601","file":"scan.l","length":99,"level":"error","line":"1176","name":"error","position":"25","routine":"scanner_yyerror","service":"user-service","severity":"ERROR"}
 {"code":"42601","file":"analyze.c","length":131,"level":"error","line":"2074","name":"error","position":"150","routine":"transformSetOperationTree","service":"user-service","severity":"ERROR"}
+{"code":"42703","file":"parse_relation.c","length":115,"level":"error","line":"3601","name":"error","position":"49","routine":"errorMissingColumn","service":"user-service","severity":"ERROR"}
+{"code":"42703","file":"parse_relation.c","length":115,"level":"error","line":"3601","name":"error","position":"49","routine":"errorMissingColumn","service":"user-service","severity":"ERROR"}

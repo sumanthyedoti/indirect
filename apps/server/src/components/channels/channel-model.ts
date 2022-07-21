@@ -1,4 +1,5 @@
 import * as T from '@api-types/channels'
+import { Message as MessageT } from '@api-types/messages'
 import db from '../../db'
 
 async function CreateChannel(channel: T.CreateChannel): Promise<T.Channel> {
@@ -16,6 +17,23 @@ async function CreateChannel(channel: T.CreateChannel): Promise<T.Channel> {
 async function getChannel(id: number): Promise<T.Channel> {
   const [channel]: T.Channel[] = await db('channels').select().where({ id })
   return channel
+}
+
+async function getChannelMessages(id: number): Promise<MessageT[]> {
+  const result: MessageT[] = await db
+    .select(
+      'id',
+      'text',
+      'sender_id',
+      'channel_id',
+      // 'conversation_id',
+      'created_at',
+      'is_edited',
+      'is_files_attached'
+    )
+    .from('messages')
+    .where({ channel_id: id })
+  return result
 }
 
 async function UpdateChannel(
@@ -46,6 +64,7 @@ async function deleteChannel(id: number): Promise<number> {
 export default {
   CreateChannel,
   getChannel,
+  getChannelMessages,
   UpdateChannel,
   deleteChannel,
 }

@@ -47,6 +47,26 @@ async function getChannel(
   }
 }
 
+async function getChannelMessages(
+  req: TypedRequestParams<{ id: number }>,
+  res: Response
+) {
+  try {
+    const id = req.params.id
+    const messages = await channelModel.getChannelMessages(id)
+    if (!messages) {
+      res.status(204).json({ id, error: 'No channels found for this space' })
+      return
+    }
+    res.status(200).json({
+      data: messages,
+    })
+  } catch (err) {
+    logger.error(err)
+    res.status(500).send('Something went wrong!')
+  }
+}
+
 async function UpdateChannel(
   req: TypedRequest<{ id: number }, T.UpdateChannel>,
   res: Response
@@ -95,6 +115,7 @@ async function deleteChannel(
 export default {
   createChannel,
   getChannel,
+  getChannelMessages,
   UpdateChannel,
   deleteChannel,
 }
