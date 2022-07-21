@@ -19,6 +19,7 @@ export async function up(knex: Knex): Promise<void> {
           .integer('channel_id')
           .unsigned()
           .notNullable()
+          .index()
           .references('id')
           .inTable('channels')
           .onDelete('CASCADE')

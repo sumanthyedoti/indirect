@@ -5,3 +5,10 @@
 {"level":"error","service":"user-service"}
 {"level":"error","service":"user-service"}
 {"code":"22P02","file":"numutils.c","length":146,"level":"error","line":"320","name":"error","routine":"pg_strtoint32","service":"user-service","severity":"ERROR","where":"unnamed portal parameter $1 = '...'"}
+{"code":"42P01","file":"parse_relation.c","length":112,"level":"error","line":"3553","name":"error","position":"30","routine":"errorMissingRTE","service":"user-service","severity":"ERROR"}
+{"code":"42P01","file":"parse_relation.c","length":112,"level":"error","line":"3553","name":"error","position":"30","routine":"errorMissingRTE","service":"user-service","severity":"ERROR"}
+{"code":"42P01","file":"parse_relation.c","length":112,"level":"error","line":"3553","name":"error","position":"30","routine":"errorMissingRTE","service":"user-service","severity":"ERROR"}
+{"code":"42P01","file":"parse_relation.c","length":112,"level":"error","line":"3553","name":"error","position":"30","routine":"errorMissingRTE","service":"user-service","severity":"ERROR"}
+{"code":"42P01","file":"parse_relation.c","length":112,"level":"error","line":"3553","name":"error","position":"30","routine":"errorMissingRTE","service":"user-service","severity":"ERROR"}
+{"code":"42P01","file":"parse_relation.c","length":112,"level":"error","line":"3553","name":"error","position":"30","routine":"errorMissingRTE","service":"user-service","severity":"ERROR"}
+{"code":"42P01","file":"parse_relation.c","length":112,"level":"error","line":"3553","name":"error","position":"30","routine":"errorMissingRTE","service":"user-service","severity":"ERROR"}

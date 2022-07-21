@@ -13,6 +13,7 @@ export async function up(knex: Knex): Promise<void> {
           .integer('space_id')
           .unsigned()
           .notNullable()
+          .index()
           .references('id')
           .inTable('spaces')
           .onDelete('CASCADE')

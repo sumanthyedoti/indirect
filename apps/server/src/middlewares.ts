@@ -32,6 +32,7 @@ export function validateIdParam(
   next: NextFunction
 ) {
   const id = Number(req.params.id)
+
   if (id) {
     req.params.id = id
     return next()

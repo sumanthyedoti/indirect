@@ -15,6 +15,7 @@ router.post(
   spaceController.createSpace
 )
 router.get('/:id', validateIdParam, spaceController.getSpace)
+router.get('/:id/channels', validateIdParam, spaceController.getSpaceChannels)
 router.put('/:id', validateIdParam, spaceController.updateSpace)
 router.delete('/:id', validateIdParam, spaceController.deleteSpace)
 

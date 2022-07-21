@@ -1,4 +1,5 @@
 import * as T from '@api-types/spaces'
+import { Channel as ChannelT } from '@api-types/channels'
 import db from '../../db'
 
 async function createSpace(space: T.CreateSpace): Promise<T.Space> {
@@ -18,6 +19,14 @@ async function getSpace(id: number): Promise<T.Space> {
     .select('id', 'name', 'tagline', 'description')
     .where({ id })
   return space
+}
+
+async function getSpaceChannels(id: number): Promise<ChannelT[]> {
+  const result: ChannelT[] = await db
+    .select()
+    .from<ChannelT>('channels')
+    .where({ id })
+  return result
 }
 
 async function updateSpace(id: number, space: T.UpdateSpace): Promise<number> {
@@ -45,6 +54,7 @@ async function deleteSpace(id: number): Promise<number> {
 export default {
   createSpace,
   getSpace,
+  getSpaceChannels,
   updateSpace,
   deleteSpace,
 }
