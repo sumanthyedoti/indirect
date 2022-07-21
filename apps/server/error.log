@@ -19,3 +19,12 @@
 {"level":"error","service":"user-service"}
 {"level":"error","service":"user-service"}
 {"code":"23502","column":"name","detail":"Failing row contains (3, 1, null, null, f, 2022-07-21 06:57:36.404891+00, 2022-07-21 06:57:36.404891+00).","file":"execMain.c","length":273,"level":"error","line":"1883","name":"error","routine":"ExecConstraints","schema":"public","service":"user-service","severity":"ERROR","table":"channels"}
+{"code":"42601","file":"scan.l","length":94,"level":"error","line":"1176","name":"error","position":"69","routine":"scanner_yyerror","service":"user-service","severity":"ERROR"}
+{"code":"42601","file":"scan.l","length":94,"level":"error","line":"1176","name":"error","position":"69","routine":"scanner_yyerror","service":"user-service","severity":"ERROR"}
+{"code":"42601","file":"scan.l","length":94,"level":"error","line":"1176","name":"error","position":"69","routine":"scanner_yyerror","service":"user-service","severity":"ERROR"}
+{"code":"42601","file":"scan.l","length":94,"level":"error","line":"1176","name":"error","position":"69","routine":"scanner_yyerror","service":"user-service","severity":"ERROR"}
+{"code":"42601","file":"scan.l","length":94,"level":"error","line":"1176","name":"error","position":"96","routine":"scanner_yyerror","service":"user-service","severity":"ERROR"}
+{"code":"42601","file":"scan.l","length":94,"level":"error","line":"1176","name":"error","position":"92","routine":"scanner_yyerror","service":"user-service","severity":"ERROR"}
+{"code":"42601","file":"scan.l","length":90,"level":"error","line":"1176","name":"error","position":"18","routine":"scanner_yyerror","service":"user-service","severity":"ERROR"}
+{"code":"42601","file":"scan.l","length":99,"level":"error","line":"1176","name":"error","position":"25","routine":"scanner_yyerror","service":"user-service","severity":"ERROR"}
+{"code":"42601","file":"analyze.c","length":131,"level":"error","line":"2074","name":"error","position":"150","routine":"transformSetOperationTree","service":"user-service","severity":"ERROR"}
