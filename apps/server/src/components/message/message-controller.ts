@@ -15,7 +15,6 @@ async function createMessage(
     channel_id = null,
     personal_channel_id = null,
   } = req.body
-  console.log(req.body)
 
   try {
     const message: T.Message = await messageModel.createMessage({

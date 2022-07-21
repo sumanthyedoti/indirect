@@ -27,7 +27,6 @@ const MessagedOfADay: FC<MessagedOfADayProps> = ({
   })
 
   if (!isSuccess) return null
-  console.log(users)
 
   return (
     <div className={isFirstDay ? 'mt-auto' : ''}>
