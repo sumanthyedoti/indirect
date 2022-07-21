@@ -2,18 +2,17 @@ import create from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { doesHttpOnlyCookieExist } from '../utils'
 
-type User = {
-  email: string
-  fullname: string
-  id: number
-}
+import { User as UserT } from '@api-types/users'
 
 interface UserData {
-  user: User | null
+  user: UserT | null
   isLoggedIn: boolean
   isSessionExpired?: boolean
-  login: (user: User) => void
+  spaceId: number
+  channelId: number
+  login: (user: UserT) => void
   logout: () => void
+  setSpaceId: (id: number) => void
 }
 
 const initialState = {
@@ -23,11 +22,11 @@ const initialState = {
 }
 
 // @ts-ignore
-const store = (set) => ({
+const store: (any) => UserData = (set) => ({
   ...initialState,
-  login: (user: UserData) =>
-    set(() => ({ isLoggedIn: true, user: { ...user } })),
+  login: (user) => set(() => ({ isLoggedIn: true, user: { ...user } })),
   logout: () => set(() => ({ isLoggedIn: false, user: null })),
+  setSpaceId: (id) => set((state: UserData) => ({ ...state, spaceId: id })),
 })
 const storeThroughtMiddlewares = devtools(
   // @ts-ignore

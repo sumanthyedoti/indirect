@@ -13,13 +13,13 @@ async function createUser(user: T.CreateUser): Promise<number> {
   return userCreated.id
 }
 
-async function getUsers(): Promise<T.GetUser[]> {
+async function getUsers(): Promise<T.User[]> {
   const users = await db('users').select('id', 'email', 'fullname')
   return users
 }
 
-async function getUser(id: number): Promise<T.GetUser> {
-  const user: T.GetUser[] = await db('users')
+async function getUser(id: number): Promise<T.User> {
+  const user: T.User[] = await db('users')
     .select('id', 'email', 'fullname')
     .where({ id })
   return user[0]

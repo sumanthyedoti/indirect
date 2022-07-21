@@ -1,10 +1,10 @@
 import { useQuery } from 'react-query'
 import api from './axios'
-import { GetUser } from '@api-types/users'
+import { SpaceUser } from '@api-types/spaces'
 
-function useQueryUsers() {
-  return useQuery<GetUser[]>('users', async () => {
-    const { data } = await api.get('/users/map')
+function useQueryUsers(space_id: number) {
+  return useQuery<SpaceUser[]>(['users', space_id], async () => {
+    const { data } = await api.get(`/spaces/${space_id}/users-map`)
     return data.data
   })
 }

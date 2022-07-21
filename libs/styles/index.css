@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply tracking-tight text-neutral-200 bg-slate-700;
+    @apply tracking-tight bg-slate-700 text-neutral-200;
   }
   h1,
   h2,

@@ -17,8 +17,8 @@ const MessagedOfADay: FC<MessagedOfADayProps> = ({
   isFirstDay,
   containerRef,
 }) => {
-  const { user } = userStore()
-  const { data: users, isSuccess } = useQueryUsers()
+  const { user, spaceId } = userStore()
+  const { data: users, isSuccess } = useQueryUsers(spaceId)
 
   useEffect(() => {
     if (containerRef.current) {
@@ -27,6 +27,8 @@ const MessagedOfADay: FC<MessagedOfADayProps> = ({
   })
 
   if (!isSuccess) return null
+  console.log(users)
+
   return (
     <div className={isFirstDay ? 'mt-auto' : ''}>
       <section className="relative pb-2 mt-3 border-t border-gray-500">

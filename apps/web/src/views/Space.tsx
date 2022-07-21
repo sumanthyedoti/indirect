@@ -3,7 +3,7 @@ import toast from 'react-hot-toast'
 
 import * as T from '@api-types/messages'
 import { MessageInput } from '../components/molecules'
-import { ChannelMessages } from '../components'
+import { ChannelMessages, SidePanel } from '../components'
 import userStore from '../store/userStore'
 import api from '../axios'
 import useSocket from '../hooks/useSocket'
@@ -53,16 +53,16 @@ const Space: FC = () => {
     }
   }
   return (
-    <div
-      className={`
-        flex flex-col md:w-11/12 lg:w-4/5 2xl:w-3/5 relative
-        h-screen p-3 mx-auto
-        bg-slate-800
-        shadow-xl shadow-slate-700/60
-        `}
-    >
-      <ChannelMessages messages={messages} />
-      <MessageInput className="-ml-1 -mr-1" onSubmit={onMessageSubmit} />
+    <div className="flex h-screen">
+      <SidePanel />
+      <div
+        className={`
+          w-full flex flex-col relative h-full bg-slate-800 py-2 px-4
+    `}
+      >
+        <ChannelMessages messages={messages} />
+        <MessageInput className="-ml-1 -mr-1" onSubmit={onMessageSubmit} />
+      </div>
     </div>
   )
 }

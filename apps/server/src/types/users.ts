@@ -17,7 +17,7 @@ export interface LoginUser {
   password: string
 }
 
-export interface GetUser extends Info {
+export interface User extends Info {
   id: number
 }
 

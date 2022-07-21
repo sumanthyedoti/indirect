@@ -48,6 +48,7 @@ const Login: FC = () => {
   const locationState = location.state as { isRegister: boolean }
 
   const login = userStore((store) => store.login)
+  const setSpaceId = userStore((store) => store.setSpaceId)
   const { isLoggedIn, isSessionExpired } = userStore()
 
   const {
@@ -65,6 +66,8 @@ const Login: FC = () => {
     try {
       const { data } = await api.post('/login', input)
       login(data)
+      // TODO: handle dyamically
+      setSpaceId(1)
     } catch (error) {
       const err = error as AxiosError
       if (err.response?.status === 401) {

@@ -17,6 +17,7 @@ router.post(
 router.get('/:id', validateIdParam, spaceController.getSpace)
 router.get('/:id/channels', validateIdParam, spaceController.getSpaceChannels)
 router.get('/:id/users', validateIdParam, spaceController.getSpaceUsers)
+router.get('/:id/users-map', validateIdParam, spaceController.getSpaceUsersMap)
 router.put(
   '/:id',
   // @ts-ignore
