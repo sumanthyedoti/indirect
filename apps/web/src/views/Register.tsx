@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import toast from 'react-hot-toast'
 import * as yup from 'yup'
 
+import { Constraints } from '@api-types/users'
 import { AuthForm, Input, Button } from '../components/atoms'
 import { FormInput } from '../components/molecules'
 import userStore from '../store/userStore'
@@ -14,12 +15,30 @@ import api from '../axios'
 import { useToastLimit } from '../hooks'
 
 const schema = yup.object().shape({
-  fullname: yup.string().required('Email required'),
-  email: yup.string().email('Invalid Email').required('Email required!'),
+  fullname: yup
+    .string()
+    .required('Please enter your name')
+    .max(Constraints.fullname, `Please keep it under ${Constraints.fullname}`),
+  email: yup
+    .string()
+    .email('Invalid Email')
+    .required('Email required!')
+    .min(Constraints.passwordMin, `Invalid email`)
+    .max(
+      Constraints.passwordMax,
+      `We don't support emails that max ${Constraints.emailMax}`
+    ),
   password: yup
     .string()
     .required('Password required')
-    .min(6, 'Password should be atleast 6 characters'),
+    .min(
+      Constraints.passwordMin,
+      `Password should be atleast ${Constraints.passwordMin} characters`
+    )
+    .max(
+      Constraints.passwordMax,
+      `We don't support password that max ${Constraints.passwordMax}`
+    ),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref('password'), null], 'Passwords must match'),

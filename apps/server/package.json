@@ -14,7 +14,7 @@
     "lint": "eslint \"./src/**/*.{js,ts,json}\"",
     "format": "prettier --write \"./src/**/*.{js,ts,json,md}\"",
     "pre-commit": "lint-staged",
-    "knex:make": "knex --migrations-directory ./src/db/migrations/ migrate:make $name -x ts",
+    "knex:make": "knex  --migrations-directory ./src/db/migrations/ migrate:make $name -x ts",
     "knex:migrate": "env $(cat .env) knex migrate:latest --knexfile ./src/db/knexfile.ts",
     "knex:rollback": "env $(cat .env) knex migrate:rollback --knexfile ./src/db/knexfile.ts",
     "knex:seed": "env $(cat .env) knex seed:run --knexfile ./src/db/knexfile.ts",

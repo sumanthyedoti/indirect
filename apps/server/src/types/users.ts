@@ -32,10 +32,10 @@ export interface UpdateUser {
 
 export enum Constraints {
   emailMin = 6,
-  emailMax = 100,
-  fullname = 40,
-  quote = 100,
+  emailMax = 255,
+  fullname = 60,
+  quote = 255,
   passwordMin = 6,
-  passwordMax = 40,
+  passwordMax = 255,
   googleId = 100,
 }

@@ -29,6 +29,6 @@ export interface SpaceUser {
 
 export enum Constraints {
   name = 60,
-  tagline = 100,
+  tagline = 255,
   description = 3000,
 }
