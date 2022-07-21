@@ -13,6 +13,7 @@ interface UserData {
   login: (user: UserT) => void
   logout: () => void
   setSpaceId: (id: number) => void
+  setChannelId: (id: number) => void
 }
 
 const initialState = {
@@ -27,6 +28,7 @@ const store: (any) => UserData = (set) => ({
   login: (user) => set(() => ({ isLoggedIn: true, user: { ...user } })),
   logout: () => set(() => ({ isLoggedIn: false, user: null })),
   setSpaceId: (id) => set((state: UserData) => ({ ...state, spaceId: id })),
+  setChannelId: (id) => set((state: UserData) => ({ ...state, channelId: id })),
 })
 const storeThroughtMiddlewares = devtools(
   // @ts-ignore

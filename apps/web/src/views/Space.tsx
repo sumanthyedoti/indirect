@@ -10,7 +10,7 @@ import useSocket from '../hooks/useSocket'
 import { appErrorToastOptions } from '../utils'
 
 const Space: FC = () => {
-  const { user } = userStore()
+  const { user, channelId } = userStore()
   const socket = useSocket()
   const [messages, setMessages] = useState<T.Message[]>([])
   useEffect(() => {
@@ -41,7 +41,7 @@ const Space: FC = () => {
     try {
       await api.post('/messages', {
         sender_id: user?.id,
-        conversation_id: 4,
+        channel_id: channelId,
         text,
       })
     } catch (err) {
@@ -52,6 +52,7 @@ const Space: FC = () => {
       })
     }
   }
+
   return (
     <div className="flex h-screen">
       <SidePanel />

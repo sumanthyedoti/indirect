@@ -9,4 +9,11 @@ function useQueryUsers(space_id: number) {
   })
 }
 
-export { useQueryUsers }
+function useQueryChannels(space_id: number) {
+  return useQuery<SpaceUser[]>(['channels', space_id], async () => {
+    const { data } = await api.get(`/spaces/${space_id}/channels`)
+    return data.data
+  })
+}
+
+export { useQueryUsers, useQueryChannels }
