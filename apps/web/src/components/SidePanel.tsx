@@ -1,11 +1,11 @@
 import { FC, useState } from 'react'
 
-// import api from '../axios'
 import userStore from '../store/userStore'
-import { Modal } from './organisms'
+import { Modal, CreateChannel } from './organisms'
 import { Plus } from '../icons'
-import { Dialog } from '@headlessui/react'
 import { useQueryChannels } from '../queries'
+import { CreateChannel as CreateChannelT } from '@api-types/channels'
+// import api from '../axios'
 
 interface SidePanelProps {
   dummy?: null
@@ -21,6 +21,10 @@ const SidePanel: FC<SidePanelProps> = () => {
   }
   const { spaceId } = userStore()
   const { data: channels, isSuccess } = useQueryChannels(spaceId)
+  const createChannel = (data: CreateChannelT) => {
+    // api.post('/channels', data)
+    console.log(data)
+  }
   if (!isSuccess) return null
 
   return (
@@ -45,10 +49,7 @@ const SidePanel: FC<SidePanelProps> = () => {
         )
       })}
       <Modal isOpen={isModalOpen} close={closeModal}>
-        <Dialog.Title as="h2" className="test">
-          Create Channel
-        </Dialog.Title>
-        <button onClick={closeModal}>close</button>
+        <CreateChannel createChannel={createChannel} close={closeModal} />
       </Modal>
     </aside>
   )
