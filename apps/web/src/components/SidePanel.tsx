@@ -1,4 +1,5 @@
 import { useQueryClient } from 'react-query'
+import classnames from 'classnames'
 import { FC, useState, useCallback } from 'react'
 import toast from 'react-hot-toast'
 
@@ -77,10 +78,18 @@ const SidePanel: FC<SidePanelProps> = () => {
           <button
             onClick={() => handleChannelClick(c.id)}
             key={c.id}
-            className="flex space-x-1"
+            className={classnames('flex space-x-1', [
+              c.id === channelId && 'text-neutral-100',
+            ])}
           >
-            <span className="text-lg text-zinc-400">#</span>
-            <span className={channelId === c.id ? 'font-bold' : ''}>
+            <span
+              className={classnames('text-lg', {
+                'text-zinc-400': c.id !== channelId,
+              })}
+            >
+              #
+            </span>
+            <span className={classnames({ 'font-bold': c.id === channelId })}>
               {c.name}
             </span>
           </button>
