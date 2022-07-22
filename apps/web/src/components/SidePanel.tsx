@@ -62,7 +62,7 @@ const SidePanel: FC<SidePanelProps> = () => {
 
   return (
     <aside
-      className={`w-1/3 md:w-1/4 xl:w-1/5 h-full relative
+      className={`w-1/3 lg:w-1/4 2xl:w-1/5 h-full shrink-0 relative
       px-2 py-2 md:px-3 border-r border-neutral-600
       bg-slate-900
      `}
@@ -97,7 +97,7 @@ const SidePanel: FC<SidePanelProps> = () => {
       })}
       <IconButton
         onClick={handleLogout}
-        className="absolute bottom-2 right-2"
+        className="absolute bottom-3 right-3"
         aria-label="Log out"
       >
         <Logout />

@@ -22,7 +22,7 @@ const Space: FC = () => {
       socket.off('message_received')
       toast.dismiss()
     }
-  }, [channelId])
+  }, [])
   useEffect(() => {
     fetchMessages(channelId)
   }, [channelId])
