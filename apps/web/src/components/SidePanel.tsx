@@ -4,6 +4,7 @@ import toast from 'react-hot-toast'
 
 import userStore from '../store/userStore'
 import { Modal, CreateChannel } from './organisms'
+import { IconButton } from './atoms'
 import { Plus } from '../icons'
 import { useQueryChannels } from '../queries'
 import { CreateChannel as CreateChannelT } from '@api-types/channels'
@@ -50,16 +51,16 @@ const SidePanel: FC<SidePanelProps> = () => {
 
   return (
     <aside
-      className={`w-1/4 md:w-1/5 h-full
+      className={`w-1/3 md:w-1/4 xl:w-1/5 h-full
       px-2 py-2 md:px-3 border-r border-neutral-600
       bg-slate-900
      `}
     >
       <div className="flex items-center justify-between">
         <h4>Channels</h4>
-        <button aria-label="Create Channel" onClick={openModal}>
+        <IconButton aria-label="Create Channel" onClick={openModal}>
           <Plus />
-        </button>
+        </IconButton>
       </div>
       {channels?.map((c) => {
         return (

@@ -22,6 +22,7 @@ const Button: FC<props> = ({
   const classes = classnames(
     `px-6 py-3 text-zinc-100 text-lg
     ring-slate-100 ring-offset-1 focus:ring-2
+    ring-offset-transparent
     outline-none font-semibold rounded`,
     [(primary || !secondary) && `bg-blue-600`, secondary && `bg-gray-600`]
   )

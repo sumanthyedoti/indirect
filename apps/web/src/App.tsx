@@ -9,6 +9,7 @@ import timezone from 'dayjs/plugin/timezone'
 
 import { Login, Register, Space } from './views'
 import { Logout } from './icons'
+import { IconButton } from './components/atoms'
 import { useSocket } from './hooks'
 import userStore from './store/userStore'
 import { PrivateRoute } from './routes'
@@ -57,13 +58,13 @@ const App: FC = () => {
         </Route>
       </Routes>
       {isLoggedIn && (
-        <button
+        <IconButton
           onClick={handleLogout}
           className="absolute top-4 right-6"
           aria-label="Log out"
         >
           <Logout />
-        </button>
+        </IconButton>
       )}
     </>
   )
