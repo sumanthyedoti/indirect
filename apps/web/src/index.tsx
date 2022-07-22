@@ -22,5 +22,3 @@ root.render(
     </BrowserRouter>
   </StrictMode>
 )
-
-export { App }

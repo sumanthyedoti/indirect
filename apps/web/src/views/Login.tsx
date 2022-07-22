@@ -44,8 +44,7 @@ const Login: FC = () => {
   useToastLimit()
   const locationState = location.state as { isRegister: boolean }
 
-  const { isLoggedIn, isSessionExpired, login, setSpaceId, setChannelId } =
-    userStore()
+  const { isLoggedIn, login, setSpaceId, setChannelId } = userStore()
 
   const {
     register,
@@ -77,14 +76,11 @@ const Login: FC = () => {
     }
   }
 
+  // TODO welocme message function utility
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <AuthForm autoComplete="on" onSubmit={handleSubmit(onSubmit)}>
-        {isSessionExpired ? (
-          <h1>Please log in again</h1>
-        ) : (
-          <h1>{locationState?.isRegister ? 'Welcome!' : 'Welcome back!'}</h1>
-        )}
+        <h1>{locationState?.isRegister ? 'Welcome!' : 'Welcome back!'}</h1>
         <FormInput
           label="Email"
           id="email"

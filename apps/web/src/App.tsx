@@ -26,10 +26,18 @@ const App: FC = () => {
     socket.on('connect', () => {
       console.log(socket.id)
     })
+
+    return () => {
+      socket.off('connect')
+    }
   }, [])
   useEffect(() => {
     if (isLoggedIn) socket.connect()
     navigate('/space')
+
+    return () => {
+      socket.disconnect()
+    }
   }, [isLoggedIn])
 
   return (
