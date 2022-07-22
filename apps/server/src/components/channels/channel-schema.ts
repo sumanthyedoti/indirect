@@ -11,7 +11,6 @@ const createChannelScheme: JSONSchemaType<CreateChannel> = {
     description: {
       type: 'string',
       nullable: true,
-      minLength: 1,
       maxLength: Constraints.description,
     },
   },

@@ -18,6 +18,7 @@ interface CreateChannelProps {
 }
 
 const schema = yup.object().shape({
+  space_id: yup.number().required(),
   name: yup
     .string()
     .required('Please provide the channel name!')
@@ -27,10 +28,11 @@ const schema = yup.object().shape({
     ),
   description: yup
     .string()
+    .nullable()
     .max(Constraints.description, `Too large. Please edit`),
 })
 
-const CreateChannel: FC<CreateChannelProps> = () => {
+const CreateChannel: FC<CreateChannelProps> = ({ close, createChannel }) => {
   const { spaceId } = userStore()
   const {
     register,
@@ -42,22 +44,9 @@ const CreateChannel: FC<CreateChannelProps> = () => {
   })
 
   const onSubmit = async (input: CreateChannelT) => {
-    console.log(input)
-
-    // try {
-    //   const { data } = await api.post('/login', input)
-    // } catch (error) {
-    //   const err = error as AxiosError
-    //   if (err.response?.status === 401) {
-    //     toast.error('Email/password invalid!', userErrorToastOptions)
-    //   } else {
-    //     toast.error(
-    //       'Something went wrong. Please try again',
-    //       appErrorToastOptions
-    //     )
-    //   }
-    // }
+    createChannel(input)
   }
+
   return (
     <div>
       <Dialog.Panel className="w-full max-w-lg p-6 overflow-hidden text-left align-middle bg-slate-700 transform rounded-md transition-all">
@@ -65,7 +54,13 @@ const CreateChannel: FC<CreateChannelProps> = () => {
           Create Channel
         </Dialog.Title>
         <form autoComplete="on" onSubmit={handleSubmit(onSubmit)}>
-          <input hidden type="number" value={spaceId} />
+          <input
+            hidden
+            type="number"
+            {...register('space_id')}
+            readOnly
+            value={spaceId}
+          />
           <FormInput
             label="Name"
             id="name"
@@ -84,12 +79,15 @@ const CreateChannel: FC<CreateChannelProps> = () => {
             }
             error={errors.description?.message}
           />
-          <Button
-            secondary
-            className="w-full mt-5"
-            type="submit"
-            label="Create"
-          />
+          <div className="flex space-x-2">
+            <Button
+              secondary
+              className="w-full mt-5"
+              label="Cancel"
+              onClick={close}
+            />
+            <Button className="w-full mt-5" type="submit" label="Create" />
+          </div>
         </form>
       </Dialog.Panel>
     </div>

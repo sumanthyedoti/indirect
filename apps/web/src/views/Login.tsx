@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
+import { LoginUser } from '@api-types/users'
 import { Constraints } from '@api-types/users'
 import { AuthForm, Input, Button } from '../components/atoms'
 import { FormInput } from '../components/molecules'
@@ -19,9 +20,9 @@ const schema = yup.object().shape({
     .string()
     .email('Invalid Email')
     .required('Email required!')
-    .min(Constraints.passwordMin, `Invalid email`)
+    .min(Constraints.emailMin, `Invalid email`)
     .max(
-      Constraints.passwordMax,
+      Constraints.emailMax,
       `We don't support emails that max ${Constraints.emailMax}`
     ),
   password: yup
@@ -36,10 +37,6 @@ const schema = yup.object().shape({
       `We don't support password that max ${Constraints.passwordMax}`
     ),
 })
-interface FormInputs {
-  email: string
-  password: string
-}
 
 const Login: FC = () => {
   const navigate = useNavigate()
@@ -54,14 +51,14 @@ const Login: FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormInputs>({
+  } = useForm<LoginUser>({
     resolver: yupResolver(schema),
     mode: 'onBlur',
   })
   useEffect(() => {
     if (isLoggedIn) navigate('/')
   }, [isLoggedIn])
-  const onSubmit = async (input: FormInputs) => {
+  const onSubmit = async (input: LoginUser) => {
     try {
       const { data } = await api.post('/login', input)
       login(data)

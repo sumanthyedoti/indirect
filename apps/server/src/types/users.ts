@@ -9,7 +9,7 @@ export interface CreateUser extends Info {
 
 export interface RegisterUser extends Info {
   password: string
-  google_id: string
+  google_id?: string
 }
 
 export interface LoginUser {

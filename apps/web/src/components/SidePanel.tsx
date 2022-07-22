@@ -1,11 +1,13 @@
 import { FC, useState } from 'react'
+import toast from 'react-hot-toast'
 
 import userStore from '../store/userStore'
 import { Modal, CreateChannel } from './organisms'
 import { Plus } from '../icons'
 import { useQueryChannels } from '../queries'
 import { CreateChannel as CreateChannelT } from '@api-types/channels'
-// import api from '../axios'
+import { appErrorToastOptions, successToastOptions } from '../utils'
+import api from '../axios'
 
 interface SidePanelProps {
   dummy?: null
@@ -21,9 +23,21 @@ const SidePanel: FC<SidePanelProps> = () => {
   }
   const { spaceId } = userStore()
   const { data: channels, isSuccess } = useQueryChannels(spaceId)
-  const createChannel = (data: CreateChannelT) => {
-    // api.post('/channels', data)
-    console.log(data)
+  const createChannel = async (data: CreateChannelT) => {
+    try {
+      await api.post('/channels', data)
+      closeModal()
+      toast.success('Channel created', {
+        ...successToastOptions,
+        id: 'post-channel-success',
+      })
+    } catch (err) {
+      console.log(err)
+      toast.error('Error creating Channel', {
+        ...appErrorToastOptions,
+        id: 'post-channel-error',
+      })
+    }
   }
   if (!isSuccess) return null
 
@@ -42,10 +56,10 @@ const SidePanel: FC<SidePanelProps> = () => {
       </div>
       {channels?.map((c) => {
         return (
-          <span key={c.id}>
-            <span className="text-neutral-400"># </span>
+          <p key={c.id}>
+            <span className="text-zinc-400"># </span>
             {c.name}
-          </span>
+          </p>
         )
       })}
       <Modal isOpen={isModalOpen} close={closeModal}>

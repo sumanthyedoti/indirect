@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import toast from 'react-hot-toast'
 import * as yup from 'yup'
 
+import { RegisterUser } from '@api-types/users'
 import { Constraints } from '@api-types/users'
 import { AuthForm, Input, Button } from '../components/atoms'
 import { FormInput } from '../components/molecules'
@@ -23,9 +24,9 @@ const schema = yup.object().shape({
     .string()
     .email('Invalid Email')
     .required('Email required!')
-    .min(Constraints.passwordMin, `Invalid email`)
+    .min(Constraints.emailMin, `Invalid email`)
     .max(
-      Constraints.passwordMax,
+      Constraints.emailMax,
       `We don't support emails that max ${Constraints.emailMax}`
     ),
   password: yup
@@ -43,10 +44,7 @@ const schema = yup.object().shape({
     .string()
     .oneOf([yup.ref('password'), null], 'Passwords must match'),
 })
-interface FormInputs {
-  fullname: string
-  email: string
-  password: string
+interface FormInputs extends RegisterUser {
   confirmPassword: string
 }
 
