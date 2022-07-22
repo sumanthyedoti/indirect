@@ -9,7 +9,7 @@ async function createMessage(message: T.CreateMessage): Promise<T.Message> {
       sender_id,
       channel_id,
     })
-    .returning(['id', 'text', 'sender_id', 'created_at'])
+    .returning(['id', 'text', 'sender_id', 'channel_id', 'created_at'])
   return savedMessage
 }
 
@@ -18,6 +18,7 @@ async function getMessages(): Promise<T.Message[]> {
     'id',
     'text',
     'sender_id',
+    'channel_id',
     'created_at'
   )
   return messages

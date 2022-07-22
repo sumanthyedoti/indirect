@@ -1,4 +1,4 @@
-import { useState, useEffect, memo, FC } from 'react'
+import { useState, useEffect, useCallback, memo, FC } from 'react'
 import toast from 'react-hot-toast'
 
 import * as T from '@api-types/messages'
@@ -14,18 +14,19 @@ const Space: FC = () => {
   const socket = useSocket()
   const [messages, setMessages] = useState<T.Message[]>([])
   useEffect(() => {
-    socket.on('message_received', (msg) => {
+    socket.on('message_received', (msg: T.Message) => {
+      if (msg.channel_id !== channelId) return
       setMessages((messages) => [...messages, msg])
     })
     return () => {
       socket.off('message_received')
       toast.dismiss()
     }
-  }, [])
-  useEffect(() => {
-    fetchMessages()
   }, [channelId])
-  const fetchMessages = async () => {
+  useEffect(() => {
+    fetchMessages(channelId)
+  }, [channelId])
+  const fetchMessages = async (channelId: number) => {
     try {
       const { data } = await api.get(`/channels/${channelId}/messages`)
 
@@ -38,21 +39,24 @@ const Space: FC = () => {
       })
     }
   }
-  const onMessageSubmit = async (text: string) => {
-    try {
-      await api.post('/messages', {
-        sender_id: user?.id,
-        channel_id: channelId,
-        text,
-      })
-    } catch (err) {
-      console.log(err)
-      toast.error('Error sending message', {
-        ...appErrorToastOptions,
-        id: 'post-messages-error',
-      })
-    }
-  }
+  const handleMessageSubmit = useCallback(
+    async (text: string) => {
+      try {
+        await api.post('/messages', {
+          sender_id: user?.id,
+          channel_id: channelId,
+          text,
+        })
+      } catch (err) {
+        console.log(err)
+        toast.error('Error sending message', {
+          ...appErrorToastOptions,
+          id: 'post-messages-error',
+        })
+      }
+    },
+    [channelId]
+  )
 
   return (
     <div className="flex h-screen">
@@ -63,7 +67,7 @@ const Space: FC = () => {
     `}
       >
         <ChannelMessages messages={messages} />
-        <MessageInput className="-ml-1 -mr-1" onSubmit={onMessageSubmit} />
+        <MessageInput className="-ml-1 -mr-1" onSubmit={handleMessageSubmit} />
       </div>
     </div>
   )
