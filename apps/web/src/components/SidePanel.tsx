@@ -1,7 +1,10 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 
 // import api from '../axios'
 import userStore from '../store/userStore'
+import { Modal } from './organisms'
+import { Plus } from '../icons'
+import { Dialog } from '@headlessui/react'
 import { useQueryChannels } from '../queries'
 
 interface SidePanelProps {
@@ -9,6 +12,13 @@ interface SidePanelProps {
 }
 
 const SidePanel: FC<SidePanelProps> = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const closeModal = () => {
+    setIsModalOpen(false)
+  }
+  const openModal = () => {
+    setIsModalOpen(true)
+  }
   const { spaceId } = userStore()
   const { data: channels, isSuccess } = useQueryChannels(spaceId)
   if (!isSuccess) return null
@@ -20,7 +30,12 @@ const SidePanel: FC<SidePanelProps> = () => {
       bg-slate-900
      `}
     >
-      <h4>Channels</h4>
+      <div className="flex items-center justify-between">
+        <h4>Channels</h4>
+        <button aria-label="Create Channel" onClick={openModal}>
+          <Plus />
+        </button>
+      </div>
       {channels?.map((c) => {
         return (
           <span key={c.id}>
@@ -29,6 +44,12 @@ const SidePanel: FC<SidePanelProps> = () => {
           </span>
         )
       })}
+      <Modal isOpen={isModalOpen} close={closeModal}>
+        <Dialog.Title as="h2" className="test">
+          Create Channel
+        </Dialog.Title>
+        <button onClick={closeModal}>close</button>
+      </Modal>
     </aside>
   )
 }
