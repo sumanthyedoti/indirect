@@ -1,4 +1,5 @@
-import { FC, useState } from 'react'
+import { useQueryClient } from 'react-query'
+import { FC, useState, useCallback } from 'react'
 import toast from 'react-hot-toast'
 
 import userStore from '../store/userStore'
@@ -21,16 +22,19 @@ const SidePanel: FC<SidePanelProps> = () => {
   const openModal = () => {
     setIsModalOpen(true)
   }
-  const { spaceId } = userStore()
+  const queryClient = useQueryClient()
+  const { spaceId, channelId, setChannelId } = userStore()
   const { data: channels, isSuccess } = useQueryChannels(spaceId)
-  const createChannel = async (data: CreateChannelT) => {
+  const createChannel = useCallback(async (data: CreateChannelT) => {
     try {
-      await api.post('/channels', data)
+      const { data: res } = await api.post('/channels', data)
       closeModal()
       toast.success('Channel created', {
         ...successToastOptions,
         id: 'post-channel-success',
       })
+      setChannelId(res.data.id)
+      queryClient.invalidateQueries(['channels', spaceId])
     } catch (err) {
       console.log(err)
       toast.error('Error creating Channel', {
@@ -38,6 +42,9 @@ const SidePanel: FC<SidePanelProps> = () => {
         id: 'post-channel-error',
       })
     }
+  }, [])
+  const handleChannelClick = (id: number) => {
+    setChannelId(id)
   }
   if (!isSuccess) return null
 
@@ -56,10 +63,16 @@ const SidePanel: FC<SidePanelProps> = () => {
       </div>
       {channels?.map((c) => {
         return (
-          <p key={c.id}>
-            <span className="text-zinc-400"># </span>
-            {c.name}
-          </p>
+          <button
+            onClick={() => handleChannelClick(c.id)}
+            key={c.id}
+            className="flex space-x-1"
+          >
+            <span className="text-lg text-zinc-400">#</span>
+            <span className={channelId === c.id ? 'font-bold' : ''}>
+              {c.name}
+            </span>
+          </button>
         )
       })}
       <Modal isOpen={isModalOpen} close={closeModal}>

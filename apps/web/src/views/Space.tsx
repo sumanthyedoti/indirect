@@ -17,16 +17,17 @@ const Space: FC = () => {
     socket.on('message_received', (msg) => {
       setMessages((messages) => [...messages, msg])
     })
-    fetchMessages()
-
     return () => {
       socket.off('message_received')
       toast.dismiss()
     }
   }, [])
+  useEffect(() => {
+    fetchMessages()
+  }, [channelId])
   const fetchMessages = async () => {
     try {
-      const { data } = await api.get('/messages')
+      const { data } = await api.get(`/channels/${channelId}/messages`)
 
       setMessages(data.data)
     } catch (err) {

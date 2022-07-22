@@ -41,7 +41,4 @@
   ::-webkit-scrollbar-thumb:window-inactive {
     @apply bg-gray-600;
   }
-  .test {
-    @apply border-2 border-red-400 outline outline-2 outline-red-500;
-  }
 }

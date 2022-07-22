@@ -1,5 +1,5 @@
 import { useEffect, FC } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import dayjs from 'dayjs'
 import isToday from 'dayjs/plugin/isToday'
@@ -24,6 +24,8 @@ dayjs.tz.guess()
 const App: FC = () => {
   const socket = useSocket()
   const { isLoggedIn, logout } = userStore()
+  const navigate = useNavigate()
+
   useEffect(() => {
     socket.on('connect', () => {
       console.log(socket.id)
@@ -31,6 +33,7 @@ const App: FC = () => {
   }, [])
   useEffect(() => {
     if (isLoggedIn) socket.connect()
+    navigate('/space')
   }, [isLoggedIn])
 
   const handleLogout = async () => {
@@ -48,7 +51,9 @@ const App: FC = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route element={<PrivateRoute />}>
-          <Route path="/" element={<Space />} />
+          <Route path="/space" element={<Space />}>
+            <Route path=":channelId" element={<Space />} />
+          </Route>
         </Route>
       </Routes>
       {isLoggedIn && (
