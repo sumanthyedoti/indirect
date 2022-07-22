@@ -37,7 +37,11 @@ const MessagedOfADay: FC<MessagedOfADayProps> = ({
             <Message
               key={m.id}
               createdAt={m.created_at}
-              senderName={user && users[m.sender_id]?.fullname}
+              senderName={
+                user &&
+                (users[m.sender_id]?.display_name ||
+                  users[m.sender_id]?.fullname)
+              }
               message={m}
             />
           )

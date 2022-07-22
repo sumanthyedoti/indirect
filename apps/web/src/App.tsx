@@ -1,6 +1,5 @@
 import { useEffect, FC } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom'
-import toast from 'react-hot-toast'
 import dayjs from 'dayjs'
 import isToday from 'dayjs/plugin/isToday'
 import isYesterday from 'dayjs/plugin/isYesterday'
@@ -8,13 +7,9 @@ import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 
 import { Login, Register, Space } from './views'
-import { Logout } from './icons'
-import { IconButton } from './components/atoms'
 import { useSocket } from './hooks'
 import userStore from './store/userStore'
 import { PrivateRoute } from './routes'
-import api from './axios'
-import { userErrorToastOptions } from './utils'
 
 dayjs.extend(isToday)
 dayjs.extend(isYesterday)
@@ -24,7 +19,7 @@ dayjs.tz.guess()
 
 const App: FC = () => {
   const socket = useSocket()
-  const { isLoggedIn, logout } = userStore()
+  const { isLoggedIn } = userStore()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -37,15 +32,6 @@ const App: FC = () => {
     navigate('/space')
   }, [isLoggedIn])
 
-  const handleLogout = async () => {
-    try {
-      await api.delete('/logout')
-      logout()
-    } catch (err) {
-      toast.error('Failed to logout. Please try again', userErrorToastOptions)
-    }
-  }
-
   return (
     <>
       <Routes>
@@ -57,15 +43,6 @@ const App: FC = () => {
           </Route>
         </Route>
       </Routes>
-      {isLoggedIn && (
-        <IconButton
-          onClick={handleLogout}
-          className="absolute top-4 right-6"
-          aria-label="Log out"
-        >
-          <Logout />
-        </IconButton>
-      )}
     </>
   )
 }
