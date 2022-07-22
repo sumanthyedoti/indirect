@@ -13,7 +13,7 @@ async function createMessage(message: T.CreateMessage): Promise<T.Message> {
   return savedMessage
 }
 
-async function getMessages(): Promise<T.Message[]> {
+async function getMessages() {
   const messages: T.Message[] = await db('messages').select(
     'id',
     'text',

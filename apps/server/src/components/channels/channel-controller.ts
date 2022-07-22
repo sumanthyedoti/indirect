@@ -33,7 +33,7 @@ async function getChannel(
 ) {
   try {
     const id = req.params.id
-    const result: T.Channel = await channelModel.getChannel(id)
+    const result = await channelModel.getChannel(id)
     if (!result) {
       res.status(404).json({ id, error: 'Channel not found' })
       return

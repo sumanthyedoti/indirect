@@ -61,7 +61,7 @@ app.listen(port, () => {
 
 /* web sockets */
 
-const httpServer = createHTTPServer(app)
+const httpServer = createHTTPServer()
 const io = new SocketServer(httpServer, {
   cors: { origin: whiteList, credentials: true },
 })

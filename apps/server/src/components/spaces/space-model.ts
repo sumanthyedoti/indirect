@@ -14,14 +14,14 @@ async function createSpace(space: T.CreateSpace): Promise<T.Space> {
   return spaceCreated
 }
 
-async function getSpace(id: number): Promise<T.Space> {
+async function getSpace(id: number) {
   const [space]: T.Space[] = await db('spaces')
     .select('id', 'name', 'tagline', 'description')
     .where({ id })
   return space
 }
 
-async function getSpaceChannels(id: number): Promise<ChannelT[]> {
+async function getSpaceChannels(id: number) {
   const result: ChannelT[] = await db
     .select()
     .from<ChannelT>('channels')
@@ -29,7 +29,7 @@ async function getSpaceChannels(id: number): Promise<ChannelT[]> {
   return result
 }
 
-async function getSpaceUsers(id: number): Promise<T.SpaceUser[]> {
+async function getSpaceUsers(id: number) {
   const result: T.SpaceUser[] = await db.raw(`
     SELECT p.*, u.email, u.fullname
       FROM profiles as p JOIN users as u
@@ -40,7 +40,7 @@ async function getSpaceUsers(id: number): Promise<T.SpaceUser[]> {
   return result?.rows
 }
 
-async function updateSpace(id: number, space: T.UpdateSpace): Promise<number> {
+async function updateSpace(id: number, space: T.UpdateSpace) {
   const spaceId: number = await db('spaces')
     .where({
       id: id,
@@ -53,13 +53,13 @@ async function updateSpace(id: number, space: T.UpdateSpace): Promise<number> {
   return spaceId
 }
 
-async function deleteSpace(id: number): Promise<number> {
-  const channel = await db('spaces')
+async function deleteSpace(id: number) {
+  const spaceId = await db('spaces')
     .where({
       id,
     })
     .del()
-  return channel
+  return spaceId
 }
 
 export default {
