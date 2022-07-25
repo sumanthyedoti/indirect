@@ -34,7 +34,7 @@ function useQuerySpace(spaceId: number) {
 
 function useQueryChannel(channelId: number) {
   return useQuery<Channel>(
-    ['space', channelId],
+    ['channel', channelId],
     async () => {
       const { data } = await api.get(`/channels/${channelId}`)
       return data.data

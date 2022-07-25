@@ -1,9 +1,10 @@
-import { useQueryClient } from 'react-query'
+import React, { FC, useState, useCallback } from 'react'
 import classnames from 'classnames'
-import { FC, useState, useCallback } from 'react'
+import { useQueryClient } from 'react-query'
 import toast from 'react-hot-toast'
 
 import SideHeader from './SideHeader'
+import Section from './Section'
 import CreateChannel from './CreateChannel'
 import { CreateChannel as CreateChannelT } from '@api-types/channels'
 import { Modal } from '../organisms'
@@ -22,10 +23,14 @@ interface SidePanelProps {
 
 const SidePanel: FC<SidePanelProps> = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  // const [isChannelsClosed, setIsChannelsClosed] = useState(false)
+
   const closeModal = () => {
     setIsModalOpen(false)
   }
-  const openModal = () => {
+  const openModal = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    e.preventDefault()
     setIsModalOpen(true)
   }
   const queryClient = useQueryClient()
@@ -73,34 +78,48 @@ const SidePanel: FC<SidePanelProps> = () => {
     >
       <SideHeader />
       <div className="side-panel-padding">
-        <div className="flex items-center justify-between">
-          <h4 className="text-base font-normal">Channels</h4>
-          <IconButton aria-label="Create Channel" onClick={openModal}>
-            <Plus />
-          </IconButton>
-        </div>
-        {channels?.map((c) => {
-          return (
-            <button
-              onClick={() => handleChannelClick(c.id)}
-              key={c.id}
-              className={classnames('flex space-x-1', [
-                c.id === channelId && 'text-neutral-100',
-              ])}
+        <Section
+          title="Channels"
+          actionIcon={
+            <IconButton
+              className="w-5 h-5"
+              aria-label="Create Channel"
+              onClick={openModal}
             >
-              <span
-                className={classnames('text-lg', {
-                  'text-zinc-400': c.id !== channelId,
-                })}
-              >
-                #
-              </span>
-              <span className={classnames({ 'font-bold': c.id === channelId })}>
-                {c.name}
-              </span>
-            </button>
-          )
-        })}
+              <Plus />
+            </IconButton>
+          }
+          body={
+            <>
+              {channels?.map((c) => {
+                return (
+                  <button
+                    onClick={() => handleChannelClick(c.id)}
+                    key={c.id}
+                    className={classnames('flex space-x-1', [
+                      c.id === channelId && 'text-neutral-100',
+                    ])}
+                  >
+                    <span
+                      className={classnames('text-lg', {
+                        'text-zinc-400': c.id !== channelId,
+                      })}
+                    >
+                      #
+                    </span>
+                    <span
+                      className={classnames({
+                        'font-bold': c.id === channelId,
+                      })}
+                    >
+                      {c.name}
+                    </span>
+                  </button>
+                )
+              })}
+            </>
+          }
+        />
       </div>
       <IconButton
         onClick={handleLogout}

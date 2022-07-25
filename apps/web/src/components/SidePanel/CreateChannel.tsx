@@ -50,7 +50,7 @@ const CreateChannel: FC<CreateChannelProps> = ({ close, createChannel }) => {
   return (
     <div>
       <Dialog.Panel className="w-full max-w-lg p-6 overflow-hidden text-left align-middle bg-slate-700 transform rounded-md transition-all">
-        <Dialog.Title as="h2" className="test">
+        <Dialog.Title as="h2" className="">
           Create Channel
         </Dialog.Title>
         <form autoComplete="on" onSubmit={handleSubmit(onSubmit)}>
