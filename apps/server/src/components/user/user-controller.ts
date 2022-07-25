@@ -96,7 +96,7 @@ async function getUsersMap(req: Request, res: Response) {
 async function getUser(req: TypedRequestParams<{ id: number }>, res: Response) {
   try {
     const id = req.params.id
-    const result: T.GetUser = await userModel.getUser(id)
+    const result: T.User = await userModel.getUser(id)
     if (!result) {
       res.status(404).json({ id, error: 'User not found' })
       return

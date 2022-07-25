@@ -19,6 +19,7 @@ const registerUserScheme: JSONSchemaType<RegisterUser> = {
     fullname: { type: 'string', minLength: 2, maxLength: Constraints.fullname },
     google_id: {
       type: 'string',
+      nullable: true,
       minLength: 2,
       maxLength: Constraints.googleId,
     },

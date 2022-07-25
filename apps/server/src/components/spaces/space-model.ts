@@ -2,16 +2,16 @@ import * as T from '@api-types/spaces'
 import { Channel as ChannelT } from '@api-types/channels'
 import db from '../../db'
 
-async function createSpace(space: T.CreateSpace): Promise<T.Space> {
+async function createSpace(space: T.CreateSpace) {
   const { name, tagline, description } = space
-  const [spaceCreated]: T.Space[] = await db('spaces')
+  const spaceId: number = await db('spaces')
     .insert({
       name,
       tagline,
       description,
     })
     .returning('id')
-  return spaceCreated
+  return spaceId
 }
 
 async function getSpace(id: number) {
@@ -30,7 +30,7 @@ async function getSpaceChannels(id: number) {
 }
 
 async function getSpaceUsers(id: number) {
-  const result: T.SpaceUser[] = await db.raw(`
+  const result: { rows: T.SpaceUser[] } = await db.raw(`
     SELECT p.*, u.email, u.fullname
       FROM profiles as p JOIN users as u
       ON p.user_id = u.id
