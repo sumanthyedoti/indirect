@@ -35,6 +35,7 @@ export async function up(knex: Knex): Promise<void> {
         table.timestamp('status_duration').nullable()
         table.string('status_text', 100).nullable()
         table.string('is_active', 100).defaultTo(false)
+        table.boolean('is_admin').defaultTo(false)
         table.timestamps(true, true)
       })
       return query

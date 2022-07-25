@@ -4,22 +4,6 @@ import { SpaceUser, Space } from '@api-types/spaces'
 import { Channel } from '@api-types/channels'
 import api from './axios'
 
-// const stateTime = (hrs: number) => hrs * 60 * 60 * 1000
-//
-// function useQueryUsersMap(spaceId: number) {
-//   const {data} = useQueryUsers(spaceId)
-//   return useQuery<{ [key: string]: SpaceUser }>(
-//     ['users-map', spaceId],
-//     async () => {
-//       const { data } = await api.get(`/spaces/${spaceId}/users-map`)
-//       return data.data
-//     },
-//     {
-//       staleTime: Infinity,
-//     }
-//   )
-// }
-
 type UsersQuery = {
   list: SpaceUser[]
   idMap: {

@@ -2,6 +2,8 @@ interface Info {
   space_id: number
   name: string
   description: string | null
+  creator_id: number
+  is_private: boolean
 }
 
 export interface Channel extends Info {

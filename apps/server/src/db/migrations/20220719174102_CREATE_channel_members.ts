@@ -23,6 +23,7 @@ export async function up(knex: Knex): Promise<void> {
           .references('id')
           .inTable('users')
           .onDelete('SET NULL')
+        table.boolean('is_admin').defaultTo(false)
       })
       return query
     }

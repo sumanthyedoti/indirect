@@ -12,6 +12,7 @@ export async function seed(knex: Knex): Promise<void> {
       description: `<div>This is the only space available for all, for now.
       <br/>
       The space is exanding you know?</div>`,
+      creator_id: 1,
     },
   ])
   await query

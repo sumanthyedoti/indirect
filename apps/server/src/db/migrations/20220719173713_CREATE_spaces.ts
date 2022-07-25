@@ -12,6 +12,8 @@ export async function up(knex: Knex): Promise<void> {
         table.string('name', 60).notNullable()
         table.string('tagline').nullable()
         table.text('description').nullable()
+        table.text('creator_id').notNullable()
+        table.boolean('is_private').defaultTo(false)
         table.timestamps(true, true)
       })
       return query

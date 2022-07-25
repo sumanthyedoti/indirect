@@ -6,7 +6,12 @@ export async function seed(knex: Knex): Promise<void> {
 
   // Inserts seed entries
   const query = knex('channels').insert([
-    { name: 'general', description: 'open for everyone here', space_id: 1 },
+    {
+      name: 'general',
+      description: 'open for everyone here',
+      space_id: 1,
+      creator_id: 2,
+    },
   ])
   await query
 }

@@ -2,6 +2,7 @@ interface Info {
   name: string
   tagline?: string | null
   description?: string | null
+  is_private: boolean
 }
 
 import { User } from './users'

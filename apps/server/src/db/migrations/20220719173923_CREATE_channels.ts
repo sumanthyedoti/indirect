@@ -19,6 +19,8 @@ export async function up(knex: Knex): Promise<void> {
           .onDelete('CASCADE')
         table.text('name').notNullable()
         table.text('description').nullable()
+        table.text('creator_id').notNullable()
+        table.boolean('is_private').defaultTo(false)
         table.boolean('is_shared').defaultTo(false)
         table.timestamps(true, true)
       })
