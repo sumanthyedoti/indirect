@@ -16,11 +16,7 @@ import { appErrorToastOptions, successToastOptions } from '../../utils'
 import api from '../../axios'
 import { userErrorToastOptions } from '../../utils'
 
-interface SidePanelProps {
-  dummy?: null
-}
-
-const SidePanel: FC<SidePanelProps> = () => {
+const SidePanel: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const closeModal = () => {

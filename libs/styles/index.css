@@ -27,6 +27,12 @@
   a {
     @apply text-blue-300 no-underline hover:underline;
   }
+  button {
+    @apply rounded-sm outline-none focus:ring-2 ring-offset-2 ring-offset-slate-800 ring-sky-500;
+  }
+  button:focus:not(:focus-visible) {
+    @apply ring-0 ring-offset-0; /* undo gold */
+  }
   ::-webkit-scrollbar {
     @apply w-1;
   }
