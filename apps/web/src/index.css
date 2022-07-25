@@ -1,5 +1,12 @@
 @import '@libs/styles/lib/index.css';
 
+* {
+  /* outline: 1px solid red; */
+}
+.test {
+  @apply outline outline-red-500;
+}
+
 @tailwind components;
 @layer components {
   [contenteditable='true']:empty:before {
@@ -16,6 +23,12 @@
   /* icons */
   .icon-log-out {
     @apply hover:stroke-red-600;
+  }
+  .side-panel-padding {
+    @apply px-2 py-2 md:px-3;
+  }
+  .main-view-padding {
+    @apply px-4;
   }
 }
 

@@ -3,16 +3,17 @@ import classnames from 'classnames'
 import { FC, useState, useCallback } from 'react'
 import toast from 'react-hot-toast'
 
-import userStore from '../store/userStore'
-import { Logout } from '../icons'
-import { Modal, CreateChannel } from './organisms'
-import { IconButton } from './atoms'
-import { Plus } from '../icons'
-import { useQueryChannels } from '../queries'
+import SideHeader from './SideHeader'
 import { CreateChannel as CreateChannelT } from '@api-types/channels'
-import { appErrorToastOptions, successToastOptions } from '../utils'
-import api from '../axios'
-import { userErrorToastOptions } from '../utils'
+import { Modal, CreateChannel } from '../organisms'
+import { IconButton } from '../atoms'
+import userStore from '../../store/userStore'
+import { Logout } from '../../icons'
+import { Plus } from '../../icons'
+import { useQuerySpaceChannels } from '../../queries'
+import { appErrorToastOptions, successToastOptions } from '../../utils'
+import api from '../../axios'
+import { userErrorToastOptions } from '../../utils'
 
 interface SidePanelProps {
   dummy?: null
@@ -28,7 +29,7 @@ const SidePanel: FC<SidePanelProps> = () => {
   }
   const queryClient = useQueryClient()
   const { spaceId, channelId, setChannelId, logout } = userStore()
-  const { data: channels, isSuccess } = useQueryChannels(spaceId)
+  const { data: channels, isSuccess } = useQuerySpaceChannels(spaceId)
   const createChannel = useCallback(async (data: CreateChannelT) => {
     try {
       const { data: res } = await api.post('/channels', data)
@@ -62,39 +63,44 @@ const SidePanel: FC<SidePanelProps> = () => {
 
   return (
     <aside
-      className={`w-1/3 lg:w-1/4 2xl:w-1/5 h-full shrink-0 relative
-      px-2 py-2 md:px-3 border-r border-neutral-600
+      className={`
+      w-1/3 lg:w-1/4 2xl:w-1/5 h-full
+      shrink-0 relative
+      border-r border-neutral-600
       bg-slate-900
      `}
     >
-      <div className="flex items-center justify-between">
-        <h4>Channels</h4>
-        <IconButton aria-label="Create Channel" onClick={openModal}>
-          <Plus />
-        </IconButton>
-      </div>
-      {channels?.map((c) => {
-        return (
-          <button
-            onClick={() => handleChannelClick(c.id)}
-            key={c.id}
-            className={classnames('flex space-x-1', [
-              c.id === channelId && 'text-neutral-100',
-            ])}
-          >
-            <span
-              className={classnames('text-lg', {
-                'text-zinc-400': c.id !== channelId,
-              })}
+      <SideHeader />
+      <div className="side-panel-padding">
+        <div className="flex items-center justify-between">
+          <h4 className="text-base font-normal">Channels</h4>
+          <IconButton aria-label="Create Channel" onClick={openModal}>
+            <Plus />
+          </IconButton>
+        </div>
+        {channels?.map((c) => {
+          return (
+            <button
+              onClick={() => handleChannelClick(c.id)}
+              key={c.id}
+              className={classnames('flex space-x-1', [
+                c.id === channelId && 'text-neutral-100',
+              ])}
             >
-              #
-            </span>
-            <span className={classnames({ 'font-bold': c.id === channelId })}>
-              {c.name}
-            </span>
-          </button>
-        )
-      })}
+              <span
+                className={classnames('text-lg', {
+                  'text-zinc-400': c.id !== channelId,
+                })}
+              >
+                #
+              </span>
+              <span className={classnames({ 'font-bold': c.id === channelId })}>
+                {c.name}
+              </span>
+            </button>
+          )
+        })}
+      </div>
       <IconButton
         onClick={handleLogout}
         className="absolute bottom-3 right-3"

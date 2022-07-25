@@ -2,12 +2,14 @@ import { useState, useEffect, useCallback, memo, FC } from 'react'
 import toast from 'react-hot-toast'
 
 import * as T from '@api-types/messages'
-import { MessageInput } from '../components/molecules'
-import { ChannelMessages, SidePanel } from '../components'
-import userStore from '../store/userStore'
-import api from '../axios'
-import useSocket from '../hooks/useSocket'
-import { appErrorToastOptions } from '../utils'
+import Header from './MainHeader'
+import ChannelMessages from './ChannelMessages'
+import { MessageInput } from '../../components/molecules'
+import { SidePanel } from '../../components'
+import userStore from '../../store/userStore'
+import api from '../../axios'
+import useSocket from '../../hooks/useSocket'
+import { appErrorToastOptions } from '../../utils'
 
 const Space: FC = () => {
   const { user, channelId } = userStore()
@@ -59,15 +61,16 @@ const Space: FC = () => {
   )
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen max-h-screen">
       <SidePanel />
       <div
         className={`
-          w-full flex flex-col relative h-full bg-slate-800 py-2 px-4
+          w-full flex flex-col relative h-full bg-slate-800
     `}
       >
+        <Header />
         <ChannelMessages messages={messages} />
-        <MessageInput className="-ml-1 -mr-1" onSubmit={handleMessageSubmit} />
+        <MessageInput className="mx-3 mb-2" onSubmit={handleMessageSubmit} />
       </div>
     </div>
   )

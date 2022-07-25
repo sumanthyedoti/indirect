@@ -70,6 +70,7 @@ export const socketAuthentication = (
   const req = socket.request
   //@ts-ignore
   if (req.isAuthenticated && req.isAuthenticated()) {
+    socket.join(req.user.id.toString())
     next()
   } else {
     next(new Error('unauthorized'))

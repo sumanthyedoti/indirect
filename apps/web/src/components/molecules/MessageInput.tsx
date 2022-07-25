@@ -1,4 +1,5 @@
 import React, { useState, FC } from 'react'
+import classnames from 'classnames'
 
 interface MessageAreaProps {
   onSubmit?: (text: string) => void
@@ -19,7 +20,7 @@ const MessageArea: FC<MessageAreaProps> = ({
     setText('')
   }
   return (
-    <form onSubmit={handleSubmit} className={className}>
+    <form onSubmit={handleSubmit} className={classnames(className)}>
       <input
         {...props}
         onChange={handleInput}

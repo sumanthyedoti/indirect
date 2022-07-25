@@ -1,8 +1,7 @@
 import { useRef, FC } from 'react'
 
 import * as T from '@api-types/messages'
-import { MessagesOfADay } from './organisms'
-import { MessagesContainer } from './molecules'
+import { MessagesOfADay } from '../organisms'
 
 interface ChannelMessagesProps {
   messages: T.Message[]
@@ -15,7 +14,12 @@ const ChannelMessages: FC<ChannelMessagesProps> = ({ messages }) => {
   let isFirstDay = true
 
   return (
-    <MessagesContainer ref={messagesContainerRef}>
+    <article
+      ref={messagesContainerRef}
+      className={`h-full mr-2 overflow-y-auto
+        flex flex-col main-view-padding
+      `}
+    >
       {messages.map((m, i) => {
         const currentDate = new Date(m.created_at).getDate()
         const nextDate = new Date(messages[i + 1]?.created_at).getDate()
@@ -37,7 +41,7 @@ const ChannelMessages: FC<ChannelMessagesProps> = ({ messages }) => {
           return null
         }
       })}
-    </MessagesContainer>
+    </article>
   )
 }
 
