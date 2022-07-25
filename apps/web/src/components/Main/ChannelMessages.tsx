@@ -1,7 +1,7 @@
 import { useRef, FC } from 'react'
 
 import * as T from '@api-types/messages'
-import { MessagesOfADay } from '../organisms'
+import MessagesOfADay from './MessagesOfADay'
 
 interface ChannelMessagesProps {
   messages: T.Message[]
