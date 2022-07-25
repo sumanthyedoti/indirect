@@ -3,13 +3,8 @@ import { Message as MessageT } from '@api-types/messages'
 import db from '../../db'
 
 async function CreateChannel(channel: T.CreateChannel) {
-  const { space_id, name, description } = channel
-  const [channelCreated]: T.Channel[] = await db('channels')
-    .insert({
-      name,
-      space_id,
-      description,
-    })
+  const channelCreated: number = await db('channels')
+    .insert(channel)
     .returning('id')
   return channelCreated
 }

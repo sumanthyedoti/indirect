@@ -22,7 +22,7 @@ const createSpaceScheme: JSONSchemaType<CreateSpace> = {
     creator_id: { type: 'number' },
     is_private: { type: 'boolean', nullable: true },
   },
-  required: ['name'],
+  required: ['name', 'creator_id'],
   // additionalProperties: false,
 }
 

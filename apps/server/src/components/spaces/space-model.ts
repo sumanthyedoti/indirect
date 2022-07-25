@@ -3,14 +3,7 @@ import { Channel as ChannelT } from '@api-types/channels'
 import db from '../../db'
 
 async function createSpace(space: T.CreateSpace) {
-  const { name, tagline, description } = space
-  const spaceId: number = await db('spaces')
-    .insert({
-      name,
-      tagline,
-      description,
-    })
-    .returning('id')
+  const spaceId: number = await db('spaces').insert(space).returning('id')
   return spaceId
 }
 

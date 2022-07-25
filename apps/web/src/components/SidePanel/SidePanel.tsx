@@ -36,6 +36,7 @@ const SidePanel: FC<SidePanelProps> = () => {
   const { spaceId, setChannelId, logout } = userStore()
   const { data: channels, isSuccess } = useQuerySpaceChannels(spaceId)
   const createChannel = useCallback(async (data: CreateChannelT) => {
+    console.log({ data })
     try {
       const { data: res } = await api.post('/channels', data)
       closeModal()

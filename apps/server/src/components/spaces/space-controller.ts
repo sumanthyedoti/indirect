@@ -13,13 +13,14 @@ async function createSpace(
   req: TypedRequestBody<T.CreateSpace>,
   res: Response
 ) {
-  const { name, tagline, description } = req.body
+  const { name, tagline, description, creator_id } = req.body
 
   try {
     const spaceId = await spaceModel.createSpace({
       name,
       tagline,
       description,
+      creator_id,
     })
     res.status(201).json({
       data: {

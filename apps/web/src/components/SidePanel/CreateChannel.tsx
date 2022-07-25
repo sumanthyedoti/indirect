@@ -19,6 +19,7 @@ interface CreateChannelProps {
 
 const schema = yup.object().shape({
   space_id: yup.number().required(),
+  creator_id: yup.number().required(),
   name: yup
     .string()
     .required('Please provide the channel name!')
@@ -33,7 +34,7 @@ const schema = yup.object().shape({
 })
 
 const CreateChannel: FC<CreateChannelProps> = ({ close, createChannel }) => {
-  const { spaceId } = userStore()
+  const { spaceId, user } = userStore()
   const {
     register,
     handleSubmit,
@@ -60,6 +61,13 @@ const CreateChannel: FC<CreateChannelProps> = ({ close, createChannel }) => {
             {...register('space_id')}
             readOnly
             value={spaceId}
+          />
+          <input
+            hidden
+            type="number"
+            {...register('creator_id')}
+            readOnly
+            value={user?.id}
           />
           <FormInput
             label="Name"
