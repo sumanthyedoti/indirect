@@ -13,8 +13,10 @@ const createChannelScheme: JSONSchemaType<CreateChannel> = {
       nullable: true,
       maxLength: Constraints.description,
     },
+    creator_id: { type: 'number' },
+    is_private: { type: 'boolean', nullable: true },
   },
-  required: ['name'],
+  required: ['name', 'creator_id'],
   // additionalProperties: false,
 }
 

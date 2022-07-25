@@ -2,16 +2,19 @@ interface Info {
   name: string
   tagline?: string | null
   description?: string | null
-  is_private: boolean
+  creator_id: number
 }
 
 import { User } from './users'
 import { Profile } from './profile'
 
-export interface CreateSpace extends Info {}
+export interface CreateSpace extends Info {
+  is_private?: boolean
+}
 
 export interface Space extends Info {
   id: number
+  is_private: boolean
 }
 
 export interface UpdateSpace extends Info {}

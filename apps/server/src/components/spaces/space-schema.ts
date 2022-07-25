@@ -19,6 +19,8 @@ const createSpaceScheme: JSONSchemaType<CreateSpace> = {
       minLength: 1,
       maxLength: Constraints.description,
     },
+    creator_id: { type: 'number' },
+    is_private: { type: 'boolean', nullable: true },
   },
   required: ['name'],
   // additionalProperties: false,

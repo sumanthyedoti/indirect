@@ -3,15 +3,17 @@ interface Info {
   name: string
   description: string | null
   creator_id: number
-  is_private: boolean
 }
 
 export interface Channel extends Info {
   id: number
   is_shared: boolean
+  is_private: boolean
 }
 
-export interface CreateChannel extends Info {}
+export interface CreateChannel extends Info {
+  is_private?: boolean
+}
 
 export interface UpdateChannel {
   name: string | null
