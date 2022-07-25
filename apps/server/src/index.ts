@@ -18,7 +18,6 @@ import { expressSessionMiddleware, socketAuthentication } from './middlewares'
 import messageServer from './message-server'
 
 const port = process.env.PORT || 8000
-// const wsPort = process.env.WS_PORT || 4000
 
 const whiteList = ['http://localhost:3000']
 
@@ -56,9 +55,10 @@ app.use('/spaces', spaceRouter)
 app.use('/channels', channelRouter)
 
 /* web sockets */
-const httpServer = createHTTPServer(app)
-const io = new SocketServer(httpServer, {
+const server = createHTTPServer(app)
+const io = new SocketServer(server, {
   cors: { origin: whiteList, credentials: true },
+  cookie: true,
 })
 
 const wrap =
@@ -68,7 +68,6 @@ const wrap =
   }
 
 // -- connect express-session and passport to socket.io middlewares
-//@ts-nocheck
 io.use(wrap(expressSessionMiddleware))
 io.use(wrap(passport.initialize()))
 io.use(wrap(passport.session()))
@@ -79,10 +78,14 @@ io.use(socketAuthentication)
 
 io.on('connection', (socket) => {
   console.log('a user connected ', socket.id)
+  if (process.env.NODE_ENV === 'development')
+    socket.onAny((event, ...args) => {
+      console.log(event, args)
+    })
 })
 messageServer(io)
 
-httpServer.listen(port, () => {
+server.listen(port, () => {
   console.log(`⚡️[server]: Server is running at ${port}`)
   console.log('💬 Message server running at ' + port)
 })
