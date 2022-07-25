@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { io } from 'socket.io-client'
 // import userStore from '../store/userStore'
 
-const socket = io('ws://localhost:4000', {
+const socket = io('ws://localhost:8000', {
   autoConnect: false,
   withCredentials: true,
 })

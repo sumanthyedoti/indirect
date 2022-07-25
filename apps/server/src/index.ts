@@ -18,7 +18,7 @@ import { expressSessionMiddleware, socketAuthentication } from './middlewares'
 import messageServer from './message-server'
 
 const port = process.env.PORT || 8000
-const wsPort = process.env.WS_PORT || 4000
+// const wsPort = process.env.WS_PORT || 4000
 
 const whiteList = ['http://localhost:3000']
 
@@ -55,12 +55,7 @@ app.use('/messages', messageRouter)
 app.use('/spaces', spaceRouter)
 app.use('/channels', channelRouter)
 
-app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at ${port}`)
-})
-
 /* web sockets */
-
 const httpServer = createHTTPServer(app)
 const io = new SocketServer(httpServer, {
   cors: { origin: whiteList, credentials: true },
@@ -87,6 +82,7 @@ io.on('connection', (socket) => {
 })
 messageServer(io)
 
-httpServer.listen(wsPort, () => {
-  console.log('💬 Message server running at ' + wsPort)
+httpServer.listen(port, () => {
+  console.log(`⚡️[server]: Server is running at ${port}`)
+  console.log('💬 Message server running at ' + port)
 })
