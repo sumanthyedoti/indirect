@@ -1,9 +1,9 @@
 import React, { FC, useState, useCallback } from 'react'
-import classnames from 'classnames'
 import { useQueryClient } from 'react-query'
 import toast from 'react-hot-toast'
 
 import SideHeader from './SideHeader'
+import ChannelName from './ChannelName'
 import Section from './Section'
 import CreateChannel from './CreateChannel'
 import { CreateChannel as CreateChannelT } from '@api-types/channels'
@@ -23,7 +23,6 @@ interface SidePanelProps {
 
 const SidePanel: FC<SidePanelProps> = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  // const [isChannelsClosed, setIsChannelsClosed] = useState(false)
 
   const closeModal = () => {
     setIsModalOpen(false)
@@ -34,7 +33,7 @@ const SidePanel: FC<SidePanelProps> = () => {
     setIsModalOpen(true)
   }
   const queryClient = useQueryClient()
-  const { spaceId, channelId, setChannelId, logout } = userStore()
+  const { spaceId, setChannelId, logout } = userStore()
   const { data: channels, isSuccess } = useQuerySpaceChannels(spaceId)
   const createChannel = useCallback(async (data: CreateChannelT) => {
     try {
@@ -93,28 +92,11 @@ const SidePanel: FC<SidePanelProps> = () => {
             <>
               {channels?.map((c) => {
                 return (
-                  <button
-                    onClick={() => handleChannelClick(c.id)}
+                  <ChannelName
                     key={c.id}
-                    className={classnames('flex space-x-1', [
-                      c.id === channelId && 'text-neutral-100',
-                    ])}
-                  >
-                    <span
-                      className={classnames('text-lg', {
-                        'text-zinc-400': c.id !== channelId,
-                      })}
-                    >
-                      #
-                    </span>
-                    <span
-                      className={classnames({
-                        'font-bold': c.id === channelId,
-                      })}
-                    >
-                      {c.name}
-                    </span>
-                  </button>
+                    channel={c}
+                    onClick={handleChannelClick}
+                  />
                 )
               })}
             </>

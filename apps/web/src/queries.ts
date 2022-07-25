@@ -5,13 +5,40 @@ import { Channel } from '@api-types/channels'
 import api from './axios'
 
 // const stateTime = (hrs: number) => hrs * 60 * 60 * 1000
+//
+// function useQueryUsersMap(spaceId: number) {
+//   const {data} = useQueryUsers(spaceId)
+//   return useQuery<{ [key: string]: SpaceUser }>(
+//     ['users-map', spaceId],
+//     async () => {
+//       const { data } = await api.get(`/spaces/${spaceId}/users-map`)
+//       return data.data
+//     },
+//     {
+//       staleTime: Infinity,
+//     }
+//   )
+// }
 
+type UsersQuery = {
+  list: SpaceUser[]
+  idMap: {
+    [key: string]: SpaceUser
+  }
+}
 function useQueryUsers(spaceId: number) {
-  return useQuery<SpaceUser[]>(
+  return useQuery(
     ['users', spaceId],
     async () => {
-      const { data } = await api.get(`/spaces/${spaceId}/users-map`)
-      return data.data
+      const { data } = await api.get<{ data: SpaceUser[] }>(
+        `/spaces/${spaceId}/users`
+      )
+      const users = data.data
+      const usersListAndMap: UsersQuery = { list: users, idMap: {} }
+      for (let i = 0; i < users.length; i++) {
+        usersListAndMap.idMap[users[i].user_id] = users[i]
+      }
+      return usersListAndMap
     },
     {
       staleTime: Infinity,
@@ -58,4 +85,10 @@ function useQuerySpaceChannels(spaceId: number) {
   )
 }
 
-export { useQueryUsers, useQuerySpaceChannels, useQuerySpace, useQueryChannel }
+export {
+  useQueryUsers,
+  // useQueryUsersMap,
+  useQuerySpaceChannels,
+  useQuerySpace,
+  useQueryChannel,
+}

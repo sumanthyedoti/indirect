@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import classnames from 'classnames'
-import { Disclosure, Transition } from '@headlessui/react'
+import { Disclosure } from '@headlessui/react'
 
 import { ChevronRight } from '../../icons'
 
@@ -28,18 +28,9 @@ const Section: FC<SectionProps> = ({ title, actionIcon, body }) => {
             </h2>
           </Disclosure.Button>
           <span className="absolute h-3 top-0.5 right-4">{actionIcon}</span>
-          <Transition
-            className=""
-            show={open}
-            enter="transition duration-100 ease-out"
-            enterFrom="transform -translate-y-3 opacity-75"
-            enterTo="transform translate-y-0 opacity-100"
-            leave="transition duration-75 ease-out"
-            leaveFrom="transform translate-y-0 opacity-100"
-            leaveTo="transform -translate-y-3 opacity-25"
-          >
+          <div className="overflow-hidden">
             <Disclosure.Panel className="">{body}</Disclosure.Panel>
-          </Transition>
+          </div>
         </div>
       )}
     </Disclosure>
