@@ -1,4 +1,5 @@
 import React, { useState, FC } from 'react'
+import toast from 'react-hot-toast'
 import Select from 'react-select'
 import { Dialog } from '@headlessui/react'
 
@@ -8,7 +9,8 @@ import { IconButton, Button } from '../atoms'
 import { Close, ArrowBack } from '../../icons'
 import useStore from './store'
 import stylesConfig from '../../config/react-select-styles'
-// import api from '../../axios'
+import { appErrorToastOptions, successToastOptions } from '../../utils'
+import api from '../../axios'
 
 interface AddPeoleProps {
   dummy?: null
@@ -39,9 +41,29 @@ const AddPeole: FC<AddPeoleProps> = () => {
     if (data.length) setIsError(false)
     setSelectedUsers(data)
   }
-  const onAddPeople = (e: React.FormEvent<HTMLFormElement>) => {
+  const onAddPeople = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (selectedUsers.length === 0) setIsError(true)
+    if (selectedUsers.length === 0) {
+      setIsError(true)
+      return
+    }
+    try {
+      await api.post('/channels/users', {
+        channel_id: channelId,
+        user_ids: selectedUsers.map((u) => u.value),
+      })
+      toast.success(`Added users to the channel '#${channel.name}'`, {
+        ...successToastOptions,
+        id: 'post-channel-users-success',
+      })
+      setSelectedUsers([])
+    } catch (err) {
+      console.log(err)
+      toast.error('Something went wrong while adding users to the channel', {
+        ...appErrorToastOptions,
+        id: 'post-channel-users-error',
+      })
+    }
   }
 
   return (
@@ -69,6 +91,7 @@ const AddPeole: FC<AddPeoleProps> = () => {
           styles={stylesConfig}
           options={options}
           isMulti
+          value={selectedUsers}
           onChange={onPeopleChange}
           noOptionsMessage={() => 'No matches'}
           menuPortalTarget={document.body}
