@@ -1,5 +1,5 @@
-import { FC } from 'react'
-import Select, { StylesConfig } from 'react-select'
+import { useRef, FC } from 'react'
+import Select, { StylesConfig, components, MenuProps } from 'react-select'
 import { Dialog } from '@headlessui/react'
 
 import userStore from '../../store/userStore'
@@ -16,9 +16,11 @@ const AddPeole: FC<AddPeoleProps> = () => {
     value: user.id,
     label: user.fullname,
   }))
+  const menuRef = useRef<HTMLDivElement>(null)
   const stylesConfig: StylesConfig = {
     control: (styles) => ({
       ...styles,
+      border: 'none',
       backgroundColor: '#1e293b',
     }),
     option: (styles, { isFocused, isDisabled }) => ({
@@ -51,19 +53,34 @@ const AddPeole: FC<AddPeoleProps> = () => {
         color: 'white',
       },
     }),
+    menuPortal: (styles) => ({
+      ...styles,
+      position: 'absolute',
+      zIndex: 100,
+    }),
   }
+
+  const Menu = (props: MenuProps) => {
+    return (
+      <div className="">
+        <components.Menu {...props}>{props.children}</components.Menu>
+      </div>
+    )
+  }
+
   if (!isSuccess) return null
 
   return (
-    <Dialog.Panel className="relative z-10 h-64 p-3">
+    <Dialog.Panel ref={menuRef} className="relative z-10 h-40 p-4">
       <Dialog.Title as="h2">Add People</Dialog.Title>
-      <div className="relative z-20">
+      <div className="">
         <Select
           styles={stylesConfig}
           options={options}
           defaultMenuIsOpen
           isMulti
-          closeMenuOnSelect={false}
+          menuPortalTarget={document.body}
+          components={{ Menu }}
         />
       </div>
     </Dialog.Panel>
