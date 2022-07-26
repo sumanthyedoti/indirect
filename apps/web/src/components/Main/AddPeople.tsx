@@ -1,9 +1,12 @@
 import { FC } from 'react'
-import Select, { StylesConfig, components, MenuProps } from 'react-select'
+import Select, { StylesConfig } from 'react-select'
 import { Dialog } from '@headlessui/react'
 
 import userStore from '../../store/userStore'
 import { useQueryUsers } from '../../queries'
+import { IconButton } from '../atoms'
+import { Close } from '../../icons'
+import useStore from './store'
 
 interface AddPeoleProps {
   dummy?: null
@@ -11,6 +14,7 @@ interface AddPeoleProps {
 
 const AddPeole: FC<AddPeoleProps> = () => {
   const { spaceId } = userStore()
+  const { closeAddPeopleModal } = useStore()
   const { data } = useQueryUsers(spaceId)
   if (!data) return null
   const options = data?.list.map((user) => ({
@@ -24,6 +28,11 @@ const AddPeole: FC<AddPeoleProps> = () => {
       backgroundColor: '#1e293b',
       maxHeight: '72px',
       overflow: 'auto',
+      color: '#e2e8f0',
+    }),
+    input: (styles) => ({
+      ...styles,
+      color: '#e2e8f0',
     }),
     option: (styles, { isFocused, isDisabled }) => ({
       ...styles,
@@ -33,6 +42,7 @@ const AddPeole: FC<AddPeoleProps> = () => {
         ? '#334155'
         : '#475569',
       cursor: isDisabled ? 'not-allowed' : 'default',
+      color: '#e2e8f0',
     }),
     menu: (styles) => ({
       ...styles,
@@ -44,12 +54,9 @@ const AddPeole: FC<AddPeoleProps> = () => {
       backgroundColor: '#475569',
       borderRadius: '0.2em',
     }),
-    multiValue: (styles) => ({
-      ...styles,
-    }),
     multiValueRemove: (styles) => ({
       ...styles,
-      color: 'gray',
+      // color: 'gray',
       ':hover': {
         backgroundColor: '#bbb',
         color: 'white',
@@ -62,14 +69,6 @@ const AddPeole: FC<AddPeoleProps> = () => {
     }),
   }
 
-  const Menu = (props: MenuProps) => {
-    return (
-      <div className="">
-        <components.Menu {...props}>{props.children}</components.Menu>
-      </div>
-    )
-  }
-
   return (
     <Dialog.Panel className="relative z-10 h-40 p-4">
       <Dialog.Title as="h2">Add People</Dialog.Title>
@@ -78,10 +77,16 @@ const AddPeole: FC<AddPeoleProps> = () => {
           styles={stylesConfig}
           options={options}
           isMulti
+          noOptionsMessage={() => 'No matches'}
           menuPortalTarget={document.body}
-          components={{ Menu }}
         />
       </div>
+      <IconButton
+        onClick={closeAddPeopleModal}
+        className="absolute top-4 right-4"
+      >
+        <Close />
+      </IconButton>
     </Dialog.Panel>
   )
 }

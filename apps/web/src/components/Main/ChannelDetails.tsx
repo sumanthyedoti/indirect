@@ -4,7 +4,8 @@ import { Dialog, Tab } from '@headlessui/react'
 
 import userStore from '../../store/userStore'
 import { useQueryChannel } from '../../queries'
-import { AddPeople } from '../../icons'
+import { AddPeople, Close } from '../../icons'
+import { IconButton } from '../atoms'
 import useStore from './store'
 
 interface ChannelDetailsProps {
@@ -45,7 +46,7 @@ const TabC: FC<{ children: string }> = ({ children }) => (
   <Tab
     className={({ selected }) =>
       classnames(
-        'mx-3 first:ml-0 border-b-2 outline-none ring-offset-0 focus:ring-0',
+        'mx-3 first:ml-0 border-b-2 outline-none p-0.5 ring-offset-0',
         {
           'border-slate-300': selected,
           'border-transparent': !selected,
@@ -57,50 +58,56 @@ const TabC: FC<{ children: string }> = ({ children }) => (
   </Tab>
 )
 
-const ChannelDetails: FC<ChannelDetailsProps> = () => {
+const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
   const { channelId } = userStore()
+  const { closeChannelModal } = useStore()
   const { data: channel, isSuccess } = useQueryChannel(channelId)
+
   if (!isSuccess) return null
   return (
-    <div>
-      <Dialog.Panel
-        className={`w-full max-w-lg py-3
+    <Dialog.Panel
+      className={`w-full max-w-lg py-3 relative
         text-left align-middle
         bg-slate-700 transform
         rounded-md transition-all`}
-        style={{
-          minHeight: '200px',
-        }}
-      >
-        <Dialog.Title as="h2" className="px-4 pb-2 mb-0">
-          # {channel?.name}
-        </Dialog.Title>
-        <Tab.Group>
-          <Tab.List className="px-4 border-b border-gray-600">
-            <TabC>About</TabC>
-            <TabC>Members</TabC>
-          </Tab.List>
-          <Tab.Panels className="">
-            <Tab.Panel className="flex flex-col">
-              {channel.description && (
-                <Section>
-                  <h5 className="font-medium">Description</h5>
-                  <div
-                    dangerouslySetInnerHTML={{ __html: channel.description }}
-                  />
-                </Section>
-              )}
-            </Tab.Panel>
-            <Tab.Panel>
+      style={{
+        minHeight: '200px',
+      }}
+    >
+      <Dialog.Title as="h2" className="px-4">
+        # {channel?.name}
+      </Dialog.Title>
+      <Tab.Group>
+        <Tab.List className="px-4 border-b border-gray-600">
+          <TabC>About</TabC>
+          <TabC>Members</TabC>
+        </Tab.List>
+        <Tab.Panels className="">
+          <Tab.Panel className="flex flex-col">
+            {channel.description && (
               <Section>
-                <AddPeopleButton />
+                <h5 className="font-medium">Description</h5>
+                <div
+                  dangerouslySetInnerHTML={{ __html: channel.description }}
+                />
               </Section>
-            </Tab.Panel>
-          </Tab.Panels>
-        </Tab.Group>
-      </Dialog.Panel>
-    </div>
+            )}
+          </Tab.Panel>
+          <Tab.Panel>
+            <Section>
+              <AddPeopleButton />
+            </Section>
+          </Tab.Panel>
+        </Tab.Panels>
+      </Tab.Group>
+      <IconButton
+        onClick={closeChannelModal}
+        className="absolute top-4 right-4"
+      >
+        <Close />
+      </IconButton>
+    </Dialog.Panel>
   )
 }
 
-export default ChannelDetails
+export default ChannelDetailsModal

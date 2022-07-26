@@ -12,7 +12,7 @@ const IconButton: FC<IconButtonProps> = ({ children, className, ...props }) => {
     <button
       className={classnames(
         `rounded-sm
-        outline-none
+        outline-none hover:bg-slate-800
         ring-sky-500 ring-offset-1 ring-offset-transparent focus:ring-1`,
         className
       )}
