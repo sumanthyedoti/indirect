@@ -5,7 +5,7 @@ import { Dialog } from '@headlessui/react'
 import userStore from '../../store/userStore'
 import { useQueryUsers } from '../../queries'
 import { IconButton } from '../atoms'
-import { Close } from '../../icons'
+import { Close, ArrowBack } from '../../icons'
 import useStore from './store'
 
 interface AddPeoleProps {
@@ -14,13 +14,21 @@ interface AddPeoleProps {
 
 const AddPeole: FC<AddPeoleProps> = () => {
   const { spaceId } = userStore()
-  const { closeAddPeopleModal } = useStore()
+  const { closeAddPeopleModal, openChannelModal, setActiveChannelTab } =
+    useStore()
   const { data } = useQueryUsers(spaceId)
   if (!data) return null
   const options = data?.list.map((user) => ({
     value: user.id,
     label: user.fullname,
   }))
+
+  const handleGoBack = () => {
+    setActiveChannelTab(1)
+    openChannelModal()
+    closeAddPeopleModal()
+  }
+
   const stylesConfig: StylesConfig = {
     control: (styles) => ({
       ...styles,
@@ -56,7 +64,7 @@ const AddPeole: FC<AddPeoleProps> = () => {
     }),
     multiValueRemove: (styles) => ({
       ...styles,
-      // color: 'gray',
+      color: 'gray',
       ':hover': {
         backgroundColor: '#bbb',
         color: 'white',
@@ -71,7 +79,18 @@ const AddPeole: FC<AddPeoleProps> = () => {
 
   return (
     <Dialog.Panel className="relative z-10 h-40 p-4">
-      <Dialog.Title as="h2">Add People</Dialog.Title>
+      <div className="flex items-center mb-6 space-x-2">
+        <IconButton
+          aria-label="Go back to channel members"
+          onClick={handleGoBack}
+          className="h-8 w-9"
+        >
+          <ArrowBack />
+        </IconButton>
+        <Dialog.Title as="h2" className="mb-0">
+          Add People
+        </Dialog.Title>
+      </div>
       <div className="">
         <Select
           styles={stylesConfig}
@@ -82,6 +101,7 @@ const AddPeole: FC<AddPeoleProps> = () => {
         />
       </div>
       <IconButton
+        aria-label="Close"
         onClick={closeAddPeopleModal}
         className="absolute top-4 right-4"
       >

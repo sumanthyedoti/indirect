@@ -60,7 +60,7 @@ const TabC: FC<{ children: string }> = ({ children }) => (
 
 const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
   const { channelId } = userStore()
-  const { closeChannelModal } = useStore()
+  const { closeChannelModal, activeChannelTab } = useStore()
   const { data: channel, isSuccess } = useQueryChannel(channelId)
 
   if (!isSuccess) return null
@@ -71,19 +71,19 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
         bg-slate-700 transform
         rounded-md transition-all`}
       style={{
-        minHeight: '200px',
+        minHeight: '300px',
       }}
     >
       <Dialog.Title as="h2" className="px-4">
         # {channel?.name}
       </Dialog.Title>
-      <Tab.Group>
+      <Tab.Group selectedIndex={activeChannelTab}>
         <Tab.List className="px-4 border-b border-gray-600">
           <TabC>About</TabC>
           <TabC>Members</TabC>
         </Tab.List>
         <Tab.Panels className="">
-          <Tab.Panel className="flex flex-col">
+          <Tab.Panel tabIndex={-1}>
             {channel.description && (
               <Section>
                 <h5 className="font-medium">Description</h5>
@@ -92,8 +92,11 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
                 />
               </Section>
             )}
+            <Section>
+              <AddPeopleButton />
+            </Section>
           </Tab.Panel>
-          <Tab.Panel>
+          <Tab.Panel tabIndex={-1}>
             <Section>
               <AddPeopleButton />
             </Section>
@@ -101,6 +104,7 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
         </Tab.Panels>
       </Tab.Group>
       <IconButton
+        aria-label="Close"
         onClick={closeChannelModal}
         className="absolute top-4 right-4"
       >
