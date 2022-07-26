@@ -3,7 +3,7 @@ import Select, { StylesConfig } from 'react-select'
 import { Dialog } from '@headlessui/react'
 
 import userStore from '../../store/userStore'
-import { useQueryUsers } from '../../queries'
+import { useQueryUsers, useQueryChannel } from '../../queries'
 import { IconButton } from '../atoms'
 import { Close, ArrowBack } from '../../icons'
 import useStore from './store'
@@ -13,11 +13,12 @@ interface AddPeoleProps {
 }
 
 const AddPeole: FC<AddPeoleProps> = () => {
-  const { spaceId } = userStore()
+  const { spaceId, channelId } = userStore()
   const { closeAddPeopleModal, openChannelModal, setActiveChannelTab } =
     useStore()
   const { data } = useQueryUsers(spaceId)
-  if (!data) return null
+  const { data: channel } = useQueryChannel(channelId)
+  if (!data || !channel) return null
   const options = data?.list.map((user) => ({
     value: user.id,
     label: user.fullname,
@@ -79,7 +80,7 @@ const AddPeole: FC<AddPeoleProps> = () => {
 
   return (
     <Dialog.Panel className="relative z-10 h-40 p-4">
-      <div className="flex items-center mb-6 space-x-2">
+      <div className="flex items-center space-x-2">
         <IconButton
           aria-label="Go back to channel members"
           onClick={handleGoBack}
@@ -91,6 +92,7 @@ const AddPeole: FC<AddPeoleProps> = () => {
           Add People
         </Dialog.Title>
       </div>
+      <p className="self-end mb-4 ml-10"># {channel.name}</p>
       <div className="">
         <Select
           styles={stylesConfig}

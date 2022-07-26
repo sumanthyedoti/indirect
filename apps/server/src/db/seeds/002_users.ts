@@ -15,8 +15,13 @@ export async function seed(knex: Knex): Promise<void> {
       password_hash: passHash,
     },
     {
-      email: 'bheem@gmail.com',
-      fullname: 'Bheemla Nayak',
+      email: 'guest1@gmail.com',
+      fullname: 'Guest One',
+      password_hash: passHash,
+    },
+    {
+      email: 'guest2@gmail.com',
+      fullname: 'Guest Two',
       password_hash: passHash,
     },
   ])
