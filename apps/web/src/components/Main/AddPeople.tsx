@@ -1,25 +1,33 @@
-import { FC } from 'react'
-import Select, { StylesConfig } from 'react-select'
+import React, { useState, FC } from 'react'
+import Select from 'react-select'
 import { Dialog } from '@headlessui/react'
 
 import userStore from '../../store/userStore'
 import { useQueryUsers, useQueryChannel } from '../../queries'
-import { IconButton } from '../atoms'
+import { IconButton, Button } from '../atoms'
 import { Close, ArrowBack } from '../../icons'
 import useStore from './store'
+import stylesConfig from '../../config/react-select-styles'
+// import api from '../../axios'
 
 interface AddPeoleProps {
   dummy?: null
 }
+type OptionT = {
+  value: number
+  label: string
+}
 
 const AddPeole: FC<AddPeoleProps> = () => {
+  const [selectedUsers, setSelectedUsers] = useState<OptionT[]>([])
+  const [isError, setIsError] = useState(false)
   const { spaceId, channelId } = userStore()
   const { closeAddPeopleModal, openChannelModal } = useStore()
   const { data } = useQueryUsers(spaceId)
   const { data: channel } = useQueryChannel(channelId)
   if (!data || !channel) return null
-  const options = data?.list.map((user) => ({
-    value: user.id,
+  const options: OptionT[] = data?.list.map((user) => ({
+    value: user.user_id,
     label: user.fullname,
   }))
 
@@ -27,57 +35,22 @@ const AddPeole: FC<AddPeoleProps> = () => {
     openChannelModal()
     closeAddPeopleModal()
   }
-
-  const stylesConfig: StylesConfig = {
-    control: (styles) => ({
-      ...styles,
-      border: 'none',
-      backgroundColor: '#1e293b',
-      maxHeight: '72px',
-      overflow: 'auto',
-      color: '#e2e8f0',
-    }),
-    input: (styles) => ({
-      ...styles,
-      color: '#e2e8f0',
-    }),
-    option: (styles, { isFocused, isDisabled }) => ({
-      ...styles,
-      backgroundColor: isDisabled
-        ? '#9ca3af'
-        : isFocused
-        ? '#334155'
-        : '#475569',
-      cursor: isDisabled ? 'not-allowed' : 'default',
-      color: '#e2e8f0',
-    }),
-    menu: (styles) => ({
-      ...styles,
-      backgroundColor: '#475569',
-      borderRadius: '0.2em',
-    }),
-    menuList: (styles) => ({
-      ...styles,
-      backgroundColor: '#475569',
-      borderRadius: '0.2em',
-    }),
-    multiValueRemove: (styles) => ({
-      ...styles,
-      color: 'gray',
-      ':hover': {
-        backgroundColor: '#bbb',
-        color: 'white',
-      },
-    }),
-    menuPortal: (styles) => ({
-      ...styles,
-      position: 'absolute',
-      zIndex: 100,
-    }),
+  const onPeopleChange = (data: any) => {
+    if (data.length) setIsError(false)
+    setSelectedUsers(data)
+  }
+  const onAddPeople = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (selectedUsers.length === 0) setIsError(true)
   }
 
   return (
-    <Dialog.Panel className="relative z-10 h-40 p-4">
+    <Dialog.Panel
+      className="relative z-10 p-5"
+      style={{
+        minHeight: '200px',
+      }}
+    >
       <div className="flex items-center space-x-2">
         <IconButton
           aria-label="Go back to channel members"
@@ -91,19 +64,28 @@ const AddPeole: FC<AddPeoleProps> = () => {
         </Dialog.Title>
       </div>
       <p className="self-end mb-4 ml-10"># {channel.name}</p>
-      <div className="">
+      <form className="" onSubmit={onAddPeople}>
         <Select
           styles={stylesConfig}
           options={options}
           isMulti
+          onChange={onPeopleChange}
           noOptionsMessage={() => 'No matches'}
           menuPortalTarget={document.body}
         />
-      </div>
+        {isError && (
+          <em className="text-sm text-red-400">No poeple are selected</em>
+        )}
+        <Button
+          type="submit"
+          className="w-full mt-6"
+          label="Add to the Channel"
+        />
+      </form>
       <IconButton
         aria-label="Close"
         onClick={closeAddPeopleModal}
-        className="absolute top-4 right-4"
+        className="absolute top-6 right-4"
       >
         <Close />
       </IconButton>
