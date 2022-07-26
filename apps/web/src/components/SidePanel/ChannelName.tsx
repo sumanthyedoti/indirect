@@ -15,10 +15,9 @@ const ChannelName: FC<ChannelNameProps> = ({ onClick, channel }) => {
     <button
       onClick={() => onClick(channel.id)}
       key={channel.id}
-      className={classnames(
-        'flex space-x-1 w-full hover:bg-slate-800 focus:bg-slate-800 outline-none',
-        [channel.id === channelId && 'text-neutral-100']
-      )}
+      className={classnames('flex space-x-1 w-full my-0.5 hover:bg-slate-800', [
+        channel.id === channelId && 'text-neutral-100',
+      ])}
     >
       <span
         className={classnames('text-lg', {
