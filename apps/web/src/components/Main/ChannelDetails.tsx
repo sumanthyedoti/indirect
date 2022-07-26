@@ -9,7 +9,6 @@ import { AddPeople } from '../../icons'
 
 interface ChannelDetailsProps {
   isPersonal?: boolean
-  close: () => void
 }
 
 interface SectionProps {
@@ -29,6 +28,7 @@ const Section: FC<SectionProps> = ({ children }) => (
 //   if (!isSuccess) return null
 //   return <Select options={options} />
 // }
+
 const AddPeopleButton = () => {
   return (
     <button
