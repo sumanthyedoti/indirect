@@ -5,6 +5,7 @@ import { Dialog, Tab } from '@headlessui/react'
 import userStore from '../../store/userStore'
 import { useQueryChannel } from '../../queries'
 import { AddPeople } from '../../icons'
+import useStore from './store'
 
 interface ChannelDetailsProps {
   isPersonal?: boolean
@@ -18,6 +19,11 @@ const Section: FC<SectionProps> = ({ children }) => (
 )
 
 const AddPeopleButton = () => {
+  const { openAddPeopleModal, closeChannelModal } = useStore()
+  const handleAddPeopeClick = () => {
+    closeChannelModal()
+    openAddPeopleModal()
+  }
   return (
     <button
       className={`flex items-center w-full
@@ -25,6 +31,7 @@ const AddPeopleButton = () => {
       space-x-2 font-lg
       focus:bg-gray-800
       `}
+      onClick={handleAddPeopeClick}
     >
       <span className="w-5 h-5">
         <AddPeople />

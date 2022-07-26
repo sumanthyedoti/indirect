@@ -7,7 +7,7 @@ import { useQueryChannel } from '../../queries'
 
 import ChannelDetails from './ChannelDetails'
 import AddPeople from './AddPeople'
-import store from './store'
+import useStore from './store'
 
 const SideHeader: FC = () => {
   const { channelId } = userStore()
@@ -15,17 +15,16 @@ const SideHeader: FC = () => {
   const {
     isChannelModalOpen,
     isAddPeopleModalOpen,
-    // openChannelModal,
-    openAddPeopleModal,
+    openChannelModal,
     closeChannelModal,
     closeAddPeopleModal,
-  } = store()
+  } = useStore()
 
   if (!isSuccess) return null
   return (
     <div className="mb-0 text-base border-b border-gray-700 shadow-sm shadow-gray-700 side-panel-padding">
       <button
-        onClick={openAddPeopleModal}
+        onClick={openChannelModal}
         className="flex items-center space-x-1"
       >
         <span># {channel.name} </span>
