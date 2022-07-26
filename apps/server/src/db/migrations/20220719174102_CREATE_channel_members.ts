@@ -8,7 +8,6 @@ export async function up(knex: Knex): Promise<void> {
   return knex.schema.hasTable('channel_users').then(function (exists) {
     if (!exists) {
       const query = knex.schema.createTable('channel_users', (table) => {
-        table.increments('id').unsigned().primary()
         table
           .integer('channel_id')
           .unsigned()
@@ -23,6 +22,7 @@ export async function up(knex: Knex): Promise<void> {
           .references('id')
           .inTable('users')
           .onDelete('SET NULL')
+        table.primary(['channel_id', 'user_id'])
         table.boolean('is_admin').defaultTo(false)
       })
       return query
