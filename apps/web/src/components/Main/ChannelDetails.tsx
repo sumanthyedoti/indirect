@@ -60,7 +60,8 @@ const TabC: FC<{ children: string }> = ({ children }) => (
 
 const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
   const { channelId } = userStore()
-  const { closeChannelModal, activeChannelTab } = useStore()
+  const { closeChannelModal, activeChannelTab, setActiveChannelTab } =
+    useStore()
   const { data: channel, isSuccess } = useQueryChannel(channelId)
 
   if (!isSuccess) return null
@@ -77,7 +78,10 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
       <Dialog.Title as="h2" className="px-4">
         # {channel?.name}
       </Dialog.Title>
-      <Tab.Group selectedIndex={activeChannelTab}>
+      <Tab.Group
+        selectedIndex={activeChannelTab}
+        onChange={setActiveChannelTab}
+      >
         <Tab.List className="px-4 border-b border-gray-600">
           <TabC>About</TabC>
           <TabC>Members</TabC>

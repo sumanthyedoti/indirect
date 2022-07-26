@@ -14,8 +14,7 @@ interface AddPeoleProps {
 
 const AddPeole: FC<AddPeoleProps> = () => {
   const { spaceId, channelId } = userStore()
-  const { closeAddPeopleModal, openChannelModal, setActiveChannelTab } =
-    useStore()
+  const { closeAddPeopleModal, openChannelModal } = useStore()
   const { data } = useQueryUsers(spaceId)
   const { data: channel } = useQueryChannel(channelId)
   if (!data || !channel) return null
@@ -25,7 +24,6 @@ const AddPeole: FC<AddPeoleProps> = () => {
   }))
 
   const handleGoBack = () => {
-    setActiveChannelTab(1)
     openChannelModal()
     closeAddPeopleModal()
   }
