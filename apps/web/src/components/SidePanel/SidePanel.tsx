@@ -24,7 +24,6 @@ const SidePanel: FC = () => {
   }
   const openModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
-    e.preventDefault()
     setIsModalOpen(true)
   }
   const queryClient = useQueryClient()

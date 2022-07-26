@@ -27,7 +27,7 @@ const Section: FC<SectionProps> = ({ title, actionIcon, body }) => {
               <span>{title}</span>
             </h2>
           </Disclosure.Button>
-          <span className="absolute h-3 top-0.5 right-4">{actionIcon}</span>
+          <span className="absolute h-3 top-0.5 right-2">{actionIcon}</span>
           <div className="">
             <Disclosure.Panel className="">{body}</Disclosure.Panel>
           </div>

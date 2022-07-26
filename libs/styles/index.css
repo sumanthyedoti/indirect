@@ -24,6 +24,9 @@
   h4 {
     @apply mb-1 text-xl;
   }
+  h5 {
+    @apply mb-1 text-lg;
+  }
   a {
     @apply text-blue-300 no-underline hover:underline;
   }
