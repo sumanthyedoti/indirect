@@ -31,10 +31,7 @@ async function getChannelMessages(id: number) {
   return result
 }
 
-async function UpdateChannel(
-  id: number,
-  channel: T.UpdateChannel
-): Promise<number> {
+async function UpdateChannel(id: number, channel: T.UpdateChannel) {
   const recordId: number = await db('channels')
     .where({
       id: id,
@@ -56,10 +53,21 @@ async function deleteChannel(id: number) {
   return channelId
 }
 
+async function addChannelMembers({ channel_id, user_ids }: T.ChannelMembers) {
+  const users: number[] = await db('channel_users').insert(
+    user_ids.map((userId) => ({
+      user_id: userId,
+      channel_id,
+    }))
+  )
+  return users
+}
+
 export default {
   CreateChannel,
   getChannel,
   getChannelMessages,
   UpdateChannel,
   deleteChannel,
+  addChannelMembers,
 }

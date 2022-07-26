@@ -4,6 +4,7 @@ import { validateIdParam } from '../../middlewares'
 import {
   createChannelSchemaValidator,
   updateChannelSchemaValidator,
+  createChannelMembersSchemaValidator,
 } from './channel-schema'
 import channelController from './channel-controller'
 import { isAuthenticated, validateSchema } from '../../middlewares'
@@ -30,5 +31,10 @@ router.put(
   channelController.UpdateChannel
 )
 router.delete('/:id', validateIdParam, channelController.deleteChannel)
+router.post(
+  '/users',
+  validateSchema(createChannelMembersSchemaValidator),
+  channelController.addChannelMembers
+)
 
 export default router

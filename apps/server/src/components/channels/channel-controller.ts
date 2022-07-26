@@ -112,10 +112,34 @@ async function deleteChannel(
   }
 }
 
+async function addChannelMembers(
+  req: TypedRequestBody<T.ChannelMembers>,
+  res: Response
+) {
+  try {
+    const result = await channelModel.addChannelMembers(req.body)
+    if (!result) {
+      res.status(404).json({ message: 'Channel/Users not found' })
+      return
+    }
+    res.status(201).json({
+      message: 'Add the members to the channel successfully!',
+    })
+  } catch (err) {
+    logger.error(err)
+    res
+      .status(500)
+      .send(
+        'Something went wrong! User(s) might already be member of the channel or channel/users might not exist'
+      )
+  }
+}
+
 export default {
   createChannel,
   getChannel,
   getChannelMessages,
   UpdateChannel,
   deleteChannel,
+  addChannelMembers,
 }

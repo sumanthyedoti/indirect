@@ -1,7 +1,12 @@
 import { JSONSchemaType } from 'ajv'
 
 import ajv from '../../config/ajv'
-import { CreateChannel, UpdateChannel, Constraints } from '@api-types/channels'
+import {
+  CreateChannel,
+  UpdateChannel,
+  ChannelMembers,
+  Constraints,
+} from '@api-types/channels'
 
 const createChannelScheme: JSONSchemaType<CreateChannel> = {
   type: 'object',
@@ -35,5 +40,23 @@ const updateChannelScheme: JSONSchemaType<UpdateChannel> = {
   // additionalProperties: false,
 }
 
+const createChannelMembersScheme: JSONSchemaType<ChannelMembers> = {
+  type: 'object',
+  properties: {
+    channel_id: { type: 'number' },
+    user_ids: {
+      type: 'array',
+      items: {
+        type: 'number',
+      },
+    },
+  },
+  required: ['channel_id', 'user_ids'],
+  // additionalProperties: false,
+}
+
 export const createChannelSchemaValidator = ajv.compile(createChannelScheme)
 export const updateChannelSchemaValidator = ajv.compile(updateChannelScheme)
+export const createChannelMembersSchemaValidator = ajv.compile(
+  createChannelMembersScheme
+)
