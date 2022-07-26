@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
 import classnames from 'classnames'
-// import Select from 'react-select'
 import { Dialog, Tab } from '@headlessui/react'
 
 import userStore from '../../store/userStore'
@@ -17,17 +16,6 @@ interface SectionProps {
 const Section: FC<SectionProps> = ({ children }) => (
   <div className="px-4 py-2 border-b border-gray-600">{children}</div>
 )
-
-// const AddPeopleModal = () => {
-//   const { spaceId } = userStore()
-//   const { data, isSuccess } = useQueryUsers(spaceId)
-//   const options = data?.list.map((user) => ({
-//     value: user.id,
-//     label: user.fullname,
-//   }))
-//   if (!isSuccess) return null
-//   return <Select options={options} />
-// }
 
 const AddPeopleButton = () => {
   return (

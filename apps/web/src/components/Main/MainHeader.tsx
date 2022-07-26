@@ -6,6 +6,7 @@ import { ChevronDown } from '../../icons'
 import { useQueryChannel } from '../../queries'
 
 import ChannelDetails from './ChannelDetails'
+import AddPeople from './AddPeople'
 import store from './store'
 
 const SideHeader: FC = () => {
@@ -14,7 +15,8 @@ const SideHeader: FC = () => {
   const {
     isChannelModalOpen,
     isAddPeopleModalOpen,
-    openChannelModal,
+    // openChannelModal,
+    openAddPeopleModal,
     closeChannelModal,
     closeAddPeopleModal,
   } = store()
@@ -23,7 +25,7 @@ const SideHeader: FC = () => {
   return (
     <div className="mb-0 text-base border-b border-gray-700 shadow-sm shadow-gray-700 side-panel-padding">
       <button
-        onClick={openChannelModal}
+        onClick={openAddPeopleModal}
         className="flex items-center space-x-1"
       >
         <span># {channel.name} </span>
@@ -43,7 +45,7 @@ const SideHeader: FC = () => {
         isOpen={isAddPeopleModalOpen}
         close={closeAddPeopleModal}
       >
-        <ChannelDetails />
+        <AddPeople />
       </Modal>
     </div>
   )
