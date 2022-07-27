@@ -1,12 +1,16 @@
 import React, { useState, FC } from 'react'
 import toast from 'react-hot-toast'
-import Select from 'react-select'
+import Select, { components, OptionProps } from 'react-select'
 import { useQueryClient } from 'react-query'
 import { Dialog } from '@headlessui/react'
 
 import { ChannelMembers } from '@api-types/channels'
 import userStore from '../../store/userStore'
-import { useQuerySpaceUsers, useQueryChannel } from '../../queries'
+import {
+  useQuerySpaceUsers,
+  useQueryChannel,
+  useQueryChannelMembers,
+} from '../../queries'
 import { IconButton, Button } from '../atoms'
 import { Close, ArrowBack } from '../../icons'
 import useStore from './store'
@@ -20,6 +24,7 @@ interface AddPeoleProps {
 type OptionT = {
   value: number
   label: string
+  isDisabled: boolean
 }
 
 const AddPeole: FC<AddPeoleProps> = () => {
@@ -30,11 +35,18 @@ const AddPeole: FC<AddPeoleProps> = () => {
   const { closeAddPeopleModal, openChannelModal } = useStore()
   const { data: users } = useQuerySpaceUsers(spaceId)
   const { data: channel } = useQueryChannel(channelId)
-  if (!users || !channel) return null
-  const options: OptionT[] = users?.list.map((user) => ({
-    value: user.user_id,
-    label: user.fullname,
-  }))
+  const { data: channelUserIds } = useQueryChannelMembers(channelId)
+  if (!users || !channel || !channelUserIds) return null
+  const options: OptionT[] = users?.list.map((user) => {
+    const isAlreadyAMember = !channelUserIds.every((id) => id !== user.user_id)
+    return {
+      value: user.user_id,
+      label: user.fullname,
+      isDisabled: isAlreadyAMember,
+    }
+  })
+
+  console.log({ channelUserIds })
 
   const handleGoBack = () => {
     openChannelModal()
@@ -76,6 +88,17 @@ const AddPeole: FC<AddPeoleProps> = () => {
     }
   }
 
+  const Option = (props: OptionProps) => {
+    return (
+      <div className="flex items-center justify-between">
+        <components.Option {...props} />
+        {props.isDisabled && (
+          <i className="mr-4 text-xs shrink-0">alredy a member</i>
+        )}
+      </div>
+    )
+  }
+
   return (
     <Dialog.Panel
       className="relative z-10 p-5"
@@ -98,6 +121,7 @@ const AddPeole: FC<AddPeoleProps> = () => {
       <p className="self-end mb-4 ml-10"># {channel.name}</p>
       <form className="" onSubmit={onAddPeople}>
         <Select
+          components={{ Option }}
           styles={stylesConfig}
           options={options}
           isMulti

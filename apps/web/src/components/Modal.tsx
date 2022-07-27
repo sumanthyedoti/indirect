@@ -4,15 +4,27 @@ import { Dialog, Transition } from '@headlessui/react'
 
 interface ModalProps {
   children: React.ReactNode
+  initialFocusRef?: React.MutableRefObject<null>
   className?: string
   isOpen: boolean
   close: () => void
 }
 
-const Modal: FC<ModalProps> = ({ children, isOpen, close, className }) => {
+const Modal: FC<ModalProps> = ({
+  children,
+  isOpen,
+  close,
+  className,
+  initialFocusRef,
+}) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={close}>
+      <Dialog
+        as="div"
+        className="relative z-10"
+        onClose={close}
+        initialFocus={initialFocusRef}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-150"

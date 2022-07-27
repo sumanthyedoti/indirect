@@ -15,7 +15,7 @@ const stylesConfig: StylesConfig = {
   }),
   option: (styles, { isFocused, isDisabled }) => ({
     ...styles,
-    backgroundColor: isDisabled ? '#9ca3af' : isFocused ? '#334155' : '#475569',
+    backgroundColor: isDisabled ? '#475569' : isFocused ? '#334155' : '#475569',
     cursor: isDisabled ? 'not-allowed' : 'default',
     color: '#e2e8f0',
   }),
