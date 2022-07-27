@@ -14,11 +14,9 @@ async function createChannel(
   res: Response
 ) {
   try {
-    const spaceId = await channelModel.CreateChannel(req.body)
+    const channel = await channelModel.CreateChannel(req.body)
     res.status(201).json({
-      data: {
-        id: spaceId,
-      },
+      data: channel,
       message: 'Created the channel successfully!',
     })
   } catch (err) {
@@ -113,7 +111,7 @@ async function deleteChannel(
 }
 
 async function createChannelMembers(
-  req: TypedRequest<{ id: number }, T.ChannelMembers>,
+  req: TypedRequest<{ id: number }, T.CreateChannelMembers>,
   res: Response
 ) {
   try {

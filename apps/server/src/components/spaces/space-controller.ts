@@ -16,16 +16,14 @@ async function createSpace(
   const { name, tagline, description, creator_id } = req.body
 
   try {
-    const spaceId = await spaceModel.createSpace({
+    const space = await spaceModel.createSpace({
       name,
       tagline,
       description,
       creator_id,
     })
     res.status(201).json({
-      data: {
-        id: spaceId,
-      },
+      data: space,
       message: 'Created the space successfully!',
     })
   } catch (err) {
