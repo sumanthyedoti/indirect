@@ -87,6 +87,7 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
           <TabC>Members</TabC>
         </Tab.List>
         <Tab.Panels className="">
+          {/* About */}
           <Tab.Panel tabIndex={-1}>
             {channel.description && (
               <Section>
@@ -100,6 +101,7 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
               <AddPeopleButton />
             </Section>
           </Tab.Panel>
+          {/* Members */}
           <Tab.Panel tabIndex={-1}>
             <Section>
               <AddPeopleButton />

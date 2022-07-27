@@ -31,10 +31,14 @@ router.put(
   channelController.UpdateChannel
 )
 router.delete('/:id', validateIdParam, channelController.deleteChannel)
+
+/* -- channel users -- */
 router.post(
-  '/users',
-  validateSchema(createChannelMembersSchemaValidator),
-  channelController.addChannelMembers
+  '/:id/users',
+  //@ts-ignore
+  [validateIdParam, validateSchema(createChannelMembersSchemaValidator)],
+  channelController.createChannelMembers
 )
+router.get('/:id/users', validateIdParam, channelController.getChannelMembers)
 
 export default router

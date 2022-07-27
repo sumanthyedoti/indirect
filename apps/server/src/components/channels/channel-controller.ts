@@ -74,7 +74,7 @@ async function UpdateChannel(
   try {
     const id = req.params.id
 
-    const result = await channelModel.UpdateChannel(id, req.body)
+    const result = await channelModel.updateChannel(id, req.body)
     if (!result) {
       res.status(404).json({ id, error: 'Channel not found' })
       return
@@ -112,12 +112,13 @@ async function deleteChannel(
   }
 }
 
-async function addChannelMembers(
-  req: TypedRequestBody<T.ChannelMembers>,
+async function createChannelMembers(
+  req: TypedRequest<{ id: number }, T.ChannelMembers>,
   res: Response
 ) {
   try {
-    const result = await channelModel.addChannelMembers(req.body)
+    const { id } = req.params
+    const result = await channelModel.createChannelMembers(id, req.body)
     if (!result) {
       res.status(404).json({ message: 'Channel/Users not found' })
       return
@@ -135,11 +136,32 @@ async function addChannelMembers(
   }
 }
 
+async function getChannelMembers(
+  req: TypedRequestParams<{ id: number }>,
+  res: Response
+) {
+  try {
+    const id = req.params.id
+    const result = await channelModel.getChannelMembers(id)
+    if (!result) {
+      res.status(404).json({ id, error: 'Channel not found' })
+      return
+    }
+    res.status(200).json({
+      data: result,
+    })
+  } catch (err) {
+    logger.error(err)
+    res.status(500).send('Something went wrong!')
+  }
+}
+
 export default {
   createChannel,
   getChannel,
   getChannelMessages,
   UpdateChannel,
   deleteChannel,
-  addChannelMembers,
+  createChannelMembers,
+  getChannelMembers,
 }

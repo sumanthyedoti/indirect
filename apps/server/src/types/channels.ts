@@ -21,10 +21,8 @@ export interface UpdateChannel {
 }
 
 export interface ChannelMembers {
-  channel_id: number
   user_ids: number[]
 }
-
 export enum Constraints {
   name = 60,
   description = 3000,
