@@ -20,9 +20,12 @@ export interface UpdateChannel {
   description: string | null
 }
 
-export interface ChannelMembers {
+export interface CreateChannelMembers {
   user_ids: number[]
 }
+
+export type ChannelMembers = number[]
+
 export enum Constraints {
   name = 60,
   description = 3000,

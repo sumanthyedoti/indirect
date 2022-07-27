@@ -55,7 +55,7 @@ async function deleteChannel(id: number) {
 
 async function createChannelMembers(
   channel_id: number,
-  { user_ids }: T.ChannelMembers
+  { user_ids }: T.CreateChannelMembers
 ) {
   const users: number[] = await db('channel_users').insert(
     user_ids.map((userId) => ({
@@ -69,10 +69,20 @@ async function createChannelMembers(
 async function getChannelMembers(
   channel_id: number
 ): Promise<T.ChannelMembers> {
-  const users = await db('channel_users')
+  const users: { user_id: number }[] = await db('channel_users')
     .select('user_id')
     .where({ channel_id })
-  return { user_ids: users.map((u) => u.user_id) }
+  return users.map((u) => u.user_id)
+}
+
+async function deleteChannelMember(channel_id: number, user_id: number) {
+  const channelId: number = await db('channel_users')
+    .where({
+      channel_id,
+      user_id,
+    })
+    .del()
+  return channelId
 }
 
 export default {
@@ -83,4 +93,5 @@ export default {
   deleteChannel,
   createChannelMembers,
   getChannelMembers,
+  deleteChannelMember,
 }

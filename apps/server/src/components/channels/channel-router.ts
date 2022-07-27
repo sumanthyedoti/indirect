@@ -40,5 +40,10 @@ router.post(
   channelController.createChannelMembers
 )
 router.get('/:id/users', validateIdParam, channelController.getChannelMembers)
+router.delete(
+  '/:id/users/:uid',
+  validateIdParam,
+  channelController.deleteChannelMember
+)
 
 export default router

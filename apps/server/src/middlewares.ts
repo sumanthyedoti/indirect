@@ -27,7 +27,7 @@ export const expressSessionMiddleware: RequestHandler = session({
 })
 
 export function validateIdParam(
-  req: TypedRequestParams<{ id: number }>,
+  req: TypedRequestParams<{ id: number; uid?: number }>,
   res: Response,
   next: NextFunction
 ) {

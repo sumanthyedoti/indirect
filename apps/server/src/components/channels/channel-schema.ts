@@ -4,7 +4,7 @@ import ajv from '../../config/ajv'
 import {
   CreateChannel,
   UpdateChannel,
-  ChannelMembers,
+  CreateChannelMembers,
   Constraints,
 } from '@api-types/channels'
 
@@ -40,7 +40,7 @@ const updateChannelScheme: JSONSchemaType<UpdateChannel> = {
   // additionalProperties: false,
 }
 
-const createChannelMembersScheme: JSONSchemaType<ChannelMembers> = {
+const createChannelMembersScheme: JSONSchemaType<CreateChannelMembers> = {
   type: 'object',
   properties: {
     user_ids: {

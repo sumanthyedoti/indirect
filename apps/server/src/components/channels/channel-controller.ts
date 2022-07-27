@@ -124,7 +124,7 @@ async function createChannelMembers(
       return
     }
     res.status(201).json({
-      message: 'Add the members to the channel successfully!',
+      message: 'Added the members to the channel successfully!',
     })
   } catch (err) {
     logger.error(err)
@@ -156,6 +156,25 @@ async function getChannelMembers(
   }
 }
 
+async function deleteChannelMember(
+  req: TypedRequestParams<{ id: number; uid: number }>,
+  res: Response
+) {
+  try {
+    const { id, uid } = req.params
+
+    const result = await channelModel.deleteChannelMember(id, uid)
+    if (!result) {
+      res.status(404).json({ id, message: 'Channel not found' })
+      return
+    }
+    res.sendStatus(204)
+  } catch (err) {
+    logger.error(err)
+    res.status(500).send('Something went wrong!')
+  }
+}
+
 export default {
   createChannel,
   getChannel,
@@ -164,4 +183,5 @@ export default {
   deleteChannel,
   createChannelMembers,
   getChannelMembers,
+  deleteChannelMember,
 }
