@@ -29,8 +29,8 @@ const SidePanel: FC = () => {
   const queryClient = useQueryClient()
   const { spaceId, setChannelId, logout } = userStore()
   const { data: channels, isSuccess } = useQuerySpaceChannels(spaceId)
+
   const createChannel = useCallback(async (data: CreateChannelT) => {
-    console.log({ data })
     try {
       const { data: res } = await api.post('/channels', data)
       closeModal()
@@ -38,8 +38,18 @@ const SidePanel: FC = () => {
         ...successToastOptions,
         id: 'post-channel-success',
       })
+      console.log(res)
+      queryClient.setQueryData(['channels', spaceId], (oldData) => [
+        //@ts-ignore
+        ...oldData,
+        {
+          id: res.data.id,
+          ...data,
+        },
+      ])
+      // queryClient.invalidateQueries(['channels', spaceId])
+
       setChannelId(res.data.id)
-      queryClient.invalidateQueries(['channels', spaceId])
     } catch (err) {
       console.log(err)
       toast.error('Error creating Channel', {
@@ -48,6 +58,7 @@ const SidePanel: FC = () => {
       })
     }
   }, [])
+
   const handleChannelClick = (id: number) => {
     setChannelId(id)
   }

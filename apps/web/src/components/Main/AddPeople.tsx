@@ -46,8 +46,6 @@ const AddPeole: FC<AddPeoleProps> = () => {
     }
   })
 
-  console.log({ channelUserIds })
-
   const handleGoBack = () => {
     openChannelModal()
     closeAddPeopleModal()
