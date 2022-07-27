@@ -30,6 +30,11 @@
   .main-view-padding {
     @apply px-4;
   }
+
+  /* flex */
+  .flex-between-center {
+    @apply flex items-center justify-between;
+  }
 }
 
 @tailwind utilities;

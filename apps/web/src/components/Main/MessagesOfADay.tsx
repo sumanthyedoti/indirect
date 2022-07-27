@@ -4,7 +4,7 @@ import * as T from '@api-types/messages'
 import userStore from '../../store/userStore'
 import { MessageDate } from '../atoms'
 import { Message } from '../molecules'
-import { useQueryUsers } from '../../queries'
+import { useQuerySpaceUsers } from '../../queries'
 
 interface MessagedOfADayProps {
   isFirstDay: boolean
@@ -18,7 +18,7 @@ const MessagedOfADay: FC<MessagedOfADayProps> = ({
   containerRef,
 }) => {
   const { user, spaceId } = userStore()
-  const { data: users, isSuccess } = useQueryUsers(spaceId)
+  const { data: users, isSuccess } = useQuerySpaceUsers(spaceId)
 
   useEffect(() => {
     if (containerRef.current) {

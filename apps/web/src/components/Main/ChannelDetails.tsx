@@ -3,7 +3,12 @@ import classnames from 'classnames'
 import { Dialog, Tab } from '@headlessui/react'
 
 import userStore from '../../store/userStore'
-import { useQueryChannel } from '../../queries'
+import {
+  useQueryChannel,
+  useQueryChannelMembers,
+  useQuerySpaceUsers,
+  useRemoveChannelMember,
+} from '../../queries'
 import { AddPeople, Close } from '../../icons'
 import { IconButton } from '../atoms'
 import useStore from './store'
@@ -14,9 +19,16 @@ interface ChannelDetailsProps {
 
 interface SectionProps {
   children: React.ReactNode
+  noBorder?: boolean
 }
-const Section: FC<SectionProps> = ({ children }) => (
-  <div className="px-4 py-2 border-b border-gray-600">{children}</div>
+const Section: FC<SectionProps> = ({ children, noBorder }) => (
+  <div
+    className={classnames('px-4 py-2 border-gray-600', {
+      'border-b': !noBorder,
+    })}
+  >
+    {children}
+  </div>
 )
 
 const AddPeopleButton = () => {
@@ -28,7 +40,7 @@ const AddPeopleButton = () => {
   return (
     <button
       className={`flex items-center w-full
-      p-3 rounded hover:bg-gray-800
+      py-3 px-2 rounded hover:bg-gray-800
       space-x-2 font-lg
       focus:bg-gray-800
       `}
@@ -59,12 +71,20 @@ const TabC: FC<{ children: string }> = ({ children }) => (
 )
 
 const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
-  const { channelId } = userStore()
+  const { channelId, spaceId } = userStore()
   const { closeChannelModal, activeChannelTab, setActiveChannelTab } =
     useStore()
-  const { data: channel, isSuccess } = useQueryChannel(channelId)
+  const { data: users } = useQuerySpaceUsers(spaceId)
+  const { data: channel } = useQueryChannel(channelId)
+  const { data: channelUserIds } = useQueryChannelMembers(channelId)
+  const { mutate: removeMember } = useRemoveChannelMember(channelId)
 
-  if (!isSuccess) return null
+  const handleRemoveMember = (id: number) => {
+    removeMember(id)
+  }
+
+  if (!users || !channel || !channelUserIds) return null
+
   return (
     <Dialog.Panel
       className={`w-full max-w-lg py-3 relative
@@ -105,6 +125,25 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
           <Tab.Panel tabIndex={-1}>
             <Section>
               <AddPeopleButton />
+              <ul>
+                {channelUserIds?.map((uid) => {
+                  const user = users.idMap[uid]
+                  return (
+                    <li
+                      className="p-2 hover:bg-slate-600 flex-between-center"
+                      key={uid}
+                    >
+                      <span>{user ? user.fullname : 'Unknown User'}</span>
+                      <button
+                        className="text-sm text-sky-500 hover:text-red-500"
+                        onClick={() => handleRemoveMember(uid)}
+                      >
+                        Remove
+                      </button>
+                    </li>
+                  )
+                })}
+              </ul>
             </Section>
           </Tab.Panel>
         </Tab.Panels>

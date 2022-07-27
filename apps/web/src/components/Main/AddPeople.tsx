@@ -1,10 +1,12 @@
 import React, { useState, FC } from 'react'
 import toast from 'react-hot-toast'
 import Select from 'react-select'
+import { useQueryClient } from 'react-query'
 import { Dialog } from '@headlessui/react'
 
+import { ChannelMembers } from '@api-types/channels'
 import userStore from '../../store/userStore'
-import { useQueryUsers, useQueryChannel } from '../../queries'
+import { useQuerySpaceUsers, useQueryChannel } from '../../queries'
 import { IconButton, Button } from '../atoms'
 import { Close, ArrowBack } from '../../icons'
 import useStore from './store'
@@ -23,12 +25,13 @@ type OptionT = {
 const AddPeole: FC<AddPeoleProps> = () => {
   const [selectedUsers, setSelectedUsers] = useState<OptionT[]>([])
   const [isError, setIsError] = useState(false)
+  const queryClient = useQueryClient()
   const { spaceId, channelId } = userStore()
   const { closeAddPeopleModal, openChannelModal } = useStore()
-  const { data } = useQueryUsers(spaceId)
+  const { data: users } = useQuerySpaceUsers(spaceId)
   const { data: channel } = useQueryChannel(channelId)
-  if (!data || !channel) return null
-  const options: OptionT[] = data?.list.map((user) => ({
+  if (!users || !channel) return null
+  const options: OptionT[] = users?.list.map((user) => ({
     value: user.user_id,
     label: user.fullname,
   }))
@@ -48,14 +51,21 @@ const AddPeole: FC<AddPeoleProps> = () => {
       return
     }
     try {
-      await api.post('/channels/users', {
-        channel_id: channelId,
-        user_ids: selectedUsers.map((u) => u.value),
+      const userIds = selectedUsers.map((u) => u.value)
+      await api.post(`/channels/${channelId}/users`, {
+        user_ids: userIds,
       })
       toast.success(`Added users to the channel '#${channel.name}'`, {
         ...successToastOptions,
         id: 'post-channel-users-success',
       })
+      queryClient.setQueryData<ChannelMembers>(
+        ['channel-users', channelId],
+        (oldData) => {
+          if (!oldData) return userIds
+          return [...oldData, ...userIds]
+        }
+      )
       setSelectedUsers([])
     } catch (err) {
       console.log(err)

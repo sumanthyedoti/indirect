@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require("tailwindcss/colors");
 module.exports = {
   // mode: "jit",
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
@@ -11,6 +12,9 @@ module.exports = {
         //   dark: colors.gray["300"],
         //   darker: colors.gray["500"],
         // },
+        danger: {
+          DEFAULT: colors.red["500"],
+        },
       },
     },
   },
