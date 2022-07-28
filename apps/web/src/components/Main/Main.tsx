@@ -11,7 +11,7 @@ import api from '../../axios'
 import useSocket from '../../hooks/useSocket'
 
 const Space: FC = () => {
-  const { user, channelId } = useUserStore()
+  const { user, channelId, logout } = useUserStore()
   const socket = useSocket()
   const [messages, setMessages] = useState<T.Message[]>([])
   useEffect(() => {
@@ -33,7 +33,10 @@ const Space: FC = () => {
 
       setMessages(data.data)
     } catch (err) {
-      console.log(err)
+      if (err.response.status === 401) {
+        logout()
+      }
+
       toast.error('Error fetching messages', {
         id: 'get-messages-error',
       })
