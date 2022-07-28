@@ -178,7 +178,10 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
       </Tab.Group>
       <IconButton
         aria-label="Close"
-        onClick={closeChannelModal}
+        onClick={() => {
+          setActiveChannelTab(0)
+          closeChannelModal()
+        }}
         className="absolute top-4 right-4"
       >
         <Close />

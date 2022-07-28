@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-import classnames from 'classnames'
 import { Dialog } from '@headlessui/react'
 
 import { Button } from './atoms'
@@ -64,7 +63,8 @@ const DeleteChannelConfirmModal: FC<Props> = ({
           />
           <Button
             onClick={handleConfirm}
-            className={classnames('w-full', { 'bg-red-500': isDanger })}
+            danger={isDanger}
+            className="w-full"
             label={confirmLabel}
           />
         </div>

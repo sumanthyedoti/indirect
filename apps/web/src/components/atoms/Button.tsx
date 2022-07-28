@@ -7,6 +7,7 @@ interface props {
   className?: string
   primary?: boolean
   secondary?: boolean
+  danger?: boolean
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
@@ -16,6 +17,7 @@ const Button: FC<props> = ({
   onClick,
   primary,
   secondary,
+  danger,
   className,
   ...props
 }) => {
@@ -24,7 +26,11 @@ const Button: FC<props> = ({
     ring-slate-100 ring-offset-1 focus:ring-2
     ring-offset-transparent
     outline-none font-semibold rounded`,
-    [(primary || !secondary) && `bg-blue-600`, secondary && `bg-gray-600`]
+    {
+      'bg-gray-600': secondary,
+      'bg-red-500': danger,
+      'bg-blue-600': primary || (!secondary && !danger),
+    }
   )
   return (
     <button
