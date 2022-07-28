@@ -1,14 +1,16 @@
 import create from 'zustand'
 
 interface StateT {
+  // state
   isChannelModalOpen: boolean
-  isAddPeopleModalOpen: boolean
   activeChannelTab: number
+  isAddPeopleModalOpen: boolean
+  // actions
   openChannelModal: () => void
   closeChannelModal: () => void
+  setActiveChannelTab: (i: number) => void
   openAddPeopleModal: () => void
   closeAddPeopleModal: () => void
-  setActiveChannelTab: (i: number) => void
 }
 
 const initialState = {
@@ -23,11 +25,11 @@ const useStore = create<StateT>((set) => ({
     set((state) => ({ ...state, isChannelModalOpen: true })),
   closeChannelModal: () =>
     set((state) => ({ ...state, isChannelModalOpen: false })),
+  setActiveChannelTab: (i: number) =>
+    set((state) => ({ ...state, activeChannelTab: i })),
   openAddPeopleModal: () =>
     set((state) => ({ ...state, isAddPeopleModalOpen: true })),
   closeAddPeopleModal: () =>
     set((state) => ({ ...state, isAddPeopleModalOpen: false })),
-  setActiveChannelTab: (i: number) =>
-    set((state) => ({ ...state, activeChannelTab: i })),
 }))
 export default useStore

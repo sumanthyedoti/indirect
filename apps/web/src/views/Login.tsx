@@ -12,7 +12,10 @@ import { AuthForm, Input, Button } from '../components/atoms'
 import { FormInput } from '../components/molecules'
 import userStore from '../store/userStore'
 import api from '../axios'
-import { userErrorToastOptions, appErrorToastOptions } from '../utils'
+import {
+  userErrorToastOptions,
+  appErrorToastOptions,
+} from '../config/toastConfig'
 import { useToastLimit } from '../hooks'
 
 const schema = yup.object().shape({

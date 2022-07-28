@@ -15,7 +15,10 @@ import { IconButton, Button } from '../atoms'
 import { Close, ArrowBack } from '../../icons'
 import useStore from './store'
 import stylesConfig from '../../config/react-select-styles'
-import { appErrorToastOptions, successToastOptions } from '../../utils'
+import {
+  appErrorToastOptions,
+  successToastOptions,
+} from '../../config/toastConfig'
 import api from '../../axios'
 
 interface AddPeoleProps {

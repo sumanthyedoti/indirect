@@ -9,7 +9,7 @@ import { SidePanel } from '../../components'
 import userStore from '../../store/userStore'
 import api from '../../axios'
 import useSocket from '../../hooks/useSocket'
-import { appErrorToastOptions } from '../../utils'
+import { appErrorToastOptions } from '../../config/toastConfig'
 
 const Space: FC = () => {
   const { user, channelId } = userStore()

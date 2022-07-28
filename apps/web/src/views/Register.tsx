@@ -11,7 +11,10 @@ import { Constraints } from '@api-types/users'
 import { AuthForm, Input, Button } from '../components/atoms'
 import { FormInput } from '../components/molecules'
 import userStore from '../store/userStore'
-import { appErrorToastOptions, userErrorToastOptions } from '../utils'
+import {
+  appErrorToastOptions,
+  userErrorToastOptions,
+} from '../config/toastConfig'
 import api from '../axios'
 import { useToastLimit } from '../hooks'
 

@@ -6,15 +6,21 @@ import SideHeader from './SideHeader'
 import ChannelName from './ChannelName'
 import Section from './Section'
 import CreateChannel from './CreateChannel'
-import { CreateChannel as CreateChannelT } from '@api-types/channels'
+import {
+  CreateChannel as CreateChannelT,
+  Channel as ChannelT,
+} from '@api-types/channels'
 import Modal from '../Modal'
 import { IconButton } from '../atoms'
 import userStore from '../../store/userStore'
 import { Logout, Plus } from '../../icons'
 import { useQuerySpaceChannels } from '../../queries'
-import { appErrorToastOptions, successToastOptions } from '../../utils'
+import {
+  appErrorToastOptions,
+  userErrorToastOptions,
+  successToastOptions,
+} from '../../config/toastConfig'
 import api from '../../axios'
-import { userErrorToastOptions } from '../../utils'
 
 const SidePanel: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -38,16 +44,19 @@ const SidePanel: FC = () => {
         ...successToastOptions,
         id: 'post-channel-success',
       })
-      console.log(res)
-      queryClient.setQueryData(['channels', spaceId], (oldData) => [
+      queryClient.setQueryData<ChannelT[] | undefined>(
+        ['channels', spaceId],
         //@ts-ignore
-        ...oldData,
-        {
-          id: res.data.id,
-          ...data,
-        },
-      ])
-      // queryClient.invalidateQueries(['channels', spaceId])
+        (oldData) => {
+          const newChannel = {
+            id: res.data.id,
+            ...data,
+          }
+          if (!oldData) return newChannel
+          return [...oldData, newChannel]
+        }
+      )
+      queryClient.invalidateQueries(['channels', spaceId])
 
       setChannelId(res.data.id)
     } catch (err) {

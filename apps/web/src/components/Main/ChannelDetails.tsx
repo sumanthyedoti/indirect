@@ -12,10 +12,7 @@ import {
 import { AddPeople, Close } from '../../icons'
 import { IconButton } from '../atoms'
 import useStore from './store'
-
-interface ChannelDetailsProps {
-  isPersonal?: boolean
-}
+import useUIStore from '../../store/useUIStore'
 
 interface SectionProps {
   children: React.ReactNode
@@ -54,6 +51,27 @@ const AddPeopleButton = () => {
   )
 }
 
+const DeleteChannelButton = () => {
+  const { openConfirmationModal } = useUIStore()
+  const { closeChannelModal } = useStore()
+  const deleteChannelConfirmation = () => {
+    closeChannelModal()
+    openConfirmationModal()
+  }
+  return (
+    <button
+      className={`flex items-center w-full
+      py-3 px-2 rounded hover:bg-slate-600
+      space-x-2 font-lg
+      focus:bg-slate-600 text-red-400 ring-offset-slate-700
+      `}
+      onClick={deleteChannelConfirmation}
+    >
+      Delete the Channel
+    </button>
+  )
+}
+
 const TabC: FC<{ children: string }> = ({ children }) => (
   <Tab
     className={({ selected }) =>
@@ -70,6 +88,9 @@ const TabC: FC<{ children: string }> = ({ children }) => (
   </Tab>
 )
 
+interface ChannelDetailsProps {
+  isPersonal?: boolean
+}
 const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
   const { channelId, spaceId } = userStore()
   const { closeChannelModal, activeChannelTab, setActiveChannelTab } =
@@ -89,8 +110,8 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
     <Dialog.Panel
       className={`w-full max-w-lg py-3 relative
         text-left align-middle
-        bg-slate-700 transform
-        rounded-md transition-all`}
+          bg-slate-700 transform
+          rounded-md transition-all`}
       style={{
         minHeight: '300px',
       }}
@@ -105,6 +126,7 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
         <Tab.List className="px-4 border-b border-gray-600">
           <TabC>About</TabC>
           <TabC>Members</TabC>
+          <TabC>Settings</TabC>
         </Tab.List>
         <Tab.Panels className="">
           {/* About */}
@@ -144,6 +166,12 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
                   )
                 })}
               </ul>
+            </Section>
+          </Tab.Panel>
+          {/* Settings */}
+          <Tab.Panel tabIndex={-1}>
+            <Section>
+              <DeleteChannelButton />
             </Section>
           </Tab.Panel>
         </Tab.Panels>
