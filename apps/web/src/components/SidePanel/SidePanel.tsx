@@ -36,37 +36,37 @@ const SidePanel: FC = () => {
   const { spaceId, setChannelId, logout } = useUserStore()
   const { data: channels, isSuccess } = useQuerySpaceChannels(spaceId)
 
-  const createChannel = useCallback(async (data: CreateChannelT) => {
-    try {
-      const { data: res } = await api.post('/channels', data)
-      closeModal()
-      toast.success('Channel created', {
-        ...successToastOptions,
-        id: 'post-channel-success',
-      })
-      queryClient.setQueryData<ChannelT[] | undefined>(
-        ['channels', spaceId],
-        //@ts-ignore
-        (oldData) => {
-          const newChannel = {
-            id: res.data.id,
-            ...data,
-          }
-          if (!oldData) return newChannel
-          return [...oldData, newChannel]
-        }
-      )
-      queryClient.invalidateQueries(['channels', spaceId])
+  const createChannel = useCallback(
+    async (data: CreateChannelT) => {
+      try {
+        const {
+          data: { data: newChannel },
+        } = await api.post<{ data: ChannelT }>('/channels', data)
+        closeModal()
+        toast.success('Channel created', {
+          ...successToastOptions,
+          id: 'post-channel-success',
+        })
 
-      setChannelId(res.data.id)
-    } catch (err) {
-      console.log(err)
-      toast.error('Error creating Channel', {
-        ...appErrorToastOptions,
-        id: 'post-channel-error',
-      })
-    }
-  }, [])
+        queryClient.setQueryData<ChannelT[] | undefined>(
+          ['channels', spaceId],
+          //@ts-ignore
+          (channels) => {
+            if (!channels) return newChannel
+            return [...channels, newChannel]
+          }
+        )
+        setChannelId(newChannel.id)
+      } catch (err) {
+        console.log(err)
+        toast.error('Error creating Channel', {
+          ...appErrorToastOptions,
+          id: 'post-channel-error',
+        })
+      }
+    },
+    [spaceId]
+  )
 
   const handleChannelClick = (id: number) => {
     setChannelId(id)

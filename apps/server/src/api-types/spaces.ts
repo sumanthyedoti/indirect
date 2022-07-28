@@ -15,6 +15,7 @@ export interface CreateSpace extends Info {
 export interface Space extends Info {
   id: number
   is_private: boolean
+  general_channel_id: number
 }
 
 export interface UpdateSpace extends Info {}

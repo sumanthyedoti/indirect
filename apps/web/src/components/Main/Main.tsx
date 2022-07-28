@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, memo, FC } from 'react'
+import { useState, useEffect, useCallback, FC } from 'react'
 import toast from 'react-hot-toast'
 
 import * as T from '@api-types/messages'
@@ -75,4 +75,4 @@ const Space: FC = () => {
     </div>
   )
 }
-export default memo(Space, () => true)
+export default Space

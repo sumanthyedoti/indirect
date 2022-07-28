@@ -40,8 +40,6 @@ const SideHeader: FC = () => {
         ['channels', spaceId],
         (oldData) => oldData?.filter((ch) => ch.id !== channelId)
       )
-      queryClient.invalidateQueries(['channels', spaceId])
-
       setChannelId(1) // TODO: change to general channel of the space
     } catch (err) {
       console.log(err)
@@ -50,7 +48,7 @@ const SideHeader: FC = () => {
         id: 'delete-channel-error',
       })
     }
-  }, [])
+  }, [channelId])
   if (!isSuccess) return null
   return (
     <div className="mb-0 text-base border-b border-gray-700 shadow-sm shadow-gray-700 side-panel-padding">

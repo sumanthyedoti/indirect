@@ -3,9 +3,9 @@ import { Message as MessageT } from '@api-types/messages'
 import db from '../../db'
 
 async function CreateChannel(channel: T.CreateChannel) {
-  const [createdChannel]: { id: number }[] = await db('channels')
+  const [createdChannel]: T.Channel[] = await db('channels')
     .insert(channel)
-    .returning('id')
+    .returning('*')
   return createdChannel
 }
 

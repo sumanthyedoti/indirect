@@ -12,7 +12,7 @@
     "skipLibCheck": true,
     "baseUrl": "./src",
     "paths": {
-      "@api-types/*": ["./types/*"]
+      "@api-types/*": ["./api-types/*"]
     }
   }
 }

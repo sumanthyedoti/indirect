@@ -1,6 +1,7 @@
 import { Knex } from 'knex'
 
 export async function seed(knex: Knex): Promise<void> {
+  return
   // Deletes ALL existing entries
   await knex.raw('TRUNCATE TABLE channels CASCADE')
 

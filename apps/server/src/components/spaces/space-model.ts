@@ -1,5 +1,6 @@
 import * as T from '@api-types/spaces'
 import { Channel as ChannelT } from '@api-types/channels'
+// import { createChannel } from '../channels/channel-model'
 import db from '../../db'
 
 async function createSpace(space: T.CreateSpace) {
