@@ -2,7 +2,7 @@ import * as T from '@api-types/channels'
 import { Message as MessageT } from '@api-types/messages'
 import db from '../../db'
 
-async function CreateChannel(channel: T.CreateChannel) {
+async function createChannel(channel: T.CreateChannel) {
   const [createdChannel]: T.Channel[] = await db('channels')
     .insert(channel)
     .returning('*')
@@ -86,7 +86,7 @@ async function deleteChannelMember(channel_id: number, user_id: number) {
 }
 
 export default {
-  CreateChannel,
+  createChannel,
   getChannel,
   getChannelMessages,
   updateChannel,

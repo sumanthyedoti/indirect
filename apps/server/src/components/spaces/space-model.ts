@@ -1,12 +1,27 @@
 import * as T from '@api-types/spaces'
 import { Channel as ChannelT } from '@api-types/channels'
-// import { createChannel } from '../channels/channel-model'
 import db from '../../db'
 
-async function createSpace(space: T.CreateSpace) {
-  const [createdSpace]: { id: number }[] = await db('spaces')
-    .insert(space)
+async function createGeneralChannel(channel: {
+  space_id: number
+  name: string
+  is_general: boolean
+}) {
+  const [createdChannel]: { id: number }[] = await db('channels')
+    .insert(channel)
     .returning('id')
+  return createdChannel.id
+}
+
+async function createSpace(space: T.CreateSpace) {
+  const [createdSpace]: T.Space[] = await db('spaces')
+    .insert(space)
+    .returning('*')
+  await createGeneralChannel({
+    space_id: createdSpace.id,
+    name: 'general',
+    is_general: true,
+  })
   return createdSpace
 }
 

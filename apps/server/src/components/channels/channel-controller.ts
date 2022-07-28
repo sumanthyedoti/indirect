@@ -14,7 +14,7 @@ async function createChannel(
   res: Response
 ) {
   try {
-    const channel = await channelModel.CreateChannel(req.body)
+    const channel = await channelModel.createChannel(req.body)
     res.status(201).json({
       data: channel,
       message: 'Created the channel successfully!',

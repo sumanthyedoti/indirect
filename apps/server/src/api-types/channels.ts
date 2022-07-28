@@ -5,14 +5,15 @@ interface Info {
   creator_id: number
 }
 
+export interface CreateChannel extends Info {
+  is_private?: boolean
+}
+
 export interface Channel extends Info {
   id: number
   is_shared: boolean
   is_private: boolean
-}
-
-export interface CreateChannel extends Info {
-  is_private?: boolean
+  is_general: boolean
 }
 
 export interface UpdateChannel {
