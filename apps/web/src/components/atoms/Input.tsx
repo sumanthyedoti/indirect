@@ -25,10 +25,11 @@ interface Props {
   autoComplete?: 'on' | 'off'
   placeholder?: string
   className?: string
+  onChange?: any
 }
 
 const Input: FC<Props> = forwardRef<HTMLInputElement, Props>(
-  ({ className, ...props }, ref) => {
+  ({ className, onChange, ...props }, ref) => {
     return (
       <input
         ref={ref}
@@ -39,6 +40,7 @@ const Input: FC<Props> = forwardRef<HTMLInputElement, Props>(
           rounded-md focus:ring ring-sky-500`,
           className,
         ])}
+        onChange={onChange}
         {...props}
       />
     )

@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import useUserStore from '../../store/useUserStore'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -37,6 +37,7 @@ const CreateChannel: FC<CreateChannelProps> = ({ close, createChannel }) => {
   const { spaceId, user } = useUserStore()
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<CreateChannelT>({
@@ -46,6 +47,10 @@ const CreateChannel: FC<CreateChannelProps> = ({ close, createChannel }) => {
 
   const onSubmit = async (input: CreateChannelT) => {
     createChannel(input)
+  }
+
+  const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue('name', e.target.value.toLowerCase())
   }
 
   return (
@@ -77,7 +82,13 @@ const CreateChannel: FC<CreateChannelProps> = ({ close, createChannel }) => {
           <FormInput
             label="Name"
             id="name"
-            field={<Input {...register('name')} type="text" />}
+            field={
+              <Input
+                {...register('name')}
+                onChange={onNameChange}
+                type="text"
+              />
+            }
             error={errors.name?.message}
           />
           <FormInput
