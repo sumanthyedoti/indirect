@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import classnames from 'classnames'
 import { Dialog } from '@headlessui/react'
 
@@ -8,7 +8,8 @@ import useUIStore from '../store/useUIStore'
 
 interface Props {
   title?: string
-  description: string
+  description: React.ReactNode
+  details?: React.ReactNode
   confirmLabel: string
   isDanger: boolean
   onCancel: () => void
@@ -18,6 +19,7 @@ interface Props {
 const DeleteChannelConfirmModal: FC<Props> = ({
   title = 'Are you sure?',
   description,
+  details,
   confirmLabel,
   isDanger,
   onCancel,
@@ -40,28 +42,29 @@ const DeleteChannelConfirmModal: FC<Props> = ({
       close={handleCancel}
     >
       <Dialog.Panel
-        className={`w-full max-w-lg p-4 relative
-        text-left align-middle
+        className={`w-full max-w-lg relative
+        text-left align-middle p-5
         bg-slate-700 transform
         rounded-md transition-all`}
       >
-        <Dialog.Title as="h2" className="px-4">
+        <Dialog.Title as="h2" className="mb-1">
           {title}
         </Dialog.Title>
-        <Dialog.Description as="p" className="px-4">
+        <Dialog.Description as="p" className="mb-3">
           {description}
         </Dialog.Description>
+        {details && <p className="text-sm">{details}</p>}
 
-        <div className="flex space-x-2">
+        <div className="flex mt-6 space-x-2">
           <Button
             secondary
-            className="w-full mt-5"
+            className="w-full"
             label="Cancel"
             onClick={handleCancel}
           />
           <Button
             onClick={handleConfirm}
-            className={classnames('w-full mt-5', { 'bg-red-500': isDanger })}
+            className={classnames('w-full', { 'bg-red-500': isDanger })}
             label={confirmLabel}
           />
         </div>

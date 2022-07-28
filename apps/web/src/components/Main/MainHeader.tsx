@@ -78,7 +78,13 @@ const SideHeader: FC = () => {
         <AddPeople />
       </Modal>
       <ConfirmationModal
-        description="Deleting the channel affects all the channel members"
+        description={
+          <span>
+            Deleting the channel{' '}
+            <span className="font-semibold">#{channel.name}</span>
+          </span>
+        }
+        details="Deleting the channel affects all the channel members"
         confirmLabel="Yes, Delete"
         onCancel={() => {
           openChannelModal()
