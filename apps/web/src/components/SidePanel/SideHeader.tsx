@@ -1,10 +1,10 @@
 import { FC } from 'react'
-import userStore from '../../store/userStore'
+import useUserStore from '../../store/useUserStore'
 
 import { useQuerySpace } from '../../queries'
 
 const SideHeader: FC = () => {
-  const { spaceId } = userStore()
+  const { spaceId } = useUserStore()
   const { data: space, isSuccess } = useQuerySpace(spaceId)
 
   if (!isSuccess) return null

@@ -6,13 +6,13 @@ import Header from './MainHeader'
 import ChannelMessages from './ChannelMessages'
 import { MessageInput } from '../../components/molecules'
 import { SidePanel } from '../../components'
-import userStore from '../../store/userStore'
+import useUserStore from '../../store/useUserStore'
 import api from '../../axios'
 import useSocket from '../../hooks/useSocket'
 import { appErrorToastOptions } from '../../config/toastConfig'
 
 const Space: FC = () => {
-  const { user, channelId } = userStore()
+  const { user, channelId } = useUserStore()
   const socket = useSocket()
   const [messages, setMessages] = useState<T.Message[]>([])
   useEffect(() => {

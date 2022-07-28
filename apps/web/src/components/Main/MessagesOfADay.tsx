@@ -1,7 +1,7 @@
 import { useEffect, FC, RefObject } from 'react'
 
 import * as T from '@api-types/messages'
-import userStore from '../../store/userStore'
+import useUserStore from '../../store/useUserStore'
 import { MessageDate } from '../atoms'
 import { Message } from '../molecules'
 import { useQuerySpaceUsers } from '../../queries'
@@ -17,7 +17,7 @@ const MessagedOfADay: FC<MessagedOfADayProps> = ({
   isFirstDay,
   containerRef,
 }) => {
-  const { user, spaceId } = userStore()
+  const { user, spaceId } = useUserStore()
   const { data: users, isSuccess } = useQuerySpaceUsers(spaceId)
 
   useEffect(() => {

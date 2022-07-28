@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import classnames from 'classnames'
 import { Dialog, Tab } from '@headlessui/react'
 
-import userStore from '../../store/userStore'
+import useUserStore from '../../store/useUserStore'
 import {
   useQueryChannel,
   useQueryChannelMembers,
@@ -92,7 +92,7 @@ interface ChannelDetailsProps {
   isPersonal?: boolean
 }
 const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
-  const { channelId, spaceId } = userStore()
+  const { channelId, spaceId } = useUserStore()
   const { closeChannelModal, activeChannelTab, setActiveChannelTab } =
     useStore()
   const { data: users } = useQuerySpaceUsers(spaceId)

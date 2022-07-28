@@ -10,7 +10,7 @@ import { LoginUser } from '@api-types/users'
 import { Constraints } from '@api-types/users'
 import { AuthForm, Input, Button } from '../components/atoms'
 import { FormInput } from '../components/molecules'
-import userStore from '../store/userStore'
+import useUserStore from '../store/useUserStore'
 import api from '../axios'
 import {
   userErrorToastOptions,
@@ -47,7 +47,7 @@ const Login: FC = () => {
   useToastLimit()
   const locationState = location.state as { isRegister: boolean }
 
-  const { isLoggedIn, login, setSpaceId, setChannelId } = userStore()
+  const { isLoggedIn, login, setSpaceId, setChannelId } = useUserStore()
 
   const {
     register,

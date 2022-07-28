@@ -2,7 +2,7 @@ import { FC } from 'react'
 import classnames from 'classnames'
 
 import { Channel as ChannelT } from '@api-types/channels'
-import userStore from '../../store/userStore'
+import useUserStore from '../../store/useUserStore'
 
 interface ChannelNameProps {
   onClick: (id: number) => void
@@ -10,7 +10,7 @@ interface ChannelNameProps {
 }
 
 const ChannelName: FC<ChannelNameProps> = ({ onClick, channel }) => {
-  const { channelId } = userStore()
+  const { channelId } = useUserStore()
   return (
     <button
       onClick={() => onClick(channel.id)}

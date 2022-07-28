@@ -3,7 +3,7 @@ import { useQueryClient } from 'react-query'
 import toast from 'react-hot-toast'
 
 import { Channel } from '@api-types/channels'
-import userStore from '../../store/userStore'
+import useUserStore from '../../store/useUserStore'
 import Modal from '../Modal'
 import { ChevronDown } from '../../icons'
 import { useQueryChannel } from '../../queries'
@@ -18,7 +18,7 @@ import {
 import api from '../../axios'
 
 const SideHeader: FC = () => {
-  const { channelId, spaceId, setChannelId } = userStore()
+  const { channelId, spaceId, setChannelId } = useUserStore()
   const { data: channel, isSuccess } = useQueryChannel(channelId)
   const queryClient = useQueryClient()
   const {

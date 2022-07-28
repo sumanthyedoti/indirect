@@ -1,10 +1,10 @@
 import { FC } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 
-import userStore from '../store/userStore'
+import useUserStore from '../store/useUserStore'
 
 const PrivateRoute: FC = () => {
-  const { isLoggedIn } = userStore()
+  const { isLoggedIn } = useUserStore()
   return isLoggedIn ? <Outlet /> : <Navigate to="/login" />
 }
 

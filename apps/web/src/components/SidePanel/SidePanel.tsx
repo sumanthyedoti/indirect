@@ -12,7 +12,7 @@ import {
 } from '@api-types/channels'
 import Modal from '../Modal'
 import { IconButton } from '../atoms'
-import userStore from '../../store/userStore'
+import useUserStore from '../../store/useUserStore'
 import { Logout, Plus } from '../../icons'
 import { useQuerySpaceChannels } from '../../queries'
 import {
@@ -33,7 +33,7 @@ const SidePanel: FC = () => {
     setIsModalOpen(true)
   }
   const queryClient = useQueryClient()
-  const { spaceId, setChannelId, logout } = userStore()
+  const { spaceId, setChannelId, logout } = useUserStore()
   const { data: channels, isSuccess } = useQuerySpaceChannels(spaceId)
 
   const createChannel = useCallback(async (data: CreateChannelT) => {

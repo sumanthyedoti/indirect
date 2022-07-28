@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import userStore from '../../store/userStore'
+import useUserStore from '../../store/useUserStore'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { Dialog } from '@headlessui/react'
@@ -34,7 +34,7 @@ const schema = yup.object().shape({
 })
 
 const CreateChannel: FC<CreateChannelProps> = ({ close, createChannel }) => {
-  const { spaceId, user } = userStore()
+  const { spaceId, user } = useUserStore()
   const {
     register,
     handleSubmit,

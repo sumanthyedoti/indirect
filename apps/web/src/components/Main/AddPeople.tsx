@@ -5,7 +5,7 @@ import { useQueryClient } from 'react-query'
 import { Dialog } from '@headlessui/react'
 
 import { ChannelMembers } from '@api-types/channels'
-import userStore from '../../store/userStore'
+import useUserStore from '../../store/useUserStore'
 import {
   useQuerySpaceUsers,
   useQueryChannel,
@@ -34,7 +34,7 @@ const AddPeole: FC<AddPeoleProps> = () => {
   const [selectedUsers, setSelectedUsers] = useState<OptionT[]>([])
   const [isError, setIsError] = useState(false)
   const queryClient = useQueryClient()
-  const { spaceId, channelId } = userStore()
+  const { spaceId, channelId } = useUserStore()
   const { closeAddPeopleModal, openChannelModal } = useStore()
   const { data: users } = useQuerySpaceUsers(spaceId)
   const { data: channel } = useQueryChannel(channelId)

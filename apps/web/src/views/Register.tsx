@@ -10,7 +10,7 @@ import { RegisterUser } from '@api-types/users'
 import { Constraints } from '@api-types/users'
 import { AuthForm, Input, Button } from '../components/atoms'
 import { FormInput } from '../components/molecules'
-import userStore from '../store/userStore'
+import useUserStore from '../store/useUserStore'
 import {
   appErrorToastOptions,
   userErrorToastOptions,
@@ -62,7 +62,7 @@ const Register: FC = () => {
   })
   useToastLimit()
   const navigate = useNavigate()
-  const { isLoggedIn } = userStore()
+  const { isLoggedIn } = useUserStore()
   useEffect(() => {
     if (isLoggedIn) navigate('/')
   }, [isLoggedIn])

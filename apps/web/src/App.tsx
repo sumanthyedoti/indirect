@@ -9,7 +9,7 @@ import timezone from 'dayjs/plugin/timezone'
 import { Login, Register } from './views'
 import { Main } from './components'
 import { useSocket } from './hooks'
-import userStore from './store/userStore'
+import useUserStore from './store/useUserStore'
 import { PrivateRoute } from './routes'
 
 dayjs.extend(isToday)
@@ -20,7 +20,7 @@ dayjs.tz.guess()
 
 const App: FC = () => {
   const socket = useSocket()
-  const { isLoggedIn } = userStore()
+  const { isLoggedIn } = useUserStore()
   const navigate = useNavigate()
 
   useEffect(() => {
