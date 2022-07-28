@@ -15,10 +15,6 @@ import { IconButton, Button } from '../atoms'
 import { Close, ArrowBack } from '../../icons'
 import useStore from './store'
 import stylesConfig from '../../config/react-select-styles'
-import {
-  appErrorToastOptions,
-  successToastOptions,
-} from '../../config/toastConfig'
 import api from '../../axios'
 
 interface AddPeoleProps {
@@ -69,7 +65,6 @@ const AddPeole: FC<AddPeoleProps> = () => {
         user_ids: userIds,
       })
       toast.success(`Added users to the channel '#${channel.name}'`, {
-        ...successToastOptions,
         id: 'post-channel-users-success',
       })
       queryClient.setQueryData<ChannelMembers>(
@@ -83,7 +78,6 @@ const AddPeole: FC<AddPeoleProps> = () => {
     } catch (err) {
       console.log(err)
       toast.error('Something went wrong while adding users to the channel', {
-        ...appErrorToastOptions,
         id: 'post-channel-users-error',
       })
     }

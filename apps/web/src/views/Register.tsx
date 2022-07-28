@@ -11,10 +11,6 @@ import { Constraints } from '@api-types/users'
 import { AuthForm, Input, Button } from '../components/atoms'
 import { FormInput } from '../components/molecules'
 import useUserStore from '../store/useUserStore'
-import {
-  appErrorToastOptions,
-  userErrorToastOptions,
-} from '../config/toastConfig'
 import api from '../axios'
 import { useToastLimit } from '../hooks'
 
@@ -74,9 +70,9 @@ const Register: FC = () => {
     } catch (error) {
       const err = error as AxiosError
       if (err.response?.status === 409) {
-        toast.error('Email already exists!', userErrorToastOptions)
+        toast.error('Email already exists!')
       } else {
-        toast.error('Something when wrong', appErrorToastOptions)
+        toast.error('Something when wrong')
       }
     }
   }

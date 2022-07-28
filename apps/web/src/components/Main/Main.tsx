@@ -9,7 +9,6 @@ import { SidePanel } from '../../components'
 import useUserStore from '../../store/useUserStore'
 import api from '../../axios'
 import useSocket from '../../hooks/useSocket'
-import { appErrorToastOptions } from '../../config/toastConfig'
 
 const Space: FC = () => {
   const { user, channelId } = useUserStore()
@@ -36,7 +35,6 @@ const Space: FC = () => {
     } catch (err) {
       console.log(err)
       toast.error('Error fetching messages', {
-        ...appErrorToastOptions,
         id: 'get-messages-error',
       })
     }
@@ -52,7 +50,6 @@ const Space: FC = () => {
       } catch (err) {
         console.log(err)
         toast.error('Error sending message', {
-          ...appErrorToastOptions,
           id: 'post-messages-error',
         })
       }

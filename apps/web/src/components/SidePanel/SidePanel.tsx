@@ -15,11 +15,6 @@ import { IconButton } from '../atoms'
 import useUserStore from '../../store/useUserStore'
 import { Logout, Plus } from '../../icons'
 import { useQuerySpaceChannels } from '../../queries'
-import {
-  appErrorToastOptions,
-  userErrorToastOptions,
-  successToastOptions,
-} from '../../config/toastConfig'
 import api from '../../axios'
 
 const SidePanel: FC = () => {
@@ -44,7 +39,6 @@ const SidePanel: FC = () => {
         } = await api.post<{ data: ChannelT }>('/channels', data)
         closeModal()
         toast.success('Channel created', {
-          ...successToastOptions,
           id: 'post-channel-success',
         })
 
@@ -60,7 +54,6 @@ const SidePanel: FC = () => {
       } catch (err) {
         console.log(err)
         toast.error('Error creating Channel', {
-          ...appErrorToastOptions,
           id: 'post-channel-error',
         })
       }
@@ -76,7 +69,7 @@ const SidePanel: FC = () => {
       await api.delete('/logout')
       logout()
     } catch (err) {
-      toast.error('Failed to logout. Please try again', userErrorToastOptions)
+      toast.error('Failed to logout. Please try again')
     }
   }
   if (!isSuccess) return null

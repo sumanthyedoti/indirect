@@ -11,10 +11,6 @@ import ChannelDetails from './ChannelDetails'
 import ConfirmationModal from '../ConfirmationModal'
 import AddPeople from './AddPeople'
 import useStore from './store'
-import {
-  appErrorToastOptions,
-  successToastOptions,
-} from '../../config/toastConfig'
 import api from '../../axios'
 
 const SideHeader: FC = () => {
@@ -33,7 +29,6 @@ const SideHeader: FC = () => {
     try {
       await api.delete(`/channels/${channelId}`)
       toast.success('Channel deleted', {
-        ...successToastOptions,
         id: 'delete-channel-success',
       })
       queryClient.setQueryData<Channel[] | undefined>(
@@ -44,7 +39,6 @@ const SideHeader: FC = () => {
     } catch (err) {
       console.log(err)
       toast.error('Error deleting Channel', {
-        ...appErrorToastOptions,
         id: 'delete-channel-error',
       })
     }

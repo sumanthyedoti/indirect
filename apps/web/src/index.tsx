@@ -1,11 +1,11 @@
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
-import { Toaster } from 'react-hot-toast'
 import { BrowserRouter } from 'react-router-dom'
 import { QueryClientProvider, QueryClient } from 'react-query'
 // import { ReactQueryDevtools } from 'react-query/devtools'
 
 import App from './App'
+import Toaster from './components/Toaster'
 
 import './index.css'
 

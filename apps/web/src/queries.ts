@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from 'react-query'
 
 import { SpaceUser, Space } from '@api-types/spaces'
 import { Channel, ChannelMembers } from '@api-types/channels'
+
 import api from './axios'
 
 type UsersQuery = {
