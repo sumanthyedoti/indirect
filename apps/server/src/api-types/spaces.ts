@@ -6,7 +6,7 @@ interface Info {
 }
 
 import { User } from './users'
-import { Profile } from './profile'
+import { Profile } from './profiles'
 
 export interface CreateSpace extends Info {
   is_private?: boolean
