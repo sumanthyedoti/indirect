@@ -23,6 +23,7 @@ const SideHeader: FC = () => {
     openChannelModal,
     closeChannelModal,
     closeAddPeopleModal,
+    setActiveChannelTab,
   } = useStore()
 
   const onDeleteChannel = useCallback(async () => {
@@ -78,10 +79,11 @@ const SideHeader: FC = () => {
         }
         details="Deleting the channel affects all the channel members"
         confirmLabel="Yes, Delete"
-        onCancel={() => {
-          openChannelModal()
+        onCancel={openChannelModal}
+        onConfirm={() => {
+          setActiveChannelTab(0)
+          onDeleteChannel()
         }}
-        onConfirm={onDeleteChannel}
         isDanger={true}
       />
     </div>

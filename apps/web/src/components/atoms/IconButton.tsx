@@ -4,7 +4,7 @@ import classnames from 'classnames'
 interface IconButtonProps {
   children: React.ReactElement
   className?: string
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  onClick?: (e: any) => void
 }
 
 const IconButton: FC<IconButtonProps> = ({ children, className, ...props }) => {

@@ -5,22 +5,25 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { Dialog } from '@headlessui/react'
 
-import {
-  CreateChannel as CreateChannelT,
-  Constraints,
-} from '@api-types/channels'
+import { CreateSpace as CreateSpaceT, Constraints } from '@api-types/spaces'
 import { Button, Input } from '../atoms'
 import { FormInput } from '../molecules'
 
 const schema = yup.object().shape({
-  space_id: yup.number().required(),
   creator_id: yup.number().required(),
   name: yup
     .string()
-    .required('Please provide the channel name!')
+    .required('Please provide the Space name!')
     .max(
       Constraints.name,
       `Please keep it under ${Constraints.name} characters`
+    ),
+  tagline: yup
+    .string()
+    .nullable()
+    .max(
+      Constraints.tagline,
+      `Please keep it under ${Constraints.tagline} characters`
     ),
   description: yup
     .string()
@@ -30,23 +33,22 @@ const schema = yup.object().shape({
 
 interface Props {
   close: () => void
-  createChannel: (data: CreateChannelT) => void
+  createSpace: (data: CreateSpaceT) => void
 }
-
-const CreateChannel: FC<Props> = ({ close, createChannel }) => {
-  const { spaceId, user } = useUserStore()
+const CreateSpace: FC<Props> = ({ close, createSpace }) => {
+  const { user } = useUserStore()
   const {
     register,
     setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreateChannelT>({
+  } = useForm<CreateSpaceT>({
     resolver: yupResolver(schema),
     mode: 'onBlur',
   })
 
-  const onSubmit = async (input: CreateChannelT) => {
-    createChannel(input)
+  const onSubmit = async (input: CreateSpaceT) => {
+    createSpace(input)
   }
 
   const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,16 +64,9 @@ const CreateChannel: FC<Props> = ({ close, createChannel }) => {
         rounded-md transition-all`}
       >
         <Dialog.Title as="h2" className="">
-          Create Channel
+          Create Space
         </Dialog.Title>
         <form autoComplete="on" onSubmit={handleSubmit(onSubmit)}>
-          <input
-            hidden
-            type="number"
-            {...register('space_id')}
-            readOnly
-            value={spaceId}
-          />
           <input
             hidden
             type="number"
@@ -90,6 +85,14 @@ const CreateChannel: FC<Props> = ({ close, createChannel }) => {
               />
             }
             error={errors.name?.message}
+          />
+          <FormInput
+            label="Tagline"
+            id="tagline"
+            field={
+              <Input autoComplete="on" {...register('tagline')} type="text" />
+            }
+            error={errors.tagline?.message}
           />
           <FormInput
             label="Description"
@@ -118,4 +121,4 @@ const CreateChannel: FC<Props> = ({ close, createChannel }) => {
   )
 }
 
-export default CreateChannel
+export default CreateSpace

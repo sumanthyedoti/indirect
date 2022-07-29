@@ -9,14 +9,12 @@ const createSpaceScheme: JSONSchemaType<CreateSpace> = {
     name: { type: 'string', minLength: 1, maxLength: Constraints.name },
     tagline: {
       type: 'string',
-      minLength: 1,
-      maxLength: Constraints.tagline,
       nullable: true,
+      maxLength: Constraints.tagline,
     },
     description: {
       type: 'string',
       nullable: true,
-      minLength: 1,
       maxLength: Constraints.description,
     },
     creator_id: { type: 'number' },

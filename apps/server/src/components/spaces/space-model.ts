@@ -7,10 +7,10 @@ async function createGeneralChannel(channel: {
   name: string
   is_general: boolean
 }) {
-  const [createdChannel]: { id: number }[] = await db('channels')
+  const [createdChannel]: T.Space[] = await db('channels')
     .insert(channel)
-    .returning('id')
-  return createdChannel.id
+    .returning('*')
+  return createdChannel
 }
 
 async function createSpace(space: T.CreateSpace) {

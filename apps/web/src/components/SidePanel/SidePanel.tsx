@@ -50,6 +50,7 @@ const SidePanel: FC = () => {
             return [...channels, newChannel]
           }
         )
+        setIsModalOpen(false)
         setChannelId(newChannel.id)
       } catch (err) {
         console.log(err)

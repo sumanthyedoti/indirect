@@ -145,7 +145,7 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
                 <h5 className="font-medium">Created by</h5>
                 <div>
                   <span className="font-medium">
-                    {users.list[channel.creator_id].fullname}
+                    {users.idMap[channel.creator_id].fullname}
                   </span>{' '}
                   on {dayjs(channel.created_at).format('MMM D, YYYY')}
                 </div>
