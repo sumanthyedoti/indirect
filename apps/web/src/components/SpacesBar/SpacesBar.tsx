@@ -32,7 +32,6 @@ const SpacesBar: FC<SpacesBarProps> = () => {
       toast.success('Space created', {
         id: 'post-space-success',
       })
-
       queryClient.setQueryData<SpaceT[] | undefined>(
         'spaces',
         //@ts-ignore

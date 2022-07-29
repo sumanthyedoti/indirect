@@ -1,5 +1,6 @@
 import * as T from '@api-types/spaces'
 import { Channel as ChannelT } from '@api-types/channels'
+import { CreateProfile as CreateProfileT } from '@api-types/profiles'
 import db from '../../db'
 
 async function createGeneralChannel(channel: {
@@ -13,6 +14,16 @@ async function createGeneralChannel(channel: {
   return createdChannel
 }
 
+async function createProfile(profile: CreateProfileT) {
+  const createdProfile = await db('profiles')
+    .insert({
+      user_id: profile.user_id,
+      space_id: profile.space_id,
+    })
+    .returning('*')
+  return createdProfile
+}
+
 async function createSpace(space: T.CreateSpace) {
   const [createdSpace]: T.Space[] = await db('spaces')
     .insert(space)
@@ -21,6 +32,10 @@ async function createSpace(space: T.CreateSpace) {
     space_id: createdSpace.id,
     name: 'general',
     is_general: true,
+  })
+  await createProfile({
+    space_id: createdSpace.id,
+    user_id: space.creator_id,
   })
   return createdSpace
 }

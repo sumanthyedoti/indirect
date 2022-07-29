@@ -14,7 +14,7 @@ import useStore from './store'
 import api from '../../axios'
 
 const SideHeader: FC = () => {
-  const { channelId, spaceId, setChannelId } = useUserStore()
+  const { channelId, spaceId, setSpaceId, setChannelId } = useUserStore()
   const { data: channel, isSuccess } = useQueryChannel(channelId)
   const queryClient = useQueryClient()
   const {
@@ -36,6 +36,7 @@ const SideHeader: FC = () => {
         ['channels', spaceId],
         (oldData) => oldData?.filter((ch) => ch.id !== channelId)
       )
+      setSpaceId(1) // TODO: do dynamically
       setChannelId(1) // TODO: change to general channel of the space
     } catch (err) {
       console.log(err)
@@ -43,7 +44,8 @@ const SideHeader: FC = () => {
         id: 'delete-channel-error',
       })
     }
-  }, [channelId])
+  }, [channelId, spaceId])
+
   if (!isSuccess) return null
   return (
     <div className="mb-0 text-base border-b border-gray-700 shadow-sm shadow-gray-700 side-panel-padding">

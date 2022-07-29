@@ -1,5 +1,9 @@
+export interface CreateProfile {
+  user_id: number
+  space_id: number
+}
+
 export interface Profile {
-  id: number
   user_id: number
   space_id: number
   display_name: string | null
