@@ -9,6 +9,17 @@ async function createChannel(channel: T.CreateChannel) {
   return createdChannel
 }
 
+async function createGeneralChannel(channel: {
+  space_id: number
+  name: string
+  is_general: boolean
+}) {
+  const [createdChannel]: T.Channel[] = await db('channels')
+    .insert(channel)
+    .returning('*')
+  return createdChannel
+}
+
 async function getChannel(id: number) {
   const [channel]: T.Channel[] = await db('channels').select().where({ id })
   return channel
@@ -87,6 +98,7 @@ async function deleteChannelMember(channel_id: number, user_id: number) {
 
 export default {
   createChannel,
+  createGeneralChannel,
   getChannel,
   getChannelMessages,
   updateChannel,
