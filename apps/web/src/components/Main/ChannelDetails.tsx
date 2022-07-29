@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import dayjs from 'dayjs'
 import classnames from 'classnames'
 import { Dialog, Tab } from '@headlessui/react'
 
@@ -139,14 +140,27 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
                 />
               </Section>
             )}
-            <Section>
-              <AddPeopleButton />
-            </Section>
+            {!channel.is_general && (
+              <Section>
+                <h5 className="font-medium">Created by</h5>
+                <div>
+                  <span className="font-medium">
+                    {users.list[channel.creator_id].fullname}
+                  </span>{' '}
+                  on {dayjs(channel.created_at).format('MMM D, YYYY')}
+                </div>
+              </Section>
+            )}
+            {!channel.is_general && (
+              <Section>
+                <AddPeopleButton />
+              </Section>
+            )}
           </Tab.Panel>
           {/* Members */}
           <Tab.Panel tabIndex={-1}>
             <Section>
-              <AddPeopleButton />
+              {!channel.is_general && <AddPeopleButton />}
               <ul>
                 {channelUserIds?.map((uid) => {
                   const user = users.idMap[uid]
@@ -156,12 +170,14 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
                       key={uid}
                     >
                       <span>{user ? user.fullname : 'Unknown User'}</span>
-                      <button
-                        className="text-sm text-sky-500 hover:text-red-500"
-                        onClick={() => handleRemoveMember(uid)}
-                      >
-                        Remove
-                      </button>
+                      {!channel.is_general && (
+                        <button
+                          className="text-sm text-sky-500 hover:text-red-500"
+                          onClick={() => handleRemoveMember(uid)}
+                        >
+                          Remove
+                        </button>
+                      )}
                     </li>
                   )
                 })}
@@ -170,9 +186,11 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
           </Tab.Panel>
           {/* Settings */}
           <Tab.Panel tabIndex={-1}>
-            <Section>
-              <DeleteChannelButton />
-            </Section>
+            {!channel.is_general && (
+              <Section>
+                <DeleteChannelButton />
+              </Section>
+            )}
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>

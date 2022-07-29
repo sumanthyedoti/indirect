@@ -14,6 +14,7 @@ export interface Channel extends Info {
   is_shared: boolean
   is_private: boolean
   is_general: boolean
+  created_at: Date
 }
 
 export interface UpdateChannel {
