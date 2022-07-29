@@ -47,6 +47,7 @@ const SideHeader: FC = () => {
   }, [channelId, spaceId])
 
   if (!isSuccess) return null
+
   return (
     <div className="mb-0 text-base border-b border-gray-700 shadow-sm shadow-gray-700 side-panel-padding">
       <button
