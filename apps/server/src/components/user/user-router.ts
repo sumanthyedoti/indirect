@@ -9,9 +9,9 @@ const router = express.Router()
 router.use(isAuthenticated)
 
 router.get('/', userController.getUsers)
-router.get('/map', userController.getUsersMap)
 router.get('/:id', validateIdParam, userController.getUser)
 router.put('/:id', validateIdParam, userController.updateUser)
 router.delete('/:id', validateIdParam, userController.deleteUser)
+router.get('/:id/spaces', validateIdParam, userController.getUserSpaces)
 
 export default router

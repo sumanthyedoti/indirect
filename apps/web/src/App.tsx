@@ -7,7 +7,7 @@ import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 
 import { Login, Register } from './views'
-import { Main } from './components'
+import Main from './components/Main'
 import { useSocket } from './hooks'
 import useUserStore from './store/useUserStore'
 import { PrivateRoute } from './routes'

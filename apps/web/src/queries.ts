@@ -5,6 +5,33 @@ import { Channel, ChannelMembers } from '@api-types/channels'
 
 import api from './axios'
 
+type SpacesQuery = {
+  list: Space[]
+  idMap: {
+    [key: string]: Space
+  }
+}
+function useQueryUserSpaces(userId: number | undefined) {
+  return useQuery(
+    ['spaces'],
+    async () => {
+      const { data } = await api.get<{ data: Space[] }>(
+        `/users/${userId}/spaces`
+      )
+      const spaces = data.data
+      const spacesListAndMap: SpacesQuery = { list: spaces, idMap: {} }
+      for (let i = 0; i < spaces.length; i++) {
+        spacesListAndMap.idMap[spaces[i].id] = spaces[i]
+      }
+      return spacesListAndMap
+    },
+    {
+      staleTime: Infinity,
+      enabled: !!userId,
+    }
+  )
+}
+
 type UsersQuery = {
   list: SpaceUser[]
   idMap: {
@@ -113,6 +140,7 @@ function useQuerySpaceChannels(spaceId: number) {
 }
 
 export {
+  useQueryUserSpaces,
   useQuerySpaceUsers,
   useQuerySpaceChannels,
   useQuerySpace,

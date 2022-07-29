@@ -77,22 +77,6 @@ async function getUsers(req: Request, res: Response) {
   }
 }
 
-async function getUsersMap(req: Request, res: Response) {
-  try {
-    const users = await userModel.getUsers()
-    const usersIdMap = users.reduce((acc, user) => {
-      acc[user.id] = user
-      return acc
-    }, {})
-    res.status(200).json({
-      data: usersIdMap,
-    })
-  } catch (err) {
-    logger.error(err)
-    res.status(500).send('Something went wrong!')
-  }
-}
-
 async function getUser(req: TypedRequestParams<{ id: number }>, res: Response) {
   try {
     const id = req.params.id
@@ -155,12 +139,33 @@ async function deleteUser(
   }
 }
 
+async function getUserSpaces(
+  req: TypedRequestParams<{ id: number }>,
+  res: Response
+) {
+  try {
+    const id = req.params.id
+
+    const result = await userModel.getUserSpaces(id)
+    if (!result) {
+      res.status(404).json({ id, message: 'User not found' })
+      return
+    }
+    res.json({
+      data: result,
+    })
+  } catch (err) {
+    logger.error(err)
+    res.status(500).send('Something went wrong!')
+  }
+}
+
 export default {
   registerUser,
   loginUser,
   getUsers,
-  getUsersMap,
   getUser,
   updateUser,
   deleteUser,
+  getUserSpaces,
 }

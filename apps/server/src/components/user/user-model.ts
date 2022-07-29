@@ -1,4 +1,5 @@
 import * as T from '@api-types/users'
+import { Space as SpaceT } from '@api-types/spaces'
 import db from '../../db'
 
 async function createUser(user: T.CreateUser) {
@@ -52,6 +53,16 @@ async function deleteUser(id: number) {
   return userId
 }
 
+async function getUserSpaces(userId: number) {
+  const result: { rows: SpaceT[] } = await db.raw(`
+    SELECT s.*
+      FROM profiles as p JOIN spaces as s
+      ON p.space_id = s.id
+      WHERE p.user_id = ${userId}
+    `)
+  return result?.rows
+}
+
 export default {
   createUser,
   getUsers,
@@ -59,4 +70,5 @@ export default {
   getUserByEmail,
   updateUser,
   deleteUser,
+  getUserSpaces,
 }

@@ -43,7 +43,7 @@ const Login: FC = () => {
   useToastLimit()
   const locationState = location.state as { isRegister: boolean }
 
-  const { isLoggedIn, login, setSpaceId, setChannelId } = useUserStore()
+  const { isLoggedIn, login } = useUserStore()
 
   const {
     register,
@@ -60,8 +60,6 @@ const Login: FC = () => {
     try {
       const { data } = await api.post('/login', input)
       login(data)
-      setSpaceId(1) // TODO: handle dyamically
-      setChannelId(1) // TODO: handle dyamically
     } catch (error) {
       const err = error as AxiosError
       if (err.response?.status === 401) {

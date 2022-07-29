@@ -5,7 +5,8 @@ import * as T from '@api-types/messages'
 import Header from './MainHeader'
 import ChannelMessages from './ChannelMessages'
 import { MessageInput } from '../../components/molecules'
-import { SidePanel } from '../../components'
+import SpacesBar from '../SpacesBar'
+import SidePanel from '../SidePanel'
 import useUserStore from '../../store/useUserStore'
 import api from '../../axios'
 import useSocket from '../../hooks/useSocket'
@@ -62,6 +63,7 @@ const Space: FC = () => {
 
   return (
     <div className="flex h-screen max-h-screen">
+      <SpacesBar />
       <SidePanel />
       <div
         className={`

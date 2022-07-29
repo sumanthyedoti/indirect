@@ -93,26 +93,6 @@ async function getSpaceUsers(
   }
 }
 
-async function getSpaceUsersMap(
-  req: TypedRequestParams<{ id: number }>,
-  res: Response
-) {
-  try {
-    const id = req.params.id
-    const users = await spaceModel.getSpaceUsers(id)
-    const usersIdMap = users.reduce((acc, user) => {
-      acc[user.user_id] = user
-      return acc
-    }, {})
-    res.status(200).json({
-      data: usersIdMap,
-    })
-  } catch (err) {
-    logger.error(err)
-    res.status(500).send('Something went wrong!')
-  }
-}
-
 async function updateSpace(
   req: TypedRequest<{ id: number }, T.UpdateSpace>,
   res: Response
@@ -162,7 +142,6 @@ export default {
   getSpace,
   getSpaceChannels,
   getSpaceUsers,
-  getSpaceUsersMap,
   updateSpace,
   deleteSpace,
 }

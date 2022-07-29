@@ -47,7 +47,6 @@ async function getSpaceUsers(id: number) {
       ON p.user_id = u.id
       WHERE p.space_id = ${id}
     `)
-  //@ts-ignore
   return result?.rows
 }
 
