@@ -6,6 +6,9 @@ async function createChannel(channel: T.CreateChannel) {
   const [createdChannel]: T.Channel[] = await db('channels')
     .insert(channel)
     .returning('*')
+  await createChannelMembers(createdChannel.id, {
+    user_ids: [channel.creator_id],
+  })
   return createdChannel
 }
 

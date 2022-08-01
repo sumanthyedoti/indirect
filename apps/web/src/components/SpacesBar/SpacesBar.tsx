@@ -30,7 +30,6 @@ const Tooltip = ({ label, children, delay = 350 }: ToolTipProps) => {
       content={label}
       delay={delay}
       trigger="mouseenter"
-      className="shadow-lg -left-1 shadow-gray-100"
     >
       {children}
     </Tippy>
@@ -85,10 +84,9 @@ const SpacesBar: FC<SpacesBarProps> = () => {
                 w-12 h-12 lg:w-14 lg:h-14
                 bg-slate-800 mb-4`,
                 {
-                  'ring-2 ring-slate-300 hover:ring-sky-400 hover:ring-2 focus:ring-sky-400 focus:ring-2':
+                  'w-10 h-10 lg:w-12 lg:h-12 ring-2 ring-slate-300 hover:ring-sky-400 hover:ring-2 focus:ring-sky-400 focus:ring-2':
                     space.id === spaceId,
                   'focus:ring-1 focus:ring-sky-400': space.id !== spaceId,
-                  'hover:rounded-full focus:rounded-full': space.id !== spaceId,
                 }
               )}
               onClick={() => setSpaceId(space.id)}
