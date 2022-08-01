@@ -74,7 +74,7 @@ const SpacesBar: FC<SpacesBarProps> = () => {
   console.log(spaces)
 
   return (
-    <div className="flex flex-col items-center w-1/12 mt-3">
+    <aside className="flex flex-col items-center mt-3 w-28 lg:w-32">
       {spaces?.map((space) => {
         return (
           <Tooltip key={space.id} delay={100} label={space.name}>
@@ -125,7 +125,7 @@ const SpacesBar: FC<SpacesBarProps> = () => {
           close={() => setIsCreateSpaceModalOpen(false)}
         />
       </Modal>
-    </div>
+    </aside>
   )
 }
 
