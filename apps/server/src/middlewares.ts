@@ -68,7 +68,6 @@ export const socketAuthentication = (
   next: NextFunction
 ) => {
   const req = socket.request
-  //@ts-ignore
   if (req.isAuthenticated && req.isAuthenticated()) {
     socket.join(req.user.id.toString())
     next()

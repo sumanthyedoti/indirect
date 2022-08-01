@@ -54,7 +54,7 @@ const Login: FC = () => {
     mode: 'onBlur',
   })
   useEffect(() => {
-    if (isLoggedIn) navigate('/')
+    if (isLoggedIn) navigate('/space')
   }, [isLoggedIn])
   const onSubmit = async (input: LoginUser) => {
     try {
@@ -70,7 +70,6 @@ const Login: FC = () => {
     }
   }
 
-  // TODO welocme message function utility
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <AuthForm autoComplete="on" onSubmit={handleSubmit(onSubmit)}>

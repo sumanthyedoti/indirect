@@ -1,5 +1,5 @@
-import { useEffect, FC } from 'react'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { FC } from 'react'
+import { Routes, Route } from 'react-router-dom'
 import dayjs from 'dayjs'
 import isToday from 'dayjs/plugin/isToday'
 import isYesterday from 'dayjs/plugin/isYesterday'
@@ -8,8 +8,6 @@ import timezone from 'dayjs/plugin/timezone'
 
 import { Login, Register } from './views'
 import Main from './components/Main'
-import { useSocket } from './hooks'
-import useUserStore from './store/useUserStore'
 import { PrivateRoute } from './routes'
 
 dayjs.extend(isToday)
@@ -19,28 +17,6 @@ dayjs.extend(timezone)
 dayjs.tz.guess()
 
 const App: FC = () => {
-  const socket = useSocket()
-  const { isLoggedIn } = useUserStore()
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    socket.on('connect', () => {
-      console.log(socket.id)
-    })
-
-    return () => {
-      socket.off('connect')
-    }
-  }, [])
-  useEffect(() => {
-    if (isLoggedIn) socket.connect()
-    navigate('/space')
-
-    return () => {
-      socket.disconnect()
-    }
-  }, [isLoggedIn])
-
   return (
     <>
       <Routes>

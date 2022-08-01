@@ -16,13 +16,13 @@ declare global {
   }
 }
 
-const localStratery = new LocalStrategy(
+const localStrategy = new LocalStrategy(
   { usernameField: 'email' },
   async (email, password, done) => {
     try {
       const user = await userModel.getUserByEmail(email)
       if (!user) {
-        return done(null, false, { message: 'Login Failed' })
+        done(null, false, { message: 'Login Failed' })
       }
       const authenticated = await bcrypt.compare(password, user.password_hash)
       if (!authenticated) {
@@ -42,7 +42,7 @@ const localStratery = new LocalStrategy(
 )
 
 const initializer = (passport: PassportStatic) => {
-  passport.use(localStratery)
+  passport.use(localStrategy)
 
   passport.serializeUser((user, done) => {
     done(null, user.id) // stores in sessions

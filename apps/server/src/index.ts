@@ -34,13 +34,6 @@ app.use(
   })
 )
 
-declare module 'express' {
-  interface User {
-    // @ts-ignore
-    user: { [key: string]: any }
-  }
-}
-
 // app.set('trust proxy', 1) // trust first proxy
 app.use(expressSessionMiddleware)
 
