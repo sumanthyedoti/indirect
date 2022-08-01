@@ -7,6 +7,8 @@ import { QueryClientProvider, QueryClient } from 'react-query'
 import App from './App'
 import Toaster from './components/Toaster'
 
+import 'tippy.js/dist/tippy.css'
+import 'tippy.js/themes/light.css'
 import './index.css'
 
 const queryClient = new QueryClient()

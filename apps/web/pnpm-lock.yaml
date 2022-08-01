@@ -13,6 +13,7 @@ specifiers:
   '@libs/types': workspace:^1.0.0
   '@pmmmwh/react-refresh-webpack-plugin': ^0.5.7
   '@tailwindcss/nesting': 0.0.0-insiders.565cd3e
+  '@tippyjs/react': ^4.2.6
   '@types/node': ^18.0.0
   '@types/react': ^18.0.14
   '@types/react-dom': ^18.0.5
@@ -55,6 +56,7 @@ specifiers:
   style-loader: ^3.3.1
   tailwindcss: ^3.1.4
   tinykeys: ^1.4.0
+  tippy.js: ^6.3.7
   ts-loader: ^9.3.1
   tsconfig-paths-webpack-plugin: ^3.5.2
   typescript: ^4.7.4
@@ -71,6 +73,7 @@ dependencies:
   '@hookform/resolvers': 2.9.5_react-hook-form@7.33.1
   '@libs/styles': link:../../libs/styles
   '@libs/types': link:../../libs/types
+  '@tippyjs/react': 4.2.6_biqbaboplfbrettd7655fr4n2y
   add: 2.0.6
   axios: 0.27.2
   classnames: 2.3.1
@@ -84,6 +87,7 @@ dependencies:
   react-select: 5.4.0_sukxovx4mwg6d6626r5e3rv5k4
   socket.io-client: 4.5.1
   tinykeys: 1.4.0
+  tippy.js: 6.3.7
   yup: 0.32.11
   zustand: 3.7.2_react@18.2.0
 
@@ -1635,6 +1639,10 @@ packages:
     resolution: {integrity: sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==}
     dev: true
 
+  /@popperjs/core/2.11.5:
+    resolution: {integrity: sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==}
+    dev: false
+
   /@socket.io/component-emitter/3.1.0:
     resolution: {integrity: sha512-+9jVqKhRSpsc591z5vX+X5Yyw+he/HCB4iQ/RYxw35CEPaY1gnsNE43nf9n9AaYjAQrTiI/mOwKUKdUs9vf7Xg==}
     dev: false
@@ -1647,6 +1655,17 @@ packages:
       postcss: 8.4.14
       postcss-nested: 5.0.6_postcss@8.4.14
     dev: true
+
+  /@tippyjs/react/4.2.6_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-91RicDR+H7oDSyPycI13q3b7o4O60wa2oRbjlz2fyRLmHImc4vyDwuUP8NtZaN0VARJY5hybvDYrFzhY9+Lbyw==}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      tippy.js: 6.3.7
+    dev: false
 
   /@trysound/sax/0.2.0:
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
@@ -6561,6 +6580,12 @@ packages:
 
   /tinykeys/1.4.0:
     resolution: {integrity: sha512-ysnVd2E4nWbNXIbHaUidcKGLTmNimqP0hdpsD0Ph5hPJ84ntCF6PHj+Jg3im9nZt9/hNsBg/E6m1psHc2KaPnQ==}
+    dev: false
+
+  /tippy.js/6.3.7:
+    resolution: {integrity: sha512-E1d3oP2emgJ9dRQZdf3Kkn0qJgI6ZLpyS5z6ZkY1DF3kaQaBsGZsndEpHwx+eC+tYM41HaSNvNtLx8tU57FzTQ==}
+    dependencies:
+      '@popperjs/core': 2.11.5
     dev: false
 
   /to-fast-properties/2.0.0:
