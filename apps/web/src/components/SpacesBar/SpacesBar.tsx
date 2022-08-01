@@ -84,9 +84,9 @@ const SpacesBar: FC<SpacesBarProps> = () => {
                 w-12 h-12 lg:w-14 lg:h-14
                 bg-slate-800 mb-4`,
                 {
-                  'w-10 h-10 lg:w-12 lg:h-12 ring-2 ring-slate-300 hover:ring-sky-400 hover:ring-2 focus:ring-sky-400 focus:ring-2':
+                  'border-2 border-slate-300 focus:ring-2 focus:ring-sky-400 active:ring-2 active-sky-400':
                     space.id === spaceId,
-                  'focus:ring-1 focus:ring-sky-400': space.id !== spaceId,
+                  'focus:ring-2 focus:ring-sky-400': space.id !== spaceId,
                 }
               )}
               onClick={() => setSpaceId(space.id)}
