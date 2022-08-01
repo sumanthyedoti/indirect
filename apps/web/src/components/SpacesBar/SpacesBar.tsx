@@ -71,8 +71,6 @@ const SpacesBar: FC<SpacesBarProps> = () => {
     }
   }, [])
 
-  console.log(spaces)
-
   return (
     <aside className="flex flex-col items-center mt-3 w-28 lg:w-32">
       {spaces?.map((space) => {

@@ -104,7 +104,6 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
   const handleRemoveMember = (id: number) => {
     removeMember(id)
   }
-
   if (!users || !channel || !channelUserIds) return null
 
   return (
@@ -164,13 +163,18 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
               <ul>
                 {channelUserIds?.map((uid) => {
                   const user = users.idMap[uid]
+
                   return (
                     <li
                       className="p-2 hover:bg-slate-600 flex-between-center"
                       key={uid}
                     >
                       <span>{user ? user.fullname : 'Unknown User'}</span>
-                      {!channel.is_general && (
+                      {!channel.is_general && channel.creator_id === uid ? (
+                        <i className="text-sm text-slate-400">
+                          Created the channel
+                        </i>
+                      ) : (
                         <button
                           className="text-sm text-sky-500 hover:text-red-500"
                           onClick={() => handleRemoveMember(uid)}

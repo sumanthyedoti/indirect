@@ -19,7 +19,7 @@ export async function up(knex: Knex): Promise<void> {
           .onDelete('CASCADE')
         table.text('name').notNullable()
         table.text('description').nullable()
-        table.text('creator_id').nullable()
+        table.integer('creator_id').nullable()
         table.boolean('is_private').defaultTo(false)
         table.boolean('is_shared').defaultTo(false)
         table.boolean('is_general').nullable()
