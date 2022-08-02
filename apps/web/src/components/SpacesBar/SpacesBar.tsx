@@ -4,7 +4,6 @@ import Tippy from '@tippyjs/react'
 
 import { useQueryUserSpaces } from '../../queries'
 import CreateSpace from './CreateSpace'
-import Modal from '../Modal'
 import { Space as SpaceIcon, Plus } from '../../icons'
 import { useUserStore } from '../../store'
 
@@ -81,12 +80,10 @@ const SpacesBar: FC<SpacesBarProps> = () => {
         </button>
       </Tooltip>
 
-      <Modal
+      <CreateSpace
         isOpen={isCreateSpaceModalOpen}
         close={() => setIsCreateSpaceModalOpen(false)}
-      >
-        <CreateSpace close={() => setIsCreateSpaceModalOpen(false)} />
-      </Modal>
+      />
     </aside>
   )
 }

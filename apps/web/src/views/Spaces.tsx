@@ -1,6 +1,5 @@
 import { useState, FC } from 'react'
 
-import Modal from '../components/Modal'
 import { Button } from '../components/atoms'
 import { useQueryUserSpaces } from '../queries'
 import CreateSpace from '../components/SpacesBar/CreateSpace'
@@ -33,7 +32,7 @@ const Spaces: FC<SpacesProps> = () => {
             <section
               key={space.id}
               className={`
-                p-4
+                px-6 py-4
                 border-b last:border-0 border-gray-700
                 flex justify-between items-center`}
             >
@@ -43,12 +42,10 @@ const Spaces: FC<SpacesProps> = () => {
           )
         })}
       </article>
-      <Modal
+      <CreateSpace
         isOpen={isCreateSpaceModalOpen}
         close={() => setIsCreateSpaceModalOpen(false)}
-      >
-        <CreateSpace close={() => setIsCreateSpaceModalOpen(false)} />
-      </Modal>
+      />
     </div>
   )
 }

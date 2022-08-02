@@ -12,6 +12,7 @@ import {
   CreateSpace as CreateSpaceT,
   Constraints,
 } from '@api-types/spaces'
+import Modal from '../Modal'
 import { Button, Input } from '../atoms'
 import { FormInput } from '../molecules'
 import api from '../../axios'
@@ -39,9 +40,10 @@ const schema = yup.object().shape({
 })
 
 interface Props {
+  isOpen: boolean
   close: () => void
 }
-const CreateSpace: FC<Props> = ({ close }) => {
+const CreateSpace: FC<Props> = ({ isOpen, close }) => {
   const { user, setSpaceId } = useUserStore()
   const {
     register,
@@ -91,7 +93,7 @@ const CreateSpace: FC<Props> = ({ close }) => {
   }
 
   return (
-    <div>
+    <Modal isOpen={isOpen} close={close}>
       <Dialog.Panel
         className={`w-full max-w-lg p-6
         text-left align-middle
@@ -152,7 +154,7 @@ const CreateSpace: FC<Props> = ({ close }) => {
           </div>
         </form>
       </Dialog.Panel>
-    </div>
+    </Modal>
   )
 }
 
