@@ -8,10 +8,13 @@ async function createSpace(space: T.CreateSpace) {
   const [createdSpace]: T.Space[] = await db('spaces')
     .insert(space)
     .returning('*')
-  await channelModel.createGeneralChannel({
+  const channel = await channelModel.createGeneralChannel({
     space_id: createdSpace.id,
     name: 'general',
     is_general: true,
+  })
+  await channelModel.createChannelMembers(channel.id, {
+    user_ids: [space.creator_id],
   })
   await profileModel.createProfile({
     space_id: createdSpace.id,
