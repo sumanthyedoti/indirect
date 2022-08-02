@@ -7,7 +7,7 @@ import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 
 import { Login, Register, Spaces, Main } from './views'
-import { PrivateRoute } from './routes'
+import { PrivateRoute, NoMatch } from './routes'
 
 dayjs.extend(isToday)
 dayjs.extend(isYesterday)
@@ -27,14 +27,7 @@ const App: FC = () => {
             <Route path=":channelId" element={<Main />} />
           </Route>
         </Route>
-        <Route
-          path="*"
-          element={
-            <main style={{ padding: '1rem' }}>
-              <p>There&apos;s nothing here!</p>
-            </main>
-          }
-        />
+        <Route path="*" element={<NoMatch />} />
       </Routes>
     </>
   )

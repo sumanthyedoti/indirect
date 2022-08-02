@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from 'react'
+import React, { FC, useState, useEffect, useCallback } from 'react'
 import { useQueryClient } from 'react-query'
 import toast from 'react-hot-toast'
 
@@ -61,6 +61,13 @@ const SidePanel: FC = () => {
     },
     [spaceId]
   )
+
+  useEffect(() => {
+    const generalChannel = channels?.find((c) => c.is_general)
+    if (generalChannel) {
+      setChannelId(generalChannel.id)
+    }
+  }, [channels])
 
   const handleChannelClick = (id: number) => {
     setChannelId(id)

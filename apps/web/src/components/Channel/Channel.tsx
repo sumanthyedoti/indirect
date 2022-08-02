@@ -10,7 +10,7 @@ import api from '../../axios'
 import useSocket from '../../hooks/useSocket'
 
 const Channel: FC = () => {
-  const { user, channelId, setChannelId, logout } = useUserStore()
+  const { user, channelId, logout } = useUserStore()
   const [messages, setMessages] = useState<T.Message[]>([])
   const socket = useSocket()
   useEffect(() => {
@@ -23,12 +23,10 @@ const Channel: FC = () => {
       toast.dismiss()
     }
   }, [])
-  /* set space and general channel IDs */
   useEffect(() => {
-    setChannelId(1) // TODO: change to general channel of the space
-  }, [])
-  useEffect(() => {
-    fetchMessages(channelId)
+    if (channelId) {
+      fetchMessages(channelId)
+    }
   }, [channelId])
   const fetchMessages = async (channelId: number) => {
     try {
