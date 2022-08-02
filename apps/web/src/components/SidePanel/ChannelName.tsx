@@ -13,9 +13,9 @@ const ChannelName: FC<ChannelNameProps> = ({ onClick, channel }) => {
   const { channelId } = useUserStore()
   return (
     <div
-      className={classnames('py-1', [
+      className={classnames('py-0.5', [
         channel.id === channelId && 'bg-slate-800 hover::bg-slate-800',
-        channel.id !== channelId && 'hover:bg-stone-800',
+        channel.id !== channelId && 'hover:bg-gray-900',
       ])}
     >
       <button
@@ -23,7 +23,10 @@ const ChannelName: FC<ChannelNameProps> = ({ onClick, channel }) => {
         key={channel.id}
         className={classnames(
           'flex space-x-1 w-full rounded-none side-panel-item-padding',
-          [channel.id === channelId && 'text-neutral-100']
+          {
+            'text-neutral-100': channel.id === channelId,
+            'hover:ring-1 hover:ring-slate-500': channel.id !== channelId,
+          }
         )}
       >
         <span
