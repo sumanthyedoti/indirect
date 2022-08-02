@@ -106,6 +106,23 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
   }
   if (!users || !channel || !channelUserIds) return null
 
+  console.log(channel)
+
+  const renderRemoveMemeberBUtton = (uid: number) => {
+    if (channel.is_general) return null
+    if (channel.creator_id === uid) {
+      return <i className="text-sm text-slate-400">Created the channel</i>
+    }
+    return (
+      <button
+        className="text-sm text-sky-500 hover:text-red-500"
+        onClick={() => handleRemoveMember(uid)}
+      >
+        Remove
+      </button>
+    )
+  }
+
   return (
     <Dialog.Panel
       className={`w-full max-w-lg py-3 relative
@@ -170,18 +187,7 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
                       key={uid}
                     >
                       <span>{user ? user.fullname : 'Unknown User'}</span>
-                      {!channel.is_general && channel.creator_id === uid ? (
-                        <i className="text-sm text-slate-400">
-                          Created the channel
-                        </i>
-                      ) : (
-                        <button
-                          className="text-sm text-sky-500 hover:text-red-500"
-                          onClick={() => handleRemoveMember(uid)}
-                        >
-                          Remove
-                        </button>
-                      )}
+                      {renderRemoveMemeberBUtton(uid)}
                     </li>
                   )
                 })}
