@@ -52,7 +52,7 @@ const SideHeader: FC = () => {
     <div className="mb-0 text-base border-b border-gray-700 shadow-sm shadow-gray-700 side-panel-padding">
       <button
         onClick={openChannelModal}
-        className="flex items-center space-x-1"
+        className="flex items-center py-2 side-panel-item-padding space-x-1"
       >
         <span># {channel.name} </span>
         <span className="w-3.5 h-3.5">

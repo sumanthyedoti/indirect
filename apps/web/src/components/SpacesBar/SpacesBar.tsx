@@ -38,7 +38,12 @@ const SpacesBar: FC<SpacesBarProps> = () => {
   const [isCreateSpaceModalOpen, setIsCreateSpaceModalOpen] = useState(false)
 
   return (
-    <aside className="flex flex-col items-center mt-3 w-28 lg:w-32">
+    <aside
+      className={`flex flex-col items-center
+      mt-3 w-28 lg:w-32
+      border-r border-neutral-500
+      `}
+    >
       {spaces?.map((space) => {
         return (
           <Tooltip key={space.id} delay={100} label={space.name}>

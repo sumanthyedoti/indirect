@@ -14,8 +14,8 @@ const Section: FC<SectionProps> = ({ title, actionIcon, body }) => {
   return (
     <Disclosure defaultOpen>
       {({ open }) => (
-        <div className="relative">
-          <Disclosure.Button className="flex items-center justify-between w-full">
+        <div className="relative py-2">
+          <Disclosure.Button className="flex items-center justify-between w-full mb-1 side-panel-item-padding">
             <h2 className="flex items-center w-full mb-0 text-base space-x-1">
               <span
                 className={classnames('origin-center transition-transform', {
@@ -27,7 +27,7 @@ const Section: FC<SectionProps> = ({ title, actionIcon, body }) => {
               <span>{title}</span>
             </h2>
           </Disclosure.Button>
-          <span className="absolute h-3 top-0.5 right-2">{actionIcon}</span>
+          <span className="absolute h-3 top-2 right-2">{actionIcon}</span>
           <div className="">
             <Disclosure.Panel className="">{body}</Disclosure.Panel>
           </div>

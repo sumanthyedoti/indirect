@@ -24,8 +24,8 @@
   .icon-log-out {
     @apply hover:stroke-red-600;
   }
-  .side-panel-padding {
-    @apply px-2 py-2 md:px-3;
+  .side-panel-item-padding {
+    @apply px-2 md:px-3;
   }
   .main-view-padding {
     @apply px-4;

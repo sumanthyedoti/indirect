@@ -54,7 +54,7 @@ const Login: FC = () => {
     mode: 'onBlur',
   })
   useEffect(() => {
-    if (isLoggedIn) navigate('/space')
+    if (isLoggedIn) navigate('/')
   }, [isLoggedIn])
   const onSubmit = async (input: LoginUser) => {
     try {

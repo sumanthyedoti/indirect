@@ -18,7 +18,7 @@ const PrivateRoute: FC = () => {
       setSpaceId(1) // TODO: do dynamically
       setChannelId(1) // TODO: change to general channel of the space
     }
-    navigate('/space')
+    navigate('/')
 
     return () => {
       socket.off('connect')

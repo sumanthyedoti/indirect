@@ -85,7 +85,7 @@ const SidePanel: FC = () => {
      `}
     >
       <SideHeader />
-      <div className="side-panel-padding">
+      <div className="">
         <Section
           title="Channels"
           actionIcon={
