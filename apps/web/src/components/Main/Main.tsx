@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, FC } from 'react'
 import toast from 'react-hot-toast'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import * as T from '@api-types/messages'
 import Header from './MainHeader'
@@ -8,12 +9,16 @@ import { MessageInput } from '../../components/molecules'
 import SpacesBar from '../SpacesBar'
 import SidePanel from '../SidePanel'
 import useUserStore from '../../store/useUserStore'
+import { useQueryUserSpaces } from '../../queries'
 import api from '../../axios'
 import useSocket from '../../hooks/useSocket'
 
 const Space: FC = () => {
-  const { user, channelId, logout } = useUserStore()
+  const { user, channelId, setSpaceId, setChannelId, logout } = useUserStore()
+  const { data: spaces } = useQueryUserSpaces(user?.id)
   const socket = useSocket()
+  const params = useParams()
+  const navigate = useNavigate()
   const [messages, setMessages] = useState<T.Message[]>([])
   useEffect(() => {
     socket.on('message_received', (msg: T.Message) => {
@@ -23,6 +28,17 @@ const Space: FC = () => {
     return () => {
       socket.off('message_received')
       toast.dismiss()
+    }
+  }, [])
+  /* set space and general channel IDs */
+  useEffect(() => {
+    if (params.spaceId) {
+      const spaceId = parseInt(params.spaceId)
+      const space = spaces?.find((s) => s.id === spaceId)
+      space ? setSpaceId(space.id) : navigate('/') //TODO: show error view
+      setChannelId(1) // TODO: change to general channel of the space
+    } else {
+      navigate('/')
     }
   }, [])
   useEffect(() => {

@@ -38,7 +38,7 @@ const Spaces: FC<SpacesProps> = () => {
                 flex justify-between items-center`}
             >
               <h3 className="mb-0">{space.name}</h3>
-              <LinkButton to="/space" small>
+              <LinkButton to={space.id.toString()} small>
                 Open Space
               </LinkButton>
             </section>

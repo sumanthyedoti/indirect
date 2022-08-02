@@ -14,8 +14,8 @@ const ChannelName: FC<ChannelNameProps> = ({ onClick, channel }) => {
   return (
     <div
       className={classnames('py-0.5', [
-        channel.id === channelId && 'bg-slate-800 hover::bg-slate-800',
-        channel.id !== channelId && 'hover:bg-gray-900',
+        channel.id === channelId && 'bg-sky-900',
+        channel.id !== channelId && 'hover:bg-slate-800',
       ])}
     >
       <button
@@ -25,7 +25,6 @@ const ChannelName: FC<ChannelNameProps> = ({ onClick, channel }) => {
           'flex space-x-1 w-full rounded-none side-panel-item-padding',
           {
             'text-neutral-100': channel.id === channelId,
-            'hover:ring-1 hover:ring-slate-500': channel.id !== channelId,
           }
         )}
       >

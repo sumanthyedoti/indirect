@@ -6,7 +6,7 @@ import { useSocket } from '../hooks'
 
 const PrivateRoute: FC = () => {
   const socket = useSocket()
-  const { isLoggedIn, setSpaceId, setChannelId } = useUserStore()
+  const { isLoggedIn } = useUserStore()
   const navigate = useNavigate()
   useEffect(() => {
     socket.on('connect', () => {
@@ -15,8 +15,6 @@ const PrivateRoute: FC = () => {
 
     if (isLoggedIn) {
       socket.connect()
-      setSpaceId(1) // TODO: do dynamically
-      setChannelId(1) // TODO: change to general channel of the space
     }
     navigate('/')
 
