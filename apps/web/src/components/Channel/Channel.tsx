@@ -1,25 +1,18 @@
 import { useState, useEffect, useCallback, FC } from 'react'
 import toast from 'react-hot-toast'
-import { useParams, useNavigate } from 'react-router-dom'
 
-import * as T from '@api-types/messages'
 import Header from './MainHeader'
 import ChannelMessages from './ChannelMessages'
 import { MessageInput } from '../../components/molecules'
-import SpacesBar from '../SpacesBar'
-import SidePanel from '../SidePanel'
 import useUserStore from '../../store/useUserStore'
-import { useQueryUserSpaces } from '../../queries'
+import type * as T from '@api-types/messages'
 import api from '../../axios'
 import useSocket from '../../hooks/useSocket'
 
-const Space: FC = () => {
-  const { user, channelId, setSpaceId, setChannelId, logout } = useUserStore()
-  const { data: spaces } = useQueryUserSpaces(user?.id)
-  const socket = useSocket()
-  const params = useParams()
-  const navigate = useNavigate()
+const Channel: FC = () => {
+  const { user, channelId, setChannelId, logout } = useUserStore()
   const [messages, setMessages] = useState<T.Message[]>([])
+  const socket = useSocket()
   useEffect(() => {
     socket.on('message_received', (msg: T.Message) => {
       if (msg.channel_id !== channelId) return
@@ -32,14 +25,7 @@ const Space: FC = () => {
   }, [])
   /* set space and general channel IDs */
   useEffect(() => {
-    if (params.spaceId) {
-      const spaceId = parseInt(params.spaceId)
-      const space = spaces?.find((s) => s.id === spaceId)
-      space ? setSpaceId(space.id) : navigate('/') //TODO: show error view
-      setChannelId(1) // TODO: change to general channel of the space
-    } else {
-      navigate('/')
-    }
+    setChannelId(1) // TODO: change to general channel of the space
   }, [])
   useEffect(() => {
     fetchMessages(channelId)
@@ -76,21 +62,17 @@ const Space: FC = () => {
     },
     [channelId]
   )
-
   return (
-    <div className="flex h-screen max-h-screen">
-      <SpacesBar />
-      <SidePanel />
-      <div
-        className={`
+    <div
+      className={`
           w-full flex flex-col relative h-full bg-slate-800
     `}
-      >
-        <Header />
-        <ChannelMessages messages={messages} />
-        <MessageInput className="mx-3 mb-2" onSubmit={handleMessageSubmit} />
-      </div>
+    >
+      <Header />
+      <ChannelMessages messages={messages} />
+      <MessageInput className="mx-3 mb-2" onSubmit={handleMessageSubmit} />
     </div>
   )
 }
-export default Space
+
+export default Channel

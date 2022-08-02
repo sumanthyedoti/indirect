@@ -64,7 +64,7 @@ const DeleteChannelButton = () => {
       className={`flex items-center w-full
       py-3 px-2 rounded hover:bg-slate-600
       space-x-2 font-lg
-      focus:bg-slate-600 text-red-400 ring-offset-slate-700
+      focus:bg-slate-600 text-red-500 ring-offset-slate-700
       `}
       onClick={deleteChannelConfirmation}
     >
