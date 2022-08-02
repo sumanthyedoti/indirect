@@ -5,6 +5,7 @@ interface props {
   label: string
   type?: 'button' | 'submit' | 'reset'
   className?: string
+  small?: boolean
   primary?: boolean
   secondary?: boolean
   danger?: boolean
@@ -15,6 +16,7 @@ const Button: FC<props> = ({
   label,
   type = 'button',
   onClick,
+  small,
   primary,
   secondary,
   danger,
@@ -22,14 +24,17 @@ const Button: FC<props> = ({
   ...props
 }) => {
   const classes = classnames(
-    `px-6 py-3 text-zinc-100 text-lg
+    `text-zinc-100
     ring-slate-100 ring-offset-1 focus:ring-2
     ring-offset-transparent
-    outline-none font-semibold rounded`,
+    outline-none rounded`,
     {
+      'px-6 py-3 text-lg font-semibold': !small,
+      'px-4 py-2 text-md font-medium': small,
       'bg-gray-600': secondary,
       'bg-red-500': danger,
-      'bg-blue-600': primary || (!secondary && !danger),
+      'bg-blue-600 hover:bg-blue-700 focus:bg-blue-700':
+        primary || (!secondary && !danger),
     }
   )
   return (

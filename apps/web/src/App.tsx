@@ -6,7 +6,7 @@ import isYesterday from 'dayjs/plugin/isYesterday'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 
-import { Login, Register } from './views'
+import { Login, Register, Spaces } from './views'
 import Main from './components/Main'
 import { PrivateRoute } from './routes'
 
@@ -23,7 +23,7 @@ const App: FC = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route element={<PrivateRoute />}>
-          <Route path="/space" element={<Main />}>
+          <Route path="/space" element={<Spaces />}>
             <Route path=":channelId" element={<Main />} />
           </Route>
         </Route>
