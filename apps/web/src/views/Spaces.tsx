@@ -1,7 +1,6 @@
 import { useState, FC } from 'react'
-import { useNavigate } from 'react-router-dom'
 
-import { Button } from '../components/atoms'
+import { Button, LinkButton } from '../components/atoms'
 import { useQueryUserSpaces } from '../queries'
 import CreateSpace from '../components/SpacesBar/CreateSpace'
 import { useUserStore } from '../store'
@@ -12,13 +11,8 @@ interface SpacesProps {
 
 const Spaces: FC<SpacesProps> = () => {
   const [isCreateSpaceModalOpen, setIsCreateSpaceModalOpen] = useState(false)
-  const { user, setSpaceId } = useUserStore()
-  const navigate = useNavigate()
+  const { user } = useUserStore()
   const { data: spaces } = useQueryUserSpaces(user?.id)
-  const onSpaceOpen = (spaceId: number) => {
-    setSpaceId(spaceId)
-    navigate(`${spaceId}`)
-  }
   if (!spaces) return null
   return (
     <div className="p-5 mx-auto sm:px-5 md:px-0 md:w-4/5 lg:w-3/5">
@@ -44,11 +38,9 @@ const Spaces: FC<SpacesProps> = () => {
                 flex justify-between items-center`}
             >
               <h3 className="mb-0">{space.name}</h3>
-              <Button
-                onClick={() => onSpaceOpen(space.id)}
-                small
-                label="Open Space"
-              />
+              <LinkButton to="/space" small>
+                Open Space
+              </LinkButton>
             </section>
           )
         })}

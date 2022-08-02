@@ -23,10 +23,17 @@ const App: FC = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route element={<PrivateRoute />}>
-          <Route path="/" element={<Main />}>
-            <Route path=":spaceId" element={<Spaces />} />
-          </Route>
+          <Route path="/" element={<Spaces />} />
+          <Route path="/space" element={<Main />} />
         </Route>
+        <Route
+          path="*"
+          element={
+            <main style={{ padding: '1rem' }}>
+              <p>There&apos;s nothing here!</p>
+            </main>
+          }
+        />
       </Routes>
     </>
   )
