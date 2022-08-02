@@ -1,13 +1,20 @@
-import React, { FC } from 'react'
+import React, { useCallback, FC } from 'react'
+import toast from 'react-hot-toast'
 import { useForm } from 'react-hook-form'
 import useUserStore from '../../store/useUserStore'
+import { useQueryClient } from 'react-query'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { Dialog } from '@headlessui/react'
 
-import { CreateSpace as CreateSpaceT, Constraints } from '@api-types/spaces'
+import {
+  Space as SpaceT,
+  CreateSpace as CreateSpaceT,
+  Constraints,
+} from '@api-types/spaces'
 import { Button, Input } from '../atoms'
 import { FormInput } from '../molecules'
+import api from '../../axios'
 
 const schema = yup.object().shape({
   creator_id: yup.number().required(),
@@ -33,10 +40,9 @@ const schema = yup.object().shape({
 
 interface Props {
   close: () => void
-  createSpace: (data: CreateSpaceT) => void
 }
-const CreateSpace: FC<Props> = ({ close, createSpace }) => {
-  const { user } = useUserStore()
+const CreateSpace: FC<Props> = ({ close }) => {
+  const { user, setSpaceId } = useUserStore()
   const {
     register,
     setValue,
@@ -47,8 +53,37 @@ const CreateSpace: FC<Props> = ({ close, createSpace }) => {
     mode: 'onBlur',
   })
 
+  const queryClient = useQueryClient()
+
+  const onCreateNewSpace = useCallback(async (data: CreateSpaceT) => {
+    try {
+      const {
+        data: { data: newSpace },
+      } = await api.post<{ data: SpaceT }>('/spaces', data)
+      toast.success('Space created', {
+        id: 'post-space-success',
+      })
+      queryClient.setQueryData<SpaceT[] | undefined>(
+        'spaces',
+        //@ts-ignore
+        (spaces) => {
+          if (!spaces) return newSpace
+          return [...spaces, newSpace]
+        }
+      )
+      queryClient.invalidateQueries('spaces')
+      close()
+      setSpaceId(newSpace.id)
+    } catch (err) {
+      console.log(err)
+      toast.error('Error creating Space', {
+        id: 'post-spacel-error',
+      })
+    }
+  }, [])
+
   const onSubmit = async (input: CreateSpaceT) => {
-    createSpace(input)
+    onCreateNewSpace(input)
   }
 
   const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
