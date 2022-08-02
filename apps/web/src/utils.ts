@@ -6,4 +6,5 @@ function doesHttpOnlyCookieExist(cookiename: string) {
   document.cookie = cookiename + '=new_value;path=/;' + expires
   return document.cookie.indexOf(cookiename + '=') == -1
 }
+
 export { doesHttpOnlyCookieExist }

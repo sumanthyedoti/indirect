@@ -2,7 +2,7 @@ import { useCallback, FC } from 'react'
 import { useQueryClient } from 'react-query'
 import toast from 'react-hot-toast'
 
-import { Channel } from '@api-types/channels'
+import { Channel as ChannelT } from '@api-types/channels'
 import useUserStore from '../../store/useUserStore'
 import Modal from '../Modal'
 import { ChevronDown } from '../../icons'
@@ -14,7 +14,7 @@ import useStore from './store'
 import api from '../../axios'
 
 const SideHeader: FC = () => {
-  const { channelId, spaceId, setSpaceId, setChannelId } = useUserStore()
+  const { channelId, spaceId, setChannelId } = useUserStore()
   const { data: channel, isSuccess } = useQueryChannel(channelId)
   const queryClient = useQueryClient()
   const {
@@ -32,12 +32,19 @@ const SideHeader: FC = () => {
       toast.success('Channel deleted', {
         id: 'delete-channel-success',
       })
-      queryClient.setQueryData<Channel[] | undefined>(
+      queryClient.setQueryData<ChannelT[] | undefined>(
         ['channels', spaceId],
         (oldData) => oldData?.filter((ch) => ch.id !== channelId)
       )
-      setSpaceId(1) // TODO: do dynamically
-      setChannelId(1) // TODO: change to general channel of the space
+      // set general channel id
+      const channels = queryClient.getQueryData<ChannelT[]>([
+        'channels',
+        spaceId,
+      ])
+      const generalChannel = channels?.find((c) => c.is_general)
+      if (generalChannel) {
+        setChannelId(generalChannel.id)
+      }
     } catch (err) {
       console.log(err)
       toast.error('Error deleting Channel', {
