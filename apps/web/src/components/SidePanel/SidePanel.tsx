@@ -1,5 +1,6 @@
-import React, { FC, useState, useCallback } from 'react'
+import React, { FC, useEffect, useState, useCallback } from 'react'
 import { useQueryClient } from 'react-query'
+import { useNavigate, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 
 import SideHeader from './SideHeader'
@@ -19,6 +20,8 @@ import api from '../../axios'
 
 const SidePanel: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const navigate = useNavigate()
+  const params = useParams()
 
   const closeModal = () => {
     setIsModalOpen(false)
@@ -30,6 +33,30 @@ const SidePanel: FC = () => {
   const queryClient = useQueryClient()
   const { spaceId, setChannelId, logout } = useUserStore()
   const { data: channels, isSuccess } = useQuerySpaceChannels(spaceId)
+
+  useEffect(() => {
+    /* set channel ID from URL param */
+    if (params.channelId && params.spaceId) {
+      const paramSpaceId = parseInt(params.spaceId)
+      const channelId = parseInt(params.channelId)
+      console.log(channelId)
+      const channels = queryClient.getQueryData<ChannelT[]>([
+        'channels',
+        paramSpaceId,
+      ])
+      const channel = channels?.find((c) => c.space_id === paramSpaceId)
+      // set channel ID if channel exists
+      if (channel) {
+        setChannelId(channel.id)
+      } else {
+        // else redirect to general channel of the Space
+        const generalChannel = channels?.find((c) => c.is_general)
+        if (generalChannel) {
+          navigate(`./${generalChannel.id}`, { replace: true })
+        }
+      }
+    }
+  }, [params.channelId])
 
   const createChannel = useCallback(
     async (data: CreateChannelT) => {
@@ -51,7 +78,7 @@ const SidePanel: FC = () => {
           }
         )
         setIsModalOpen(false)
-        setChannelId(newChannel.id)
+        navigate(`/${spaceId}/${newChannel.id}`)
       } catch (err) {
         console.log(err)
         toast.error('Error creating Channel', {
@@ -63,7 +90,7 @@ const SidePanel: FC = () => {
   )
 
   const handleChannelClick = (id: number) => {
-    setChannelId(id)
+    navigate(`./${id}`)
   }
   const handleLogout = async () => {
     try {

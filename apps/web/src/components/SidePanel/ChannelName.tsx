@@ -11,6 +11,7 @@ interface ChannelNameProps {
 
 const ChannelName: FC<ChannelNameProps> = ({ onClick, channel }) => {
   const { channelId } = useUserStore()
+
   return (
     <div
       className={classnames('py-0.5', [
