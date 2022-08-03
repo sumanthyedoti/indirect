@@ -106,8 +106,6 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
   }
   if (!users || !channel || !channelUserIds) return null
 
-  console.log(channel)
-
   const renderRemoveMemeberBUtton = (uid: number) => {
     if (channel.is_general) return null
     if (channel.creator_id === uid) {

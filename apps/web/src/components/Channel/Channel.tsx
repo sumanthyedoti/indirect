@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, FC } from 'react'
+import { useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 
 import Header from './MainHeader'
@@ -13,6 +14,7 @@ const Channel: FC = () => {
   const { user, channelId, logout } = useUserStore()
   const [messages, setMessages] = useState<T.Message[]>([])
   const socket = useSocket()
+  const params = useParams()
   useEffect(() => {
     socket.on('message_received', (msg: T.Message) => {
       if (msg.channel_id !== channelId) return
@@ -21,6 +23,13 @@ const Channel: FC = () => {
     return () => {
       socket.off('message_received')
       toast.dismiss()
+    }
+  }, [])
+  useEffect(() => {
+    if (params.channelId) {
+      const channelId = parseInt(params.channelId)
+      console.log(channelId)
+    } else {
     }
   }, [])
   useEffect(() => {
