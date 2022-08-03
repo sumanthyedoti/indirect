@@ -1,5 +1,5 @@
 import { useState, FC } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import classnames from 'classnames'
 import Tippy from '@tippyjs/react'
 
@@ -33,14 +33,9 @@ const Tooltip = ({ label, children, delay = 350 }: ToolTipProps) => {
 }
 
 const SpacesBar: FC<SpacesBarProps> = () => {
-  const navigate = useNavigate()
   const { user, spaceId } = useUserStore()
   const { data: spaces } = useQueryUserSpaces(user?.id)
   const [isCreateSpaceModalOpen, setIsCreateSpaceModalOpen] = useState(false)
-
-  const onSpaceClick = (spaceId: number) => {
-    navigate(`/${spaceId}`)
-  }
 
   return (
     <aside
@@ -52,7 +47,8 @@ const SpacesBar: FC<SpacesBarProps> = () => {
       {spaces?.map((space) => {
         return (
           <Tooltip key={space.id} delay={100} label={space.name}>
-            <button
+            <Link
+              to={`/${space.id.toString()}`}
               className={classnames(
                 `rounded-2xl
                 w-12 h-12 lg:w-14 lg:h-14
@@ -63,13 +59,10 @@ const SpacesBar: FC<SpacesBarProps> = () => {
                   'focus:ring-2 focus:ring-sky-400': space.id !== spaceId,
                 }
               )}
-              onClick={() => onSpaceClick(space.id)}
               key={space.id}
             >
-              <>
-                <SpaceIcon aria-label={space.name} />
-              </>
-            </button>
+              <SpaceIcon aria-label={space.name} />
+            </Link>
           </Tooltip>
         )
       })}
