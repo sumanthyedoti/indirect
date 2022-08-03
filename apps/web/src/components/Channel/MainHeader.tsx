@@ -1,5 +1,6 @@
 import { useCallback, FC } from 'react'
 import { useQueryClient } from 'react-query'
+import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 
 import { Channel as ChannelT } from '@api-types/channels'
@@ -14,9 +15,10 @@ import useStore from './store'
 import api from '../../axios'
 
 const SideHeader: FC = () => {
-  const { channelId, spaceId, setChannelId } = useUserStore()
+  const { channelId, spaceId } = useUserStore()
   const { data: channel, isSuccess } = useQueryChannel(channelId)
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
   const {
     isChannelModalOpen,
     isAddPeopleModalOpen,
@@ -43,7 +45,9 @@ const SideHeader: FC = () => {
       ])
       const generalChannel = channels?.find((c) => c.is_general)
       if (generalChannel) {
-        setChannelId(generalChannel.id)
+        navigate(`/${spaceId}/${generalChannel.id}`)
+      } else {
+        navigate('/')
       }
     } catch (err) {
       console.log(err)

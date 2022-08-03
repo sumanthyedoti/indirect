@@ -54,6 +54,8 @@ const SidePanel: FC = () => {
         const generalChannel = channels?.find((c) => c.is_general)
         if (generalChannel) {
           navigate(`./${generalChannel.id}`, { replace: true })
+        } else {
+          navigate('/')
         }
       }
     }
