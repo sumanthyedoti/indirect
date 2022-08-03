@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, FC } from 'react'
 import toast from 'react-hot-toast'
 
-import Header from './MainHeader'
+import Header from './Header'
 import ChannelMessages from './ChannelMessages'
 import { MessageInput } from '../../components/molecules'
 import useUserStore from '../../store/useUserStore'

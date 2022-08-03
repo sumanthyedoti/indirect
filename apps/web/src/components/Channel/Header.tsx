@@ -6,16 +6,18 @@ import toast from 'react-hot-toast'
 import { Channel as ChannelT } from '@api-types/channels'
 import useUserStore from '../../store/useUserStore'
 import Modal from '../Modal'
+import { Tooltip } from '../molecules'
 import { ChevronDown } from '../../icons'
 import { useQueryChannel } from '../../queries'
 import ChannelDetails from './ChannelDetails'
 import ConfirmationModal from '../ConfirmationModal'
 import AddPeople from './AddPeople'
+import Avatar from './Avatar'
 import useStore from './store'
 import api from '../../axios'
 
 const SideHeader: FC = () => {
-  const { channelId, spaceId } = useUserStore()
+  const { channelId, spaceId, user } = useUserStore()
   const { data: channel, isSuccess } = useQueryChannel(channelId)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
@@ -57,19 +59,32 @@ const SideHeader: FC = () => {
     }
   }, [channelId, spaceId])
 
-  if (!isSuccess) return null
+  if (!isSuccess || !user) return null
 
   return (
-    <div className="mb-0 text-base border-b border-gray-700 shadow-sm shadow-gray-700 side-panel-padding">
-      <button
-        onClick={openChannelModal}
-        className="flex items-center py-2 side-panel-item-padding space-x-1"
+    <>
+      <div
+        className={`
+          py-2 px-3 md:px-4 mb-0 text-base border-b border-gray-700
+          shadow-sm shadow-gray-700
+          flex justify-between items-center
+        `}
       >
-        <span># {channel.name} </span>
-        <span className="w-3.5 h-3.5">
-          <ChevronDown />
-        </span>
-      </button>
+        <button
+          onClick={openChannelModal}
+          className="flex items-center space-x-1"
+        >
+          <span># {channel.name} </span>
+          <span className="w-3.5 h-3.5">
+            <ChevronDown />
+          </span>
+        </button>
+        <Tooltip label={user?.fullname} arrow={false} placement="bottom">
+          <button className="ring-offset-1 ring-offset-slate-700">
+            <Avatar />
+          </button>
+        </Tooltip>
+      </div>
       <Modal
         className="-mt-48"
         isOpen={isChannelModalOpen}
@@ -100,7 +115,7 @@ const SideHeader: FC = () => {
         }}
         isDanger={true}
       />
-    </div>
+    </>
   )
 }
 

@@ -1,35 +1,15 @@
 import { useState, FC } from 'react'
 import { Link } from 'react-router-dom'
 import classnames from 'classnames'
-import Tippy from '@tippyjs/react'
 
 import { useQueryUserSpaces } from '../../queries'
 import CreateSpace from './CreateSpace'
+import { Tooltip } from '../molecules'
 import { Space as SpaceIcon, Plus } from '../../icons'
 import { useUserStore } from '../../store'
 
 interface SpacesBarProps {
   dummy?: null
-}
-
-interface ToolTipProps {
-  children: JSX.Element
-  label: string
-  delay?: number
-}
-const Tooltip = ({ label, children, delay = 350 }: ToolTipProps) => {
-  return (
-    <Tippy
-      arrow
-      placement="right"
-      theme="light"
-      content={label}
-      delay={delay}
-      trigger="mouseenter"
-    >
-      {children}
-    </Tippy>
-  )
 }
 
 const SpacesBar: FC<SpacesBarProps> = () => {
@@ -46,11 +26,16 @@ const SpacesBar: FC<SpacesBarProps> = () => {
     >
       {spaces?.map((space) => {
         return (
-          <Tooltip key={space.id} delay={100} label={space.name}>
+          <Tooltip
+            key={space.id}
+            placement="right"
+            delay={100}
+            label={space.name}
+          >
             <Link
               to={`/${space.id.toString()}`}
               className={classnames(
-                `rounded-2xl
+                `rounded-xl
                 w-12 h-12 lg:w-14 lg:h-14
                 bg-slate-800 mb-4`,
                 {
@@ -66,7 +51,7 @@ const SpacesBar: FC<SpacesBarProps> = () => {
           </Tooltip>
         )
       })}
-      <Tooltip label="Create a new Space">
+      <Tooltip placement="right" label="Create a new Space">
         <button
           className={`
           mt-2
