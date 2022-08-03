@@ -23,9 +23,7 @@ function useQueryUserSpaces(userId: number | undefined) {
 
 type UsersQuery = {
   list: SpaceUser[]
-  idMap: {
-    [key: string]: SpaceUser
-  }
+  idMap: Record<string, SpaceUser>
 }
 function useQuerySpaceUsers(spaceId: number) {
   return useQuery(

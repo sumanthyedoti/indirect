@@ -11,7 +11,7 @@ import {
   useQueryChannel,
   useQueryChannelMembers,
 } from '../../queries'
-import { IconButton, Button } from '../atoms'
+import { Button } from '../atoms'
 import { Close, ArrowBack } from '../../icons'
 import useStore from './store'
 import stylesConfig from '../../config/react-select-styles'
@@ -102,13 +102,13 @@ const AddPeole: FC<AddPeoleProps> = () => {
       }}
     >
       <div className="flex items-center space-x-2">
-        <IconButton
+        <button
           aria-label="Go back to channel members"
           onClick={handleGoBack}
-          className="h-8 w-9"
+          className="h-8 icon w-9"
         >
           <ArrowBack />
-        </IconButton>
+        </button>
         <Dialog.Title as="h2" className="mb-0">
           Add People
         </Dialog.Title>
@@ -134,13 +134,13 @@ const AddPeole: FC<AddPeoleProps> = () => {
           label="Add to the Channel"
         />
       </form>
-      <IconButton
+      <button
         aria-label="Close"
         onClick={closeAddPeopleModal}
-        className="absolute top-6 right-4"
+        className="absolute icon top-6 right-4"
       >
         <Close />
-      </IconButton>
+      </button>
     </Dialog.Panel>
   )
 }

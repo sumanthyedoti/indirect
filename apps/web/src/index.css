@@ -7,6 +7,10 @@
   @apply outline outline-red-500;
 }
 
+button.icon:hover {
+  @apply ring-2 ring-slate-600;
+}
+
 @tailwind components;
 @layer components {
   [contenteditable='true']:empty:before {

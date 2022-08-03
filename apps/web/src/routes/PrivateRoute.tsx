@@ -1,5 +1,5 @@
 import { useEffect, FC } from 'react'
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet, useNavigate } from 'react-router-dom'
 
 import useUserStore from '../store/useUserStore'
 import { useSocket } from '../hooks'
@@ -7,7 +7,7 @@ import { useSocket } from '../hooks'
 const PrivateRoute: FC = () => {
   const socket = useSocket()
   const { isLoggedIn } = useUserStore()
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   useEffect(() => {
     socket.on('connect', () => {
       console.log(socket.id)
@@ -16,7 +16,7 @@ const PrivateRoute: FC = () => {
     if (isLoggedIn) {
       socket.connect()
     }
-    // navigate('/')
+    navigate('/')
 
     return () => {
       socket.off('connect')

@@ -11,7 +11,6 @@ import {
   useRemoveChannelMember,
 } from '../../queries'
 import { AddPeople, Close } from '../../icons'
-import { IconButton } from '../atoms'
 import useStore from './store'
 import useUIStore from '../../store/useUIStore'
 
@@ -202,16 +201,16 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
-      <IconButton
+      <button
         aria-label="Close"
         onClick={() => {
           setActiveChannelTab(0)
           closeChannelModal()
         }}
-        className="absolute top-4 right-4"
+        className="absolute icon top-4 right-4"
       >
         <Close />
-      </IconButton>
+      </button>
     </Dialog.Panel>
   )
 }

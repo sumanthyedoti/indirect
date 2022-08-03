@@ -12,9 +12,8 @@ import {
   Channel as ChannelT,
 } from '@api-types/channels'
 import Modal from '../Modal'
-import { IconButton } from '../atoms'
 import useUserStore from '../../store/useUserStore'
-import { Logout, Plus } from '../../icons'
+import { Plus } from '../../icons'
 import { useQuerySpaceChannels } from '../../queries'
 import api from '../../axios'
 
@@ -31,7 +30,7 @@ const SidePanel: FC = () => {
     setIsModalOpen(true)
   }
   const queryClient = useQueryClient()
-  const { spaceId, setChannelId, logout } = useUserStore()
+  const { spaceId, setChannelId } = useUserStore()
   const { data: channels, isSuccess } = useQuerySpaceChannels(spaceId)
 
   useEffect(() => {
@@ -95,21 +94,13 @@ const SidePanel: FC = () => {
   const handleChannelClick = (id: number) => {
     navigate(`./${id}`)
   }
-  const handleLogout = async () => {
-    try {
-      await api.delete('/logout')
-      logout()
-    } catch (err) {
-      toast.error('Failed to logout. Please try again')
-    }
-  }
   if (!isSuccess) return null
 
   return (
     <aside
       className={`
       w-1/3 lg:w-1/4 2xl:w-1/5 h-full
-      shrink-0 relative
+      shrink-0
       border-r border-neutral-600
       bg-slate-900
      `}
@@ -119,13 +110,13 @@ const SidePanel: FC = () => {
         <Section
           title="Channels"
           actionIcon={
-            <IconButton
-              className="w-5 h-5"
+            <button
+              className="w-5 h-5 icon"
               aria-label="Create Channel"
               onClick={openModal}
             >
               <Plus />
-            </IconButton>
+            </button>
           }
           body={
             <>
@@ -142,13 +133,6 @@ const SidePanel: FC = () => {
           }
         />
       </div>
-      <IconButton
-        onClick={handleLogout}
-        className="absolute bottom-3 right-3"
-        aria-label="Log out"
-      >
-        <Logout />
-      </IconButton>
       <Modal isOpen={isModalOpen} close={closeModal}>
         <CreateChannel createChannel={createChannel} close={closeModal} />
       </Modal>
