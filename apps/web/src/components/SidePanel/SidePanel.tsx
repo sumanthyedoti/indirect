@@ -39,12 +39,13 @@ const SidePanel: FC = () => {
     if (params.channelId && params.spaceId) {
       const paramSpaceId = parseInt(params.spaceId)
       const channelId = parseInt(params.channelId)
-      console.log(channelId)
       const channels = queryClient.getQueryData<ChannelT[]>([
         'channels',
         paramSpaceId,
       ])
-      const channel = channels?.find((c) => c.space_id === paramSpaceId)
+      const channel = channels?.find(
+        (c) => c.space_id === paramSpaceId && c.id === channelId
+      )
       // set channel ID if channel exists
       if (channel) {
         setChannelId(channel.id)
