@@ -51,14 +51,7 @@ const SidePanel: FC = () => {
         setChannelId(channel.id)
       } else {
         // else redirect to general channel of the Space
-        const generalChannel = channels?.find(
-          (c) => c.id === space?.general_channel_id
-        )
-        if (generalChannel) {
-          navigate(`./${generalChannel.id}`, { replace: true })
-        } else {
-          navigate('/')
-        }
+        navigate(`./${space?.general_channel_id}`, { replace: true })
       }
     }
   }, [params.channelId])
