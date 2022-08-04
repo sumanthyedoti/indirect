@@ -14,6 +14,7 @@ export async function up(knex: Knex): Promise<void> {
         table.text('description').nullable()
         table.text('creator_id').notNullable()
         table.boolean('is_private').defaultTo(false)
+        table.integer('general_channel_id').unsigned()
         table.timestamps(true, true)
       })
       return query

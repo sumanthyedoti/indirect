@@ -13,6 +13,12 @@ const Spaces: FC<SpacesProps> = () => {
   const [isCreateSpaceModalOpen, setIsCreateSpaceModalOpen] = useState(false)
   const { user } = useUserStore()
   const { data: spaces } = useQueryUserSpaces(user?.id)
+  // if (isError) {
+  //   console.log(error)
+  //   // if (err.response.status === 401) {
+  //   //   logout()
+  //   // }
+  // }
   if (!spaces) return null
   return (
     <div className="p-5 mx-auto sm:px-5 md:px-0 md:w-4/5 lg:w-3/5">

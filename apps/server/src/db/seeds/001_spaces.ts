@@ -13,6 +13,7 @@ export async function seed(knex: Knex): Promise<void> {
       <br/>
       The space is exanding you know?</div>`,
       creator_id: 1,
+      general_channel_id: 1,
     },
   ])
   await query
