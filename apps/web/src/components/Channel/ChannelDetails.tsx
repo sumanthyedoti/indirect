@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import classnames from 'classnames'
 import { Dialog, Tab } from '@headlessui/react'
 
-import useUserStore from '../../store/useUserStore'
+import { useUserStore, useSpaceStore } from '../../store'
 import {
   useQueryChannel,
   useQueryChannelMembers,
@@ -93,6 +93,7 @@ interface ChannelDetailsProps {
 }
 const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
   const { channelId, spaceId } = useUserStore()
+  const { space } = useSpaceStore()
   const { closeChannelModal, activeChannelTab, setActiveChannelTab } =
     useStore()
   const { data: users } = useQuerySpaceUsers(spaceId)
@@ -106,7 +107,7 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
   if (!users || !channel || !channelUserIds) return null
 
   const renderRemoveMemeberBUtton = (uid: number) => {
-    if (channel.is_general) return null
+    if (channel.id === space?.id) return null
     if (channel.creator_id === uid) {
       return <i className="text-sm text-slate-400">Created the channel</i>
     }
@@ -153,7 +154,7 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
                 />
               </Section>
             )}
-            {!channel.is_general && (
+            {channel.id !== space?.general_channel_id && (
               <Section>
                 <h5 className="font-medium">Created by</h5>
                 <div>
@@ -164,7 +165,7 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
                 </div>
               </Section>
             )}
-            {!channel.is_general && (
+            {channel.id !== space?.general_channel_id && (
               <Section>
                 <AddPeopleButton />
               </Section>
@@ -173,7 +174,7 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
           {/* Members */}
           <Tab.Panel tabIndex={-1}>
             <Section>
-              {!channel.is_general && <AddPeopleButton />}
+              {channel.id !== space?.general_channel_id && <AddPeopleButton />}
               <ul>
                 {channelUserIds?.map((uid) => {
                   const user = users.idMap[uid]
@@ -193,7 +194,7 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
           </Tab.Panel>
           {/* Settings */}
           <Tab.Panel tabIndex={-1}>
-            {!channel.is_general && (
+            {!(channel.id === space?.general_channel_id) && (
               <Section>
                 <DeleteChannelButton />
               </Section>

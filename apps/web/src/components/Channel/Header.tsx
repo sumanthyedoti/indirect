@@ -5,7 +5,7 @@ import { Popover } from '@headlessui/react'
 import toast from 'react-hot-toast'
 
 import { Channel as ChannelT } from '@api-types/channels'
-import useUserStore from '../../store/useUserStore'
+import { useUserStore, useSpaceStore } from '../../store'
 import Modal from '../Modal'
 import { Tooltip } from '../molecules'
 import { Logout } from '../../icons'
@@ -20,6 +20,7 @@ import api from '../../axios'
 
 const SideHeader: FC = () => {
   const { channelId, spaceId, user, logout } = useUserStore()
+  const { space } = useSpaceStore()
   const { data: channel, isSuccess } = useQueryChannel(channelId)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
@@ -47,7 +48,9 @@ const SideHeader: FC = () => {
         'channels',
         spaceId,
       ])
-      const generalChannel = channels?.find((c) => c.is_general)
+      const generalChannel = channels?.find(
+        (c) => c.id === space?.general_channel_id
+      )
       if (generalChannel) {
         navigate(`/${spaceId}/${generalChannel.id}`)
       } else {

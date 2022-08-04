@@ -12,7 +12,7 @@ import {
   Channel as ChannelT,
 } from '@api-types/channels'
 import Modal from '../Modal'
-import useUserStore from '../../store/useUserStore'
+import { useUserStore, useSpaceStore } from '../../store'
 import { Plus } from '../../icons'
 import { useQuerySpaceChannels } from '../../queries'
 import api from '../../axios'
@@ -31,6 +31,7 @@ const SidePanel: FC = () => {
   }
   const queryClient = useQueryClient()
   const { spaceId, setChannelId } = useUserStore()
+  const { space } = useSpaceStore()
   const { data: channels, isSuccess } = useQuerySpaceChannels(spaceId)
 
   useEffect(() => {
@@ -50,7 +51,9 @@ const SidePanel: FC = () => {
         setChannelId(channel.id)
       } else {
         // else redirect to general channel of the Space
-        const generalChannel = channels?.find((c) => c.is_general)
+        const generalChannel = channels?.find(
+          (c) => c.id === space?.general_channel_id
+        )
         if (generalChannel) {
           navigate(`./${generalChannel.id}`, { replace: true })
         } else {

@@ -5,11 +5,12 @@ import { useQueryClient } from 'react-query'
 import { Channel as ChannelT } from '@api-types/channels'
 import SpacesBar from '../components/SpacesBar'
 import SidePanel from '../components/SidePanel'
-import useUserStore from '../store/useUserStore'
+import { useUserStore, useSpaceStore } from '../store'
 import { useQueryUserSpaces } from '../queries'
 
 const Space: FC = () => {
   const { setSpaceId, user } = useUserStore()
+  const { setSpace } = useSpaceStore()
   const { data: spaces } = useQueryUserSpaces(user?.id)
   const params = useParams()
   const navigate = useNavigate()
@@ -20,13 +21,16 @@ const Space: FC = () => {
       /* set space ID from URL param */
       const spaceId = parseInt(params.spaceId)
       const space = spaces?.find((s) => s.id === spaceId)
+      space && setSpace(space)
       space ? setSpaceId(space.id) : navigate('/') //TODO: show error view
       /* set general Channel id */
       const channels = queryClient.getQueryData<ChannelT[]>([
         'channels',
         spaceId,
       ])
-      const generalChannel = channels?.find((c) => c.is_general)
+      const generalChannel = channels?.find(
+        (c) => c.id === space?.general_channel_id
+      )
       if (generalChannel) {
         navigate(`./${generalChannel.id}`, { replace: true })
       } else {

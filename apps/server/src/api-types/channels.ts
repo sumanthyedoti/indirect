@@ -13,7 +13,6 @@ export interface Channel extends Info {
   id: number
   is_shared: boolean
   is_private: boolean
-  is_general: boolean
   created_at: Date
 }
 

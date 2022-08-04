@@ -32,9 +32,7 @@ async function createSpace(space: T.CreateSpace) {
 }
 
 async function getSpace(id: number) {
-  const [space]: T.Space[] = await db('spaces')
-    .select('id', 'name', 'tagline', 'description')
-    .where({ id })
+  const [space]: T.Space[] = await db('spaces').select('*').where({ id })
   return space
 }
 
