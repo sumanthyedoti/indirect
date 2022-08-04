@@ -22,8 +22,6 @@ const Space: FC = () => {
       if (space) {
         setSpace(space)
         setSpaceId(space.id)
-        console.log('gg', space.id, space.general_channel_id)
-
         navigate(`./${space.general_channel_id}`, { replace: true })
       }
     } else {

@@ -1,5 +1,5 @@
 import { useState, FC } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import classnames from 'classnames'
 
 import { useQueryUserSpaces } from '../../queries'
@@ -13,9 +13,20 @@ interface SpacesBarProps {
 }
 
 const SpacesBar: FC<SpacesBarProps> = () => {
+  const navigate = useNavigate()
+  const params = useParams()
   const { user, spaceId } = useUserStore()
   const { data: spaces } = useQueryUserSpaces(user?.id)
   const [isCreateSpaceModalOpen, setIsCreateSpaceModalOpen] = useState(false)
+
+  const onSpaceClick = (spaceId: number) => {
+    if (params.spaceId) {
+      if (parseInt(params.spaceId) !== spaceId) {
+        navigate(spaceId.toString())
+        navigate(`/${spaceId.toString()}`)
+      }
+    }
+  }
 
   return (
     <aside
@@ -32,8 +43,8 @@ const SpacesBar: FC<SpacesBarProps> = () => {
             delay={100}
             label={space.name}
           >
-            <Link
-              to={`/${space.id.toString()}`}
+            <button
+              onClick={() => onSpaceClick(space.id)}
               className={classnames(
                 `rounded-xl
                 w-12 h-12 lg:w-14 lg:h-14
@@ -47,7 +58,7 @@ const SpacesBar: FC<SpacesBarProps> = () => {
               key={space.id}
             >
               <SpaceIcon aria-label={space.name} />
-            </Link>
+            </button>
           </Tooltip>
         )
       })}
