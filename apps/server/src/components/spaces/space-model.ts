@@ -18,6 +18,7 @@ async function createSpace(space: T.CreateSpace) {
   const channel = await channelModel.createGeneralChannel({
     space_id: createdSpace.id,
     name: 'general',
+    creator_id: space.creator_id,
   })
   // add Space creator as member of general channel
   await channelModel.createChannelMembers(channel.id, {

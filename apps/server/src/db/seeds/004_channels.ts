@@ -10,6 +10,7 @@ export async function seed(knex: Knex): Promise<void> {
       name: 'general',
       description: 'open for everyone here',
       space_id: 1,
+      creator_id: 1,
     },
   ])
   await query

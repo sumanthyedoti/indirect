@@ -18,6 +18,7 @@ interface SectionProps {
   children: React.ReactNode
   noBorder?: boolean
 }
+
 const Section: FC<SectionProps> = ({ children, noBorder }) => (
   <div
     className={classnames('px-4 py-2 border-gray-600', {
@@ -106,8 +107,8 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
   }
   if (!users || !channel || !channelUserIds) return null
 
-  const renderRemoveMemeberBUtton = (uid: number) => {
-    if (channel.id === space?.id) return null
+  const renderRemoveMemeberButton = (uid: number) => {
+    if (channel.id === space?.general_channel_id) return null
     if (channel.creator_id === uid) {
       return <i className="text-sm text-slate-400">Created the channel</i>
     }
@@ -185,7 +186,7 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
                       key={uid}
                     >
                       <span>{user ? user.fullname : 'Unknown User'}</span>
-                      {renderRemoveMemeberBUtton(uid)}
+                      {renderRemoveMemeberButton(uid)}
                     </li>
                   )
                 })}
