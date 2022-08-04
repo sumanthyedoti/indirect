@@ -36,7 +36,7 @@ const SidePanel: FC = () => {
 
   useEffect(() => {
     /* set channel ID from URL param */
-    if (params.channelId && params.spaceId) {
+    if (params.channelId && params.spaceId && space) {
       const paramSpaceId = parseInt(params.spaceId)
       const channelId = parseInt(params.channelId)
       const channels = queryClient.getQueryData<ChannelT[]>([
@@ -51,7 +51,8 @@ const SidePanel: FC = () => {
         setChannelId(channel.id)
       } else {
         // else redirect to general channel of the Space
-        navigate(`./${space?.general_channel_id}`, { replace: true })
+        setChannelId(space.general_channel_id)
+        navigate(`/${space.id}/${space.general_channel_id}`, { replace: true })
       }
     }
   }, [params.channelId])

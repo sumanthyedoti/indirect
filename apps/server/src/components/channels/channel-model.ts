@@ -15,7 +15,6 @@ async function createChannel(channel: T.CreateChannel) {
 async function createGeneralChannel(channel: {
   space_id: number
   name: string
-  is_general: boolean
 }) {
   const [createdChannel]: T.Channel[] = await db('channels')
     .insert(channel)

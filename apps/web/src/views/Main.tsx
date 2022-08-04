@@ -18,10 +18,11 @@ const Space: FC = () => {
       /* set space ID from URL param */
       const spaceId = parseInt(params.spaceId)
       const space = spaces?.find((s) => s.id === spaceId)
+      console.log(space)
       if (space) {
         setSpace(space)
         setSpaceId(space.id)
-        console.log('gg', space.general_channel_id)
+        console.log('gg', space.id, space.general_channel_id)
 
         navigate(`./${space.general_channel_id}`, { replace: true })
       }
