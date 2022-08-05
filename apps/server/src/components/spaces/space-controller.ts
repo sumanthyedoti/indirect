@@ -125,6 +125,12 @@ async function deleteSpace(
   try {
     const id = req.params.id
 
+    const userId = req.user?.id
+    const space = await spaceModel.getSpace(id)
+    if (space.creator_id !== userId) {
+      res.sendStatus(403)
+      return
+    }
     const result = await spaceModel.deleteSpace(id)
     if (!result) {
       res.status(404).json({ id, message: 'Space not found' })

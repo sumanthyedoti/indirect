@@ -2,6 +2,7 @@ import { Response } from 'express'
 
 import * as T from '@api-types/channels'
 import channelModel from './channel-model'
+import spaceModel from '../spaces/space-model'
 import {
   TypedRequest,
   TypedRequestParams,
@@ -98,6 +99,20 @@ async function deleteChannel(
   try {
     const id = req.params.id
 
+    const userId = req.user?.id
+
+    const channel = await channelModel.getChannel(id)
+    if (channel.id !== userId) {
+      res.sendStatus(403)
+      return
+    }
+    const space = await spaceModel.getSpace(channel.space_id)
+    console.log(space, channel)
+
+    if (space.general_channel_id === channel.id) {
+      res.status(406).send('Can not delete general channel of a space')
+      return
+    }
     const result = await channelModel.deleteChannel(id)
     if (!result) {
       res.status(404).json({ id, message: 'Channel not found' })
