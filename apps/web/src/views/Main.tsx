@@ -1,4 +1,5 @@
 import { useEffect, FC } from 'react'
+import toast from 'react-hot-toast'
 import { useParams, useNavigate, Outlet } from 'react-router-dom'
 
 import SpacesBar from '../components/SpacesBar'
@@ -9,12 +10,17 @@ import { useQueryUserSpaces } from '../queries'
 const Space: FC = () => {
   const { setSpaceId, user } = useUserStore()
   const { setSpace } = useSpaceStore()
-  const { data: spaces } = useQueryUserSpaces(user?.id)
+  const { data: spaces, isError } = useQueryUserSpaces(user?.id)
   const params = useParams()
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (params.spaceId) {
+    if (isError) {
+      navigate('/')
+      toast.error('Error while loading data!')
+    }
+    if (params.spaceId && spaces) {
+      console.log(params)
       /* set space ID from URL param */
       const spaceId = parseInt(params.spaceId)
       const space = spaces?.find((s) => s.id === spaceId)
@@ -24,10 +30,10 @@ const Space: FC = () => {
         setSpaceId(space.id)
         navigate(`./${space.general_channel_id}`, { replace: true })
       }
-    } else {
-      navigate('/')
     }
-  }, [params.spaceId])
+  }, [params.spaceId, spaces, isError])
+
+  if (!spaces || !params.spaceId) return null
 
   return (
     <div className="flex h-screen max-h-screen">
@@ -37,4 +43,5 @@ const Space: FC = () => {
     </div>
   )
 }
+
 export default Space
