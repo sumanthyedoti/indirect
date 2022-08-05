@@ -45,10 +45,15 @@ async function getChannelMessages(id: number) {
   return result
 }
 
-async function updateChannel(id: number, channel: T.UpdateChannel) {
+async function updateChannel(
+  id: number,
+  channel: T.UpdateChannel,
+  creator_id: number
+) {
   const recordId: number = await db('channels')
     .where({
-      id: id,
+      id,
+      creator_id,
     })
     .update({
       name: channel.name,

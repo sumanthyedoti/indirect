@@ -56,10 +56,15 @@ async function getSpaceUsers(id: number) {
   return result?.rows
 }
 
-async function updateSpace(id: number, space: T.UpdateSpace) {
+async function updateSpace(
+  id: number,
+  space: T.UpdateSpace,
+  creator_id: number
+) {
   const spaceId: number = await db('spaces')
     .where({
-      id: id,
+      id,
+      creator_id,
     })
     .update({
       name: space.name,

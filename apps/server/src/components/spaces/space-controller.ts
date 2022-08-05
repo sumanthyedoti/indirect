@@ -99,7 +99,12 @@ async function updateSpace(
 ) {
   try {
     const id = req.params.id
-    const result = await spaceModel.updateSpace(id, req.body)
+    const userId = req.user?.id
+    if (!userId) {
+      res.sendStatus(401)
+      return
+    }
+    const result = await spaceModel.updateSpace(id, req.body, userId)
     if (!result) {
       res.status(404).json({ id, error: 'Space not found' })
       return

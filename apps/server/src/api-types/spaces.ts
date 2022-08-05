@@ -19,7 +19,7 @@ export interface Space extends Info {
   created_at: Date
 }
 
-export interface UpdateSpace extends Info {}
+export interface UpdateSpace extends Omit<Info, 'creator_id'> {}
 
 export interface SpaceUser extends User, Profile {}
 

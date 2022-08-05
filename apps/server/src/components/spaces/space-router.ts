@@ -1,7 +1,10 @@
 import express from 'express'
 
 import { validateIdParam } from '../../middlewares'
-import { createSpaceSchemaValidator } from './space-schema'
+import {
+  createSpaceSchemaValidator,
+  updateSpaceSchemaValidator,
+} from './space-schema'
 import spaceController from './space-controller'
 import { isAuthenticated, validateSchema } from '../../middlewares'
 
@@ -20,7 +23,7 @@ router.get('/:id/users', validateIdParam, spaceController.getSpaceUsers)
 router.put(
   '/:id',
   // @ts-ignore
-  [validateIdParam, validateSchema(createSpaceSchemaValidator)],
+  [validateIdParam, validateSchema(updateSpaceSchemaValidator)],
   spaceController.updateSpace
 )
 router.delete('/:id', validateIdParam, spaceController.deleteSpace)

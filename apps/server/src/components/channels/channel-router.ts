@@ -28,7 +28,7 @@ router.put(
   '/:id',
   // @ts-ignore
   [validateIdParam, validateSchema(updateChannelSchemaValidator)],
-  channelController.UpdateChannel
+  channelController.updateChannel
 )
 router.delete('/:id', validateIdParam, channelController.deleteChannel)
 

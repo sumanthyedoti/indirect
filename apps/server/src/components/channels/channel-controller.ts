@@ -66,14 +66,18 @@ async function getChannelMessages(
   }
 }
 
-async function UpdateChannel(
+async function updateChannel(
   req: TypedRequest<{ id: number }, T.UpdateChannel>,
   res: Response
 ) {
   try {
     const id = req.params.id
-
-    const result = await channelModel.updateChannel(id, req.body)
+    const userId = req.user?.id
+    if (!userId) {
+      res.sendStatus(401)
+      return
+    }
+    const result = await channelModel.updateChannel(id, req.body, userId)
     if (!result) {
       res.status(404).json({ id, error: 'Channel not found' })
       return
@@ -106,6 +110,7 @@ async function deleteChannel(
       res.sendStatus(403)
       return
     }
+
     const space = await spaceModel.getSpace(channel.space_id)
     console.log(space, channel)
 
@@ -192,7 +197,7 @@ export default {
   createChannel,
   getChannel,
   getChannelMessages,
-  UpdateChannel,
+  updateChannel,
   deleteChannel,
   createChannelMembers,
   getChannelMembers,
