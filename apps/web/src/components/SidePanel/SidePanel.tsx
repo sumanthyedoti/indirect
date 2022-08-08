@@ -32,30 +32,37 @@ const SidePanel: FC = () => {
   const queryClient = useQueryClient()
   const { spaceId, setChannelId } = useUserStore()
   const { space } = useSpaceStore()
-  const { data: channels, isSuccess } = useQuerySpaceChannels(spaceId)
+  const { data: channels, isError } = useQuerySpaceChannels(spaceId)
 
   useEffect(() => {
-    /* set channel ID from URL param */
-    if (params.channelId && params.spaceId && space) {
-      const paramSpaceId = parseInt(params.spaceId)
-      const channelId = parseInt(params.channelId)
-      const channels = queryClient.getQueryData<ChannelT[]>([
-        'channels',
-        paramSpaceId,
-      ])
-      const channel = channels?.find(
-        (c) => c.space_id === paramSpaceId && c.id === channelId
-      )
-      // set channel ID if channel exists
-      if (channel) {
-        setChannelId(channel.id)
-      } else {
-        // else redirect to general channel of the Space
-        setChannelId(space.general_channel_id)
-        navigate(`/${space.id}/${space.general_channel_id}`, { replace: true })
-      }
+    if (isError) {
+      navigate('/')
+      toast.error('Error while loading data!')
     }
-  }, [params.channelId])
+    /* set channel ID from URL param */
+    if (!params.channelId || !params.spaceId || !channels || !space) {
+      return
+    }
+    const paramSpaceId = parseInt(params.spaceId)
+    const channelId = parseInt(params.channelId)
+    // const channels = queryClient.getQueryData<ChannelT[]>([
+    //   'channels',
+    //   paramSpaceId,
+    // ])
+    console.log(channelId)
+    console.log(channels)
+    const channel = channels?.find(
+      (c) => c.space_id === paramSpaceId && c.id === channelId
+    )
+    // redirect to general channel of the Space if the channel does not exists
+    if (!channel) {
+      setChannelId(space.general_channel_id)
+      navigate(`/${space.id}/${space.general_channel_id}`, { replace: true })
+      return
+    }
+    // set channel ID if channel exists
+    setChannelId(channel.id)
+  }, [params.channelId, channels, isError])
 
   const createChannel = useCallback(
     async (data: CreateChannelT) => {
@@ -91,7 +98,7 @@ const SidePanel: FC = () => {
   const handleChannelClick = (id: number) => {
     navigate(`./${id}`)
   }
-  if (!isSuccess) return null
+  if (!channels) return null
 
   return (
     <aside

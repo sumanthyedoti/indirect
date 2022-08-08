@@ -94,13 +94,11 @@ const SideHeader: FC = () => {
           </span>
         </button>
         <Popover className="relative">
-          <Popover.Button>
-            <Tooltip label={name} arrow={false} placement="bottom">
-              <button className="ring-offset-1 ring-offset-slate-700">
-                <Avatar />
-              </button>
-            </Tooltip>
-          </Popover.Button>
+          <Tooltip label={name} arrow={false} placement="bottom">
+            <Popover.Button className="ring-offset-1 ring-offset-slate-700">
+              <Avatar />
+            </Popover.Button>
+          </Tooltip>
           <Popover.Panel
             className={`absolute right-0 z-10
             rounded bg-slate-900

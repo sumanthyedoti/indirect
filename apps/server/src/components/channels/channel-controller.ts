@@ -106,13 +106,12 @@ async function deleteChannel(
     const userId = req.user?.id
 
     const channel = await channelModel.getChannel(id)
-    if (channel.id !== userId) {
+    if (channel.creator_id !== userId) {
       res.sendStatus(403)
       return
     }
 
     const space = await spaceModel.getSpace(channel.space_id)
-    console.log(space, channel)
 
     if (space.general_channel_id === channel.id) {
       res.status(406).send('Can not delete general channel of a space')

@@ -19,17 +19,19 @@ const Space: FC = () => {
       navigate('/')
       toast.error('Error while loading data!')
     }
-    if (params.spaceId && spaces) {
-      console.log(params)
-      /* set space ID from URL param */
-      const spaceId = parseInt(params.spaceId)
-      const space = spaces?.find((s) => s.id === spaceId)
-      console.log(space)
-      if (space) {
-        setSpace(space)
-        setSpaceId(space.id)
-        navigate(`./${space.general_channel_id}`, { replace: true })
-      }
+    if (!params.spaceId || !spaces) {
+      return
+    }
+    /* set space ID from URL param */
+    const spaceId = parseInt(params.spaceId)
+    const space = spaces.find((s) => s.id === spaceId)
+    if (!space) {
+      return
+    }
+    setSpace(space)
+    setSpaceId(space.id)
+    if (!params.channelId) {
+      navigate(`./${space.general_channel_id}`, { replace: true })
     }
   }, [params.spaceId, spaces, isError])
 
