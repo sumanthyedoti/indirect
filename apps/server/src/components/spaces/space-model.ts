@@ -54,10 +54,6 @@ async function createSpace(space: T.CreateSpace) {
       },
       trx
     )
-    console.log({ channel })
-
-    // add Space creator as member of general channel
-    // await channelModel.createChannelMembers(channel.id, [space.creator_id], trx)
     // add general_channel_id to Space
     await trx('spaces')
       .update({

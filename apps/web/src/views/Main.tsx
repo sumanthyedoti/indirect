@@ -15,6 +15,7 @@ const Space: FC = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
+    console.log(params.spaceId)
     if (isError) {
       navigate('/')
       toast.error('Error while loading data!')
@@ -26,6 +27,7 @@ const Space: FC = () => {
     const spaceId = parseInt(params.spaceId)
     const space = spaces.find((s) => s.id === spaceId)
     if (!space) {
+      navigate('/')
       return
     }
     setSpace(space)
