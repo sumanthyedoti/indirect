@@ -21,7 +21,7 @@ async function createChannel(
       message: 'Created the channel successfully!',
     })
   } catch (err) {
-    console.error(err)
+    logger.error('::', err)
     res.send('Something went wrong!')
   }
 }
@@ -41,7 +41,7 @@ async function getChannel(
       data: result,
     })
   } catch (err) {
-    logger.error(err)
+    logger.error('::', err)
     res.status(500).send('Something went wrong!')
   }
 }
@@ -61,7 +61,7 @@ async function getChannelMessages(
       data: messages,
     })
   } catch (err) {
-    logger.error(err)
+    logger.error('::', err)
     res.status(500).send('Something went wrong!')
   }
 }
@@ -91,7 +91,7 @@ async function updateChannel(
       message: 'Updated the space successfully!',
     })
   } catch (err) {
-    logger.error(err)
+    logger.error('::', err)
     res.status(500).send('Something went wrong!')
   }
 }
@@ -124,7 +124,7 @@ async function deleteChannel(
     }
     res.sendStatus(204)
   } catch (err) {
-    logger.error(err)
+    logger.error('::', err)
     res.status(500).send('Something went wrong!')
   }
 }
@@ -135,7 +135,10 @@ async function createChannelMembers(
 ) {
   try {
     const { id } = req.params
-    const result = await channelModel.createChannelMembers(id, req.body)
+    const result = await channelModel.createChannelMembers(
+      id,
+      req.body.user_ids
+    )
     if (!result) {
       res.status(404).json({ message: 'Channel/Users not found' })
       return
@@ -144,7 +147,7 @@ async function createChannelMembers(
       message: 'Added the members to the channel successfully!',
     })
   } catch (err) {
-    logger.error(err)
+    logger.error('::', err)
     res
       .status(500)
       .send(
@@ -168,7 +171,7 @@ async function getChannelMembers(
       data: result,
     })
   } catch (err) {
-    logger.error(err)
+    logger.error('::', err)
     res.status(500).send('Something went wrong!')
   }
 }
@@ -187,7 +190,7 @@ async function deleteChannelMember(
     }
     res.sendStatus(204)
   } catch (err) {
-    logger.error(err)
+    logger.error('::', err)
     res.status(500).send('Something went wrong!')
   }
 }

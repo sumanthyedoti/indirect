@@ -1,7 +1,7 @@
 interface Info {
   space_id: number
   name: string
-  description: string | null
+  description?: string | null
   creator_id: number
 }
 

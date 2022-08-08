@@ -22,6 +22,12 @@ async function createSpace(
       description,
       creator_id,
     })
+    if (!space) {
+      res
+        .status(500)
+        .json({ error: 'Space not created. Something went wrong.' })
+      return
+    }
     res.status(201).json({
       data: space,
       message: 'Created the space successfully!',
@@ -47,7 +53,7 @@ async function getSpace(
       data: result,
     })
   } catch (err) {
-    logger.error(err)
+    logger.error('::', err)
     res.status(500).send('Something went wrong!')
   }
 }
@@ -67,7 +73,7 @@ async function getSpaceChannels(
       data: channels,
     })
   } catch (err) {
-    logger.error(err)
+    logger.error('::', err)
     res.status(500).send('Something went wrong!')
   }
 }
@@ -88,7 +94,7 @@ async function getSpaceUsers(
       data: users,
     })
   } catch (err) {
-    logger.error(err)
+    logger.error('::', err)
     res.status(500).send('Something went wrong!')
   }
 }
@@ -118,7 +124,7 @@ async function updateSpace(
       message: 'Updated the space successfully!',
     })
   } catch (err) {
-    logger.error(err)
+    logger.error('::', err)
     res.status(500).send('Something went wrong!')
   }
 }
@@ -143,7 +149,7 @@ async function deleteSpace(
     }
     res.sendStatus(204)
   } catch (err) {
-    logger.error(err)
+    logger.error('::', err)
     res.status(500).send('Something went wrong!')
   }
 }

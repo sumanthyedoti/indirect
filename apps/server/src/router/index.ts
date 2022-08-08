@@ -30,7 +30,7 @@ router.post(
 
 router.delete('/logout', isAuthenticated, (req: Request, res: Response) => {
   req.logout((err) => {
-    if (err) logger.error(err)
+    if (err) logger.error('::', err)
   })
   res.status(204).end()
 })

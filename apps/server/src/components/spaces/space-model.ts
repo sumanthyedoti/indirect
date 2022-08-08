@@ -1,36 +1,75 @@
 import * as T from '@api-types/spaces'
+import logger from '../../config/logger'
 import { Channel as ChannelT } from '@api-types/channels'
 import db from '../../db'
 import profileModel from '../profiles/profiles-model'
 import channelModel from '../channels/channel-model'
 
 async function createSpace(space: T.CreateSpace) {
-  // create Space
-  const [createdSpace]: T.Space[] = await db('spaces')
-    .insert(space)
-    .returning('*')
-  // add creator profile in the Space
-  await profileModel.createProfile({
-    space_id: createdSpace.id,
-    user_id: space.creator_id,
-  })
-  // create a general channel for the Space
-  const channel = await channelModel.createGeneralChannel({
-    space_id: createdSpace.id,
-    name: 'general',
-    creator_id: space.creator_id,
-  })
-  // add Space creator as member of general channel
-  await channelModel.createChannelMembers(channel.id, {
-    user_ids: [space.creator_id],
-  })
-  // add general_channel_id to Space
-  await db('spaces')
-    .update({
-      general_channel_id: channel.id,
-    })
-    .where({ id: createdSpace.id })
-  return createdSpace
+  // const [createdSpace]: T.Space[] = await db('spaces')
+  //   .insert(space)
+  //   .returning('*')
+  // // add creator profile in the Space
+  // await profileModel.createProfile({
+  //   space_id: createdSpace.id,
+  //   user_id: space.creator_id,
+  // })
+  // // create a general channel for the Space
+  // const channel = await channelModel.createGeneralChannel({
+  //   space_id: createdSpace.id,
+  //   name: 'general',
+  //   creator_id: space.creator_id,
+  // })
+  // // add Space creator as member of general channel
+  // await channelModel.createChannelMembers(channel.id, {
+  //   user_ids: [space.creator_id],
+  // })
+  // // add general_channel_id to Space
+  // await db('spaces')
+  //   .update({
+  //     general_channel_id: channel.id,
+  //   })
+  //   .where({ id: createdSpace.id })
+  // return createdSpace
+  const trx = await db.transaction()
+  try {
+    // create Space
+    const [createdSpace]: T.Space[] = await trx('spaces')
+      .insert(space)
+      .returning('*')
+    // add creator profile in the Space
+    await profileModel.createProfile(
+      {
+        space_id: createdSpace.id,
+        user_id: space.creator_id,
+      },
+      trx
+    )
+    // create a general channel for the Space
+    const channel = await channelModel.createChannel(
+      {
+        space_id: createdSpace.id,
+        name: 'general',
+        creator_id: space.creator_id,
+      },
+      trx
+    )
+    console.log({ channel })
+
+    // add Space creator as member of general channel
+    // await channelModel.createChannelMembers(channel.id, [space.creator_id], trx)
+    // add general_channel_id to Space
+    await trx('spaces')
+      .update({
+        general_channel_id: channel.id,
+      })
+      .where({ id: createdSpace.id })
+    trx.commit()
+    return createdSpace
+  } catch (err) {
+    logger.error('::', err)
+    trx.rollback()
+  }
 }
 
 async function getSpace(id: number) {

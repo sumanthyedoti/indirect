@@ -1,25 +1,17 @@
+import { Knex } from 'knex'
+
 import * as T from '@api-types/channels'
 import { Message as MessageT } from '@api-types/messages'
 import db from '../../db'
 
-async function createChannel(channel: T.CreateChannel) {
-  const [createdChannel]: T.Channel[] = await db('channels')
+async function createChannel(
+  channel: T.CreateChannel,
+  queryTrx: Knex.Transaction | Knex = db
+) {
+  const [createdChannel]: T.Channel[] = await queryTrx('channels')
     .insert(channel)
     .returning('*')
-  await createChannelMembers(createdChannel.id, {
-    user_ids: [channel.creator_id],
-  })
-  return createdChannel
-}
-
-async function createGeneralChannel(channel: {
-  space_id: number
-  name: string
-  creator_id: number
-}) {
-  const [createdChannel]: T.Channel[] = await db('channels')
-    .insert(channel)
-    .returning('*')
+  await createChannelMembers(createdChannel.id, [channel.creator_id], queryTrx)
   return createdChannel
 }
 
@@ -74,9 +66,10 @@ async function deleteChannel(id: number) {
 
 async function createChannelMembers(
   channel_id: number,
-  { user_ids }: T.CreateChannelMembers
+  user_ids: number[],
+  queryTrx: Knex.Transaction | Knex = db
 ) {
-  const users: number[] = await db('channel_users').insert(
+  const users: number[] = await queryTrx('channel_users').insert(
     user_ids.map((userId) => ({
       user_id: userId,
       channel_id,
@@ -106,7 +99,6 @@ async function deleteChannelMember(channel_id: number, user_id: number) {
 
 export default {
   createChannel,
-  createGeneralChannel,
   getChannel,
   getChannelMessages,
   updateChannel,
