@@ -43,6 +43,9 @@ const updateChannelScheme: JSONSchemaType<UpdateChannel> = {
 const createChannelMembersScheme: JSONSchemaType<CreateChannelMembers> = {
   type: 'object',
   properties: {
+    space_id: {
+      type: 'number',
+    },
     user_ids: {
       type: 'array',
       items: {
@@ -50,7 +53,7 @@ const createChannelMembersScheme: JSONSchemaType<CreateChannelMembers> = {
       },
     },
   },
-  required: ['user_ids'],
+  required: ['user_ids', 'space_id'],
   // additionalProperties: false,
 }
 

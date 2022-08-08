@@ -22,6 +22,7 @@ export interface UpdateChannel {
 }
 
 export interface CreateChannelMembers {
+  space_id: number
   user_ids: number[]
 }
 

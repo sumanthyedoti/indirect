@@ -137,10 +137,14 @@ async function createChannelMembers(
     const { id } = req.params
     const result = await channelModel.createChannelMembers(
       id,
+      req.body.space_id,
       req.body.user_ids
     )
     if (!result) {
-      res.status(404).json({ message: 'Channel/Users not found' })
+      res.status(404).json({
+        message:
+          'Channel/Users not found or User(s) are not member of the Space',
+      })
       return
     }
     res.status(201).json({

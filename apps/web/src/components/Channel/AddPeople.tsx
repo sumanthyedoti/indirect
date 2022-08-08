@@ -63,6 +63,7 @@ const AddPeole: FC<AddPeoleProps> = () => {
       const userIds = selectedUsers.map((u) => u.value)
       await api.post(`/channels/${channelId}/users`, {
         user_ids: userIds,
+        space_id: spaceId,
       })
       toast.success(`Added users to the channel '#${channel.name}'`, {
         id: 'post-channel-users-success',

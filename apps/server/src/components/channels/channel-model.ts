@@ -11,7 +11,12 @@ async function createChannel(
   const [createdChannel]: T.Channel[] = await queryTrx('channels')
     .insert(channel)
     .returning('*')
-  await createChannelMembers(createdChannel.id, [channel.creator_id], queryTrx)
+  await createChannelMembers(
+    createdChannel.id,
+    channel.space_id,
+    [channel.creator_id],
+    queryTrx
+  )
   return createdChannel
 }
 
@@ -66,9 +71,22 @@ async function deleteChannel(id: number) {
 
 async function createChannelMembers(
   channel_id: number,
+  space_id: number,
   user_ids: number[],
   queryTrx: Knex.Transaction | Knex = db
 ) {
+  console.log(space_id, user_ids)
+
+  const res = await queryTrx('profiles')
+    .select('user_id', 'space_id')
+    .where({
+      space_id,
+    })
+    .whereIn('user_id', user_ids)
+  if (res.length !== user_ids.length) {
+    return null
+  }
+
   const users: number[] = await queryTrx('channel_users').insert(
     user_ids.map((userId) => ({
       user_id: userId,
