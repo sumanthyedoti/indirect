@@ -75,8 +75,6 @@ async function createChannelMembers(
   user_ids: number[],
   queryTrx: Knex.Transaction | Knex = db
 ) {
-  console.log(space_id, user_ids)
-
   const res = await queryTrx('profiles')
     .select('user_id', 'space_id')
     .where({
