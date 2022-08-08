@@ -8,23 +8,20 @@ export async function up(knex: Knex): Promise<void> {
   return knex.schema.hasTable('messages').then(function (exists) {
     if (!exists) {
       const query = knex.schema.createTable('messages', (table) => {
-        table.increments('id').unsigned().primary()
+        table.increments('id').primary()
         table
           .integer('sender_id')
-          .unsigned()
           .references('id')
           .inTable('users')
           .onDelete('SET NULL')
         table
           .integer('channel_id')
-          .unsigned()
           .index()
           .references('id')
           .inTable('channels')
           .onDelete('CASCADE')
         // table
         //   .integer('personal_channel_id')
-        //   .unsigned()
         //   .index()
         //   .references('id')
         //   .inTable('personal_channel')

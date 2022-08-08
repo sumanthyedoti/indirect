@@ -8,7 +8,7 @@ export async function up(knex: Knex): Promise<void> {
   return knex.schema.hasTable('users').then(function (exists) {
     if (!exists) {
       const query = knex.schema.createTable('users', (table) => {
-        table.increments('id').unsigned().primary()
+        table.increments('id').primary()
         table.string('email').index().notNullable().unique()
         table.string('fullname', 60).notNullable()
         table.string('password_hash').notNullable()

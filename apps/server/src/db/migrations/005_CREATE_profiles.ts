@@ -16,14 +16,12 @@ export async function up(knex: Knex): Promise<void> {
       const query = knex.schema.createTable('profiles', (table) => {
         table
           .integer('user_id')
-          .unsigned()
           .notNullable()
           .references('id')
           .inTable('users')
           .onDelete('CASCADE')
         table
           .integer('space_id')
-          .unsigned()
           .notNullable()
           .references('id')
           .inTable('spaces')

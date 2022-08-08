@@ -10,14 +10,12 @@ export async function up(knex: Knex): Promise<void> {
       const query = knex.schema.createTable('channel_users', (table) => {
         table
           .integer('channel_id')
-          .unsigned()
           .notNullable()
           .references('id')
           .inTable('channels')
           .onDelete('CASCADE')
         table
           .integer('user_id')
-          .unsigned()
           .references('id')
           .inTable('users')
           .onDelete('SET NULL')
