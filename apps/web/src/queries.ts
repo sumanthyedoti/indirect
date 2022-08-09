@@ -2,6 +2,10 @@ import { useQuery, useMutation, useQueryClient } from 'react-query'
 
 import { SpaceUser, Space } from '@api-types/spaces'
 import { Channel, ChannelMembers } from '@api-types/channels'
+import {
+  Message as MessageT,
+  // CreateMessage as CreateMessageT,
+} from '@api-types/messages'
 
 import api from './axios'
 
@@ -126,6 +130,20 @@ function useQuerySpaceChannels(spaceId: number) {
   )
 }
 
+function useQueryChannelMessages(channelId: number) {
+  return useQuery<MessageT[]>(
+    ['channel-messages', channelId],
+    async () => {
+      const { data } = await api.get(`/channels/${channelId}/messages`)
+      return data.data
+    },
+    {
+      enabled: !!channelId,
+      staleTime: Infinity,
+    }
+  )
+}
+
 export {
   useQueryUserSpaces,
   useQuerySpaceUsers,
@@ -134,4 +152,5 @@ export {
   useQueryChannel,
   useQueryChannelMembers,
   useRemoveChannelMember,
+  useQueryChannelMessages,
 }

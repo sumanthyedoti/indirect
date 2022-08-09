@@ -1,44 +1,14 @@
-import { useState, useEffect, useCallback, FC } from 'react'
+import { useCallback, FC } from 'react'
 import toast from 'react-hot-toast'
 
 import Header from './Header'
 import ChannelMessages from './ChannelMessages'
 import { MessageInput } from '../../components/molecules'
 import useUserStore from '../../store/useUserStore'
-import type * as T from '@api-types/messages'
 import api from '../../axios'
-import useSocket from '../../hooks/useSocket'
 
 const Channel: FC = () => {
   const { user, channelId } = useUserStore()
-  const [messages, setMessages] = useState<T.Message[]>([])
-  const socket = useSocket()
-  useEffect(() => {
-    socket.on('message_received', (msg: T.Message) => {
-      if (msg.channel_id !== channelId) return
-      setMessages((messages) => [...messages, msg])
-    })
-    return () => {
-      socket.off('message_received')
-      toast.dismiss()
-    }
-  }, [])
-  useEffect(() => {
-    if (channelId) {
-      fetchMessages(channelId)
-    }
-  }, [channelId])
-  const fetchMessages = async (channelId: number) => {
-    try {
-      const { data } = await api.get(`/channels/${channelId}/messages`)
-
-      setMessages(data.data)
-    } catch (err) {
-      toast.error('Error fetching messages', {
-        id: 'get-messages-error',
-      })
-    }
-  }
   const handleMessageSubmit = useCallback(
     async (text: string) => {
       try {
@@ -63,7 +33,7 @@ const Channel: FC = () => {
     `}
     >
       <Header />
-      <ChannelMessages messages={messages} />
+      <ChannelMessages />
       <MessageInput className="mx-3 mb-2" onSubmit={handleMessageSubmit} />
     </div>
   )
