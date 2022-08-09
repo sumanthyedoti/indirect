@@ -22,6 +22,7 @@ const Message: FC<MessageProps> = ({
     'text-stone-400': !senderName,
   })
   const time = dayjs(createdAt)
+
   return (
     <section className={classnames('flex flex-col my-3', className)}>
       <p>

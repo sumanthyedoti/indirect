@@ -12,9 +12,9 @@ router.get('/', userController.getUsers)
 router.get('/ping', (req: Request, res: Response) => {
   res.status(200).send('The user is logged in')
 })
-router.get('/:id', validateIdParam(), userController.getUser)
-router.put('/:id', validateIdParam(), userController.updateUser)
-router.delete('/:id', validateIdParam(), userController.deleteUser)
-router.get('/:id/spaces', validateIdParam(), userController.getUserSpaces)
+router.get('/:id', validateIdParam, userController.getUser)
+router.put('/:id', validateIdParam, userController.updateUser)
+router.delete('/:id', validateIdParam, userController.deleteUser)
+router.get('/:id/spaces', validateIdParam, userController.getUserSpaces)
 
 export default router

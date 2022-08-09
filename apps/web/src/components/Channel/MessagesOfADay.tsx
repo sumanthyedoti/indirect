@@ -1,4 +1,4 @@
-import { useEffect, FC, RefObject } from 'react'
+import { useEffect, FC, RefObject, memo } from 'react'
 
 import * as T from '@api-types/messages'
 import useUserStore from '../../store/useUserStore'
@@ -26,7 +26,8 @@ const MessagedOfADay: FC<MessagedOfADayProps> = ({
     }
   })
 
-  if (!isSuccess) return null
+  if (!user) return null
+  if (!isSuccess) return null //loading
 
   return (
     <div className={isFirstDay ? 'mt-auto' : ''}>
@@ -38,9 +39,8 @@ const MessagedOfADay: FC<MessagedOfADayProps> = ({
               key={m.id}
               createdAt={m.created_at}
               senderName={
-                user &&
-                (users.idMap[m.sender_id]?.display_name ||
-                  users.idMap[m.sender_id]?.fullname)
+                users.idMap[m.sender_id]?.display_name ||
+                users.idMap[m.sender_id]?.fullname
               }
               message={m}
             />
@@ -51,4 +51,4 @@ const MessagedOfADay: FC<MessagedOfADayProps> = ({
   )
 }
 
-export default MessagedOfADay
+export default memo(MessagedOfADay)

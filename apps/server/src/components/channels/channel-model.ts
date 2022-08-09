@@ -127,6 +127,7 @@ async function getChannelMessages(id: number) {
     )
     .from('messages')
     .where({ channel_id: id })
+    .orderBy('created_at', 'asc')
   return result
 }
 

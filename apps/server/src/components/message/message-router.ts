@@ -8,6 +8,6 @@ const router = express.Router()
 router.use(isAuthenticated)
 
 router.get('/', messageCotroller.getMessages)
-router.delete('/:id', validateIdParam(), messageCotroller.deleteMessage)
+router.delete('/:id', validateIdParam, messageCotroller.deleteMessage)
 
 export default router

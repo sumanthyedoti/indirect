@@ -1,10 +1,16 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query'
+import { useUserStore } from './store'
+import toast from 'react-hot-toast'
 
 import { SpaceUser, Space } from '@api-types/spaces'
-import { Channel, ChannelMembers } from '@api-types/channels'
+import {
+  Channel,
+  ChannelMembers,
+  CreateChannelMessage,
+} from '@api-types/channels'
 import {
   Message as MessageT,
-  // CreateMessage as CreateMessageT,
+  CreateMessage as CreateMessageT,
 } from '@api-types/messages'
 
 import api from './axios'
@@ -144,6 +150,53 @@ function useQueryChannelMessages(channelId: number) {
   )
 }
 
+function usePostChannelMessage(channelId: number) {
+  const queryClient = useQueryClient()
+  const { user } = useUserStore()
+  return useMutation(
+    (message: CreateChannelMessage) =>
+      api.post(`/channels/${channelId}/message`, message),
+    {
+      onMutate: async (newMessage) => {
+        if (!user) return
+        await queryClient.cancelQueries(['channel-messages', channelId])
+        const prevMessages = queryClient.getQueryData([
+          'channel-messages',
+          channelId,
+        ])
+        queryClient.setQueryData<CreateMessageT[] | undefined>(
+          ['channel-messages', channelId],
+          (oldData) => {
+            return [
+              //@ts-ignore
+              ...oldData,
+              {
+                ...newMessage,
+                sender_id: user.id,
+                channel_id: channelId,
+                created_at: Date.now(),
+              },
+            ]
+          }
+        )
+        return { prevMessages }
+      },
+      onError: (_err, _userId, context) => {
+        queryClient.setQueryData(
+          ['channel-messages', channelId],
+          context?.prevMessages
+        )
+        toast.error('Error sending message', {
+          id: 'post-messages-error',
+        })
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries(['channel-messages', channelId])
+      },
+    }
+  )
+}
+
 export {
   useQueryUserSpaces,
   useQuerySpaceUsers,
@@ -153,4 +206,5 @@ export {
   useQueryChannelMembers,
   useRemoveChannelMember,
   useQueryChannelMessages,
+  usePostChannelMessage,
 }
