@@ -189,7 +189,7 @@ async function deleteChannelMember(
 
     const result = await channelModel.deleteChannelMember(id, uid)
     if (!result) {
-      res.status(404).json({ id, message: 'Channel not found' })
+      res.status(404).json({ id, message: 'Channel/User not found' })
       return
     }
     res.sendStatus(204)

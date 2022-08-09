@@ -26,43 +26,42 @@ export const expressSessionMiddleware: RequestHandler = session({
   },
 })
 
-export function validateIdParam(
-  req: TypedRequestParams<{ id: number; uid?: number }>,
-  res: Response,
-  next: NextFunction
-) {
-  const id = Number(req.params.id)
-
-  if (id) {
-    req.params.id = id
-    return next()
-  }
-  res.status(422).json({ message: "'id' is not valid" })
-  return
-}
-
-// export const validateIdParam = (ids = ['id']) =>
-//   function (
-//     req: TypedRequestParams<{ id: number; uid?: number }>,
-//     res: Response,
-//     next: NextFunction
-//   ) {
-//     let missingId = null
-//     ids.forEach((id) => {
-//       const idNumber = Number(req.params[id])
-//       req.params[id] = idNumber
-//       if (!idNumber && idNumber !== 0) {
-//         missingId = id
-//       }
-//     })
+// export function validateIdParam(
+//   req: TypedRequestParams<{ id: number; uid?: number }>,
+//   res: Response,
+//   next: NextFunction
+// ) {
+//   const id = Number(req.params.id)
 //
-//     if (!missingId) {
-//       return next()
-//     }
-//     res.status(422).json({ message: missingId + ' is not valid' })
-//     return
+//   if (id) {
+//     req.params.id = id
+//     return next()
 //   }
-//
+//   res.status(422).json({ message: "'id' is not valid" })
+//   return
+// }
+
+export const validateIdParam = (ids = ['id']) =>
+  function (
+    req: TypedRequestParams<{ id: number; uid?: number }>,
+    res: Response,
+    next: NextFunction
+  ) {
+    let missingId = null
+    ids.forEach((id) => {
+      const idNumber = Number(req.params[id])
+      req.params[id] = idNumber
+      if (!idNumber && idNumber !== 0) {
+        missingId = id
+      }
+    })
+
+    if (!missingId) {
+      return next()
+    }
+    res.status(422).json({ message: missingId + ' is not valid' })
+    return
+  }
 
 export function validateSchema(ajvValidate: ValidateFunction) {
   return (req: Request, res: Response, next: NextFunction) => {

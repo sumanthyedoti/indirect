@@ -29,23 +29,6 @@ async function getChannel(id: number) {
   return channel
 }
 
-async function getChannelMessages(id: number) {
-  const result: MessageT[] = await db
-    .select(
-      'id',
-      'text',
-      'sender_id',
-      'channel_id',
-      // 'conversation_id',
-      'created_at',
-      'is_edited',
-      'is_files_attached'
-    )
-    .from('messages')
-    .where({ channel_id: id })
-  return result
-}
-
 async function updateChannel(
   id: number,
   channel: T.UpdateChannel,
@@ -130,14 +113,31 @@ async function createChannelMessage(message: CreateMessageT) {
   return result
 }
 
+async function getChannelMessages(id: number) {
+  const result: MessageT[] = await db
+    .select(
+      'id',
+      'text',
+      'sender_id',
+      'channel_id',
+      // 'conversation_id',
+      'created_at',
+      'is_edited',
+      'is_files_attached'
+    )
+    .from('messages')
+    .where({ channel_id: id })
+  return result
+}
+
 export default {
   createChannel,
   getChannel,
-  getChannelMessages,
   updateChannel,
   deleteChannel,
   createChannelMembers,
   getChannelMembers,
   deleteChannelMember,
   createChannelMessage,
+  getChannelMessages,
 }

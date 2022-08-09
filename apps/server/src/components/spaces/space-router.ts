@@ -23,7 +23,7 @@ router.get('/:id/users', validateIdParam, spaceController.getSpaceUsers)
 router.put(
   '/:id',
   // @ts-ignore
-  [validateIdParam, validateSchema(updateSpaceSchemaValidator)],
+  [validateIdParam(), validateSchema(updateSpaceSchemaValidator)],
   spaceController.updateSpace
 )
 router.delete('/:id', validateIdParam, spaceController.deleteSpace)
