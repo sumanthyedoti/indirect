@@ -5,8 +5,10 @@ import {
   CreateChannel,
   UpdateChannel,
   CreateChannelMembers,
+  CreateChannelMessage,
   Constraints,
 } from '@api-types/channels'
+import { Constraints as MessageConstraints } from '@api-types/messages'
 
 const createChannelScheme: JSONSchemaType<CreateChannel> = {
   type: 'object',
@@ -57,8 +59,20 @@ const createChannelMembersScheme: JSONSchemaType<CreateChannelMembers> = {
   // additionalProperties: false,
 }
 
+const createChannelMessageScheme: JSONSchemaType<CreateChannelMessage> = {
+  type: 'object',
+  properties: {
+    text: { type: 'string', minLength: 1, maxLength: MessageConstraints.text },
+  },
+  required: ['text'],
+  // additionalProperties: false,
+}
+
 export const createChannelSchemaValidator = ajv.compile(createChannelScheme)
 export const updateChannelSchemaValidator = ajv.compile(updateChannelScheme)
 export const createChannelMembersSchemaValidator = ajv.compile(
   createChannelMembersScheme
+)
+export const createChannelMessageSchemaValidator = ajv.compile(
+  createChannelMessageScheme
 )

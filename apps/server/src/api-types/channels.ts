@@ -26,6 +26,10 @@ export interface CreateChannelMembers {
   user_ids: number[]
 }
 
+export interface CreateChannelMessage {
+  text: string | null
+}
+
 export type ChannelMembers = number[]
 
 export enum Constraints {

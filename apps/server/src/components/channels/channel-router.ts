@@ -5,6 +5,7 @@ import {
   createChannelSchemaValidator,
   updateChannelSchemaValidator,
   createChannelMembersSchemaValidator,
+  createChannelMessageSchemaValidator,
 } from './channel-schema'
 import channelController from './channel-controller'
 import { isAuthenticated, validateSchema } from '../../middlewares'
@@ -23,6 +24,12 @@ router.get(
   '/:id/messages',
   validateIdParam,
   channelController.getChannelMessages
+)
+router.post(
+  '/:id/message',
+  // @ts-ignore
+  [validateIdParam, validateSchema(createChannelMessageSchemaValidator)],
+  channelController.createChannelMessage
 )
 router.put(
   '/:id',

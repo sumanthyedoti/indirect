@@ -199,6 +199,39 @@ async function deleteChannelMember(
   }
 }
 
+async function createChannelMessage(
+  req: TypedRequest<{ id: number }, T.CreateChannelMessage>,
+  res: Response
+) {
+  try {
+    const { id } = req.params
+    const { text } = req.body
+    const userId = req.user?.id
+    if (!userId) {
+      res.sendStatus(401)
+      return
+    }
+    const result = await channelModel.createChannelMessage({
+      text,
+      sender_id: userId,
+      channel_id: id,
+      personal_channel_id: null,
+    })
+    if (!result) {
+      res.status(404).json({
+        message: 'Failed. User might not the memeber of the channel',
+      })
+      return
+    }
+    res.status(201).json({
+      message: 'Added the members to the channel successfully!',
+    })
+  } catch (err) {
+    logger.error('::', err)
+    res.status(500).send('Something went wrong!')
+  }
+}
+
 export default {
   createChannel,
   getChannel,
@@ -207,5 +240,6 @@ export default {
   deleteChannel,
   createChannelMembers,
   getChannelMembers,
+  createChannelMessage,
   deleteChannelMember,
 }

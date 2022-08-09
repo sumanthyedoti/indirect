@@ -1,7 +1,11 @@
 import { Knex } from 'knex'
 
 import * as T from '@api-types/channels'
-import { Message as MessageT } from '@api-types/messages'
+import {
+  Message as MessageT,
+  CreateMessage as CreateMessageT,
+} from '@api-types/messages'
+import messageModel from '../message/message-model'
 import db from '../../db'
 
 async function createChannel(
@@ -84,7 +88,6 @@ async function createChannelMembers(
   if (res.length !== user_ids.length) {
     return null
   }
-
   const users: number[] = await queryTrx('channel_users').insert(
     user_ids.map((userId) => ({
       user_id: userId,
@@ -113,6 +116,20 @@ async function deleteChannelMember(channel_id: number, user_id: number) {
   return channelId
 }
 
+async function createChannelMessage(message: CreateMessageT) {
+  const [channelMember] = await db('channel_users')
+    .select('user_id', 'channel_id')
+    .where({
+      user_id: message.sender_id,
+      channel_id: message.channel_id,
+    })
+  if (!channelMember) {
+    return null
+  }
+  const result = await messageModel.createMessage(message)
+  return result
+}
+
 export default {
   createChannel,
   getChannel,
@@ -122,4 +139,5 @@ export default {
   createChannelMembers,
   getChannelMembers,
   deleteChannelMember,
+  createChannelMessage,
 }
