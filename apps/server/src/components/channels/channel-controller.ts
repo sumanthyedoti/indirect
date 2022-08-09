@@ -219,7 +219,7 @@ async function createChannelMessage(
     })
     if (!result) {
       res.status(404).json({
-        message: 'Failed. User might not the memeber of the channel',
+        message: 'Failed. User is not the memeber of the channel',
       })
       return
     }
@@ -240,6 +240,6 @@ export default {
   deleteChannel,
   createChannelMembers,
   getChannelMembers,
-  createChannelMessage,
   deleteChannelMember,
+  createChannelMessage,
 }

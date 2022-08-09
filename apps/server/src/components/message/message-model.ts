@@ -24,7 +24,13 @@ async function getMessages() {
   return messages
 }
 
+async function deleteMessage(message_id: number, sender_id: number) {
+  const result = await db('messages').where({ id: message_id, sender_id }).del()
+  return result
+}
+
 export default {
   createMessage,
   getMessages,
+  deleteMessage,
 }

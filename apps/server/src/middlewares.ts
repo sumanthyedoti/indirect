@@ -41,6 +41,29 @@ export function validateIdParam(
   return
 }
 
+// export const validateIdParam = (ids = ['id']) =>
+//   function (
+//     req: TypedRequestParams<{ id: number; uid?: number }>,
+//     res: Response,
+//     next: NextFunction
+//   ) {
+//     let missingId = null
+//     ids.forEach((id) => {
+//       const idNumber = Number(req.params[id])
+//       req.params[id] = idNumber
+//       if (!idNumber && idNumber !== 0) {
+//         missingId = id
+//       }
+//     })
+//
+//     if (!missingId) {
+//       return next()
+//     }
+//     res.status(422).json({ message: missingId + ' is not valid' })
+//     return
+//   }
+//
+
 export function validateSchema(ajvValidate: ValidateFunction) {
   return (req: Request, res: Response, next: NextFunction) => {
     const valid = ajvValidate(req.body)
