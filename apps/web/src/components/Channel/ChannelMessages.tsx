@@ -1,4 +1,4 @@
-import { useRef, FC, forwardRef } from 'react'
+import { useRef, FC, useEffect } from 'react'
 import { VariableSizeList as List } from 'react-window'
 import AutoSizer from 'react-virtualized-auto-sizer'
 
@@ -13,6 +13,7 @@ import { useQueryChannelMessages, useQuerySpaceUsers } from '../../queries'
 const ChannelMessages: FC = () => {
   const { channelId, spaceId } = useUserStore()
   const messagesContainerRef = useRef<HTMLDivElement>(null)
+  const listRef = useRef(null)
   const { data: users } = useQuerySpaceUsers(spaceId)
   const { data: messages } = useQueryChannelMessages(channelId)
 
@@ -27,6 +28,18 @@ const ChannelMessages: FC = () => {
   //     toast.dismiss()
   //   }
   // }, [])
+
+  useEffect(() => {
+    if (messages && messages.length > 0) {
+      scrollToBottom()
+    }
+    // eslint-disable-next-line
+  }, [messages])
+
+  function scrollToBottom() {
+    //@ts-ignore
+    listRef.current?.scrollToItem(messages.length - 1, 'end')
+  }
 
   if (!messages) return null
 
@@ -67,15 +80,15 @@ const ChannelMessages: FC = () => {
     )
   }
 
-  function handleOnWheel({ deltaY }: any) {
-    // Your handler goes here ...
-    console.log(messagesContainerRef.current?.scrollTop, deltaY)
-    messagesContainerRef.current?.focus()
-  }
-  const outerElementType = forwardRef<HTMLDivElement>((props, ref) => (
-    <div ref={ref} onWheel={handleOnWheel} {...props} />
-  ))
-  outerElementType.displayName = 'outerElementType'
+  // function handleOnWheel({ deltaY }: any) {
+  //   // Your handler goes here ...
+  //   console.log(messagesContainerRef.current?.scrollTop, deltaY)
+  //   messagesContainerRef.current?.focus()
+  // }
+  // const outerElementType = forwardRef<HTMLDivElement>((props, ref) => (
+  //   <div ref={ref} onWheel={handleOnWheel} {...props} />
+  // ))
+  // outerElementType.displayName = 'outerElementType'
 
   return (
     <article
@@ -90,7 +103,8 @@ const ChannelMessages: FC = () => {
             <List
               height={height}
               itemCount={messages.length}
-              outerElementType={outerElementType}
+              // outerElementType={outerElementType}
+              ref={listRef}
               itemSize={() => 70}
               width={width}
             >

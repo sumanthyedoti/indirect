@@ -49,9 +49,10 @@ app.use('/spaces', spaceRouter)
 app.use('/channels', channelRouter)
 
 app.use(express.static(path.resolve(__dirname, '../../web', 'dist')))
-app.get('*', (req, res) =>
+app.get('*', (req, res) => {
+  console.log('static')
   res.sendFile(path.resolve(__dirname, '../../web', 'dist', 'index.html'))
-)
+})
 
 /* web sockets */
 const server = createHTTPServer(app)
