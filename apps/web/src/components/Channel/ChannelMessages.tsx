@@ -12,8 +12,8 @@ import { useQueryChannelMessages, useQuerySpaceUsers } from '../../queries'
 
 const ChannelMessages: FC = () => {
   const { channelId, spaceId } = useUserStore()
-  const messagesContainerRef = useRef<HTMLDivElement>(null)
   const listRef = useRef(null)
+  const rowHeights = useRef<Record<number, number>>({})
   const { data: users } = useQuerySpaceUsers(spaceId)
   const { data: messages } = useQueryChannelMessages(channelId)
 
@@ -41,58 +41,52 @@ const ChannelMessages: FC = () => {
     listRef.current?.scrollToItem(messages.length - 1, 'end')
   }
 
+  function getRowHeight(index: number) {
+    return rowHeights.current[index] + 8 || 70
+  }
+
+  function setRowHeight(index: number, size: number) {
+    rowHeights.current = { ...rowHeights.current, [index]: size }
+  }
+
   if (!messages) return null
 
   const Row = ({ index: i, style }: any) => {
+    const rowRef = useRef<HTMLDivElement>(null)
+    useEffect(() => {
+      if (rowRef.current) {
+        console.log(rowRef.current.clientHeight, rowRef.current.dataset.i)
+        setRowHeight(i, rowRef.current.clientHeight)
+      }
+      // eslint-disable-next-line
+    }, [rowRef])
     const prevDate = messages[i - 1]
       ? new Date(messages[i - 1].created_at).getDate()
       : null
     const currentDate = new Date(messages[i]?.created_at).getDate()
     if (!users) return null
     return (
-      <div style={style}>
-        {currentDate !== prevDate ? (
+      <div ref={rowRef} data-i={i} style={style}>
+        {currentDate !== prevDate && (
           <div className="pb-0 mt-3 border-t border-gray-500">
             <MessageDate timestamp={messages[i].created_at} />
-            <Message
-              key={messages[i].id}
-              createdAt={messages[i].created_at}
-              className="mt-0"
-              senderName={
-                users.idMap[messages[i].sender_id]?.display_name ||
-                users.idMap[messages[i].sender_id]?.fullname
-              }
-              message={messages[i]}
-            />
           </div>
-        ) : (
-          <Message
-            key={messages[i].id}
-            createdAt={messages[i].created_at}
-            senderName={
-              users.idMap[messages[i].sender_id]?.display_name ||
-              users.idMap[messages[i].sender_id]?.fullname
-            }
-            message={messages[i]}
-          />
         )}
+        <Message
+          key={messages[i].id}
+          createdAt={messages[i].created_at}
+          senderName={
+            users.idMap[messages[i].sender_id]?.display_name ||
+            users.idMap[messages[i].sender_id]?.fullname
+          }
+          message={messages[i]}
+        />
       </div>
     )
   }
 
-  // function handleOnWheel({ deltaY }: any) {
-  //   // Your handler goes here ...
-  //   console.log(messagesContainerRef.current?.scrollTop, deltaY)
-  //   messagesContainerRef.current?.focus()
-  // }
-  // const outerElementType = forwardRef<HTMLDivElement>((props, ref) => (
-  //   <div ref={ref} onWheel={handleOnWheel} {...props} />
-  // ))
-  // outerElementType.displayName = 'outerElementType'
-
   return (
     <article
-      ref={messagesContainerRef}
       className={`h-full overflow-y-auto
         flex flex-col main-view-padding
       `}
@@ -102,11 +96,10 @@ const ChannelMessages: FC = () => {
           return (
             <List
               height={height}
-              itemCount={messages.length}
-              // outerElementType={outerElementType}
               ref={listRef}
-              itemSize={() => 70}
               width={width}
+              itemCount={messages.length}
+              itemSize={getRowHeight}
             >
               {Row}
             </List>
