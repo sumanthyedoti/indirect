@@ -39,7 +39,7 @@ const ChannelMessages: FC = () => {
   }
 
   function getRowHeight(index: number) {
-    return rowHeights.current[index] + 8 || 70
+    return rowHeights.current[index] || 70
   }
 
   function setRowHeight(index: number, size: number) {
@@ -64,14 +64,19 @@ const ChannelMessages: FC = () => {
               itemCount={messages.length}
               itemSize={getRowHeight}
             >
-              {({ index, style }) => (
-                <MessageRow
-                  messages={messages}
-                  index={index}
-                  style={style}
-                  setRowHeight={setRowHeight}
-                />
-              )}
+              {({ index: i, style }) => {
+                return (
+                  <MessageRow
+                    message={messages[i]}
+                    previousMessageDate={
+                      messages[i - 1] ? messages[i - 1].created_at : null
+                    }
+                    index={i}
+                    style={style}
+                    setRowHeight={setRowHeight}
+                  />
+                )
+              }}
             </List>
           )
         }}

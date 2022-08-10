@@ -9,12 +9,13 @@ import { useQuerySpaceUsers } from '../../queries'
 
 interface MessageRowProps {
   index: number
-  messages: T.Message[]
-  style: any
+  message: T.Message
+  previousMessageDate: Date | null
+  style: Record<string, any>
   setRowHeight: (index: number, size: number) => void
 }
 const MessageRow: FC<MessageRowProps> = memo(
-  ({ index: i, messages, style, setRowHeight }: any) => {
+  ({ index: i, message, previousMessageDate, style, setRowHeight }: any) => {
     const rowRef = useRef<HTMLDivElement>(null)
     const { spaceId } = useUserStore()
     const { data: users } = useQuerySpaceUsers(spaceId)
@@ -29,26 +30,26 @@ const MessageRow: FC<MessageRowProps> = memo(
       }
       // eslint-disable-next-line
     })
-    const prevDate = messages[i - 1]
-      ? new Date(messages[i - 1].created_at).getDate()
-      : null
-    const currentDate = new Date(messages[i]?.created_at).getDate()
+    const prevDate =
+      previousMessageDate && new Date(previousMessageDate).getDate()
+    const currentDate = new Date(message?.created_at).getDate()
+
     if (!users) return null
     return (
       <div ref={rowRef} data-i={i} style={style}>
         {currentDate !== prevDate && (
           <div className="pb-0 mt-3 border-t border-gray-500">
-            <MessageDate timestamp={messages[i].created_at} />
+            <MessageDate timestamp={message.created_at} />
           </div>
         )}
         <Message
-          key={messages[i].id}
-          createdAt={messages[i].created_at}
+          key={message.id}
+          createdAt={message.created_at}
           senderName={
-            users.idMap[messages[i].sender_id]?.display_name ||
-            users.idMap[messages[i].sender_id]?.fullname
+            users.idMap[message.sender_id]?.display_name ||
+            users.idMap[message.sender_id]?.fullname
           }
-          message={messages[i]}
+          message={message}
         />
       </div>
     )
