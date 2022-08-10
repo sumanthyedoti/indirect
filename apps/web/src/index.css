@@ -21,8 +21,9 @@ button.icon:hover {
     animation: toast-bottom-enter 0.2s ease-out both;
   }
   .messages-date {
-    margin-top: -12px;
-    @apply sticky top-0 z-10;
+    margin-top: -10px;
+    /* margin-top: -12px; */
+    /* @apply sticky top-0 z-10; */
   }
   /* icons */
   .icon-log-out {

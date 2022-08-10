@@ -13,10 +13,13 @@ specifiers:
   '@libs/types': workspace:^1.0.0
   '@pmmmwh/react-refresh-webpack-plugin': ^0.5.7
   '@tailwindcss/nesting': 0.0.0-insiders.565cd3e
+  '@tanstack/react-virtual': 3.0.0-beta.17
   '@tippyjs/react': ^4.2.6
   '@types/node': ^18.0.0
   '@types/react': ^18.0.14
   '@types/react-dom': ^18.0.5
+  '@types/react-virtualized-auto-sizer': ^1.0.1
+  '@types/react-window': ^1.8.5
   '@typescript-eslint/eslint-plugin': ^5.29.0
   '@typescript-eslint/parser': ^5.29.0
   add: ^2.0.6
@@ -50,6 +53,8 @@ specifiers:
   react-refresh: ^0.14.0
   react-router-dom: '6'
   react-select: ^5.4.0
+  react-virtualized-auto-sizer: ^1.0.6
+  react-window: ^1.8.7
   sass-loader: ^13.0.0
   serve: ^14.0.1
   socket.io-client: ^4.5.1
@@ -73,6 +78,7 @@ dependencies:
   '@hookform/resolvers': 2.9.5_react-hook-form@7.33.1
   '@libs/styles': link:../../libs/styles
   '@libs/types': link:../../libs/types
+  '@tanstack/react-virtual': 3.0.0-beta.17_react@18.2.0
   '@tippyjs/react': 4.2.6_biqbaboplfbrettd7655fr4n2y
   add: 2.0.6
   axios: 0.27.2
@@ -85,6 +91,8 @@ dependencies:
   react-query: 3.39.1_biqbaboplfbrettd7655fr4n2y
   react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
   react-select: 5.4.0_sukxovx4mwg6d6626r5e3rv5k4
+  react-virtualized-auto-sizer: 1.0.6_biqbaboplfbrettd7655fr4n2y
+  react-window: 1.8.7_biqbaboplfbrettd7655fr4n2y
   socket.io-client: 4.5.1
   tinykeys: 1.4.0
   tippy.js: 6.3.7
@@ -103,6 +111,8 @@ devDependencies:
   '@types/node': 18.0.0
   '@types/react': 18.0.14
   '@types/react-dom': 18.0.5
+  '@types/react-virtualized-auto-sizer': 1.0.1
+  '@types/react-window': 1.8.5
   '@typescript-eslint/eslint-plugin': 5.29.0_qqmbkyiaixvppdwswpytuf2hgm
   '@typescript-eslint/parser': 5.29.0_b5e7v2qnwxfo6hmiq56u52mz3e
   autoprefixer: 10.4.7_postcss@8.4.14
@@ -1656,6 +1666,21 @@ packages:
       postcss-nested: 5.0.6_postcss@8.4.14
     dev: true
 
+  /@tanstack/react-virtual/3.0.0-beta.17_react@18.2.0:
+    resolution: {integrity: sha512-Rgy/D5cWf+q12XxR/Jo2lfStL/6FdcqPX5+nMjDkIu2Twfx1zjACvoi3UeieVbQjlZCynRcxw9T0BkhkNHKDjA==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@tanstack/virtual-core': 3.0.0-beta.17
+      react: 18.2.0
+    dev: false
+
+  /@tanstack/virtual-core/3.0.0-beta.17:
+    resolution: {integrity: sha512-p4bBBwHkBCCDRE8umXtLJ8UGJ03efZj39WklRwTQReVq5JOx7hvvPYY6zN9zRbbGCseNXX95OLgXiggDL657Jw==}
+    engines: {node: '>=12'}
+    dev: false
+
   /@tippyjs/react/4.2.6_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-91RicDR+H7oDSyPycI13q3b7o4O60wa2oRbjlz2fyRLmHImc4vyDwuUP8NtZaN0VARJY5hybvDYrFzhY9+Lbyw==}
     peerDependencies:
@@ -1788,6 +1813,18 @@ packages:
     dependencies:
       '@types/react': 18.0.14
     dev: false
+
+  /@types/react-virtualized-auto-sizer/1.0.1:
+    resolution: {integrity: sha512-GH8sAnBEM5GV9LTeiz56r4ZhMOUSrP43tAQNSRVxNexDjcNKLCEtnxusAItg1owFUFE6k0NslV26gqVClVvong==}
+    dependencies:
+      '@types/react': 18.0.14
+    dev: true
+
+  /@types/react-window/1.8.5:
+    resolution: {integrity: sha512-V9q3CvhC9Jk9bWBOysPGaWy/Z0lxYcTXLtLipkt2cnRj1JOSFNF7wqGpkScSXMgBwC+fnVRg/7shwgddBG5ICw==}
+    dependencies:
+      '@types/react': 18.0.14
+    dev: true
 
   /@types/react/18.0.14:
     resolution: {integrity: sha512-x4gGuASSiWmo0xjDLpm5mPb52syZHJx02VKbqUKdLmKtAwIh63XClGsiTI1K6DO5q7ox4xAsQrU+Gl3+gGXF9Q==}
@@ -5739,6 +5776,30 @@ packages:
       dom-helpers: 5.2.1
       loose-envify: 1.4.0
       prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /react-virtualized-auto-sizer/1.0.6_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-7tQ0BmZqfVF6YYEWcIGuoR3OdYe8I/ZFbNclFlGOC3pMqunkYF/oL30NCjSGl9sMEb17AnzixDz98Kqc3N76HQ==}
+    engines: {node: '>8.0.0'}
+    peerDependencies:
+      react: ^15.3.0 || ^16.0.0-alpha || ^17.0.0
+      react-dom: ^15.3.0 || ^16.0.0-alpha || ^17.0.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /react-window/1.8.7_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-JHEZbPXBpKMmoNO1bNhoXOOLg/ujhL/BU4IqVU9r8eQPcy5KQnGHIHDRkJ0ns9IM5+Aq5LNwt3j8t3tIrePQzA==}
+    engines: {node: '>8.0.0'}
+    peerDependencies:
+      react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@babel/runtime': 7.18.3
+      memoize-one: 5.2.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     dev: false
