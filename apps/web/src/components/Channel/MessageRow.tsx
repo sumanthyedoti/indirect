@@ -1,7 +1,6 @@
 import { useRef, FC, useEffect, memo } from 'react'
 
 import * as T from '@api-types/messages'
-// import MessagesOfADay from './MessagesOfADay'
 import MessageDate from '../atoms/MessageDate'
 import Message from '../molecules/Message'
 import useUserStore from '../../store/useUserStore'
