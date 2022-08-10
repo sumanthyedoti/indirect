@@ -21,15 +21,10 @@ const MessageRow: FC<MessageRowProps> = memo(
     const { data: users } = useQuerySpaceUsers(spaceId)
     useEffect(() => {
       if (rowRef.current) {
-        // console.log(
-        //   rowRef.current.clientHeight,
-        //   rowRef.current.dataset.i,
-        //   rowRef.current.getBoundingClientRect().height
-        // )
-        setRowHeight(i, rowRef.current.getBoundingClientRect().height)
+        setRowHeight(i, rowRef.current.clientHeight)
       }
       // eslint-disable-next-line
-    })
+    }, [rowRef])
     const prevDate =
       previousMessageDate && new Date(previousMessageDate).getDate()
     const currentDate = new Date(message?.created_at).getDate()

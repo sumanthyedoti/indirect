@@ -28,21 +28,22 @@ const ChannelMessages: FC = () => {
 
   useEffect(() => {
     if (messages && messages.length > 0) {
-      scrollToBottom()
+      // @ts-ignore / scroll to bottom
+      listRef.current?.scrollToItem(messages.length - 1, 'end')
     }
     // eslint-disable-next-line
   }, [messages])
 
-  function scrollToBottom() {
-    //@ts-ignore
-    listRef.current?.scrollToItem(messages.length - 1, 'end')
-  }
-
   function getRowHeight(index: number) {
-    return rowHeights.current[index] || 70
+    console.log('get')
+
+    return rowHeights.current[index] || 60
   }
 
   function setRowHeight(index: number, size: number) {
+    console.log('set')
+    //@ts-ignore
+    listRef.current?.resetAfterIndex(0)
     rowHeights.current = { ...rowHeights.current, [index]: size }
   }
 
@@ -59,8 +60,8 @@ const ChannelMessages: FC = () => {
           return (
             <List
               height={height}
-              ref={listRef}
               width={width}
+              ref={listRef}
               itemCount={messages.length}
               itemSize={getRowHeight}
             >
