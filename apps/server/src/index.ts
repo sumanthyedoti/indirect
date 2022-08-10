@@ -1,4 +1,5 @@
 require('module-alias/register')
+import path from 'path'
 import express, { Application } from 'express'
 import dotenv from 'dotenv'
 import { createServer as createHTTPServer } from 'http'
@@ -46,6 +47,11 @@ app.use('/users', userRouter)
 app.use('/messages', messageRouter)
 app.use('/spaces', spaceRouter)
 app.use('/channels', channelRouter)
+
+app.use(express.static(path.resolve(__dirname, '../../web', 'dist')))
+app.get('*', (req, res) =>
+  res.sendFile(path.resolve(__dirname, '../../web', 'dist', 'index.html'))
+)
 
 /* web sockets */
 const server = createHTTPServer(app)
