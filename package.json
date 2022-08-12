@@ -11,9 +11,11 @@
   "scripts": {
     "build": "pnpm -r build",
     "start": "pnpm -F @apps/server serve",
+    "prebuild": "npm i pnpm@7.9.0 && pnpm install && pnpm -r install",
+    "build:styles": "pnpm -F @libs/styles build:tw",
     "build:server": "pnpm -F @apps/server build",
     "build:web": "pnpm -F @apps/web build",
-    "heroku-prebuild": "npm i pnpm@7.9.0 && pnpm install && pnpm -r install && npm build:web && npm build:server",
+    "heroku-prebuild": "pnpm prebuild && pnpm build:styles && pnpm build:web && pnpm build:server",
     "prepare": "node -e \"if (process.env.NODE_ENV !== 'production'){process.exit(1)} \" || husky install",
     "dev": "pnpm --parallel dev",
     "pre-commit": "pnpm -r pre-commit",
