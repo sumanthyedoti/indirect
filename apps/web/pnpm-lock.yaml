@@ -10,7 +10,6 @@ specifiers:
   '@headlessui/react': ^1.6.6
   '@hookform/resolvers': ^2.9.5
   '@libs/styles': workspace:^1.0.0
-  '@libs/types': workspace:^1.0.0
   '@pmmmwh/react-refresh-webpack-plugin': ^0.5.7
   '@tailwindcss/nesting': 0.0.0-insiders.565cd3e
   '@tippyjs/react': ^4.2.6
@@ -72,7 +71,6 @@ dependencies:
   '@headlessui/react': 1.6.6_biqbaboplfbrettd7655fr4n2y
   '@hookform/resolvers': 2.9.5_react-hook-form@7.33.1
   '@libs/styles': link:../../libs/styles
-  '@libs/types': link:../../libs/types
   '@tippyjs/react': 4.2.6_biqbaboplfbrettd7655fr4n2y
   add: 2.0.6
   axios: 0.27.2

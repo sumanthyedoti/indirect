@@ -54,6 +54,7 @@ dependencies:
   express-session: 1.17.3
   helmet: 5.1.0
   knex: 2.1.0_pg@8.7.3
+  module-alias: 2.2.2
   passport: 0.6.0
   passport-google-oauth20: 2.0.0
   passport-local: 1.0.0
@@ -81,7 +82,6 @@ devDependencies:
   eslint-config-prettier: 8.5.0_eslint@8.18.0
   eslint-plugin-prettier: 4.1.0_xu6ewijrtliw5q5lksq5uixwby
   lint-staged: 13.0.3
-  module-alias: 2.2.2
   prettier: 2.7.1
   ts-node: 10.8.2_qiyc72axg2v44xl4yovan2v55u
   ts-node-dev: 2.0.0_qiyc72axg2v44xl4yovan2v55u
@@ -1866,7 +1866,7 @@ packages:
 
   /module-alias/2.2.2:
     resolution: {integrity: sha512-A/78XjoX2EmNvppVWEhM2oGk3x4lLxnkEA4jTbaK97QKSDjkIoOsKQlfylt/d3kKKi596Qy3NP5XrXJ6fZIC9Q==}
-    dev: true
+    dev: false
 
   /ms/2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
