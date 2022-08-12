@@ -2,6 +2,11 @@
   "name": "indirect",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "npm": "8.11.0",
+    "node": "16.15.1",
+    "pnpm": "7.9.0"
+  },
   "main": "index.js",
   "scripts": {
     "build": "pnpm -r build",
