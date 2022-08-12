@@ -11,6 +11,7 @@
     "@api-types": "dist/api-types"
   },
   "scripts": {
+    "tsc": "./node_modules/typescript/bin/tsc",
     "lint": "eslint \"./src/**/*.{js,ts,json}\"",
     "format": "prettier --write \"./src/**/*.{js,ts,json,md}\"",
     "pre-commit": "lint-staged",
