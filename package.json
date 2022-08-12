@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "pnpm -r build",
-    "start": "pnpm -F @apps/server serve",
+    "start": "pnpm -r install && pnpm build && pnpm -F @apps/server serve",
     "prepare": "husky install",
     "dev": "pnpm --parallel dev",
     "pre-commit": "pnpm -r pre-commit",
