@@ -10,7 +10,8 @@
   "main": "index.js",
   "scripts": {
     "build": "pnpm -r build",
-    "start": "pnpm -r install && pnpm build && pnpm -F @apps/server serve",
+    "start": "pnpm -r install && pnpm -F @apps/server serve",
+    "heroku-prebuild": "npm i pnpm@7.9.0 && pnpm -r build",
     "prepare": "husky install",
     "dev": "pnpm --parallel dev",
     "pre-commit": "pnpm -r pre-commit",
