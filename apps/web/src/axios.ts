@@ -1,11 +1,7 @@
 import axios from 'axios'
-
-const env = process.env.NODE_ENV || 'development'
+import { baseURL } from './config/constants'
 
 export default axios.create({
-  baseURL:
-    env === 'development'
-      ? 'http://localhost:8000/api'
-      : 'https://indirect-app.herokuapp.com/api',
+  baseURL: `${baseURL}/api`,
   withCredentials: true,
 })

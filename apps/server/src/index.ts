@@ -48,8 +48,6 @@ app.use('/api/messages', messageRouter)
 app.use('/api/spaces', spaceRouter)
 app.use('/api/channels', channelRouter)
 
-console.log('web')
-
 app.use(express.static(path.resolve(__dirname, '../../web', 'dist')))
 app.get('*', (req, res) =>
   res.sendFile(path.resolve(__dirname, '../../web', 'dist', 'index.html'))
