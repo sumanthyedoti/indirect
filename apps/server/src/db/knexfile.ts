@@ -34,16 +34,17 @@ export default {
   //   },
   // },
 
-  // production: {
-  //   client: 'postgresql',
-  //   connection: {
-  //   },
-  //   pool: {
-  //     min: 2,
-  //     max: 10,
-  //   },
-  //   migrations: {
-  //     tableName: 'knex_migrations',
-  //   },
-  // },
+  production: {
+    client: 'postgresql',
+    connection: {
+      ...config,
+    },
+    pool: {
+      min: 2,
+      max: 10,
+    },
+    migrations: {
+      tableName: 'knex_migrations',
+    },
+  },
 }
