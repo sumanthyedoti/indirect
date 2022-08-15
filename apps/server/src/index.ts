@@ -42,11 +42,11 @@ app.use(passport.initialize())
 app.use(passport.session())
 passportConfig(passport)
 
-app.use(router)
-app.use('/users', userRouter)
-app.use('/messages', messageRouter)
-app.use('/spaces', spaceRouter)
-app.use('/channels', channelRouter)
+app.use('/api', router)
+app.use('/api/users', userRouter)
+app.use('/api/messages', messageRouter)
+app.use('/api/spaces', spaceRouter)
+app.use('/api/channels', channelRouter)
 
 app.use(express.static(path.resolve(__dirname, '../../web', 'dist')))
 app.get('*', (req, res) =>
