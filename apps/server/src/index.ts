@@ -75,16 +75,8 @@ io.use(wrap(passport.session()))
 // @ts-ignore
 io.use(socketAuthentication)
 
-io.on('connection', (socket) => {
-  console.log('a user connected ', socket.id)
-  if (process.env.NODE_ENV === 'development')
-    socket.onAny((event, ...args) => {
-      console.log(event, args)
-    })
-})
 messageServer(io)
 
 server.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at ${port}`)
-  console.log('💬 Message server running at ' + port)
+  console.log(`⚡️ Server is running at ${port}`)
 })

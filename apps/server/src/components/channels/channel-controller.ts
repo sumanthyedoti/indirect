@@ -1,4 +1,5 @@
 import { Response } from 'express'
+import { Socket, Server } from 'socket.io'
 
 import * as T from '@api-types/channels'
 import channelModel from './channel-model'
@@ -232,6 +233,45 @@ async function createChannelMessage(
   }
 }
 
+async function createChannelMessageOnSocket(
+  socket: Socket,
+  io: Server,
+  {
+    text,
+    tempId,
+    channelId,
+    spaceId,
+  }: {
+    text: string
+    tempId: number
+    channelId: number
+    spaceId: number
+  }
+) {
+  try {
+    //@ts-ignore
+    const userId = socket.request.user.id
+    if (!userId) {
+      io.to(`space-${spaceId}`).emit('message-failed', tempId, channelId)
+      return
+    }
+    const result = await channelModel.createChannelMessage({
+      text,
+      sender_id: userId,
+      channel_id: channelId,
+      personal_channel_id: null,
+    })
+    if (!result) {
+      io.to(`space-${spaceId}`).emit('message-failed', tempId, channelId)
+      return
+    }
+    io.to(`space-${spaceId}`).emit('message-success')
+  } catch (err) {
+    logger.error('::', err)
+    io.to(`space-${spaceId}`).emit('message-failed', channelId, tempId)
+  }
+}
+
 export default {
   createChannel,
   getChannel,
@@ -242,4 +282,5 @@ export default {
   getChannelMembers,
   deleteChannelMember,
   createChannelMessage,
+  createChannelMessageOnSocket,
 }

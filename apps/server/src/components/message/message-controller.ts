@@ -3,7 +3,6 @@ import { Response } from 'express'
 import * as T from '@api-types/messages'
 import messageModel from './message-model'
 import { TypedRequestBody, TypedRequestParams } from '../../types.d'
-import { broadcastMessage } from '../../message-server'
 import logger from '../../config/logger'
 
 async function createMessage(
@@ -30,7 +29,6 @@ async function createMessage(
       },
       message: 'Created message successfully!',
     })
-    broadcastMessage(message)
   } catch (err) {
     logger.error('::', err)
     res.send('Something went wrong!')

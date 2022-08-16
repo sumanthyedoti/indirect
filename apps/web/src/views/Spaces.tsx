@@ -1,18 +1,36 @@
-import { useState, useEffect, FC } from 'react'
+import { useState, useEffect, memo, FC } from 'react'
 import toast from 'react-hot-toast'
 
 import { Button, LinkButton } from '../components/atoms'
 import { useQueryUserSpaces } from '../queries'
 import CreateSpace from '../components/SpacesBar/CreateSpace'
 import { useUserStore } from '../store'
+import { useSocket } from '../hooks'
 import AvatarMenu from '../components/AvatarMenu'
 import api from '../axios'
 
-interface SpacesProps {
-  dummy?: null
-}
+const SpaceItem = memo(({ id, name }: { id: number; name: string }) => {
+  const socket = useSocket()
+  useEffect(() => {
+    socket.emit('join-space', id)
+  }, [id])
+  return (
+    <section
+      className={`
+                px-6 py-4
+                border-b last:border-0 border-gray-700
+                flex justify-between items-center`}
+    >
+      <h3 className="mb-0">{name}</h3>
+      <LinkButton to={id.toString()} small>
+        Open Space
+      </LinkButton>
+    </section>
+  )
+})
+SpaceItem.displayName = 'SpaceItem'
 
-const Spaces: FC<SpacesProps> = () => {
+const Spaces: FC = () => {
   const [isCreateSpaceModalOpen, setIsCreateSpaceModalOpen] = useState(false)
   const { user, logout } = useUserStore()
   const { data: spaces } = useQueryUserSpaces(user.id)
@@ -65,22 +83,9 @@ const Spaces: FC<SpacesProps> = () => {
             Space or join other Spaces
           </p>
         )}
-        {spaces.map((space) => {
-          return (
-            <section
-              key={space.id}
-              className={`
-                px-6 py-4
-                border-b last:border-0 border-gray-700
-                flex justify-between items-center`}
-            >
-              <h3 className="mb-0">{space.name}</h3>
-              <LinkButton to={space.id.toString()} small>
-                Open Space
-              </LinkButton>
-            </section>
-          )
-        })}
+        {spaces.map((space) => (
+          <SpaceItem key={space.id} id={space.id} name={space.name} />
+        ))}
       </article>
       <CreateSpace
         isOpen={isCreateSpaceModalOpen}
