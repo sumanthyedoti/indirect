@@ -10,7 +10,7 @@ import { useUserName } from '../hooks'
 import api from '../axios'
 
 interface AvatarMenuProps {
-  dummy?: null
+  className?: null
 }
 
 const AvatarMenu: FC<AvatarMenuProps> = () => {
@@ -29,7 +29,9 @@ const AvatarMenu: FC<AvatarMenuProps> = () => {
     <Popover className="relative">
       <Tooltip label={name} arrow={false} placement="bottom">
         <Popover.Button className="ring-offset-1 ring-offset-slate-700">
-          <Avatar />
+          <div className="w-8 h-8">
+            <Avatar />
+          </div>
         </Popover.Button>
       </Tooltip>
       <Popover.Panel
@@ -40,7 +42,9 @@ const AvatarMenu: FC<AvatarMenuProps> = () => {
             `}
       >
         <div className="flex items-center px-4 pb-4 border-b border-gray-600 space-x-2">
-          <Avatar large />
+          <div className="w-10 h-10">
+            <Avatar />
+          </div>
           <p>{name}</p>
         </div>
         <button

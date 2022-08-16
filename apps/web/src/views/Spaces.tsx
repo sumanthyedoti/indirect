@@ -5,6 +5,7 @@ import { Button, LinkButton } from '../components/atoms'
 import { useQueryUserSpaces } from '../queries'
 import CreateSpace from '../components/SpacesBar/CreateSpace'
 import { useUserStore } from '../store'
+import AvatarMenu from '../components/AvatarMenu'
 import api from '../axios'
 
 interface SpacesProps {
@@ -40,15 +41,23 @@ const Spaces: FC<SpacesProps> = () => {
     <div className="p-5 mx-auto sm:px-5 md:px-0 md:w-4/5 lg:w-3/5">
       <div
         role="banner"
-        className="flex flex-col justify-between mb-14 sm:flex-row sm:items-center"
+        className="flex flex-col justify-between sm:flex-row sm:items-center"
+        style={{
+          marginBottom: 'max(40px, 5vh)',
+        }}
       >
         <h1 className="text-4xl font-light text-white sm:mb-0">inDirect</h1>
+        <div className="w-10 h-10">
+          <AvatarMenu />
+        </div>
+      </div>
+      <div className="flex justify-between mb-6">
+        <h1 className="mb-0">Your Spaces</h1>
         <Button
           onClick={() => setIsCreateSpaceModalOpen(true)}
           label="Create a new Space"
         />
       </div>
-      <h1>Your Spaces</h1>
       <article className="py-2 rounded bg-slate-800 ring-4 ring-slate-600">
         {spaces.length === 0 && (
           <p className="px-6 py-10 text-2xl text-center text-gray-400 lg:px-10">
