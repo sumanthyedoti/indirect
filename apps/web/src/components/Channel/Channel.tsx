@@ -28,11 +28,23 @@ const Channel: FC = () => {
         (messages) => messages?.filter((message) => message.id !== tempId)
       )
     })
-    socket.on('message-success', () => {
-      console.log('message-success')
-      queryClient.invalidateQueries(['channel-messages', channelId])
+    socket.on('message-success', (tempId, message) => {
+      console.log('message-success', message)
+      // queryClient.invalidateQueries(['channel-messages', channelId])
+      queryClient.setQueryData<MessageT[] | undefined>(
+        ['channel-messages', channelId],
+        (messages) => {
+          const prevMessages = messages?.filter(
+            (message) => message.id !== tempId
+          )
+          if (prevMessages?.length === messages?.length) {
+            return messages
+          }
+          return [...prevMessages, message]
+        }
+      )
     })
-  }, [socket])
+  }, [])
 
   const handleMessageSubmit = useCallback(
     (text: string) => {

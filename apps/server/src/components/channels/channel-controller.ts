@@ -265,7 +265,7 @@ async function createChannelMessageOnSocket(
       io.to(`space-${spaceId}`).emit('message-failed', tempId, channelId)
       return
     }
-    io.to(`space-${spaceId}`).emit('message-success')
+    io.to(`space-${spaceId}`).emit('message-success', tempId, result)
   } catch (err) {
     logger.error('::', err)
     io.to(`space-${spaceId}`).emit('message-failed', channelId, tempId)
