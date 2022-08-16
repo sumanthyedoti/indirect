@@ -34,13 +34,11 @@ const Channel: FC = () => {
       queryClient.setQueryData<MessageT[] | undefined>(
         ['channel-messages', channelId],
         (messages) => {
-          const prevMessages = messages?.filter(
-            (message) => message.id !== tempId
-          )
-          if (prevMessages?.length === messages?.length) {
-            return messages
+          const storedMessage = messages?.find((msg) => msg.id === message.id)
+          if (!storedMessage) {
+            return [...messages?.filter((msg) => msg.id !== tempId), message]
           }
-          return [...prevMessages, message]
+          return messages
         }
       )
     })
