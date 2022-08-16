@@ -59,8 +59,10 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
+    "aws-sdk": "^2.1195.0",
     "bcrypt": "^5.0.1",
     "connect-pg-simple": "^7.0.0",
     "cors": "^2.8.5",

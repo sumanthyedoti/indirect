@@ -19,11 +19,11 @@ import { expressSessionMiddleware, socketAuthentication } from './middlewares'
 import messageServer from './message-server'
 
 const port = process.env.PORT || 8000
-
 const whiteList = ['http://localhost:3000']
 
 dotenv.config()
 const app: Application = express()
+
 app.use(helmet())
 app.use(express.json())
 // app.use(express.urlencoded({ extended: false }))
