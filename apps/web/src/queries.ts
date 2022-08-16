@@ -17,7 +17,7 @@ import api from './axios'
 
 function useQueryUserSpaces(userId: number | undefined) {
   return useQuery(
-    'spaces',
+    ['spaces', userId],
     async () => {
       const { data } = await api.get<{ data: Space[] }>(
         `/users/${userId}/spaces`
