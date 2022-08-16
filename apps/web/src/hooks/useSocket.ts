@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { io } from 'socket.io-client'
-import { baseURL } from '../config/constants'
+import { wsURL } from '../config/constants'
 // import { useUserStore } from '../store'
 
-const socket = io(baseURL, {
+const socket = io(wsURL, {
   autoConnect: false,
   withCredentials: true,
 })

@@ -14,7 +14,7 @@ interface SpacesProps {
 const Spaces: FC<SpacesProps> = () => {
   const [isCreateSpaceModalOpen, setIsCreateSpaceModalOpen] = useState(false)
   const { user, logout } = useUserStore()
-  const { data: spaces } = useQueryUserSpaces(user?.id)
+  const { data: spaces } = useQueryUserSpaces(user.id)
 
   useEffect(() => {
     authPing()
@@ -24,6 +24,7 @@ const Spaces: FC<SpacesProps> = () => {
     try {
       await api.get(`/users/ping`)
     } catch (err) {
+      console.log(err)
       if (err.response.status === 401) {
         logout()
       }
@@ -49,6 +50,12 @@ const Spaces: FC<SpacesProps> = () => {
       </div>
       <h1>Your Spaces</h1>
       <article className="py-2 rounded bg-slate-800 ring-4 ring-slate-600">
+        {spaces.length === 0 && (
+          <p className="px-6 py-10 text-2xl text-center text-gray-400 lg:px-10">
+            You are not part of any space yet. <br /> You can create your own
+            Space or join other Spaces
+          </p>
+        )}
         {spaces.map((space) => {
           return (
             <section

@@ -5,7 +5,7 @@ import { doesHttpOnlyCookieExist } from '../utils'
 import { User as UserT } from '@api-types/users'
 
 interface UserData {
-  user: UserT | null
+  user: UserT
   isLoggedIn: boolean
   isSessionExpired?: boolean
   spaceId: number
@@ -19,7 +19,6 @@ interface UserData {
 const initialState = {
   isLoggedIn: false,
   isSessionExpired: false,
-  user: null,
 }
 
 // @ts-ignore
