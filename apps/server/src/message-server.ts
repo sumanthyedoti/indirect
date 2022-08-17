@@ -5,11 +5,11 @@ import channelController from './components/channels/channel-controller'
 const messageServer = (socketio: Server) => {
   socketio.on('connection', (socket) => {
     console.log('a user connected ', socket.id)
-    if (process.env.NODE_ENV === 'development') {
-      socket.onAny((event, ...args) => {
-        console.log('socket.io log:', event, args)
-      })
-    }
+    // if (process.env.NODE_ENV === 'development') {
+    socket.onAny((event, ...args) => {
+      console.log('💬 log:: ', event, args)
+    })
+    // }
 
     socket.on('join-space', (spaceId: number) => {
       socket.join(`space-${spaceId}`)
