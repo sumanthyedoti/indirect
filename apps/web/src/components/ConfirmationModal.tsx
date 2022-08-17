@@ -3,43 +3,35 @@ import { Dialog } from '@headlessui/react'
 
 import { Button } from './atoms'
 import Modal from './Modal'
-import useUIStore from '../store/useUIStore'
 
 interface Props {
+  isOpen: boolean
+  close: () => void
   title?: string
   description: React.ReactNode
   details?: React.ReactNode
   confirmLabel: string
   isDanger: boolean
-  onCancel: () => void
   onConfirm: () => void
 }
 
 const DeleteChannelConfirmModal: FC<Props> = ({
+  isOpen,
+  close,
   title = 'Are you sure?',
   description,
   details,
   confirmLabel,
   isDanger,
-  onCancel,
   onConfirm,
 }) => {
-  const { isConfirmationModalOpen, closeConfirmationModal } = useUIStore()
-  const handleCancel = () => {
-    closeConfirmationModal()
-    onCancel()
-  }
   const handleConfirm = () => {
-    closeConfirmationModal()
+    close()
     onConfirm()
   }
 
   return (
-    <Modal
-      className="-mt-48"
-      isOpen={isConfirmationModalOpen}
-      close={handleCancel}
-    >
+    <Modal className="-mt-48" isOpen={isOpen} close={close}>
       <Dialog.Panel
         className={`w-full max-w-lg relative
         text-left align-middle p-5
@@ -55,12 +47,7 @@ const DeleteChannelConfirmModal: FC<Props> = ({
         {details && <p className="text-sm">{details}</p>}
 
         <div className="flex mt-6 space-x-2">
-          <Button
-            secondary
-            className="w-full"
-            label="Cancel"
-            onClick={handleCancel}
-          />
+          <Button secondary className="w-full" label="Cancel" onClick={close} />
           <Button
             onClick={handleConfirm}
             danger={isDanger}

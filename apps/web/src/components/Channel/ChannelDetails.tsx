@@ -12,7 +12,6 @@ import {
 } from '../../queries'
 import { AddPeople, Close } from '../../icons'
 import useStore from './store'
-import useUIStore from '../../store/useUIStore'
 
 interface SectionProps {
   children: React.ReactNode
@@ -53,8 +52,7 @@ const AddPeopleButton = () => {
 }
 
 const DeleteChannelButton = () => {
-  const { openConfirmationModal } = useUIStore()
-  const { closeChannelModal } = useStore()
+  const { closeChannelModal, openConfirmationModal } = useStore()
   const deleteChannelConfirmation = () => {
     closeChannelModal()
     openConfirmationModal()

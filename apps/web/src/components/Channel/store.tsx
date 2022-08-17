@@ -5,7 +5,10 @@ interface StateT {
   isChannelModalOpen: boolean
   activeChannelTab: number
   isAddPeopleModalOpen: boolean
+  isConfirmationModalOpen: boolean
   // actions
+  openConfirmationModal: () => void
+  closeConfirmationModal: () => void
   openChannelModal: () => void
   closeChannelModal: () => void
   setActiveChannelTab: (i: number) => void
@@ -14,6 +17,7 @@ interface StateT {
 }
 
 const initialState = {
+  isConfirmationModalOpen: false,
   isChannelModalOpen: false,
   activeChannelTab: 0,
   isAddPeopleModalOpen: false,
@@ -31,5 +35,9 @@ const useStore = create<StateT>((set) => ({
     set((state) => ({ ...state, isAddPeopleModalOpen: true })),
   closeAddPeopleModal: () =>
     set((state) => ({ ...state, isAddPeopleModalOpen: false })),
+  openConfirmationModal: () =>
+    set((state) => ({ ...state, isConfirmationModalOpen: true })),
+  closeConfirmationModal: () =>
+    set((state) => ({ ...state, isConfirmationModalOpen: false })),
 }))
 export default useStore
