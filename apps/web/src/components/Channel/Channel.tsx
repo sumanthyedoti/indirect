@@ -21,28 +21,36 @@ const Channel: FC = () => {
   //   })
   // }, [])
   useEffect(() => {
-    socket.on('message-failed', (tempId: number, channelId: number) => {
-      console.log('message-failed')
-      queryClient.setQueryData<MessageT[] | undefined>(
-        ['channel-messages', channelId],
-        (messages) => messages?.filter((message) => message.id !== tempId)
-      )
-    })
-    socket.on('message-success', (tempId, message) => {
-      console.log('message-success', message)
-      // queryClient.invalidateQueries(['channel-messages', channelId])
-      queryClient.setQueryData<MessageT[] | undefined>(
-        ['channel-messages', channelId],
-        (messages) => {
-          const storedMessage = messages?.find((msg) => msg.id === message.id)
-          if (!storedMessage) {
-            return [...messages?.filter((msg) => msg.id !== tempId), message]
-          }
-          return messages
-        }
-      )
-    })
+    socket.on('message-failed', onMessageFail)
+    socket.on('message-success', onMessageSuccess)
+    return () => {
+      socket.off('message-failed', onMessageFail)
+      socket.off('message-success', onMessageSuccess)
+    }
   }, [])
+
+  const onMessageFail = (tempId: number, channelId: number) => {
+    console.log('message-failed')
+    queryClient.setQueryData<MessageT[] | undefined>(
+      ['channel-messages', channelId],
+      (messages) => messages?.filter((message) => message.id !== tempId)
+    )
+  }
+
+  const onMessageSuccess = (tempId: number, message: MessageT) => {
+    console.log('message-success')
+    // queryClient.invalidateQueries(['channel-messages', channelId])
+    queryClient.setQueryData<MessageT[] | undefined>(
+      ['channel-messages', channelId],
+      (messages) => {
+        const storedMessage = messages?.find((msg) => msg.id === message.id)
+        if (!storedMessage && messages) {
+          return [...messages?.filter((msg) => msg.id !== tempId), message]
+        }
+        return messages
+      }
+    )
+  }
 
   const handleMessageSubmit = useCallback(
     (text: string) => {
