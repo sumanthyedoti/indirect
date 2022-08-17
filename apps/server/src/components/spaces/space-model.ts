@@ -6,31 +6,6 @@ import profileModel from '../profiles/profiles-model'
 import channelModel from '../channels/channel-model'
 
 async function createSpace(space: T.CreateSpace) {
-  // const [createdSpace]: T.Space[] = await db('spaces')
-  //   .insert(space)
-  //   .returning('*')
-  // // add creator profile in the Space
-  // await profileModel.createProfile({
-  //   space_id: createdSpace.id,
-  //   user_id: space.creator_id,
-  // })
-  // // create a general channel for the Space
-  // const channel = await channelModel.createGeneralChannel({
-  //   space_id: createdSpace.id,
-  //   name: 'general',
-  //   creator_id: space.creator_id,
-  // })
-  // // add Space creator as member of general channel
-  // await channelModel.createChannelMembers(channel.id, {
-  //   user_ids: [space.creator_id],
-  // })
-  // // add general_channel_id to Space
-  // await db('spaces')
-  //   .update({
-  //     general_channel_id: channel.id,
-  //   })
-  //   .where({ id: createdSpace.id })
-  // return createdSpace
   const trx = await db.transaction()
   try {
     // create Space

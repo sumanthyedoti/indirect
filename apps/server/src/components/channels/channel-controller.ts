@@ -265,8 +265,6 @@ async function createChannelMessageOnSocket(
       io.to(`space-${spaceId}`).emit('message-failed', tempId, channelId)
       return
     }
-    console.log('sockev')
-
     io.to(`space-${spaceId}`).emit('message-success', tempId, result)
   } catch (err) {
     logger.error('::', err)

@@ -44,7 +44,7 @@ const Channel: FC = () => {
       ['channel-messages', channelId],
       (messages) => {
         const storedMessage = messages?.find((msg) => msg.id === message.id)
-        if (!storedMessage && messages) {
+        if (!storedMessage && !!messages) {
           return [...messages?.filter((msg) => msg.id !== tempId), message]
         }
         return messages
