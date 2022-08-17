@@ -50,7 +50,7 @@ const AvatarMenu: FC<AvatarMenuProps> = () => {
         <button
           onClick={handleLogout}
           aria-label="Log out"
-          className="flex px-4 pt-3 space-x-4 hover:text-red-400"
+          className="flex px-4 pt-3 space-x-4 hover:text-red-500"
         >
           <Logout />
           <span>Logout</span>

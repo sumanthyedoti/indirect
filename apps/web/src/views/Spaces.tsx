@@ -5,15 +5,15 @@ import { Button, LinkButton } from '../components/atoms'
 import { useQueryUserSpaces } from '../queries'
 import CreateSpace from '../components/SpacesBar/CreateSpace'
 import { useUserStore } from '../store'
-import { useSocket } from '../hooks'
+// import { useSocket } from '../hooks'
 import AvatarMenu from '../components/AvatarMenu'
 import api from '../axios'
 
 const SpaceItem = memo(({ id, name }: { id: number; name: string }) => {
-  const socket = useSocket()
-  useEffect(() => {
-    socket.emit('join-space', id)
-  }, [id])
+  // const socket = useSocket()
+  // useEffect(() => {
+  //   socket.emit('join-space', id)
+  // }, [id])
   return (
     <section
       className={`

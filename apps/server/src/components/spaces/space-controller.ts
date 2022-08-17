@@ -2,6 +2,7 @@ import { Response } from 'express'
 
 import * as T from '@api-types/spaces'
 import spaceModel from './space-model'
+import profileModel from '../profiles/profiles-model'
 import {
   TypedRequest,
   TypedRequestParams,
@@ -154,6 +155,25 @@ async function deleteSpace(
   }
 }
 
+async function deleteUserFromSpace(
+  req: TypedRequestParams<{ id: number; uid: number }>,
+  res: Response
+) {
+  try {
+    const { id, uid } = req.params
+    console.log(id, uid)
+    const result = await profileModel.deleteProfile(id, uid)
+    if (!result) {
+      res.status(404).json({ id, message: 'Space/User not found' })
+      return
+    }
+    res.sendStatus(204)
+  } catch (err) {
+    logger.error('::', err)
+    res.status(500).send('Something went wrong!')
+  }
+}
+
 export default {
   createSpace,
   getSpace,
@@ -161,4 +181,5 @@ export default {
   getSpaceUsers,
   updateSpace,
   deleteSpace,
+  deleteUserFromSpace,
 }

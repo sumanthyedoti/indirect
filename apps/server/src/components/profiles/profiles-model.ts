@@ -16,6 +16,19 @@ async function createProfile(
   return createdProfile
 }
 
+async function deleteProfile(space_id: number, user_id: number) {
+  const id = await db('profiles')
+    .where({
+      user_id: user_id,
+      space_id: space_id,
+    })
+    .del()
+  console.log(id)
+
+  return id
+}
+
 export default {
   createProfile,
+  deleteProfile,
 }

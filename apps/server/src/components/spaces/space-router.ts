@@ -20,6 +20,7 @@ router.post(
 router.get('/:id', validateIdParam, spaceController.getSpace)
 router.get('/:id/channels', validateIdParam, spaceController.getSpaceChannels)
 router.get('/:id/users', validateIdParam, spaceController.getSpaceUsers)
+router.delete('/:id/users/:uid', spaceController.deleteUserFromSpace)
 router.put(
   '/:id',
   // @ts-ignore
