@@ -23,8 +23,6 @@ async function deleteProfile(space_id: number, user_id: number) {
       space_id: space_id,
     })
     .del()
-  console.log(id)
-
   return id
 }
 

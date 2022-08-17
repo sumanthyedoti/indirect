@@ -1,13 +1,41 @@
-import { FC } from 'react'
+import { useState, FC } from 'react'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
+import { useQueryClient } from 'react-query'
 import { Popover } from '@headlessui/react'
 
 import useUserStore from '../../store/useUserStore'
+import ConfirmationModal from '../ConfirmationModal'
 import { ChevronDown, LeaveSpace, AddPeople } from '../../icons'
 import { useQuerySpace } from '../../queries'
+import api from '../../axios'
 
 const SideHeader: FC = () => {
-  const { spaceId } = useUserStore()
+  const [isLeaveConfirmModalOpen, setIsLeaveConfirmModalOpen] = useState(false)
+  const { spaceId, user } = useUserStore()
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const { data: space, isSuccess } = useQuerySpace(spaceId)
+  const handleLeaveSpace = async () => {
+    setIsLeaveConfirmModalOpen(true)
+  }
+
+  const onLeaveSpace = async () => {
+    try {
+      await api.delete(`/spaces/${spaceId}/users/${user.id}`)
+
+      queryClient.setQueryData<number[] | undefined>(
+        ['spaces', user.id],
+        //@ts-ignore
+        (spaceIds) => spaceIds.filter((id) => id !== space?.id)
+      )
+      toast.success(`You left '${space?.name}'`)
+      navigate('/')
+    } catch (err) {
+      console.log(err)
+      toast.error('Something went wrong')
+    }
+  }
 
   if (!isSuccess) return null
   return (
@@ -42,6 +70,7 @@ const SideHeader: FC = () => {
           <span>Invite Poeple to the Space</span>
         </button>
         <button
+          onClick={handleLeaveSpace}
           className={`flex px-4 py-2 text-red-500 space-x-3
           hover:bg-red-500 hover:text-current`}
         >
@@ -49,6 +78,21 @@ const SideHeader: FC = () => {
           <span>Leave the Space</span>
         </button>
       </Popover.Panel>
+      <ConfirmationModal
+        isOpen={isLeaveConfirmModalOpen}
+        close={() => setIsLeaveConfirmModalOpen(false)}
+        description={
+          <>
+            Leaving the <span className="font-semibold">{space.name}</span>
+          </>
+        }
+        details="You are about to leave the space. Are you sure?"
+        confirmLabel="Yes, Leave"
+        onConfirm={() => {
+          onLeaveSpace()
+        }}
+        isDanger={true}
+      />
     </Popover>
   )
 }

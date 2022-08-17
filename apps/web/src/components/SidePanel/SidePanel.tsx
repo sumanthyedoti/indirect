@@ -30,9 +30,27 @@ const SidePanel: FC = () => {
     setIsModalOpen(true)
   }
   const queryClient = useQueryClient()
-  const { spaceId, setChannelId } = useUserStore()
+  const { spaceId, setChannelId, logout } = useUserStore()
   const { space } = useSpaceStore()
   const { data: channels, isError } = useQuerySpaceChannels(spaceId)
+
+  useEffect(() => {
+    authPing()
+  }, [])
+
+  const authPing = async () => {
+    try {
+      await api.get(`/users/ping`)
+    } catch (err) {
+      console.log(err)
+      if (err.response.status === 401) {
+        logout()
+      }
+      toast.error('Session expired. Please login', {
+        id: 'auth-error',
+      })
+    }
+  }
 
   useEffect(() => {
     if (isError) {

@@ -161,7 +161,6 @@ async function deleteUserFromSpace(
 ) {
   try {
     const { id, uid } = req.params
-    console.log(id, uid)
     const result = await profileModel.deleteProfile(id, uid)
     if (!result) {
       res.status(404).json({ id, message: 'Space/User not found' })
