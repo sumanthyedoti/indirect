@@ -15,6 +15,7 @@
     "build:web": "pnpm -F @apps/web build",
     "build:server": "pnpm -F @apps/server build",
     "build-packages": "pnpm build:styles && pnpm build:web && pnpm build:server",
+    "local-build": "pnpm build-packages",
     "heroku-prebuild": "pnpm prebuild && pnpm build-packages",
     "prepare": "node -e \"if (process.env.NODE_ENV !== 'production'){process.exit(1)} \" || husky install",
     "dev": "pnpm --parallel dev",
