@@ -1,19 +1,13 @@
-import { useState, useEffect, memo, FC } from 'react'
-import toast from 'react-hot-toast'
+import { useState, memo, FC } from 'react'
 
 import { Button, LinkButton } from '../components/atoms'
 import { useQueryUserSpaces } from '../queries'
 import CreateSpace from '../components/SpacesBar/CreateSpace'
 import { useUserStore } from '../store'
-// import { useSocket } from '../hooks'
+import { useAuthPing } from '../hooks'
 import AvatarMenu from '../components/AvatarMenu'
-import api from '../axios'
 
 const SpaceItem = memo(({ id, name }: { id: number; name: string }) => {
-  // const socket = useSocket()
-  // useEffect(() => {
-  //   socket.emit('join-space', id)
-  // }, [id])
   return (
     <section
       className={`
@@ -32,26 +26,10 @@ SpaceItem.displayName = 'SpaceItem'
 
 const Spaces: FC = () => {
   const [isCreateSpaceModalOpen, setIsCreateSpaceModalOpen] = useState(false)
-  const { user, logout } = useUserStore()
+  const { user } = useUserStore()
   const { data: spaces } = useQueryUserSpaces(user.id)
 
-  useEffect(() => {
-    authPing()
-  }, [])
-
-  const authPing = async () => {
-    try {
-      await api.get(`/users/ping`)
-    } catch (err) {
-      console.log(err)
-      if (err.response.status === 401) {
-        logout()
-      }
-      toast.error('Session expired. Please login', {
-        id: 'auth-error',
-      })
-    }
-  }
+  useAuthPing()
 
   if (!spaces) return null
 

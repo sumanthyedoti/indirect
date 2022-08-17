@@ -21,6 +21,10 @@ const SidePanel: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const navigate = useNavigate()
   const params = useParams()
+  const queryClient = useQueryClient()
+  const { spaceId, setChannelId } = useUserStore()
+  const { space } = useSpaceStore()
+  const { data: channels, isError } = useQuerySpaceChannels(spaceId)
 
   const closeModal = () => {
     setIsModalOpen(false)
@@ -28,28 +32,6 @@ const SidePanel: FC = () => {
   const openModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
     setIsModalOpen(true)
-  }
-  const queryClient = useQueryClient()
-  const { spaceId, setChannelId, logout } = useUserStore()
-  const { space } = useSpaceStore()
-  const { data: channels, isError } = useQuerySpaceChannels(spaceId)
-
-  useEffect(() => {
-    authPing()
-  }, [])
-
-  const authPing = async () => {
-    try {
-      await api.get(`/users/ping`)
-    } catch (err) {
-      console.log(err)
-      if (err.response.status === 401) {
-        logout()
-      }
-      toast.error('Session expired. Please login', {
-        id: 'auth-error',
-      })
-    }
   }
 
   useEffect(() => {

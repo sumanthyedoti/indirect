@@ -6,6 +6,7 @@ import SpacesBar from '../components/SpacesBar'
 import SidePanel from '../components/SidePanel'
 import { useUserStore, useSpaceStore } from '../store'
 import { useQueryUserSpaces } from '../queries'
+import { useAuthPing } from '../hooks'
 
 const Space: FC = () => {
   const { setSpaceId, user } = useUserStore()
@@ -13,6 +14,8 @@ const Space: FC = () => {
   const { data: spaces, isError } = useQueryUserSpaces(user?.id)
   const params = useParams()
   const navigate = useNavigate()
+
+  useAuthPing()
 
   useEffect(() => {
     if (isError) {
