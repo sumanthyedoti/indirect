@@ -11,16 +11,23 @@ import {
 const createSpaceScheme: JSONSchemaType<CreateSpace> = {
   type: 'object',
   properties: {
-    name: { type: 'string', minLength: 1, maxLength: Constraints.name },
+    name: {
+      type: 'string',
+      minLength: 1,
+      maxLength: Constraints.name,
+      transform: ['trim'],
+    },
     tagline: {
       type: 'string',
       nullable: true,
       maxLength: Constraints.tagline,
+      transform: ['trim'],
     },
     description: {
       type: 'string',
       nullable: true,
       maxLength: Constraints.description,
+      transform: ['trim'],
     },
     creator_id: { type: 'number' },
     is_private: { type: 'boolean', nullable: true },
@@ -32,18 +39,25 @@ const createSpaceScheme: JSONSchemaType<CreateSpace> = {
 const updateSpaceScheme: JSONSchemaType<UpdateSpace> = {
   type: 'object',
   properties: {
-    name: { type: 'string', minLength: 1, maxLength: Constraints.name },
+    name: {
+      type: 'string',
+      minLength: 1,
+      maxLength: Constraints.name,
+      transform: ['trim'],
+    },
     tagline: {
       type: 'string',
       minLength: 1,
       maxLength: Constraints.tagline,
       nullable: true,
+      transform: ['trim'],
     },
     description: {
       type: 'string',
       nullable: true,
       minLength: 1,
       maxLength: Constraints.description,
+      transform: ['trim'],
     },
   },
   required: ['name'],
@@ -59,10 +73,12 @@ const invitesToSpaceScheme: JSONSchemaType<Invites> = {
       maxItems: 100,
       items: {
         type: 'string',
+        transform: ['trim'],
       },
     },
     spaceName: {
       type: 'string',
+      transform: ['trim'],
     },
   },
   required: ['emails', 'spaceName'],

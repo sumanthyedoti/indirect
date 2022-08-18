@@ -13,12 +13,18 @@ import { Constraints as MessageConstraints } from '@api-types/messages'
 const createChannelScheme: JSONSchemaType<CreateChannel> = {
   type: 'object',
   properties: {
-    name: { type: 'string', minLength: 1, maxLength: Constraints.name },
+    name: {
+      type: 'string',
+      minLength: 1,
+      maxLength: Constraints.name,
+      transform: ['trim', 'toLowerCase'],
+    },
     space_id: { type: 'number' },
     description: {
       type: 'string',
       nullable: true,
       maxLength: Constraints.description,
+      transform: ['trim'],
     },
     creator_id: { type: 'number' },
     is_private: { type: 'boolean', nullable: true },
@@ -30,12 +36,18 @@ const createChannelScheme: JSONSchemaType<CreateChannel> = {
 const updateChannelScheme: JSONSchemaType<UpdateChannel> = {
   type: 'object',
   properties: {
-    name: { type: 'string', minLength: 1, maxLength: Constraints.name },
+    name: {
+      type: 'string',
+      minLength: 1,
+      maxLength: Constraints.name,
+      transform: ['trim'],
+    },
     description: {
       type: 'string',
       nullable: true,
       minLength: 1,
       maxLength: Constraints.description,
+      transform: ['trim'],
     },
   },
   required: ['name'],
@@ -62,7 +74,12 @@ const createChannelMembersScheme: JSONSchemaType<CreateChannelMembers> = {
 const createChannelMessageScheme: JSONSchemaType<CreateChannelMessage> = {
   type: 'object',
   properties: {
-    text: { type: 'string', minLength: 1, maxLength: MessageConstraints.text },
+    text: {
+      type: 'string',
+      minLength: 1,
+      maxLength: MessageConstraints.text,
+      transform: ['trim'],
+    },
   },
   required: ['text'],
   // additionalProperties: false,

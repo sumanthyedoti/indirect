@@ -89,7 +89,7 @@ const AddPeole: FC<AddPeoleProps> = () => {
       <div className="flex items-center justify-between">
         <components.Option {...props} />
         {props.isDisabled && (
-          <i className="mr-4 text-xs shrink-0">alredy a member</i>
+          <i className="mr-4 text-xs shrink-0">already a member</i>
         )}
       </div>
     )
