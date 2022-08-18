@@ -8,6 +8,7 @@ import {
   TypedRequestParams,
   TypedRequestBody,
 } from '../../types.d'
+import { sendInviteToSpace } from '../email'
 import logger from '../../config/logger'
 
 async function createSpace(
@@ -173,6 +174,32 @@ async function deleteUserFromSpace(
   }
 }
 
+async function sendInvites(
+  req: TypedRequestBody<{ emails: string[]; spaceName: string }>,
+  res: Response
+) {
+  try {
+    const { emails, spaceName } = req.body
+    const emailsToSend = emails.map((email) =>
+      sendInviteToSpace(email, spaceName)
+    )
+    Promise.all(emailsToSend)
+      .then((emails) => {
+        res.json({
+          message: 'Sent invitations successfully',
+          emails,
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+        res.status(500).send(err)
+      })
+  } catch (err) {
+    logger.error('::', err)
+    res.status(500).send(err)
+  }
+}
+
 export default {
   createSpace,
   getSpace,
@@ -181,4 +208,5 @@ export default {
   updateSpace,
   deleteSpace,
   deleteUserFromSpace,
+  sendInvites,
 }

@@ -4,6 +4,7 @@ import { validateIdParam } from '../../middlewares'
 import {
   createSpaceSchemaValidator,
   updateSpaceSchemaValidator,
+  invitesToSpaceSchemeValidator,
 } from './space-schema'
 import spaceController from './space-controller'
 import { isAuthenticated, validateSchema } from '../../middlewares'
@@ -28,5 +29,10 @@ router.put(
   spaceController.updateSpace
 )
 router.delete('/:id', validateIdParam, spaceController.deleteSpace)
+router.post(
+  '/invites',
+  validateSchema(invitesToSpaceSchemeValidator),
+  spaceController.sendInvites
+)
 
 export default router

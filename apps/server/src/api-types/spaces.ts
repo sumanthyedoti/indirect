@@ -23,6 +23,11 @@ export interface UpdateSpace extends Omit<Info, 'creator_id'> {}
 
 export interface SpaceUser extends User, Profile {}
 
+export interface Invites {
+  emails: string[]
+  spaceName: string
+}
+
 export enum Constraints {
   name = 60,
   tagline = 255,

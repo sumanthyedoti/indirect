@@ -1,7 +1,12 @@
 import { JSONSchemaType } from 'ajv'
 
 import ajv from '../../config/ajv'
-import { CreateSpace, UpdateSpace, Constraints } from '@api-types/spaces'
+import {
+  CreateSpace,
+  UpdateSpace,
+  Invites,
+  Constraints,
+} from '@api-types/spaces'
 
 const createSpaceScheme: JSONSchemaType<CreateSpace> = {
   type: 'object',
@@ -45,5 +50,25 @@ const updateSpaceScheme: JSONSchemaType<UpdateSpace> = {
   // additionalProperties: false,
 }
 
+const invitesToSpaceScheme: JSONSchemaType<Invites> = {
+  type: 'object',
+  properties: {
+    emails: {
+      type: 'array',
+      minItems: 1,
+      maxItems: 100,
+      items: {
+        type: 'string',
+      },
+    },
+    spaceName: {
+      type: 'string',
+    },
+  },
+  required: ['emails', 'spaceName'],
+  // additionalProperties: false,
+}
+
 export const createSpaceSchemaValidator = ajv.compile(createSpaceScheme)
 export const updateSpaceSchemaValidator = ajv.compile(updateSpaceScheme)
+export const invitesToSpaceSchemeValidator = ajv.compile(invitesToSpaceScheme)

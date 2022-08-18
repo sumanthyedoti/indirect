@@ -13,7 +13,6 @@ import userRouter from './components/user/user-router'
 import messageRouter from './components/message/message-router'
 import spaceRouter from './components/spaces/space-router'
 import channelRouter from './components/channels/channel-router'
-
 import passportConfig from './config/passport'
 import { expressSessionMiddleware, socketAuthentication } from './middlewares'
 import messageServer from './message-server'

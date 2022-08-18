@@ -30,11 +30,6 @@ const AddPeole: FC<AddPeoleProps> = () => {
   const { data: space } = useQuerySpace(spaceId)
   const { closeInvitePeopleModal } = useStore()
 
-  const onPeopleChange = (data: any) => {
-    console.log({ data })
-    if (data.length) setError(null)
-    setInviteeEmails(data)
-  }
   const onInvitePeople = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (inviteeEmails.length === 0) {
@@ -75,7 +70,6 @@ const AddPeole: FC<AddPeoleProps> = () => {
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (!inputValue) return
     if (['Enter', 'Tab'].includes(event.key)) {
-      console.log(inputValue)
       emailSchema
         .validate(inputValue)
         .then(() => {
@@ -130,7 +124,6 @@ const AddPeole: FC<AddPeoleProps> = () => {
           menuIsOpen={false}
           placeholder="name@example.com"
           value={inviteeEmails}
-          onChange={onPeopleChange}
           menuPortalTarget={document.body}
         />
         {error && <em className="text-sm text-red-400">{error}</em>}
