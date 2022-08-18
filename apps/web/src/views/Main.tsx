@@ -16,7 +16,9 @@ const Space: FC = () => {
   const navigate = useNavigate()
 
   useAuthPing()
-
+  useEffect(() => {
+    console.log('Main')
+  }, [])
   useEffect(() => {
     if (isError) {
       navigate('/')

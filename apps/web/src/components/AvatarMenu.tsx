@@ -40,6 +40,9 @@ const AvatarMenu: FC<AvatarMenuProps> = () => {
             ring ring-slate-700
             flex flex-col py-4
             `}
+        style={{
+          minWidth: '200px',
+        }}
       >
         <div className="flex items-center px-4 pb-4 border-b border-gray-600 space-x-2">
           <div className="w-10 h-10">
