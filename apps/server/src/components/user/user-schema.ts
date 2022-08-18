@@ -16,7 +16,6 @@ const registerUserScheme: JSONSchemaType<RegisterUser> = {
       type: 'string',
       minLength: Constraints.passwordMin,
       maxLength: Constraints.passwordMax,
-      transform: ['trim'],
     },
     fullname: {
       type: 'string',
@@ -50,7 +49,6 @@ const loginUserScheme: JSONSchemaType<LoginUser> = {
       type: 'string',
       minLength: Constraints.passwordMin,
       maxLength: Constraints.passwordMax,
-      transform: ['trim'],
     },
   },
   required: ['email', 'password'],

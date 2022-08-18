@@ -81,7 +81,7 @@ const SidePanel: FC = () => {
         navigate(`/${spaceId}/${newChannel.id}`)
       } catch (err) {
         console.log(err)
-        toast.error('Error creating Channel', {
+        toast.error('Error creating the Channel', {
           id: 'post-channel-error',
         })
       }

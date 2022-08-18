@@ -17,6 +17,7 @@ import { useToastLimit } from '../hooks'
 const schema = yup.object().shape({
   email: yup
     .string()
+    .trim()
     .email('Invalid Email')
     .required('Email required!')
     .min(Constraints.emailMin, `Invalid email`)

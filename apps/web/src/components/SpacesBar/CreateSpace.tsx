@@ -21,6 +21,7 @@ const schema = yup.object().shape({
   creator_id: yup.number().required(),
   name: yup
     .string()
+    .trim()
     .required('Please provide the Space name!')
     .max(
       Constraints.name,
@@ -28,6 +29,7 @@ const schema = yup.object().shape({
     ),
   tagline: yup
     .string()
+    .trim()
     .nullable()
     .max(
       Constraints.tagline,
@@ -35,6 +37,7 @@ const schema = yup.object().shape({
     ),
   description: yup
     .string()
+    .trim()
     .nullable()
     .max(Constraints.description, `Too large. Please edit`),
 })
