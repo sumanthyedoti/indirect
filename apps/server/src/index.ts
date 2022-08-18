@@ -48,9 +48,10 @@ app.use('/api/spaces', spaceRouter)
 app.use('/api/channels', channelRouter)
 
 app.use(express.static(path.resolve(__dirname, '../../web', 'dist')))
-app.get('*', (req, res) =>
+app.get('*', (req, res) => {
+  res.set('Cache-Control', 'public, max-age=2592000, s-maxage=2592000') // 1 month
   res.sendFile(path.resolve(__dirname, '../../web', 'dist', 'index.html'))
-)
+})
 
 /* web sockets */
 const server = createHTTPServer(app)
