@@ -8,8 +8,8 @@ interface UserData {
   user: UserT
   isLoggedIn: boolean
   isSessionExpired?: boolean
-  spaceId: number
-  channelId: number
+  spaceId?: number
+  channelId?: number
   login: (user: UserT) => void
   logout: () => void
   setSpaceId: (id: number) => void
@@ -28,6 +28,12 @@ const store: (any) => UserData = (set) => ({
   logout: () => set(() => ({ isLoggedIn: false, user: null })),
   setSpaceId: (id) => set((state: UserData) => ({ ...state, spaceId: id })),
   setChannelId: (id) => set((state: UserData) => ({ ...state, channelId: id })),
+  removeSpaceAndChannelId: () =>
+    set((state: UserData) => ({
+      ...state,
+      spaceId: undefined,
+      channelId: undefined,
+    })),
 })
 const storeThroughtMiddlewares = devtools(
   // @ts-ignore

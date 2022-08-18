@@ -15,7 +15,7 @@ import {
 
 import api from './axios'
 
-function useQueryUserSpaces(userId: number | undefined) {
+function useQueryUserSpaces(userId?: number) {
   return useQuery(
     ['spaces', userId],
     async () => {
@@ -35,7 +35,7 @@ type UsersQuery = {
   list: SpaceUser[]
   idMap: Record<string, SpaceUser>
 }
-function useQuerySpaceUsers(spaceId: number) {
+function useQuerySpaceUsers(spaceId?: number) {
   return useQuery(
     ['users', spaceId],
     async () => {
@@ -51,11 +51,12 @@ function useQuerySpaceUsers(spaceId: number) {
     },
     {
       staleTime: Infinity,
+      enabled: !!spaceId,
     }
   )
 }
 
-function useQuerySpace(spaceId: number) {
+function useQuerySpace(spaceId?: number) {
   return useQuery<Space>(
     ['space', spaceId],
     async () => {
@@ -64,11 +65,12 @@ function useQuerySpace(spaceId: number) {
     },
     {
       staleTime: Infinity,
+      enabled: !!spaceId,
     }
   )
 }
 
-function useQueryChannel(channelId: number) {
+function useQueryChannel(channelId?: number) {
   return useQuery<Channel>(
     ['channel', channelId],
     async () => {
@@ -77,11 +79,12 @@ function useQueryChannel(channelId: number) {
     },
     {
       staleTime: Infinity,
+      enabled: !!channelId,
     }
   )
 }
 
-function useQueryChannelMembers(channelId: number) {
+function useQueryChannelMembers(channelId?: number) {
   return useQuery<ChannelMembers>(
     ['channel-users', channelId],
     async () => {
@@ -90,11 +93,12 @@ function useQueryChannelMembers(channelId: number) {
     },
     {
       staleTime: Infinity,
+      enabled: !!channelId,
     }
   )
 }
 
-function useRemoveChannelMember(channelId: number) {
+function useRemoveChannelMember(channelId?: number) {
   const queryClient = useQueryClient()
   return useMutation(
     (userId: number) => api.delete(`/channels/${channelId}/users/${userId}`),
@@ -123,7 +127,7 @@ function useRemoveChannelMember(channelId: number) {
   )
 }
 
-function useQuerySpaceChannels(spaceId: number) {
+function useQuerySpaceChannels(spaceId?: number) {
   return useQuery<Channel[]>(
     ['channels', spaceId],
     async () => {
@@ -132,11 +136,12 @@ function useQuerySpaceChannels(spaceId: number) {
     },
     {
       staleTime: Infinity,
+      enabled: !!spaceId,
     }
   )
 }
 
-function useQueryChannelMessages(channelId: number) {
+function useQueryChannelMessages(channelId?: number) {
   return useQuery<MessageT[]>(
     ['channel-messages', channelId],
     async () => {
@@ -150,7 +155,7 @@ function useQueryChannelMessages(channelId: number) {
   )
 }
 
-function usePostChannelMessage(channelId: number) {
+function usePostChannelMessage(channelId?: number) {
   const queryClient = useQueryClient()
   const { user } = useUserStore()
   return useMutation(

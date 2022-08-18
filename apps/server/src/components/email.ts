@@ -12,7 +12,6 @@ export function sendInviteToSpace(email: string, spaceName: string) {
       to: email,
       from: 'sumanth.yedoti@gmail.com',
       subject: `You are invited to '${spaceName}' space on inDirect`,
-      text: 'and easy to do anywhere, even with Node.js',
       html: '<strong>and easy to do anywhere, even with Node.js</strong>',
     }
 

@@ -23,9 +23,10 @@ const App: FC = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route element={<PrivateRoute />}>
-          <Route path="/" element={<Spaces />} />
-          <Route path=":spaceId" element={<Main />}>
-            <Route path=":channelId" element={<Channel />} />
+          <Route path="/" element={<Spaces />}>
+            <Route path=":spaceId" element={<Main />}>
+              <Route path=":channelId" element={<Channel />} />
+            </Route>
           </Route>
         </Route>
         <Route path="*" element={<NoMatch />} />
