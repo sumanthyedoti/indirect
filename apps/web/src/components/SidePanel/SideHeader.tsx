@@ -1,4 +1,4 @@
-import { useState, FC } from 'react'
+import { FC } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { useQueryClient } from 'react-query'
@@ -8,17 +8,19 @@ import useUserStore from '../../store/useUserStore'
 import ConfirmationModal from '../ConfirmationModal'
 import { ChevronDown, LeaveSpace, AddPeople } from '../../icons'
 import { useQuerySpace } from '../../queries'
+import useStore from './store'
 import api from '../../axios'
 
 const SideHeader: FC = () => {
-  const [isLeaveConfirmModalOpen, setIsLeaveConfirmModalOpen] = useState(false)
+  const {
+    isLeaveConfirmModalOpen,
+    openLeaveConfirmModal,
+    closeLeaveConfirmModal,
+  } = useStore()
   const { spaceId, user } = useUserStore()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const { data: space, isSuccess } = useQuerySpace(spaceId)
-  const handleLeaveSpace = async () => {
-    setIsLeaveConfirmModalOpen(true)
-  }
 
   const onLeaveSpace = async () => {
     try {
@@ -60,6 +62,7 @@ const SideHeader: FC = () => {
             `}
         style={{
           width: '98%',
+          minWidth: '16em',
         }}
       >
         <button
@@ -70,7 +73,7 @@ const SideHeader: FC = () => {
           <span>Invite Poeple to the Space</span>
         </button>
         <button
-          onClick={handleLeaveSpace}
+          onClick={openLeaveConfirmModal}
           className={`flex px-4 py-2 text-red-500 space-x-3
           hover:bg-red-500 hover:text-current`}
         >
@@ -80,7 +83,7 @@ const SideHeader: FC = () => {
       </Popover.Panel>
       <ConfirmationModal
         isOpen={isLeaveConfirmModalOpen}
-        close={() => setIsLeaveConfirmModalOpen(false)}
+        close={closeLeaveConfirmModal}
         description={
           <>
             Leaving the <span className="font-semibold">{space.name}</span>
