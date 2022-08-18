@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { useQueryClient } from 'react-query'
 import { Popover } from '@headlessui/react'
 
+import Modal from '../Modal'
+import InvitePeople from './InvitePeople'
 import useUserStore from '../../store/useUserStore'
 import ConfirmationModal from '../ConfirmationModal'
 import { ChevronDown, LeaveSpace, AddPeople } from '../../icons'
@@ -14,8 +16,11 @@ import api from '../../axios'
 const SideHeader: FC = () => {
   const {
     isLeaveConfirmModalOpen,
+    isInvitePeopleModalOpen,
     openLeaveConfirmModal,
     closeLeaveConfirmModal,
+    openInvitePeopleModal,
+    closeInvitePeopleModal,
   } = useStore()
   const { spaceId, user } = useUserStore()
   const navigate = useNavigate()
@@ -68,6 +73,7 @@ const SideHeader: FC = () => {
         <button
           className={`flex px-4 py-2 space-x-3 hover:bg-slate-800
           `}
+          onClick={openInvitePeopleModal}
         >
           <AddPeople />
           <span>Invite Poeple to the Space</span>
@@ -96,6 +102,13 @@ const SideHeader: FC = () => {
         }}
         isDanger={true}
       />
+      <Modal
+        className="-mt-48"
+        isOpen={isInvitePeopleModalOpen}
+        close={closeInvitePeopleModal}
+      >
+        <InvitePeople />
+      </Modal>
     </Popover>
   )
 }
