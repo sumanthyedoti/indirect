@@ -79,6 +79,11 @@ const AddPeole: FC<AddPeoleProps> = () => {
       emailSchema
         .validate(inputValue)
         .then(() => {
+          if (inviteeEmails.find((it) => it.value === inputValue)) {
+            setError('Email already added')
+            setInputValue('')
+            return
+          }
           setInviteeEmails([
             ...inviteeEmails,
             { value: inputValue, label: inputValue },
@@ -106,7 +111,7 @@ const AddPeole: FC<AddPeoleProps> = () => {
           Invite Peple
         </Dialog.Title>
       </div>
-      <p className="self-end mb-4"># {space.name}</p>
+      <p className="self-end mb-4 font-semibold">{space.name}</p>
       <form className="" onSubmit={onInvitePeople}>
         <label htmlFor="emails" className="pb-1 text-sm uppercase">
           Emails
