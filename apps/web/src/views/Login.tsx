@@ -94,16 +94,16 @@ const Login: FC = () => {
           error={errors.password?.message}
         />
         <Button className="w-full mt-5" type="submit" label="Login" />
+        <p className="mt-4">
+          Need an account?&nbsp;&nbsp;
+          <Link
+            to="/register"
+            className="outline-none focus:ring ring-blue-300 ring-offset ring-offset-slate-700"
+          >
+            <b className="font-medium">Register</b>
+          </Link>
+        </p>
       </AuthForm>
-      <p>
-        Need an account?&nbsp;&nbsp;
-        <Link
-          to="/register"
-          className="outline-none focus:ring ring-blue-300 ring-offset ring-offset-slate-700"
-        >
-          <b className="font-medium">Register</b>
-        </Link>
-      </p>
     </div>
   )
 }

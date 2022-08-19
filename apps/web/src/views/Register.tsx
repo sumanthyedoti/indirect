@@ -119,16 +119,16 @@ const Register: FC = () => {
           error={errors.confirmPassword?.message}
         />
         <Button className="w-full mt-5" type="submit" label="Register" />
+        <p className="mt-4">
+          Already have an account?&nbsp;&nbsp;
+          <Link
+            to="/login"
+            className="outline-none focus:ring ring-blue-300 ring-offset ring-offset-slate-700"
+          >
+            <b className="font-medium">Log in</b>
+          </Link>
+        </p>
       </AuthForm>
-      <p>
-        Already have an account?&nbsp;&nbsp;
-        <Link
-          to="/login"
-          className="outline-none focus:ring ring-blue-300 ring-offset ring-offset-slate-700"
-        >
-          <b className="font-medium">Log in</b>
-        </Link>
-      </p>
     </div>
   )
 }
