@@ -1,22 +1,34 @@
 import { useEffect, useState, FC } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 
 import { Header } from '../components/molecules'
 import { Button } from '../components/atoms'
+import { useUserStore } from '../store'
 import { ArrowBack } from '../icons'
-import { useQuerySpace } from '../queries'
+import { useQuerySpace, useQueryUserSpaces } from '../queries'
 
 const JoinSPace: FC = () => {
+  const { user } = useUserStore()
   const params = useParams()
+  const navigate = useNavigate()
   const [spaceParamId, setSpaceParamId] = useState<number | undefined>(
     undefined
   )
+  const { data: userSpaces } = useQueryUserSpaces(user?.id)
   const { data: space } = useQuerySpace(spaceParamId)
 
   useEffect(() => {
-    if (!params.spaceId) return
-    setSpaceParamId(parseInt(params.spaceId))
-  }, [params.spaceId])
+    if (!params.spaceId || !userSpaces) return
+    const sid = parseInt(params.spaceId)
+    console.log({ sid })
+
+    setSpaceParamId(sid)
+    const userSpace = userSpaces.find((space) => space.id === sid)
+    console.log(userSpace)
+    if (userSpace) {
+      navigate(`/${sid}`)
+    }
+  }, [params.spaceId, userSpaces])
 
   // const handleJoin = () => {}
 
