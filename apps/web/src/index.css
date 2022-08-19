@@ -1,10 +1,28 @@
 @import '@libs/styles/lib/index.css';
 
+:root {
+  --bg-color: #334155;
+  --text-color: #f1f5f9;
+}
+
 * {
   /* outline: 1px solid red; */
 }
 .test {
   @apply outline outline-red-500;
+}
+
+/* Change the white to any color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--bg-color) inset !important;
+}
+
+/*Change text in autofill textbox*/
+input:-webkit-autofill {
+  -webkit-text-fill-color: var(--text-color) !important;
 }
 
 button.icon:hover {
