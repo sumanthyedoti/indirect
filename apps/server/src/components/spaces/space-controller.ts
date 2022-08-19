@@ -162,7 +162,7 @@ async function addUserToSpace(
 ) {
   try {
     const { id, uid } = req.params
-    const result = await profileModel.createProfile({
+    const result = await spaceModel.createProfile({
       //@ts-ignore
       user_id: parseInt(uid),
       space_id: id,

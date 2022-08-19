@@ -1,4 +1,6 @@
+import { Knex } from 'knex'
 import * as T from '@api-types/spaces'
+import { CreateProfile as CreateProfileT } from '@api-types/profiles'
 import logger from '../../config/logger'
 import { Channel as ChannelT } from '@api-types/channels'
 import db from '../../db'
@@ -43,8 +45,8 @@ async function createSpace(space: T.CreateSpace) {
   }
 }
 
-async function getSpace(id: number) {
-  const [space]: T.Space[] = await db('spaces').select('*').where({ id })
+async function getSpace(id: number, queryTrx: Knex.Transaction | Knex = db) {
+  const [space]: T.Space[] = await queryTrx('spaces').select('*').where({ id })
   return space
 }
 
@@ -93,6 +95,22 @@ async function deleteSpace(id: number) {
   return spaceId
 }
 
+async function createProfile(profile: CreateProfileT) {
+  const trx = await db.transaction()
+  try {
+    await profileModel.createProfile(profile, trx)
+    const space = await getSpace(profile.space_id, trx)
+    await trx('channel_users').insert({
+      user_id: profile.user_id,
+      channel_id: space.general_channel_id,
+    })
+    return true
+  } catch (err) {
+    logger.error('::', err)
+    trx.rollback()
+  }
+}
+
 export default {
   createSpace,
   getSpace,
@@ -100,4 +118,5 @@ export default {
   getSpaceUsers,
   updateSpace,
   deleteSpace,
+  createProfile,
 }
