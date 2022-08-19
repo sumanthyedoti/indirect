@@ -2,7 +2,7 @@ import * as T from '@api-types/spaces'
 import logger from '../../config/logger'
 import { Channel as ChannelT } from '@api-types/channels'
 import db from '../../db'
-import profileModel from '../profiles/profiles-model'
+import profileModel from '../profiles/profile-model'
 import channelModel from '../channels/channel-model'
 
 async function createSpace(space: T.CreateSpace) {

@@ -34,31 +34,33 @@ const Spaces: FC = () => {
   if (!spaces) return null
 
   return (
-    <div className="p-5 mx-auto sm:px-5 md:px-0 md:w-4/5 lg:w-3/5">
+    <>
       <Header />
-      <div className="flex justify-between mb-6">
-        <h1 className="mb-0">Your Spaces</h1>
-        <Button
-          onClick={() => setIsCreateSpaceModalOpen(true)}
-          label="Create a new Space"
+      <div className="container-width">
+        <div className="flex justify-between mb-6">
+          <h1 className="mb-0">Your Spaces</h1>
+          <Button
+            onClick={() => setIsCreateSpaceModalOpen(true)}
+            label="Create a new Space"
+          />
+        </div>
+        <article className="py-2 rounded bg-slate-800 ring-4 ring-slate-600">
+          {spaces.length === 0 && (
+            <p className="px-6 py-10 text-2xl text-center text-gray-400 lg:px-10">
+              You are not part of any space yet. <br /> You can create your own
+              Space or join other Spaces
+            </p>
+          )}
+          {spaces.map((space) => (
+            <SpaceItem key={space.id} id={space.id} name={space.name} />
+          ))}
+        </article>
+        <CreateSpace
+          isOpen={isCreateSpaceModalOpen}
+          close={() => setIsCreateSpaceModalOpen(false)}
         />
       </div>
-      <article className="py-2 rounded bg-slate-800 ring-4 ring-slate-600">
-        {spaces.length === 0 && (
-          <p className="px-6 py-10 text-2xl text-center text-gray-400 lg:px-10">
-            You are not part of any space yet. <br /> You can create your own
-            Space or join other Spaces
-          </p>
-        )}
-        {spaces.map((space) => (
-          <SpaceItem key={space.id} id={space.id} name={space.name} />
-        ))}
-      </article>
-      <CreateSpace
-        isOpen={isCreateSpaceModalOpen}
-        close={() => setIsCreateSpaceModalOpen(false)}
-      />
-    </div>
+    </>
   )
 }
 

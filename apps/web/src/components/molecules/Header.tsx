@@ -12,7 +12,7 @@ const Header: FC = () => {
       className={classnames(
         `
       flex sm:flex-row sm:items-center
-      p-5 mx-auto sm:px-5 md:px-0 md:w-4/5 lg:w-3/5`,
+      container-width`,
         {
           'justify-between': isLoggedIn,
           'justify-center': !isLoggedIn,

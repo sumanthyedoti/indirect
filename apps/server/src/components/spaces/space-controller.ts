@@ -2,7 +2,7 @@ import { Response } from 'express'
 
 import * as T from '@api-types/spaces'
 import spaceModel from './space-model'
-import profileModel from '../profiles/profiles-model'
+import profileModel from '../profiles/profile-model'
 import {
   TypedRequest,
   TypedRequestParams,
@@ -156,6 +156,27 @@ async function deleteSpace(
   }
 }
 
+async function addUserToSpace(
+  req: TypedRequestParams<{ id: number; uid: number }>,
+  res: Response
+) {
+  try {
+    const { id, uid } = req.params
+    const result = await profileModel.createProfile({
+      user_id: uid,
+      space_id: id,
+    })
+    if (!result) {
+      res.status(404).json({ message: 'Space/User not found' })
+      return
+    }
+    res.status(201).json({ message: 'Add User to the Space' })
+  } catch (err) {
+    logger.error('::', err)
+    res.status(500).send('Something went wrong!')
+  }
+}
+
 async function deleteUserFromSpace(
   req: TypedRequestParams<{ id: number; uid: number }>,
   res: Response
@@ -207,6 +228,7 @@ export default {
   getSpaceUsers,
   updateSpace,
   deleteSpace,
+  addUserToSpace,
   deleteUserFromSpace,
   sendInvites,
 }
