@@ -9,7 +9,7 @@ import * as yup from 'yup'
 import { LoginUser } from '@api-types/users'
 import { Constraints } from '@api-types/users'
 import { AuthForm, Input, Button } from '../components/atoms'
-import { FormInput } from '../components/molecules'
+import { FormInput, Header } from '../components/molecules'
 import useUserStore from '../store/useUserStore'
 import api from '../axios'
 import { useToastLimit } from '../hooks'
@@ -73,6 +73,7 @@ const Login: FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
+      <Header />
       <AuthForm autoComplete="on" onSubmit={handleSubmit(onSubmit)}>
         <h1>{locationState?.isRegister ? 'Welcome!' : 'Welcome back!'}</h1>
         <FormInput

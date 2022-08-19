@@ -25,10 +25,8 @@ const Space: FC = () => {
   useAuthPing()
 
   useEffect(() => {
-    if (params.spaceId) {
-      const sId = parseInt(params.spaceId)
-      setSpaceParamId(sId)
-    }
+    if (!params.spaceId) return
+    setSpaceParamId(parseInt(params.spaceId))
   }, [params.spaceId])
   useEffect(() => {
     if (isUserSpacesError) {

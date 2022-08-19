@@ -11,6 +11,7 @@ interface MessageRowProps {
   index: number
   message: T.Message
   previousMessageDate: Date | null
+  //@ts-ignore
   style: Record<string, any>
   setRowHeight: (index: number, size: number) => void
 }

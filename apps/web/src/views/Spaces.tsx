@@ -1,11 +1,11 @@
 import { useState, memo, FC } from 'react'
 
 import { Button, LinkButton } from '../components/atoms'
+import { Header } from '../components/molecules'
 import { useQueryUserSpaces } from '../queries'
 import CreateSpace from '../components/SpacesBar/CreateSpace'
 import { useUserStore } from '../store'
 import { useAuthPing } from '../hooks'
-import AvatarMenu from '../components/AvatarMenu'
 
 const SpaceItem = memo(({ id, name }: { id: number; name: string }) => {
   return (
@@ -35,18 +35,7 @@ const Spaces: FC = () => {
 
   return (
     <div className="p-5 mx-auto sm:px-5 md:px-0 md:w-4/5 lg:w-3/5">
-      <div
-        role="banner"
-        className="flex flex-col justify-between sm:flex-row sm:items-center"
-        style={{
-          marginBottom: 'max(40px, 5vh)',
-        }}
-      >
-        <h1 className="text-4xl font-light text-white sm:mb-0">inDirect</h1>
-        <div className="w-10 h-10">
-          <AvatarMenu />
-        </div>
-      </div>
+      <Header />
       <div className="flex justify-between mb-6">
         <h1 className="mb-0">Your Spaces</h1>
         <Button

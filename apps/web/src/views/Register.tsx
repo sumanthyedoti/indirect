@@ -9,7 +9,7 @@ import * as yup from 'yup'
 import { RegisterUser } from '@api-types/users'
 import { Constraints } from '@api-types/users'
 import { AuthForm, Input, Button } from '../components/atoms'
-import { FormInput } from '../components/molecules'
+import { FormInput, Header } from '../components/molecules'
 import useUserStore from '../store/useUserStore'
 import api from '../axios'
 import { useToastLimit } from '../hooks'
@@ -80,6 +80,7 @@ const Register: FC = () => {
   }
   return (
     <div className="flex flex-col items-center justify-center h-screen">
+      <Header />
       <AuthForm onSubmit={handleSubmit(onSubmit)}>
         <h1>Create an account</h1>
         <FormInput
