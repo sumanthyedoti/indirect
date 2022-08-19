@@ -56,7 +56,7 @@ function useQuerySpaceUsers(spaceId?: number) {
   )
 }
 
-function useQuerySpace(spaceId?: number) {
+function useQuerySpace(spaceId?: number, retry = 3) {
   return useQuery<Space>(
     ['space', spaceId],
     async () => {
@@ -66,6 +66,7 @@ function useQuerySpace(spaceId?: number) {
     {
       staleTime: Infinity,
       enabled: !!spaceId,
+      retry,
     }
   )
 }

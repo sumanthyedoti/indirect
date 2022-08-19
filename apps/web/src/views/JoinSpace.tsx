@@ -1,36 +1,55 @@
 import { useEffect, useState, FC } from 'react'
+import toast from 'react-hot-toast'
 import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useQueryClient } from 'react-query'
 
 import { Header } from '../components/molecules'
 import { Button } from '../components/atoms'
 import { useUserStore } from '../store'
 import { ArrowBack } from '../icons'
 import { useQuerySpace, useQueryUserSpaces } from '../queries'
+import api from '../axios'
 
 const JoinSPace: FC = () => {
   const { user } = useUserStore()
   const params = useParams()
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const [spaceParamId, setSpaceParamId] = useState<number | undefined>(
     undefined
   )
   const { data: userSpaces } = useQueryUserSpaces(user?.id)
-  const { data: space } = useQuerySpace(spaceParamId)
+  const { data: space, isError: isSpaceError } = useQuerySpace(spaceParamId, 1)
+
+  useEffect(() => {
+    console.log(isSpaceError)
+    if (isSpaceError) {
+      navigate('/')
+    }
+  }, [isSpaceError])
 
   useEffect(() => {
     if (!params.spaceId || !userSpaces) return
     const sid = parseInt(params.spaceId)
-    console.log({ sid })
-
     setSpaceParamId(sid)
     const userSpace = userSpaces.find((space) => space.id === sid)
-    console.log(userSpace)
     if (userSpace) {
       navigate(`/${sid}`)
     }
   }, [params.spaceId, userSpaces])
 
-  // const handleJoin = () => {}
+  const handleJoin = async () => {
+    try {
+      console.log(user.id)
+
+      await api.post(`/spaces/${params.spaceId}/users/${user.id}}`)
+      navigate(`/${params.spaceId}`)
+      queryClient.invalidateQueries(['spaces', user.id])
+    } catch (err) {
+      console.log(err)
+      toast.error('Error joining the Space')
+    }
+  }
 
   if (!space) return null
 
@@ -56,7 +75,11 @@ const JoinSPace: FC = () => {
                 <p dangerouslySetInnerHTML={{ __html: space.description }} />
               </div>
             )}
-            <Button label="Join the Space" className="mt-8" />
+            <Button
+              onClick={handleJoin}
+              label="Join the Space"
+              className="mt-8"
+            />
             <Link
               to="/"
               className="flex items-center justify-center mt-4 space-x-1"
