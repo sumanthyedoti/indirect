@@ -40,10 +40,9 @@ const JoinSPace: FC = () => {
 
   const handleJoin = async () => {
     try {
-      console.log(user.id)
-
-      await api.post(`/spaces/${params.spaceId}/users/${user.id}}`)
-      navigate(`/${params.spaceId}`)
+      const res = await api.post(`/spaces/${params.spaceId}/users/${user.id}`)
+      console.log(res, params.spaceId)
+      navigate(`/${params.spaceId}`, { replace: true })
       queryClient.invalidateQueries(['spaces', user.id])
     } catch (err) {
       console.log(err)

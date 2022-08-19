@@ -16,6 +16,7 @@ interface AvatarMenuProps {
 const AvatarMenu: FC<AvatarMenuProps> = () => {
   const { logout } = useUserStore()
   const name = useUserName()
+  console.log({ name })
   const handleLogout = async () => {
     try {
       await api.delete('/logout')

@@ -104,6 +104,7 @@ async function createProfile(profile: CreateProfileT) {
       user_id: profile.user_id,
       channel_id: space.general_channel_id,
     })
+    trx.commit()
     return true
   } catch (err) {
     logger.error('::', err)

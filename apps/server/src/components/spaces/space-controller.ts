@@ -171,7 +171,7 @@ async function addUserToSpace(
       res.status(404).json({ message: 'Space/User not found' })
       return
     }
-    res.status(201).json({ message: 'Add User to the Space' })
+    res.status(201).json({ message: 'Added User to the Space' })
   } catch (err) {
     logger.error('::', err)
     res.status(500).send('Something went wrong!')
