@@ -64,8 +64,6 @@ const Space: FC = () => {
       <Outlet />
     </div>
   )
-
-  return null
 }
 
 export default Space

@@ -41,7 +41,7 @@ const Channel: FC = () => {
     console.log('message-success')
     // queryClient.invalidateQueries(['channel-messages', channelId])
     queryClient.setQueryData<MessageT[] | undefined>(
-      ['channel-messages', channelId],
+      ['channel-messages', message.channel_id],
       (messages) => {
         const storedMessage = messages?.find((msg) => msg.id === message.id)
         if (!storedMessage && !!messages) {
