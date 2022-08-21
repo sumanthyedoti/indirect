@@ -47,10 +47,16 @@ app.use('/api/messages', messageRouter)
 app.use('/api/spaces', spaceRouter)
 app.use('/api/channels', channelRouter)
 
-app.use(express.static(path.resolve(__dirname, '../../web', 'dist')))
+const cacheDays = 30
+const cacheAgeInSecs = cacheDays * 24 * 60 * 60
+const webBuildPath = path.resolve(__dirname, '../../web', 'dist')
+app.use(
+  express.static(webBuildPath, {
+    maxAge: cacheAgeInSecs,
+  })
+)
 app.get('*', (req, res) => {
-  res.set('Cache-Control', 'public, max-age=2592000') // 1 month
-  res.sendFile(path.resolve(__dirname, '../../web', 'dist', 'index.html'))
+  res.sendFile(path.resolve(webBuildPath, 'index.html'))
 })
 
 /* web sockets */
