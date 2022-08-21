@@ -43,22 +43,26 @@ const Space: FC = () => {
     if (!spaceParamId || !userSpaces || !space) {
       return
     }
-    /* set space ID from URL param */
-    const userSpace = userSpaces.find((s) => s.id === spaceParamId)
-    if (userSpace) {
-      setSpace(userSpace)
-      setSpaceId(userSpace.id)
+    /* set space state from URL param */
+    const visitedSpace = userSpaces.find((s) => s.id === spaceParamId)
+    const isUserSpace = !!visitedSpace
+    if (isUserSpace) {
+      setSpace(visitedSpace)
+      setSpaceId(visitedSpace.id)
     }
-    if (!userSpace && !space.is_private) {
+    // route to join is the user is not member of the space
+    if (!isUserSpace && !space.is_private) {
       navigate(`./join`, { replace: true })
       return
     }
-    if (!userSpace && space.is_private) {
+    // route to root if user is not a memeber of visited space and it is private
+    if (!isUserSpace && space.is_private) {
       navigate(`/`, { replace: true })
       return
     }
-    if (!params.channelId && userSpace) {
-      navigate(`./${userSpace.general_channel_id}`, { replace: true })
+    // route to general_channel_id if no channel param is visited
+    if (isUserSpace && !params.channelId) {
+      navigate(`./${visitedSpace.general_channel_id}`, { replace: true })
     }
   }, [spaceParamId, userSpaces, isUserSpacesError, space])
 
