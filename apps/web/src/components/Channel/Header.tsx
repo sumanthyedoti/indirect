@@ -65,8 +65,6 @@ const SideHeader: FC = () => {
 
   if (!isSuccess || !user) return null
 
-  console.log({ spaceId })
-
   return (
     <>
       <div

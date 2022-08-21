@@ -5,7 +5,7 @@ import { Message as MessageT } from '@api-types/messages'
 import Header from './Header'
 import { useSocket } from '../../hooks'
 import ChannelMessages from './ChannelMessages'
-import { MessageInput } from '../../components/molecules'
+import MessageInput from './MessageInput'
 import useUserStore from '../../store/useUserStore'
 // import { usePostChannelMessage } from '../../queries'
 
