@@ -72,7 +72,7 @@ const Login: FC = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center h-screen bg-slate-800">
       <Header />
       <AuthForm autoComplete="on" onSubmit={handleSubmit(onSubmit)}>
         <h1>{locationState?.isRegister ? 'Welcome!' : 'Welcome back!'}</h1>

@@ -78,8 +78,9 @@ const Register: FC = () => {
       }
     }
   }
+
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center h-screen bg-slate-800">
       <Header />
       <AuthForm onSubmit={handleSubmit(onSubmit)}>
         <h1>Create an account</h1>

@@ -35,7 +35,7 @@ const Input: FC<Props> = forwardRef<HTMLInputElement, Props>(
         ref={ref}
         className={classnames([
           `px-4 py-2.5 mb-1
-          outline-none bg-gray-700
+          outline-none bg-gray-800
           ring-offset-transparent
           rounded-md focus:ring ring-sky-500`,
           className,

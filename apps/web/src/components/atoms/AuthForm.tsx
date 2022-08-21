@@ -19,7 +19,7 @@ const AuthForm: FC<AuthFormProps> = ({
       onSubmit={onSubmit}
       className={classnames(
         `md:w-2/3 lg:w-2/5 xl:w-1/3 flex flex-col items-center
-                p-10 rounded bg-slate-800`,
+                p-10 rounded bg-slate-700`,
         className
       )}
       {...props}

@@ -46,11 +46,11 @@ const SpacesBar: FC<SpacesBarProps> = () => {
             <button
               onClick={() => onSpaceClick(space.id)}
               className={classnames(
-                `rounded-xl
+                `rounded-xl first:mt-1
                 w-12 h-12 lg:w-14 lg:h-14
-                bg-slate-800 mb-4`,
+                bg-slate-900 mb-4 border border-slate-700`,
                 {
-                  'border-2 border-slate-300 focus:ring-2 focus:ring-sky-400 active:ring-2 active-sky-400':
+                  'border-2 border-slate-400 focus:ring-2 focus:ring-sky-400':
                     space.id === spaceId,
                   'focus:ring-2 focus:ring-sky-400': space.id !== spaceId,
                 }
@@ -65,9 +65,9 @@ const SpacesBar: FC<SpacesBarProps> = () => {
       <Tooltip placement="right" label="Create a new Space">
         <button
           className={`
-          my-2
+          mx-2 my-3
           flex justify-center items-center
-          bg-slate-800
+          bg-slate-900 border border-slate-700
           w-12 h-12 lg:w-14 lg:h-14 shrink-0
           rounded rounded-lg
     `}

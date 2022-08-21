@@ -63,8 +63,8 @@ const JoinSPace: FC = () => {
         >
           <div
             className={`
-          rounded bg-slate-800 text-center
-          w-full px-6 py-8 ring ring-slate-600
+              rounded bg-slate-700 text-center
+              w-full px-6 py-8 ring ring-slate-600
             `}
           >
             <h2 className="mb-0">{space.name}</h2>
