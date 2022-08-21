@@ -43,7 +43,7 @@ const JoinSPace: FC = () => {
       const res = await api.post(`/spaces/${params.spaceId}/users/${user.id}`)
       console.log(res, params.spaceId)
       navigate(`/${params.spaceId}`, { replace: true })
-      queryClient.invalidateQueries(['spaces', user.id])
+      queryClient.invalidateQueries('spaces')
     } catch (err) {
       console.log(err)
       toast.error('Error joining the Space')

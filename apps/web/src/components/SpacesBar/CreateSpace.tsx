@@ -1,8 +1,9 @@
 import React, { useCallback, FC } from 'react'
 import toast from 'react-hot-toast'
 import { useForm } from 'react-hook-form'
-import useUserStore from '../../store/useUserStore'
+import { useUserStore, useSpaceStore } from '../../store'
 import { useQueryClient } from 'react-query'
+import { useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { Dialog } from '@headlessui/react'
@@ -48,9 +49,12 @@ interface Props {
 }
 const CreateSpace: FC<Props> = ({ isOpen, close }) => {
   const { user, setSpaceId } = useUserStore()
+  const { setSpace } = useSpaceStore()
+  const navigate = useNavigate()
   const {
     register,
     setValue,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<CreateSpaceT>({
@@ -77,8 +81,11 @@ const CreateSpace: FC<Props> = ({ isOpen, close }) => {
         }
       )
       queryClient.invalidateQueries('spaces')
-      close()
       setSpaceId(newSpace.id)
+      setSpace(newSpace)
+      navigate(`/${newSpace.id}`)
+      reset()
+      close()
     } catch (err) {
       console.log(err)
       toast.error('Error creating Space', {

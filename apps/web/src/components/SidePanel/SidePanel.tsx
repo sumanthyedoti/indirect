@@ -12,19 +12,22 @@ import {
   Channel as ChannelT,
 } from '@api-types/channels'
 import Modal from '../Modal'
-import { useUserStore, useSpaceStore } from '../../store'
+import { useUserStore } from '../../store'
 import { Plus } from '../../icons'
-import { useQuerySpaceChannels } from '../../queries'
+import { useQuerySpaceChannels, useQuerySpace } from '../../queries'
 import api from '../../axios'
 
 const SidePanel: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [spaceParamId, setSpaceParamId] = useState<number | undefined>(
+    undefined
+  )
   const navigate = useNavigate()
   const params = useParams()
   const queryClient = useQueryClient()
-  const { spaceId, setChannelId } = useUserStore()
-  const { space } = useSpaceStore()
-  const { data: channels, isError } = useQuerySpaceChannels(spaceId)
+  const { setChannelId } = useUserStore()
+  const { data: channels, isError } = useQuerySpaceChannels(spaceParamId)
+  const { data: space } = useQuerySpace(spaceParamId)
 
   const closeModal = () => {
     setIsModalOpen(false)
@@ -33,6 +36,11 @@ const SidePanel: FC = () => {
     e.stopPropagation()
     setIsModalOpen(true)
   }
+
+  useEffect(() => {
+    if (!params.spaceId) return
+    setSpaceParamId(parseInt(params.spaceId))
+  }, [params.spaceId])
 
   useEffect(() => {
     if (isError) {
@@ -56,7 +64,7 @@ const SidePanel: FC = () => {
     }
     // set channel ID if channel exists
     setChannelId(channel.id)
-  }, [params.channelId, channels, isError])
+  }, [params.channelId, channels, isError, space])
 
   const createChannel = useCallback(
     async (data: CreateChannelT) => {
@@ -70,7 +78,7 @@ const SidePanel: FC = () => {
         })
 
         queryClient.setQueryData<ChannelT[] | undefined>(
-          ['channels', spaceId],
+          ['channels', spaceParamId],
           //@ts-ignore
           (channels) => {
             if (!channels) return newChannel
@@ -78,7 +86,7 @@ const SidePanel: FC = () => {
           }
         )
         setIsModalOpen(false)
-        navigate(`/${spaceId}/${newChannel.id}`)
+        navigate(`/${params.spaceId}/${newChannel.id}`)
       } catch (err) {
         console.log(err)
         toast.error('Error creating the Channel', {
@@ -86,7 +94,7 @@ const SidePanel: FC = () => {
         })
       }
     },
-    [spaceId]
+    [spaceParamId]
   )
 
   const handleChannelClick = (id: number) => {

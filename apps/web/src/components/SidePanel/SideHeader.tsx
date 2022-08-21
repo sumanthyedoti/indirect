@@ -32,7 +32,7 @@ const SideHeader: FC = () => {
       await api.delete(`/spaces/${spaceId}/users/${user.id}`)
 
       queryClient.setQueryData<number[] | undefined>(
-        ['spaces', user.id],
+        'spaces',
         //@ts-ignore
         (spaceIds) => spaceIds.filter((id) => id !== space?.id)
       )

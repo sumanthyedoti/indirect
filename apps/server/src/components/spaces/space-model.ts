@@ -23,7 +23,7 @@ async function createSpace(space: T.CreateSpace) {
       trx
     )
     // create a general channel for the Space
-    const channel = await channelModel.createChannel(
+    const generalChannel = await channelModel.createChannel(
       {
         space_id: createdSpace.id,
         name: 'general',
@@ -34,11 +34,14 @@ async function createSpace(space: T.CreateSpace) {
     // add general_channel_id to Space
     await trx('spaces')
       .update({
-        general_channel_id: channel.id,
+        general_channel_id: generalChannel.id,
       })
       .where({ id: createdSpace.id })
     trx.commit()
-    return createdSpace
+    return {
+      ...createdSpace,
+      general_channel_id: generalChannel.id,
+    }
   } catch (err) {
     logger.error('::', err)
     trx.rollback()
