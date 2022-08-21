@@ -36,7 +36,7 @@ const Spaces: FC = () => {
   return (
     <>
       <Header />
-      <div className="container-width">
+      <main className="container-width">
         <div className="flex justify-between mb-6">
           <h1 className="mb-0">Your Spaces</h1>
           <Button
@@ -59,7 +59,7 @@ const Spaces: FC = () => {
           isOpen={isCreateSpaceModalOpen}
           close={() => setIsCreateSpaceModalOpen(false)}
         />
-      </div>
+      </main>
     </>
   )
 }

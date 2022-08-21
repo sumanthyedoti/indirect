@@ -31,7 +31,7 @@ const SpacesBar: FC<SpacesBarProps> = () => {
   return (
     <aside
       className={`flex flex-col items-center
-      mt-3 w-28 lg:w-32
+      mt-3 w-28 lg:w-32 overflow-y-auto
       border-r border-neutral-500
       `}
     >
@@ -65,9 +65,10 @@ const SpacesBar: FC<SpacesBarProps> = () => {
       <Tooltip placement="right" label="Create a new Space">
         <button
           className={`
-          mt-2
+          my-2
           flex justify-center items-center
-          bg-slate-800 w-12 h-12 lg:w-14 lg:h-14
+          bg-slate-800
+          w-12 h-12 lg:w-14 lg:h-14 shrink-0
           rounded rounded-lg
     `}
           aril-lable="Create a new Space"
