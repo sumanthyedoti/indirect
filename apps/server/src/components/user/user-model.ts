@@ -1,6 +1,7 @@
 import * as T from '@api-types/users'
 import { Space as SpaceT } from '@api-types/spaces'
 import db from '../../db'
+import logger from '../../config/logger'
 
 async function createUser(user: T.CreateUser) {
   const { email, fullname, password_hash } = user
@@ -24,6 +25,17 @@ async function getUser(id: number) {
     .select('id', 'email', 'fullname')
     .where({ id })
   return user[0]
+}
+
+async function getUserChannelIds(user_id: number) {
+  try {
+    const result: { id: number }[] = await db('channel_users')
+      .select(db.raw('channel_id as id'))
+      .where({ user_id })
+    return result
+  } catch (err) {
+    logger.error('::', err)
+  }
 }
 
 async function getUserByEmail(email: string) {
@@ -71,4 +83,5 @@ export default {
   updateUser,
   deleteUser,
   getUserSpaces,
+  getUserChannelIds,
 }

@@ -1,6 +1,7 @@
 import { Server } from 'socket.io'
 // import { Message } from '@api-types/messages'
 import channelController from './components/channels/channel-controller'
+import userModel from './components/user/user-model'
 
 const messageServer = (socketio: Server) => {
   socketio.on('connection', (socket) => {
@@ -11,8 +12,13 @@ const messageServer = (socketio: Server) => {
     })
     // }
 
-    socket.on('join-space', (spaceId: number) => {
-      socket.join(`space-${spaceId}`)
+    socket.on('join-channel-rooms', async () => {
+      const userId = socket.request.user?.id
+      if (!userId) return
+      const userChannels = await userModel.getUserChannelIds(userId)
+      userChannels?.forEach(({ id }) => {
+        socket.join(`channel-${id}`)
+      })
     })
 
     socket.on('message', (text, tempId, channelId, spaceId) => {

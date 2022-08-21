@@ -6,9 +6,21 @@ import { Strategy as LocalStrategy } from 'passport-local'
 import userModel from '../components/user/user-model'
 import { logger } from '../config'
 
+// for session
 declare global {
   namespace Express {
     interface User {
+      id: number
+      email: string
+      fullname: string
+    }
+  }
+}
+
+// for socket.io
+declare module 'node:http' {
+  interface IncomingMessage {
+    user?: {
       id: number
       email: string
       fullname: string

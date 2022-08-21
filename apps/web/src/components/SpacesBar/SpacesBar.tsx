@@ -7,7 +7,6 @@ import CreateSpace from './CreateSpace'
 import { Tooltip } from '../molecules'
 import { Space as SpaceIcon, Plus } from '../../icons'
 import { useUserStore } from '../../store'
-import { useSocket } from '../../hooks'
 
 interface SpacesBarProps {
   dummy?: null
@@ -15,7 +14,6 @@ interface SpacesBarProps {
 
 const SpacesBar: FC<SpacesBarProps> = () => {
   const navigate = useNavigate()
-  const socket = useSocket()
   const params = useParams()
   const { user, spaceId } = useUserStore()
   const { data: spaces } = useQueryUserSpaces(user?.id)
@@ -38,7 +36,6 @@ const SpacesBar: FC<SpacesBarProps> = () => {
       `}
     >
       {spaces?.map((space) => {
-        socket.emit('join-space', space.id)
         return (
           <Tooltip
             key={space.id}

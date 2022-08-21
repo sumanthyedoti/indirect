@@ -1,6 +1,7 @@
 import { useEffect, useState, FC } from 'react'
 import toast from 'react-hot-toast'
 import { useParams, useNavigate, Outlet } from 'react-router-dom'
+import { useSocket } from '../hooks'
 
 import SpacesBar from '../components/SpacesBar'
 import SidePanel from '../components/SidePanel'
@@ -21,13 +22,19 @@ const Space: FC = () => {
 
   const params = useParams()
   const navigate = useNavigate()
+  const socket = useSocket()
 
   useAuthPing()
+
+  useEffect(() => {
+    socket.emit('join-channel-rooms')
+  }, [])
 
   useEffect(() => {
     if (!params.spaceId) return
     setSpaceParamId(parseInt(params.spaceId))
   }, [params.spaceId])
+
   useEffect(() => {
     if (isUserSpacesError) {
       navigate('/', { replace: true })
