@@ -7,7 +7,7 @@ import { Dialog } from '@headlessui/react'
 import { ChannelMembers } from '@api-types/channels'
 import useUserStore from '../../store/useUserStore'
 import {
-  useQuerySpaceUsers,
+  useQuerySpaceProfiles,
   useQueryChannel,
   useQueryChannelMembers,
 } from '../../queries'
@@ -32,7 +32,7 @@ const AddPeole: FC<AddPeoleProps> = () => {
   const queryClient = useQueryClient()
   const { spaceId, channelId } = useUserStore()
   const { closeAddPeopleModal, openChannelModal } = useStore()
-  const { data: users } = useQuerySpaceUsers(spaceId)
+  const { data: users } = useQuerySpaceProfiles(spaceId)
   const { data: channel } = useQueryChannel(channelId)
   const { data: channelUserIds } = useQueryChannelMembers(channelId)
   if (!users || !channel || !channelUserIds) return null

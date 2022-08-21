@@ -2,8 +2,11 @@ import { FC } from 'react'
 import classnames from 'classnames'
 import { useUserName } from '../../hooks'
 
-const Avatar: FC = () => {
-  const name = useUserName()
+interface Props {
+  spaceId?: number
+}
+const Avatar: FC<Props> = ({ spaceId }) => {
+  const name = useUserName(spaceId)
 
   if (!name) return null
 

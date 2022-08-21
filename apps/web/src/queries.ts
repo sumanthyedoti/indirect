@@ -35,7 +35,7 @@ type UsersQuery = {
   list: SpaceUser[]
   idMap: Record<string, SpaceUser>
 }
-function useQuerySpaceUsers(spaceId?: number) {
+function useQuerySpaceProfiles(spaceId?: number) {
   return useQuery(
     ['users', spaceId],
     async () => {
@@ -205,7 +205,7 @@ function usePostChannelMessage(channelId?: number) {
 
 export {
   useQueryUserSpaces,
-  useQuerySpaceUsers,
+  useQuerySpaceProfiles,
   useQuerySpaceChannels,
   useQuerySpace,
   useQueryChannel,

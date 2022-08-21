@@ -6,6 +6,7 @@ import { useUserStore } from '../../store'
 
 const Header: FC = () => {
   const { isLoggedIn } = useUserStore()
+
   return (
     <header
       role="banner"

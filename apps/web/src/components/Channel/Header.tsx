@@ -65,6 +65,8 @@ const SideHeader: FC = () => {
 
   if (!isSuccess || !user) return null
 
+  console.log({ spaceId })
+
   return (
     <>
       <div
@@ -83,7 +85,7 @@ const SideHeader: FC = () => {
             <ChevronDown />
           </span>
         </button>
-        <AvatarMenu />
+        <AvatarMenu spaceId={spaceId} />
       </div>
       <Modal
         className="-mt-48"

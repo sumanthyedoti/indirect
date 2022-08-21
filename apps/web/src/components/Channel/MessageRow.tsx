@@ -5,7 +5,7 @@ import MessageDate from '../atoms/MessageDate'
 import Message from '../molecules/Message'
 import useUserStore from '../../store/useUserStore'
 // import useSocket from '../../hooks/useSocket'
-import { useQuerySpaceUsers } from '../../queries'
+import { useQuerySpaceProfiles } from '../../queries'
 
 interface MessageRowProps {
   index: number
@@ -19,7 +19,7 @@ const MessageRow: FC<MessageRowProps> = memo(
   ({ index: i, message, previousMessageDate, style, setRowHeight }: any) => {
     const rowRef = useRef<HTMLDivElement>(null)
     const { spaceId } = useUserStore()
-    const { data: users } = useQuerySpaceUsers(spaceId)
+    const { data: users } = useQuerySpaceProfiles(spaceId)
     useEffect(() => {
       if (rowRef.current) {
         setRowHeight(i, rowRef.current.clientHeight)

@@ -7,7 +7,7 @@ import { useUserStore, useSpaceStore } from '../../store'
 import {
   useQueryChannel,
   useQueryChannelMembers,
-  useQuerySpaceUsers,
+  useQuerySpaceProfiles,
   useRemoveChannelMember,
 } from '../../queries'
 import { AddPeople, Close } from '../../icons'
@@ -95,7 +95,7 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
   const { space } = useSpaceStore()
   const { closeChannelModal, activeChannelTab, setActiveChannelTab } =
     useStore()
-  const { data: users } = useQuerySpaceUsers(spaceId)
+  const { data: users } = useQuerySpaceProfiles(spaceId)
   const { data: channel } = useQueryChannel(channelId)
   const { data: channelUserIds } = useQueryChannelMembers(channelId)
   const { mutate: removeMember } = useRemoveChannelMember(channelId)

@@ -10,12 +10,13 @@ import { useUserName } from '../hooks'
 import api from '../axios'
 
 interface AvatarMenuProps {
+  spaceId?: number
   className?: null
 }
 
-const AvatarMenu: FC<AvatarMenuProps> = () => {
+const AvatarMenu: FC<AvatarMenuProps> = ({ spaceId }) => {
   const { logout } = useUserStore()
-  const name = useUserName()
+  const name = useUserName(spaceId)
   const handleLogout = async () => {
     try {
       await api.delete('/logout')
@@ -30,7 +31,7 @@ const AvatarMenu: FC<AvatarMenuProps> = () => {
       <Tooltip label={name} arrow={false} placement="bottom">
         <Popover.Button className="ring-offset-1 ring-offset-slate-700">
           <div className="w-8 h-8">
-            <Avatar />
+            <Avatar spaceId={spaceId} />
           </div>
         </Popover.Button>
       </Tooltip>
