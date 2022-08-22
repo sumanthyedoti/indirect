@@ -1,5 +1,6 @@
 import { useCallback, useEffect, FC } from 'react'
 import { useQueryClient } from 'react-query'
+import { Descendant } from 'slate'
 
 import { Message as MessageT } from '@api-types/messages'
 import Header from './Header'
@@ -10,7 +11,11 @@ import useUserStore from '../../store/useUserStore'
 // import { usePostChannelMessage } from '../../queries'
 
 const Channel: FC = () => {
-  const { user, channelId, spaceId } = useUserStore()
+  const {
+    // user,
+    channelId,
+    // spaceId
+  } = useUserStore()
   const queryClient = useQueryClient()
   const socket = useSocket()
   // const { mutate: postMessage } = usePostChannelMessage(channelId)
@@ -53,25 +58,27 @@ const Channel: FC = () => {
   }
 
   const handleMessageSubmit = useCallback(
-    (text: string) => {
-      const tempId = Date.now()
-      queryClient.setQueryData<MessageT[] | undefined>(
-        ['channel-messages', channelId],
-        (oldData) => {
-          return [
-            //@ts-ignore
-            ...oldData,
-            {
-              id: tempId,
-              text,
-              sender_id: user.id,
-              channel_id: channelId,
-              created_at: Date.now(),
-            },
-          ]
-        }
-      )
-      socket.emit('message', text, tempId, channelId, spaceId)
+    (input: Descendant[]) => {
+      console.log(input)
+
+      // const tempId = Date.now()
+      // queryClient.setQueryData<MessageT[] | undefined>(
+      //   ['channel-messages', channelId],
+      //   (oldData) => {
+      //     return [
+      //       //@ts-ignore
+      //       ...oldData,
+      //       {
+      //         id: tempId,
+      //         text,
+      //         sender_id: user.id,
+      //         channel_id: channelId,
+      //         created_at: Date.now(),
+      //       },
+      //     ]
+      //   }
+      // )
+      // socket.emit('message', text, tempId, channelId, spaceId)
     },
     [channelId, socket]
   )
