@@ -101,11 +101,10 @@ const MessageInput: FC<MessageAreaProps> = ({ onSubmit, className }) => {
     e.preventDefault()
     onSubmit(input)
     editor.history = { redos: [], undos: [] } // clean up history
-    editor.apply({
-      type: 'remove_node',
-      path: [0, 0],
-      node: {
-        text: 'A line of text!',
+    Transforms.delete(editor, {
+      at: {
+        anchor: Editor.start(editor, []),
+        focus: Editor.end(editor, []),
       },
     })
     setInput(initialValue)
@@ -125,27 +124,7 @@ const MessageInput: FC<MessageAreaProps> = ({ onSubmit, className }) => {
 
   return (
     <div className={classnames(className)}>
-      <Slate editor={editor} value={input}>
-        <div className="flex space-x-2">
-          <button
-            className="w-6 h-6 font-bold border"
-            onClick={(event) => {
-              event.preventDefault()
-              CustomEditor.toggleBoldMark(editor)
-            }}
-          >
-            B
-          </button>
-          <button
-            className="w-6 h-6 font-bold border"
-            onClick={(event) => {
-              event.preventDefault()
-              CustomEditor.toggleCodeBlock(editor)
-            }}
-          >
-            ```
-          </button>
-        </div>
+      <Slate editor={editor} value={input} onChange={setInput}>
         <Editable
           placeholder="Hi there.."
           className={`
