@@ -12,6 +12,14 @@ export interface Message extends Info {
   created_at: Date
 }
 
+export interface SocketMessage {
+  html: string
+  json_stringified: string
+  tempId: number
+  channelId: number
+  spaceId: number
+}
+
 export enum Constraints {
   html = 6000,
   json_stringified = 6000,

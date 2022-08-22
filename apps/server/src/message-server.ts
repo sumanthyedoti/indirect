@@ -1,5 +1,5 @@
 import { Server } from 'socket.io'
-// import { Message } from '@api-types/messages'
+import { SocketMessage as SocketMessageT } from '@api-types/messages'
 import channelController from './components/channels/channel-controller'
 import userModel from './components/user/user-model'
 
@@ -21,18 +21,9 @@ const messageServer = (socketio: Server) => {
       })
     })
 
-    socket.on(
-      'message',
-      (html, json_stringified, tempId, channelId, spaceId) => {
-        channelController.createChannelMessageOnSocket(socket, socketio, {
-          html,
-          json_stringified,
-          tempId,
-          channelId,
-          spaceId,
-        })
-      }
-    )
+    socket.on('message', (message: SocketMessageT) => {
+      channelController.createChannelMessageOnSocket(socket, socketio, message)
+    })
   })
 }
 

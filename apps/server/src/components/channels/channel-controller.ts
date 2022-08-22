@@ -2,6 +2,7 @@ import { Response } from 'express'
 import { Socket, Server } from 'socket.io'
 
 import * as T from '@api-types/channels'
+import { SocketMessage as SocketMessageT } from '@api-types/messages'
 import channelModel from './channel-model'
 import spaceModel from '../spaces/space-model'
 import {
@@ -237,42 +238,46 @@ async function createChannelMessage(
 async function createChannelMessageOnSocket(
   socket: Socket,
   io: Server,
-  {
-    html,
-    json_stringified,
-    tempId,
-    channelId,
-    spaceId,
-  }: {
-    html: string
-    json_stringified: string
-    tempId: number
-    channelId: number
-    spaceId: number
-  }
+  message: SocketMessageT
 ) {
   try {
     //@ts-ignore
     const userId = socket.request.user.id
     if (!userId) {
-      io.to(`space-${spaceId}`).emit('message-failed', tempId, channelId)
+      io.to(`space-${message.spaceId}`).emit(
+        'message-failed',
+        message.tempId,
+        message.channelId
+      )
       return
     }
     const result = await channelModel.createChannelMessage({
-      html,
-      json_stringified,
+      html: message.html,
+      json_stringified: message.json_stringified,
       sender_id: userId,
-      channel_id: channelId,
+      channel_id: message.channelId,
       personal_channel_id: null,
     })
     if (!result) {
-      io.to(`channel-${channelId}`).emit('message-failed', tempId, channelId)
+      io.to(`channel-${message.channelId}`).emit(
+        'message-failed',
+        message.tempId,
+        message.channelId
+      )
       return
     }
-    io.to(`channel-${channelId}`).emit('message-success', tempId, result)
+    io.to(`channel-${message.channelId}`).emit(
+      'message-success',
+      message.tempId,
+      result
+    )
   } catch (err) {
     logger.error('::', err)
-    io.to(`space-${spaceId}`).emit('message-failed', channelId, tempId)
+    io.to(`space-${message.spaceId}`).emit(
+      'message-failed',
+      message.channelId,
+      message.tempId
+    )
   }
 }
 
