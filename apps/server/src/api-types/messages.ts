@@ -1,5 +1,6 @@
 interface Info {
-  text: string | null
+  html: string | null
+  json_stringified: string | null
   sender_id: number
   channel_id: number | null
   personal_channel_id: number | null
@@ -12,5 +13,6 @@ export interface Message extends Info {
 }
 
 export enum Constraints {
-  text = 3000,
+  html = 6000,
+  json_stringified = 6000,
 }

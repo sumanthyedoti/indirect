@@ -64,7 +64,7 @@ const Channel: FC = () => {
           ]
         }
       )
-      socket.emit('message', input, tempId, channelId)
+      socket.emit('message', JSON.stringify(input), tempId, channelId)
     },
     [channelId, socket]
   )

@@ -126,6 +126,9 @@ const MessageInput: FC<MessageAreaProps> = ({ onSubmit, className }) => {
     <div className={classnames(className)}>
       <Slate editor={editor} value={input} onChange={setInput}>
         <Editable
+          onChange={(x) => {
+            console.log({ x })
+          }}
           placeholder="Hi there.."
           className={`
           w-full bg-slate-700 grow

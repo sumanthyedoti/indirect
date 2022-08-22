@@ -21,14 +21,18 @@ const messageServer = (socketio: Server) => {
       })
     })
 
-    socket.on('message', (text, tempId, channelId, spaceId) => {
-      channelController.createChannelMessageOnSocket(socket, socketio, {
-        text,
-        tempId,
-        channelId,
-        spaceId,
-      })
-    })
+    socket.on(
+      'message',
+      (html, json_stringified, tempId, channelId, spaceId) => {
+        channelController.createChannelMessageOnSocket(socket, socketio, {
+          html,
+          json_stringified,
+          tempId,
+          channelId,
+          spaceId,
+        })
+      }
+    )
   })
 }
 

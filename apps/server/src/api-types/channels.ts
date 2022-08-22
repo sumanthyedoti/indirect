@@ -27,7 +27,8 @@ export interface CreateChannelMembers {
 }
 
 export interface CreateChannelMessage {
-  text: string | null
+  html: string | null
+  json_stringified: string | null
 }
 
 export type ChannelMembers = number[]

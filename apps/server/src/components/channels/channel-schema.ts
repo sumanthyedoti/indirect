@@ -74,14 +74,20 @@ const createChannelMembersScheme: JSONSchemaType<CreateChannelMembers> = {
 const createChannelMessageScheme: JSONSchemaType<CreateChannelMessage> = {
   type: 'object',
   properties: {
-    text: {
+    html: {
       type: 'string',
       minLength: 1,
-      maxLength: MessageConstraints.text,
+      maxLength: MessageConstraints.html,
+      transform: ['trim'],
+    },
+    json_stringified: {
+      type: 'string',
+      minLength: 1,
+      maxLength: MessageConstraints.json_stringified,
       transform: ['trim'],
     },
   },
-  required: ['text'],
+  required: ['html', 'json_stringified'],
   // additionalProperties: false,
 }
 

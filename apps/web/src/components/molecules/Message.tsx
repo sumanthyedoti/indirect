@@ -34,7 +34,10 @@ const Message: FC<MessageProps> = ({
           {time.format('hh:mm a')}
         </time>
       </p>
-      <p className="leading-5">{message.text}</p>
+      <div
+        className="leading-5"
+        dangerouslySetInnerHTML={{ __html: message.html || '' }}
+      />
     </section>
   )
 }
