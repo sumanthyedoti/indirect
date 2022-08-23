@@ -26,7 +26,13 @@ const Channel: FC = () => {
     }
   }, [])
 
-  const onMessageFail = (tempId: number, channelId: number) => {
+  const onMessageFail = ({
+    tempId,
+    channelId,
+  }: {
+    tempId: number
+    channelId: number
+  }) => {
     console.log('message-failed')
     queryClient.setQueryData<MessageT[] | undefined>(
       ['channel-messages', channelId],
@@ -34,7 +40,13 @@ const Channel: FC = () => {
     )
   }
 
-  const onMessageSuccess = (tempId: number, message: MessageT) => {
+  const onMessageSuccess = ({
+    tempId,
+    message,
+  }: {
+    tempId: number
+    message: MessageT
+  }) => {
     console.log('message-success')
     // queryClient.invalidateQueries(['channel-messages', channelId])
     queryClient.setQueryData<MessageT[] | undefined>(
@@ -81,10 +93,11 @@ const Channel: FC = () => {
         tempId,
         channelId,
       }
-      socket.emit('message', JSON.stringify(input), tempId, message)
+      socket.emit('message', message)
     },
     [channelId, socket]
   )
+
   return (
     <div
       className={`

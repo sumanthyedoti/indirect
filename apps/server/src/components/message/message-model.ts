@@ -9,7 +9,7 @@ async function createMessage(message: T.CreateMessage): Promise<T.Message> {
       sender_id,
       channel_id,
     })
-    .returning(['id', 'text', 'sender_id', 'channel_id', 'created_at'])
+    .returning(['id', 'html', 'sender_id', 'channel_id', 'created_at'])
   return savedMessage
 }
 

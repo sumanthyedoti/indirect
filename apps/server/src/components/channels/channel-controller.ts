@@ -243,11 +243,10 @@ async function createChannelMessageOnSocket(
     //@ts-ignore
     const userId = socket.request.user.id
     if (!userId) {
-      io.to(`channel-${message.channelId}`).emit(
-        'message-failed',
-        message.tempId,
-        message.channelId
-      )
+      io.to(`channel-${message.channelId}`).emit('message-failed', {
+        tempId: message.tempId,
+        channelId: message.channelId,
+      })
       return
     }
     const result = await channelModel.createChannelMessage({
@@ -257,25 +256,22 @@ async function createChannelMessageOnSocket(
       personal_channel_id: null,
     })
     if (!result) {
-      io.to(`channel-${message.channelId}`).emit(
-        'message-failed',
-        message.tempId,
-        message.channelId
-      )
+      io.to(`channel-${message.channelId}`).emit('message-failed', {
+        tempId: message.tempId,
+        channelId: message.channelId,
+      })
       return
     }
-    io.to(`channel-${message.channelId}`).emit(
-      'message-success',
-      message.tempId,
-      result
-    )
+    io.to(`channel-${message.channelId}`).emit('message-success', {
+      tempId: message.tempId,
+      message: result,
+    })
   } catch (err) {
     logger.error('::', err)
-    io.to(`channel-${message.channelId}`).emit(
-      'message-failed',
-      message.channelId,
-      message.tempId
-    )
+    io.to(`channel-${message.channelId}`).emit('message-failed', {
+      tempId: message.tempId,
+      channelId: message.channelId,
+    })
   }
 }
 
