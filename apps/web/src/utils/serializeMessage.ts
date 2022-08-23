@@ -7,6 +7,7 @@ const serializeNode = (node: any) => {
     if (node.bold) {
       return `<strong>${string}</strong>`
     }
+    if (!Node.string(node).length) return `<br />`
     return `<span>${string}</span>`
   }
   //@ts-ignore
@@ -28,6 +29,7 @@ const serializeNode = (node: any) => {
 const serializeMessage = (nodes: any) => {
   const htmlElements: any = []
   let conseqEmptyLines = 0
+  let contentStarted = false
   for (let i = 0; i < nodes.length; i++) {
     const length = Node.string(nodes[i]).length
     if (!length) {
@@ -37,6 +39,7 @@ const serializeMessage = (nodes: any) => {
       continue
     }
     if (length) {
+      contentStarted = true
       conseqEmptyLines = 0
     }
     const preChildren = []
@@ -46,7 +49,7 @@ const serializeMessage = (nodes: any) => {
     if (preChildren.length) {
       htmlElements.push(`<pre>${preChildren.join('<br/>')}</pre>`)
     }
-    nodes[i] && htmlElements.push(serializeNode(nodes[i]))
+    contentStarted && htmlElements.push(serializeNode(nodes[i]))
   }
   return htmlElements.join('')
 }
