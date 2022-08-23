@@ -164,7 +164,7 @@ async function addUserToSpace(
     const { id, uid } = req.params
     const result = await spaceModel.createProfile({
       //@ts-ignore
-      user_id: parseInt(uid),
+      user_id: uid,
       space_id: id,
     })
     if (!result) {
@@ -185,7 +185,7 @@ async function deleteUserFromSpace(
   try {
     const { id, uid } = req.params
     //@ts-ignore
-    const result = await profileModel.deleteProfile(id, parseInt(uid))
+    const result = await profileModel.deleteProfile(id, uid)
     if (!result) {
       res.status(404).json({ id, message: 'Space/User not found' })
       return

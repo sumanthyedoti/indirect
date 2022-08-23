@@ -7,7 +7,11 @@ import {
   invitesToSpaceSchemeValidator,
 } from './space-schema'
 import spaceController from './space-controller'
-import { isAuthenticated, validateSchema } from '../../middlewares'
+import {
+  isAuthenticated,
+  validateSchema,
+  validateParams,
+} from '../../middlewares'
 
 const router = express.Router()
 
@@ -20,9 +24,20 @@ router.post(
 )
 router.get('/:id', validateIdParam, spaceController.getSpace)
 router.get('/:id/channels', validateIdParam, spaceController.getSpaceChannels)
+router.get('/:id/channels', validateIdParam, spaceController.getSpaceChannels)
 router.get('/:id/users', validateIdParam, spaceController.getSpaceUsers)
-router.post('/:id/users/:uid', spaceController.addUserToSpace)
-router.delete('/:id/users/:uid', spaceController.deleteUserFromSpace)
+router.post(
+  '/:id/users/:uid',
+  validateParams(['id', 'uid']),
+  //@ts-ignore
+  spaceController.addUserToSpace
+)
+router.delete(
+  '/:id/users/:uid',
+  validateParams(['id', 'uid']),
+  //@ts-ignore
+  spaceController.deleteUserFromSpace
+)
 router.put(
   '/:id',
   // @ts-ignore

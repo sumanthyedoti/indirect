@@ -27,7 +27,7 @@ export const expressSessionMiddleware: RequestHandler = session({
 })
 
 export function validateIdParam(
-  req: TypedRequestParams<{ id: number; uid?: number }>,
+  req: TypedRequestParams<{ id: number }>,
   res: Response,
   next: NextFunction
 ) {
@@ -40,6 +40,20 @@ export function validateIdParam(
   res.status(422).json({ message: "'id' is not valid" })
   return
 }
+
+export const validateParams =
+  (params: string[]) => (req: Request, res: Response, next: NextFunction) => {
+    params.forEach((p) => {
+      const id = Number(req.params[p])
+      if (!id) {
+        res.status(422).json({ message: `${p} ${req.params[p]} is not valid` })
+        return
+      }
+      //@ts-ignore
+      req.params[p] = id
+    })
+    return next()
+  }
 
 export function validateSchema(ajvValidate: ValidateFunction) {
   return (req: Request, res: Response, next: NextFunction) => {
