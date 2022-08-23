@@ -243,7 +243,7 @@ async function createChannelMessageOnSocket(
     //@ts-ignore
     const userId = socket.request.user.id
     if (!userId) {
-      io.to(`space-${message.spaceId}`).emit(
+      io.to(`channel-${message.channelId}`).emit(
         'message-failed',
         message.tempId,
         message.channelId
@@ -271,7 +271,7 @@ async function createChannelMessageOnSocket(
     )
   } catch (err) {
     logger.error('::', err)
-    io.to(`space-${message.spaceId}`).emit(
+    io.to(`channel-${message.channelId}`).emit(
       'message-failed',
       message.channelId,
       message.tempId

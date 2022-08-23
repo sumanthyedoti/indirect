@@ -2,7 +2,10 @@ import { useCallback, useEffect, FC } from 'react'
 import { useQueryClient } from 'react-query'
 import { serializeMessage } from '../../utils'
 
-import { Message as MessageT } from '@api-types/messages'
+import {
+  Message as MessageT,
+  SocketMessage as SocketMessageT,
+} from '@api-types/messages'
 import Header from './Header'
 import { useSocket } from '../../hooks'
 import ChannelMessages from './ChannelMessages'
@@ -48,6 +51,7 @@ const Channel: FC = () => {
 
   const handleMessageSubmit = useCallback(
     (input: any[]) => {
+      if (!channelId) return
       const html = serializeMessage(input)
 
       const tempId = Date.now()
@@ -72,7 +76,12 @@ const Channel: FC = () => {
           ]
         }
       )
-      socket.emit('message', JSON.stringify(input), tempId, channelId)
+      const message: SocketMessageT = {
+        html,
+        tempId,
+        channelId,
+      }
+      socket.emit('message', JSON.stringify(input), tempId, message)
     },
     [channelId, socket]
   )

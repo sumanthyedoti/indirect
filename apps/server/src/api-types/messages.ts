@@ -15,7 +15,6 @@ export interface SocketMessage {
   html: string
   tempId: number
   channelId: number
-  spaceId: number
 }
 
 export enum Constraints {
