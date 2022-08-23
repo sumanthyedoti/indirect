@@ -31,6 +31,9 @@ async function createSpace(space: T.CreateSpace) {
       },
       trx
     )
+    if (!generalChannel) {
+      throw new Error('Channel alredy exists')
+    }
     // add general_channel_id to Space
     await trx('spaces')
       .update({

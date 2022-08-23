@@ -88,7 +88,12 @@ const SidePanel: FC = () => {
         setIsModalOpen(false)
         navigate(`/${params.spaceId}/${newChannel.id}`)
       } catch (err) {
-        console.log(err)
+        if (err.response.code === 409) {
+          toast.error('Channel with the name already exists in the space', {
+            id: 'post-channel-name-error',
+          })
+          return
+        }
         toast.error('Error creating the Channel', {
           id: 'post-channel-error',
         })

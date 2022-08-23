@@ -7,9 +7,9 @@ const messageServer = (socketio: Server) => {
   socketio.on('connection', (socket) => {
     console.log('a user connected ', socket.id)
     // if (process.env.NODE_ENV === 'development') {
-    socket.onAny((event, ...args) => {
-      console.log('💬 log:: ', event, args)
-    })
+    //   socket.onAny((event, ...args) => {
+    //     console.log('💬 log:: ', event, args)
+    //   })
     // }
 
     socket.on('join-channel-rooms', async () => {

@@ -12,6 +12,13 @@ async function createChannel(
   channel: T.CreateChannel,
   queryTrx: Knex.Transaction | Knex = db
 ) {
+  const spaceChannelNames: { name: string }[] = await db('channels')
+    .select('name')
+    .where({ space_id: channel.space_id })
+  if (spaceChannelNames.some((ch) => ch.name === channel.name)) {
+    return null
+  }
+
   const [createdChannel]: T.Channel[] = await queryTrx('channels')
     .insert(channel)
     .returning('*')

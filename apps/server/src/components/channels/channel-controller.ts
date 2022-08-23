@@ -21,9 +21,15 @@ async function createChannel(
   res: Response
 ) {
   try {
-    const channel = await channelModel.createChannel(req.body)
+    const result = await channelModel.createChannel(req.body)
+    if (!result) {
+      res.status(409).json({
+        message: 'Channel with the name already exists in the space',
+      })
+      return
+    }
     res.status(201).json({
-      data: channel,
+      data: result,
       message: 'Created the channel successfully!',
     })
   } catch (err) {
