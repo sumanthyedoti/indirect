@@ -13,6 +13,7 @@ specifiers:
   '@pmmmwh/react-refresh-webpack-plugin': ^0.5.7
   '@tailwindcss/nesting': 0.0.0-insiders.565cd3e
   '@tippyjs/react': ^4.2.6
+  '@types/escape-html': ^1.0.2
   '@types/node': ^18.0.0
   '@types/react': ^18.0.14
   '@types/react-dom': ^18.0.5
@@ -28,6 +29,7 @@ specifiers:
   cssnano: ^5.1.12
   csstype: ^3.1.0
   dayjs: ^1.11.3
+  escape-html: ^1.0.3
   eslint: ^8.18.0
   eslint-config-prettier: ^8.5.0
   eslint-plugin-jsx-a11y: ^6.6.0
@@ -80,6 +82,7 @@ dependencies:
   axios: 0.27.2
   classnames: 2.3.1
   dayjs: 1.11.3
+  escape-html: 1.0.3
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.33.1_react@18.2.0
@@ -105,6 +108,7 @@ devDependencies:
   '@babel/runtime': 7.18.3
   '@pmmmwh/react-refresh-webpack-plugin': 0.5.7_g5otyhka3xgu4m6o2r25nvx6tm
   '@tailwindcss/nesting': 0.0.0-insiders.565cd3e_postcss@8.4.14
+  '@types/escape-html': 1.0.2
   '@types/node': 18.0.0
   '@types/react': 18.0.14
   '@types/react-dom': 18.0.5
@@ -1702,6 +1706,10 @@ packages:
     resolution: {integrity: sha512-cdeYyv4KWoEgpBISTxWvqYsVy444DOqehiF3fM3ne10AmJ62RSyNkUnxMJXHQWRQQX2eR94m5y1IZyDwBjV9FQ==}
     dependencies:
       '@types/node': 18.0.0
+    dev: true
+
+  /@types/escape-html/1.0.2:
+    resolution: {integrity: sha512-gaBLT8pdcexFztLSPRtriHeXY/Kn4907uOCZ4Q3lncFBkheAWOuNt53ypsF8szgxbEJ513UeBzcf4utN0EzEwA==}
     dev: true
 
   /@types/eslint-scope/3.7.3:
@@ -3349,7 +3357,6 @@ packages:
 
   /escape-html/1.0.3:
     resolution: {integrity: sha512-NiSupZ4OeuGwr68lGIeym/ksIZMJodUGOSCZ/FSnTxcrekbvqrgdUxlJOMpijaKZVjAJrWrGs/6Jy8OMuyj9ow==}
-    dev: true
 
   /escape-string-regexp/1.0.5:
     resolution: {integrity: sha512-vbRorB5FUQWvla16U8R/qgaFIya2qGzwDrNmCZuYKrbdSUMG6I1ZCGQRefkRVhuOkIGVne7BQ35DSfo1qvJqFg==}

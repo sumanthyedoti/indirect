@@ -1,4 +1,4 @@
-import { useState, useCallback, FC } from 'react'
+import { useState, FC } from 'react'
 import classnames from 'classnames'
 import {
   createEditor,
@@ -83,6 +83,18 @@ const Leaf = (props: any) => {
   )
 }
 
+const renderElement = (props: any) => {
+  switch (props.element.type) {
+    case 'code':
+      return <CodeElement {...props} />
+    default:
+      return <DefaultElement {...props} />
+  }
+}
+const renderLeaf = (props: any) => {
+  return <Leaf {...props} />
+}
+
 const initialValue: Descendant[] = [
   {
     type: 'paragraph',
@@ -110,18 +122,6 @@ const MessageInput: FC<MessageAreaProps> = ({ onSubmit, className }) => {
     setInput(initialValue)
   }
 
-  const renderElement = useCallback((props: any) => {
-    switch (props.element.type) {
-      case 'code':
-        return <CodeElement {...props} />
-      default:
-        return <DefaultElement {...props} />
-    }
-  }, [])
-  const renderLeaf = useCallback((props: any) => {
-    return <Leaf {...props} />
-  }, [])
-
   return (
     <div className={classnames(className)}>
       <Slate editor={editor} value={input} onChange={setInput}>
@@ -130,12 +130,13 @@ const MessageInput: FC<MessageAreaProps> = ({ onSubmit, className }) => {
             console.log({ x })
           }}
           placeholder="Hi there.."
+          id="slate-editable"
           className={`
-          w-full bg-slate-700 grow
-          px-3 py-2
-          border border-gray-600 focus:border-gray-400
-          outline-none
-          rounded
+            w-full bg-slate-700 grow
+            px-3 py-2
+            border border-gray-600 focus:border-gray-400
+            outline-none
+            rounded
         `}
           renderElement={renderElement}
           renderLeaf={renderLeaf}

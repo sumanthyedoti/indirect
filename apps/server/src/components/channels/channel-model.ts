@@ -117,7 +117,8 @@ async function getChannelMessages(id: number) {
   const result: MessageT[] = await db
     .select(
       'id',
-      'text',
+      'html',
+      'json_stringified',
       'sender_id',
       'channel_id',
       // 'conversation_id',

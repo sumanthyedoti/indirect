@@ -1,6 +1,7 @@
 import { useCallback, useEffect, FC } from 'react'
 import { useQueryClient } from 'react-query'
-import { Descendant } from 'slate'
+import escapeHtml from 'escape-html'
+import { Text } from 'slate'
 
 import { Message as MessageT } from '@api-types/messages'
 import Header from './Header'
@@ -45,18 +46,75 @@ const Channel: FC = () => {
     )
   }
 
+  const serializeNode = (node: any) => {
+    if (Text.isText(node)) {
+      let string = escapeHtml(node.text)
+      if (node.bold) {
+        string = `<strong>${string}</strong>`
+      }
+      return string
+    }
+    //@ts-ignore
+    const children = node.children.map((n: any) => serializeNode(n)).join('')
+
+    switch (node.type) {
+      case 'quote':
+        return `<blockquote><p>${children}</p></blockquote>`
+      case 'paragraph':
+        return `<p>${children}</p>`
+      case 'code':
+        return `<code>${children}</code>`
+      case 'link':
+        return `<a href="${escapeHtml(node.url)}">${children}</a>`
+      default:
+        return children
+    }
+  }
+  const serializeNodes = (nodes: any) => {
+    const htmlElements: any = []
+    for (let i = 0; i < nodes.length; ) {
+      const preChildren = []
+      for (; nodes[i]?.type === 'code'; i++) {
+        preChildren.push(serializeNode(nodes[i]))
+      }
+      if (preChildren.length) {
+        htmlElements.push(`<pre>${preChildren.join('<br/>')}</pre>`)
+      }
+      nodes[i] && htmlElements.push(serializeNode(nodes[i]))
+      i++
+    }
+    return htmlElements.join('')
+  }
+
   const handleMessageSubmit = useCallback(
-    (input: Descendant[]) => {
+    (input: any[]) => {
+      console.log(input)
+      const html = serializeNodes(input)
+
       const tempId = Date.now()
       queryClient.setQueryData<MessageT[] | undefined>(
         ['channel-messages', channelId],
+        //@ts-ignore
         (oldData) => {
+          if (!oldData) {
+            return [
+              {
+                id: tempId,
+                html,
+                json_stringified: JSON.stringify(input),
+                sender_id: user.id,
+                channel_id: channelId,
+                created_at: Date.now(),
+              },
+            ]
+          }
           return [
             //@ts-ignore
             ...oldData,
             {
               id: tempId,
-              text: JSON.stringify(input),
+              html,
+              json_stringified: JSON.stringify(input),
               sender_id: user.id,
               channel_id: channelId,
               created_at: Date.now(),
