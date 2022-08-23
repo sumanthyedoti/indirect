@@ -48,24 +48,24 @@ const Channel: FC = () => {
 
   const serializeNode = (node: any) => {
     if (Text.isText(node)) {
-      let string = escapeHtml(node.text)
+      const string = escapeHtml(node.text)
       if (node.bold) {
-        string = `<strong>${string}</strong>`
+        return `<strong>${string}</strong>`
       }
-      return string
+      return `<span>${string}</span>`
     }
     //@ts-ignore
     const children = node.children.map((n: any) => serializeNode(n)).join('')
 
     switch (node.type) {
-      case 'quote':
-        return `<blockquote><p>${children}</p></blockquote>`
       case 'paragraph':
         return `<p>${children}</p>`
       case 'code':
         return `<code>${children}</code>`
-      case 'link':
-        return `<a href="${escapeHtml(node.url)}">${children}</a>`
+      // case 'quote':
+      //   return `<blockquote><p>${children}</p></blockquote>`
+      // case 'link':
+      //   return `<a href="${escapeHtml(node.url)}">${children}</a>`
       default:
         return children
     }
@@ -86,10 +86,57 @@ const Channel: FC = () => {
     return htmlElements.join('')
   }
 
+  const deserializeHtmlToSlate = (html: string) => {
+    const dom = document.createElement('div')
+    const json = []
+    dom.innerHTML = html
+
+    const deserializeNode = (el: any) => {
+      if (el.tagName === 'SPAN') {
+        return { text: el.innerText }
+      }
+      if (el.tagName === 'STRONG') {
+        return { text: el.innerText, bold: true }
+      }
+      const children: any[] = []
+      for (const child of el.children) {
+        children.push(deserializeNode(child))
+      }
+
+      switch (el.tagName) {
+        case 'P':
+          return {
+            type: 'paragraph',
+            children,
+          }
+        case 'CODE':
+          return {
+            type: 'code',
+            children,
+          }
+        default:
+          return children
+      }
+    }
+
+    for (const el of dom.children) {
+      if (el.tagName === 'PRE') {
+        for (const child of el.children) {
+          json.push(deserializeNode(child))
+        }
+      } else {
+        json.push(deserializeNode(el))
+      }
+    }
+    console.log(json)
+  }
+
   const handleMessageSubmit = useCallback(
     (input: any[]) => {
       console.log(input)
       const html = serializeNodes(input)
+      deserializeHtmlToSlate(html)
+      console.log(html)
 
       const tempId = Date.now()
       queryClient.setQueryData<MessageT[] | undefined>(
