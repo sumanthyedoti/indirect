@@ -3,29 +3,28 @@ import { Text } from 'slate'
 
 const serializeNode = (node: any) => {
   if (Text.isText(node)) {
-    let string = escapeHtml(node.text)
+    const string = escapeHtml(node.text)
     if (node.bold) {
-      string = `<strong>${string}</strong>`
+      return `<strong>${string}</strong>`
     }
-    return string
+    return `<span>${string}</span>`
   }
   //@ts-ignore
   const children = node.children.map((n: any) => serializeNode(n)).join('')
 
   switch (node.type) {
-    case 'quote':
-      return `<blockquote><p>${children}</p></blockquote>`
     case 'paragraph':
       return `<p>${children}</p>`
     case 'code':
       return `<code>${children}</code>`
-    case 'link':
-      return `<a href="${escapeHtml(node.url)}">${children}</a>`
+    // case 'quote':
+    //   return `<blockquote><p>${children}</p></blockquote>`
+    // case 'link':
+    //   return `<a href="${escapeHtml(node.url)}">${children}</a>`
     default:
       return children
   }
 }
-
 const serializeMessage = (nodes: any) => {
   const htmlElements: any = []
   for (let i = 0; i < nodes.length; ) {
