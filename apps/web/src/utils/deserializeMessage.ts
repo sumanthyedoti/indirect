@@ -29,7 +29,9 @@ const deserializeMessage = (html: string) => {
   const dom = document.createElement('div')
   const json = []
   dom.innerHTML = html
-
+  if (!dom.children.length) {
+    json.push({ text: 'paragraph', children: { text: dom.innerText } })
+  }
   for (const el of dom.children) {
     if (el.tagName === 'PRE') {
       for (const child of el.children) {

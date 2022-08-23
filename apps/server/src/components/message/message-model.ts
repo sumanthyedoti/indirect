@@ -2,11 +2,10 @@ import * as T from '@api-types/messages'
 import db from '../../db'
 
 async function createMessage(message: T.CreateMessage): Promise<T.Message> {
-  const { html, json_stringified, sender_id, channel_id } = message
+  const { html, sender_id, channel_id } = message
   const [savedMessage]: T.Message[] = await db('messages')
     .insert({
       html,
-      json_stringified,
       sender_id,
       channel_id,
     })

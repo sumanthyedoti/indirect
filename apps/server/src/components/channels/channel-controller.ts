@@ -207,7 +207,7 @@ async function createChannelMessage(
 ) {
   try {
     const { id } = req.params
-    const { html, json_stringified } = req.body
+    const { html } = req.body
     const userId = req.user?.id
     if (!userId) {
       res.sendStatus(401)
@@ -215,7 +215,6 @@ async function createChannelMessage(
     }
     const result = await channelModel.createChannelMessage({
       html,
-      json_stringified,
       sender_id: userId,
       channel_id: id,
       personal_channel_id: null,
@@ -253,7 +252,6 @@ async function createChannelMessageOnSocket(
     }
     const result = await channelModel.createChannelMessage({
       html: message.html,
-      json_stringified: message.json_stringified,
       sender_id: userId,
       channel_id: message.channelId,
       personal_channel_id: null,

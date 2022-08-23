@@ -80,14 +80,8 @@ const createChannelMessageScheme: JSONSchemaType<CreateChannelMessage> = {
       maxLength: MessageConstraints.html,
       transform: ['trim'],
     },
-    json_stringified: {
-      type: 'string',
-      minLength: 1,
-      maxLength: MessageConstraints.json_stringified,
-      transform: ['trim'],
-    },
   },
-  required: ['html', 'json_stringified'],
+  required: ['html'],
   // additionalProperties: false,
 }
 

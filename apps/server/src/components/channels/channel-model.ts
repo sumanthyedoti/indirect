@@ -118,7 +118,6 @@ async function getChannelMessages(id: number) {
     .select(
       'id',
       'html',
-      'json_stringified',
       'sender_id',
       'channel_id',
       // 'conversation_id',

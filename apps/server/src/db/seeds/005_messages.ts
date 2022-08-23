@@ -6,13 +6,11 @@ export async function seed(knex: Knex): Promise<void> {
 
   const userIds = [1, 2]
 
-  return
-
   // Inserts seed entries
   const query = knex('messages').insert(
     Array.from(Array(1000)).map((_, i) => {
       return {
-        text: 'message ' + i,
+        html: 'message ' + i,
         sender_id: userIds[Math.floor(Math.random() * userIds.length)],
         channel_id: 1,
       }

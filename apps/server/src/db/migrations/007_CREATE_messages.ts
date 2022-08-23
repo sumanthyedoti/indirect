@@ -28,7 +28,6 @@ export async function up(knex: Knex): Promise<void> {
         //   .onDelete('CASCADE')
         // table.check('(channel_id IS NULL) != (personal_channel_id IS NULL)')
         table.text('html').nullable()
-        table.text('json_stringified').nullable()
         table.text('is_files_attached').defaultTo(false)
         table.boolean('is_edited').defaultTo(false)
         table.timestamps(true, true)

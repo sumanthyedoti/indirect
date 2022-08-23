@@ -1,6 +1,5 @@
 interface Info {
   html: string | null
-  json_stringified: string | null
   sender_id: number
   channel_id: number | null
   personal_channel_id: number | null
@@ -14,7 +13,6 @@ export interface Message extends Info {
 
 export interface SocketMessage {
   html: string
-  json_stringified: string
   tempId: number
   channelId: number
   spaceId: number
@@ -22,5 +20,4 @@ export interface SocketMessage {
 
 export enum Constraints {
   html = 6000,
-  json_stringified = 6000,
 }

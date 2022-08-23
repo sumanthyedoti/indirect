@@ -11,7 +11,6 @@ async function createMessage(
 ) {
   const {
     html,
-    json_stringified,
     sender_id,
     channel_id = null,
     personal_channel_id = null,
@@ -20,7 +19,6 @@ async function createMessage(
   try {
     const message: T.Message = await messageModel.createMessage({
       html,
-      json_stringified,
       sender_id,
       channel_id,
       personal_channel_id,

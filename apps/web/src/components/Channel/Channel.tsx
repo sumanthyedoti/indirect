@@ -1,6 +1,6 @@
 import { useCallback, useEffect, FC } from 'react'
 import { useQueryClient } from 'react-query'
-import { serializeMessage, deserializeMessage } from '../../utils'
+import { serializeMessage } from '../../utils'
 
 import { Message as MessageT } from '@api-types/messages'
 import Header from './Header'
@@ -48,43 +48,31 @@ const Channel: FC = () => {
 
   const handleMessageSubmit = useCallback(
     (input: any[]) => {
-      console.log(input)
       const html = serializeMessage(input)
-      deserializeMessage(html)
-      console.log(html)
 
       const tempId = Date.now()
       queryClient.setQueryData<MessageT[] | undefined>(
         ['channel-messages', channelId],
         //@ts-ignore
         (oldData) => {
+          const tempMessage = {
+            id: tempId,
+            html,
+            sender_id: user.id,
+            channel_id: channelId,
+            created_at: Date.now(),
+          }
           if (!oldData) {
-            return [
-              {
-                id: tempId,
-                html,
-                json_stringified: JSON.stringify(input),
-                sender_id: user.id,
-                channel_id: channelId,
-                created_at: Date.now(),
-              },
-            ]
+            return [tempMessage]
           }
           return [
             //@ts-ignore
             ...oldData,
-            {
-              id: tempId,
-              html,
-              json_stringified: JSON.stringify(input),
-              sender_id: user.id,
-              channel_id: channelId,
-              created_at: Date.now(),
-            },
+            tempMessage,
           ]
         }
       )
-      // socket.emit('message', JSON.stringify(input), tempId, channelId)
+      socket.emit('message', JSON.stringify(input), tempId, channelId)
     },
     [channelId, socket]
   )
