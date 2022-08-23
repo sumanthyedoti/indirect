@@ -16,7 +16,7 @@ const ChannelMessages: FC = () => {
   return (
     <article
       ref={messagesContainerRef}
-      className={`h-full mr-2 overflow-y-auto
+      className={`h-full shrink mr-2 overflow-y-auto
         flex flex-col main-view-padding
       `}
     >

@@ -1,5 +1,5 @@
 import escapeHtml from 'escape-html'
-import { Text } from 'slate'
+import { Text, Node } from 'slate'
 
 const serializeNode = (node: any) => {
   if (Text.isText(node)) {
@@ -27,7 +27,18 @@ const serializeNode = (node: any) => {
 }
 const serializeMessage = (nodes: any) => {
   const htmlElements: any = []
-  for (let i = 0; i < nodes.length; ) {
+  let conseqEmptyLines = 0
+  for (let i = 0; i < nodes.length; i++) {
+    const length = Node.string(nodes[i]).length
+    if (!length) {
+      conseqEmptyLines++
+    }
+    if (conseqEmptyLines > 2 && !length) {
+      continue
+    }
+    if (length) {
+      conseqEmptyLines = 0
+    }
     const preChildren = []
     for (; nodes[i]?.type === 'code'; i++) {
       preChildren.push(serializeNode(nodes[i]))
@@ -36,7 +47,6 @@ const serializeMessage = (nodes: any) => {
       htmlElements.push(`<pre>${preChildren.join('<br/>')}</pre>`)
     }
     nodes[i] && htmlElements.push(serializeNode(nodes[i]))
-    i++
   }
   return htmlElements.join('')
 }

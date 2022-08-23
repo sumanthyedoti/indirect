@@ -15,6 +15,13 @@
   border-color: var(--border-color);
   background-color: var(--bg-color);
 }
+.editor pre {
+  --bg-color: hsl(217, 25%, 30%);
+  --border-color: hsl(217, 25%, 35%);
+  @apply p-1.5 border rounded-sm;
+  border-color: var(--border-color);
+  background-color: var(--bg-color);
+}
 .test {
   @apply outline outline-red-500;
 }

@@ -55,7 +55,7 @@ const Channel: FC = () => {
     (input: any[]) => {
       if (!channelId) return
       const html = serializeMessage(input)
-
+      console.log(html)
       const tempId = Date.now()
       queryClient.setQueryData<MessageT[] | undefined>(
         ['channel-messages', channelId],
@@ -78,6 +78,7 @@ const Channel: FC = () => {
           ]
         }
       )
+
       const message: SocketMessageT = {
         html,
         tempId,
@@ -96,7 +97,9 @@ const Channel: FC = () => {
     >
       <Header />
       <ChannelMessages />
-      <MessageInput className="mx-3 mb-2" onSubmit={handleMessageSubmit} />
+      <div className="mb-2 main-view-padding">
+        <MessageInput onSubmit={handleMessageSubmit} />
+      </div>
     </div>
   )
 }

@@ -1,5 +1,4 @@
-import { useState, FC } from 'react'
-import classnames from 'classnames'
+import { useState, useCallback, FC } from 'react'
 import {
   createEditor,
   Transforms,
@@ -7,6 +6,7 @@ import {
   Editor,
   Descendant,
   Text,
+  Node,
 } from 'slate'
 import { Slate, Editable, ReactEditor, withReact } from 'slate-react'
 import { HistoryEditor, withHistory } from 'slate-history'
@@ -104,67 +104,77 @@ const initialValue: Descendant[] = [
 
 interface MessageAreaProps {
   onSubmit: (text: Descendant[]) => void
-  className?: string
 }
-const MessageInput: FC<MessageAreaProps> = ({ onSubmit, className }) => {
+const MessageInput: FC<MessageAreaProps> = ({ onSubmit }) => {
   const [editor] = useState(() => withHistory(withReact(createEditor())))
   const [input, setInput] = useState(initialValue)
-  const handleSubmit = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    onSubmit(input)
+
+  const clearInput = useCallback(() => {
     editor.history = { redos: [], undos: [] } // clean up history
+    // delete text in editor input
     Transforms.delete(editor, {
       at: {
         anchor: Editor.start(editor, []),
         focus: Editor.end(editor, []),
       },
     })
+  }, [])
+
+  const handleSubmit = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    const totalSring = input
+      .map((line) => Node.string(line))
+      .join('')
+      .trim()
+    if (!totalSring.length) {
+      return
+    }
+    onSubmit(input)
+    clearInput()
     setInput(initialValue)
   }
 
   return (
-    <div className={classnames(className)}>
-      <Slate editor={editor} value={input} onChange={setInput}>
-        <Editable
-          onChange={(x) => {
-            console.log({ x })
-          }}
-          placeholder="Hi there.."
-          id="slate-editable"
-          className={`
-            w-full bg-slate-700 grow
-            px-3 py-2
+    <Slate editor={editor} value={input} onChange={setInput}>
+      <Editable
+        placeholder="Hi there.."
+        id="slate-editable"
+        className={`
+            editor
+            bg-slate-700 px-3 py-2
+            overflow-x-none overflow-y-auto
             border border-gray-600 focus:border-gray-400
-            outline-none
-            rounded
+            outline-none rounded
         `}
-          renderElement={renderElement}
-          renderLeaf={renderLeaf}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter' && event.shiftKey) {
-              event.preventDefault()
-              editor.insertSoftBreak()
-              return
-            }
-            if (event.key === 'Enter') {
-              handleSubmit(event)
-              return
-            }
-            // When "`" is pressed, keep our existing code block logic.
-            if (event.key === '`' && event.ctrlKey) {
-              event.preventDefault()
-              CustomEditor.toggleCodeBlock(editor)
-            }
+        style={{
+          maxHeight: '50vh',
+        }}
+        renderElement={renderElement}
+        renderLeaf={renderLeaf}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' && event.shiftKey) {
+            event.preventDefault()
+            editor.insertSoftBreak()
+            return
+          }
+          if (event.key === 'Enter') {
+            handleSubmit(event)
+            return
+          }
+          // When "`" is pressed, keep our existing code block logic.
+          if (event.key === '`' && event.ctrlKey) {
+            event.preventDefault()
+            CustomEditor.toggleCodeBlock(editor)
+          }
 
-            // When "B" is pressed, bold the text in the selection.
-            if (event.key === 'b' && event.ctrlKey) {
-              event.preventDefault()
-              CustomEditor.toggleBoldMark(editor)
-            }
-          }}
-        />
-      </Slate>
-    </div>
+          // When "B" is pressed, bold the text in the selection.
+          if (event.key === 'b' && event.ctrlKey) {
+            event.preventDefault()
+            CustomEditor.toggleBoldMark(editor)
+          }
+        }}
+      />
+    </Slate>
   )
 }
 
