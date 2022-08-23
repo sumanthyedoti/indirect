@@ -5,6 +5,8 @@ import { serializeMessage } from '../../utils'
 import {
   Message as MessageT,
   SocketMessage as SocketMessageT,
+  SocketMessageFial as SocketMessageFialT,
+  SocketMessageSuccess as SocketMessageSuccessT,
 } from '@api-types/messages'
 import Header from './Header'
 import { useSocket } from '../../hooks'
@@ -26,13 +28,7 @@ const Channel: FC = () => {
     }
   }, [])
 
-  const onMessageFail = ({
-    tempId,
-    channelId,
-  }: {
-    tempId: number
-    channelId: number
-  }) => {
+  const onMessageFail = ({ tempId, channelId }: SocketMessageFialT) => {
     console.log('message-failed')
     queryClient.setQueryData<MessageT[] | undefined>(
       ['channel-messages', channelId],
@@ -40,13 +36,7 @@ const Channel: FC = () => {
     )
   }
 
-  const onMessageSuccess = ({
-    tempId,
-    message,
-  }: {
-    tempId: number
-    message: MessageT
-  }) => {
+  const onMessageSuccess = ({ tempId, message }: SocketMessageSuccessT) => {
     console.log('message-success')
     // queryClient.invalidateQueries(['channel-messages', channelId])
     queryClient.setQueryData<MessageT[] | undefined>(

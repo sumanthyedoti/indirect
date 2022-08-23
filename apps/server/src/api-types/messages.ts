@@ -17,6 +17,16 @@ export interface SocketMessage {
   channelId: number
 }
 
+export interface SocketMessageFial {
+  tempId: number
+  channelId: number
+}
+
+export interface SocketMessageSuccess {
+  tempId: number
+  message: Message
+}
+
 export enum Constraints {
   html = 6000,
 }

@@ -2,7 +2,11 @@ import { Response } from 'express'
 import { Socket, Server } from 'socket.io'
 
 import * as T from '@api-types/channels'
-import { SocketMessage as SocketMessageT } from '@api-types/messages'
+import {
+  SocketMessage as SocketMessageT,
+  SocketMessageFial as SocketMessageFialT,
+  SocketMessageSuccess as SocketMessageSuccessT,
+} from '@api-types/messages'
 import channelModel from './channel-model'
 import spaceModel from '../spaces/space-model'
 import {
@@ -239,14 +243,15 @@ async function createChannelMessageOnSocket(
   io: Server,
   message: SocketMessageT
 ) {
+  const failPayload: SocketMessageFialT = {
+    tempId: message.tempId,
+    channelId: message.channelId,
+  }
   try {
     //@ts-ignore
     const userId = socket.request.user.id
     if (!userId) {
-      io.to(`channel-${message.channelId}`).emit('message-failed', {
-        tempId: message.tempId,
-        channelId: message.channelId,
-      })
+      io.to(`channel-${message.channelId}`).emit('message-failed', failPayload)
       return
     }
     const result = await channelModel.createChannelMessage({
@@ -256,22 +261,20 @@ async function createChannelMessageOnSocket(
       personal_channel_id: null,
     })
     if (!result) {
-      io.to(`channel-${message.channelId}`).emit('message-failed', {
-        tempId: message.tempId,
-        channelId: message.channelId,
-      })
+      io.to(`channel-${message.channelId}`).emit('message-failed', failPayload)
       return
     }
-    io.to(`channel-${message.channelId}`).emit('message-success', {
+    const successPayload: SocketMessageSuccessT = {
       tempId: message.tempId,
       message: result,
-    })
+    }
+    io.to(`channel-${message.channelId}`).emit(
+      'message-success',
+      successPayload
+    )
   } catch (err) {
     logger.error('::', err)
-    io.to(`channel-${message.channelId}`).emit('message-failed', {
-      tempId: message.tempId,
-      channelId: message.channelId,
-    })
+    io.to(`channel-${message.channelId}`).emit('message-failed', failPayload)
   }
 }
 
