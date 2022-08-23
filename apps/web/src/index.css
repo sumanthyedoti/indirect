@@ -8,6 +8,13 @@
 * {
   /* outline: 1px solid red; */
 }
+.message pre {
+  --bg-color: hsl(217, 30%, 20%);
+  --border-color: hsl(217, 25%, 30%);
+  @apply p-2 mt-0.5 border rounded-sm;
+  border-color: var(--border-color);
+  background-color: var(--bg-color);
+}
 .test {
   @apply outline outline-red-500;
 }

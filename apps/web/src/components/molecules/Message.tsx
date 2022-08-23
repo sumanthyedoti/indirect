@@ -24,7 +24,7 @@ const Message: FC<MessageProps> = ({
   const time = dayjs(createdAt)
 
   return (
-    <section className={classnames('flex flex-col my-3', className)}>
+    <section className={classnames('message flex flex-col my-3', className)}>
       <p>
         <b className={senderClassNames}>{senderName || 'Unknow User'}</b>
         <time
