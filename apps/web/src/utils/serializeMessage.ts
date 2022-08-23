@@ -10,9 +10,8 @@ const serializeNode = (node: any) => {
     if (!Node.string(node).length) return `<br />`
     return `<span>${string}</span>`
   }
-  //@ts-ignore
+  if (!node) return
   const children = node.children.map((n: any) => serializeNode(n)).join('')
-
   switch (node.type) {
     case 'paragraph':
       return `<p>${children}</p>`
