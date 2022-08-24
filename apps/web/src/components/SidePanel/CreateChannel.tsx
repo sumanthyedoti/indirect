@@ -1,4 +1,4 @@
-import React, { useCallback, FC } from 'react'
+import React, { useState, useCallback, FC } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
@@ -42,6 +42,7 @@ interface Props {
 
 const CreateChannel: FC<Props> = ({ close, spaceParamId }) => {
   const { spaceId, user } = useUserStore()
+  const [isProcessing, setIsProcessing] = useState(false)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const {
@@ -56,6 +57,7 @@ const CreateChannel: FC<Props> = ({ close, spaceParamId }) => {
 
   const createChannel = useCallback(
     async (data: CreateChannelT) => {
+      setIsProcessing(true)
       try {
         const {
           data: { data: newChannel },
@@ -76,7 +78,9 @@ const CreateChannel: FC<Props> = ({ close, spaceParamId }) => {
         close()
         navigate(`/${spaceParamId}/${newChannel.id}`)
       } catch (err) {
-        if (err.response.code === 409) {
+        console.log(err)
+        setIsProcessing(false)
+        if (err.response.status === 409) {
           toast.error('Channel with the name already exists in the space', {
             id: 'post-channel-name-error',
           })
@@ -155,7 +159,13 @@ const CreateChannel: FC<Props> = ({ close, spaceParamId }) => {
               label="Cancel"
               onClick={close}
             />
-            <Button className="w-full mt-5" type="submit" label="Create" />
+            <Button
+              disabled={isProcessing}
+              isLoading={isProcessing}
+              className="w-full mt-5"
+              type="submit"
+              label="Create"
+            />
           </div>
         </form>
       </Dialog.Panel>
