@@ -1,5 +1,4 @@
-import React, { FC, useEffect, useState, useCallback } from 'react'
-import { useQueryClient } from 'react-query'
+import React, { FC, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 
@@ -7,15 +6,10 @@ import SideHeader from './SideHeader'
 import ChannelName from './ChannelName'
 import Section from './Section'
 import CreateChannel from './CreateChannel'
-import {
-  CreateChannel as CreateChannelT,
-  Channel as ChannelT,
-} from '@api-types/channels'
 import Modal from '../Modal'
 import { useUserStore } from '../../store'
 import { Plus } from '../../icons'
 import { useQuerySpaceChannels, useQuerySpace } from '../../queries'
-import api from '../../axios'
 
 const SidePanel: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -24,7 +18,6 @@ const SidePanel: FC = () => {
   )
   const navigate = useNavigate()
   const params = useParams()
-  const queryClient = useQueryClient()
   const { setChannelId } = useUserStore()
   const { data: channels, isError } = useQuerySpaceChannels(spaceParamId)
   const { data: space } = useQuerySpace(spaceParamId)
@@ -66,46 +59,10 @@ const SidePanel: FC = () => {
     setChannelId(channel.id)
   }, [params.channelId, channels, isError, space])
 
-  const createChannel = useCallback(
-    async (data: CreateChannelT) => {
-      try {
-        const {
-          data: { data: newChannel },
-        } = await api.post<{ data: ChannelT }>('/channels', data)
-        closeModal()
-        toast.success('Channel created', {
-          id: 'post-channel-success',
-        })
-
-        queryClient.setQueryData<ChannelT[] | undefined>(
-          ['channels', spaceParamId],
-          //@ts-ignore
-          (channels) => {
-            if (!channels) return newChannel
-            return [...channels, newChannel]
-          }
-        )
-        setIsModalOpen(false)
-        navigate(`/${params.spaceId}/${newChannel.id}`)
-      } catch (err) {
-        if (err.response.code === 409) {
-          toast.error('Channel with the name already exists in the space', {
-            id: 'post-channel-name-error',
-          })
-          return
-        }
-        toast.error('Error creating the Channel', {
-          id: 'post-channel-error',
-        })
-      }
-    },
-    [spaceParamId]
-  )
-
   const handleChannelClick = (id: number) => {
     navigate(`./${id}`)
   }
-  if (!channels) return null
+  if (!channels || !spaceParamId) return null
 
   return (
     <aside
@@ -145,7 +102,7 @@ const SidePanel: FC = () => {
         />
       </div>
       <Modal isOpen={isModalOpen} close={closeModal}>
-        <CreateChannel createChannel={createChannel} close={closeModal} />
+        <CreateChannel spaceParamId={spaceParamId} close={closeModal} />
       </Modal>
     </aside>
   )

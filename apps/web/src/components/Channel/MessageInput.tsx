@@ -76,10 +76,6 @@ const CodeBlock = (props: any) => {
   )
 }
 
-// const CodeElement = (props: RenderElementProps) => {
-//   return <code {...props.attributes}>{props.children}</code>
-// }
-
 const DefaultElement = (props: RenderElementProps) => {
   return <p {...props.attributes}>{props.children}</p>
 }

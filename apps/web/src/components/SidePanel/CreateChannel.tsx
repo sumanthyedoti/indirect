@@ -1,16 +1,21 @@
-import React, { FC } from 'react'
+import React, { useCallback, FC } from 'react'
+import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-import useUserStore from '../../store/useUserStore'
+import { useQueryClient } from 'react-query'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { Dialog } from '@headlessui/react'
 
 import {
   CreateChannel as CreateChannelT,
+  Channel as ChannelT,
   Constraints,
 } from '@api-types/channels'
+import useUserStore from '../../store/useUserStore'
 import { Button, Input } from '../atoms'
 import { FormInput } from '../molecules'
+import api from '../../axios'
 
 const schema = yup.object().shape({
   space_id: yup.number().required(),
@@ -32,11 +37,13 @@ const schema = yup.object().shape({
 
 interface Props {
   close: () => void
-  createChannel: (data: CreateChannelT) => void
+  spaceParamId: number
 }
 
-const CreateChannel: FC<Props> = ({ close, createChannel }) => {
+const CreateChannel: FC<Props> = ({ close, spaceParamId }) => {
   const { spaceId, user } = useUserStore()
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
   const {
     register,
     setValue,
@@ -46,6 +53,42 @@ const CreateChannel: FC<Props> = ({ close, createChannel }) => {
     resolver: yupResolver(schema),
     mode: 'onBlur',
   })
+
+  const createChannel = useCallback(
+    async (data: CreateChannelT) => {
+      try {
+        const {
+          data: { data: newChannel },
+        } = await api.post<{ data: ChannelT }>('/channels', data)
+        close()
+        toast.success('Channel created', {
+          id: 'post-channel-success',
+        })
+
+        queryClient.setQueryData<ChannelT[] | undefined>(
+          ['channels', spaceParamId],
+          //@ts-ignore
+          (channels) => {
+            if (!channels) return newChannel
+            return [...channels, newChannel]
+          }
+        )
+        close()
+        navigate(`/${spaceParamId}/${newChannel.id}`)
+      } catch (err) {
+        if (err.response.code === 409) {
+          toast.error('Channel with the name already exists in the space', {
+            id: 'post-channel-name-error',
+          })
+          return
+        }
+        toast.error('Error creating the Channel', {
+          id: 'post-channel-error',
+        })
+      }
+    },
+    [spaceParamId]
+  )
 
   const onSubmit = async (input: CreateChannelT) => {
     createChannel(input)
