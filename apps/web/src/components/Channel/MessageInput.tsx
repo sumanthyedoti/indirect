@@ -8,7 +8,14 @@ import {
   Text,
   Node,
 } from 'slate'
-import { Slate, Editable, ReactEditor, withReact } from 'slate-react'
+import {
+  Slate,
+  RenderElementProps,
+  RenderLeafProps,
+  Editable,
+  ReactEditor,
+  withReact,
+} from 'slate-react'
 import { HistoryEditor, withHistory } from 'slate-history'
 
 type CustomTextT = { text: string; bold?: boolean }
@@ -61,7 +68,7 @@ const CustomEditor = {
   },
 }
 
-const CodeElement = (props: any) => {
+const CodeBlock = (props: any) => {
   return (
     <pre {...props.attributes}>
       <code>{props.children}</code>
@@ -69,10 +76,14 @@ const CodeElement = (props: any) => {
   )
 }
 
-const DefaultElement = (props: any) => {
+// const CodeElement = (props: RenderElementProps) => {
+//   return <code {...props.attributes}>{props.children}</code>
+// }
+
+const DefaultElement = (props: RenderElementProps) => {
   return <p {...props.attributes}>{props.children}</p>
 }
-const Leaf = (props: any) => {
+const Leaf = (props: RenderLeafProps) => {
   return (
     <span
       {...props.attributes}
@@ -81,18 +92,6 @@ const Leaf = (props: any) => {
       {props.children}
     </span>
   )
-}
-
-const renderElement = (props: any) => {
-  switch (props.element.type) {
-    case 'code':
-      return <CodeElement {...props} />
-    default:
-      return <DefaultElement {...props} />
-  }
-}
-const renderLeaf = (props: any) => {
-  return <Leaf {...props} />
 }
 
 const initialValue: Descendant[] = [
@@ -108,6 +107,28 @@ interface MessageAreaProps {
 const MessageInput: FC<MessageAreaProps> = ({ onSubmit }) => {
   const [editor] = useState(() => withHistory(withReact(createEditor())))
   const [input, setInput] = useState(initialValue)
+  const [prevNodeType, setPrevNodeType] = useState('paragraph')
+
+  const renderElement = useCallback(
+    (props: RenderElementProps) => {
+      switch (props.element.type) {
+        case 'code':
+          if (prevNodeType === 'code') {
+            // return <CodeElement {...props} />
+          }
+          setPrevNodeType('code')
+          return <CodeBlock {...props} />
+        default:
+          setPrevNodeType('paragraph')
+          return <DefaultElement {...props} />
+      }
+    },
+    [prevNodeType]
+  )
+
+  const renderLeaf = useCallback((props: RenderLeafProps) => {
+    return <Leaf {...props} />
+  }, [])
 
   const clearInput = useCallback(() => {
     editor.history = { redos: [], undos: [] } // clean up history

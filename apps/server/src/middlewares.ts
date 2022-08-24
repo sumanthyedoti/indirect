@@ -33,7 +33,7 @@ export function validateIdParam(
 ) {
   const id = Number(req.params.id)
 
-  if (id) {
+  if (id !== NaN) {
     req.params.id = id
     return next()
   }
@@ -45,7 +45,7 @@ export const validateParams =
   (params: string[]) => (req: Request, res: Response, next: NextFunction) => {
     params.forEach((p) => {
       const id = Number(req.params[p])
-      if (!id) {
+      if (id === NaN) {
         res.status(422).json({ message: `${p} ${req.params[p]} is not valid` })
         return
       }
