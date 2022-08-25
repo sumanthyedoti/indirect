@@ -15,8 +15,15 @@ async function createProfile(
     })
     .returning('*')
   const space = await spaceModel.getSpace(profile.space_id, queryTrx)
+  const channelMember = queryTrx('channel_users')
+    .select('user_id', 'channel_id')
+    .where({
+      user_id: profile.user_id,
+      channel_id: space.general_channel_id,
+    })
+  console.log(channelMember)
   await queryTrx('channel_users').insert({
-    user_id: space.creator_id,
+    user_id: profile.user_id,
     channel_id: space.general_channel_id,
   })
   return createdProfile

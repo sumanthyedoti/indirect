@@ -35,7 +35,7 @@ router.delete(
   '/:id/users/:uid',
   validateParams(['id', 'uid']),
   //@ts-ignore
-  spaceController.deleteUserFromSpace
+  spaceController.deactivateUserSpaceProfile
 )
 router.put(
   '/:id',

@@ -178,14 +178,14 @@ async function addUserToSpace(
   }
 }
 
-async function deleteUserFromSpace(
+async function deactivateUserSpaceProfile(
   req: TypedRequestParams<{ id: number; uid: number }>,
   res: Response
 ) {
   try {
     const { id, uid } = req.params
     //@ts-ignore
-    const result = await profileModel.deleteProfile(id, uid)
+    const result = await profileModel.deactivateProfile(id, uid)
     if (!result) {
       res.status(404).json({ id, message: 'Space/User not found' })
       return
@@ -231,6 +231,6 @@ export default {
   updateSpace,
   deleteSpace,
   addUserToSpace,
-  deleteUserFromSpace,
+  deactivateUserSpaceProfile,
   sendInvites,
 }
