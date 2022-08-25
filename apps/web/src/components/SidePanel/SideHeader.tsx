@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { useQueryClient } from 'react-query'
@@ -9,7 +9,7 @@ import InvitePeople from './InvitePeople'
 import useUserStore from '../../store/useUserStore'
 import ConfirmationModal from '../ConfirmationModal'
 import { ChevronDown, LeaveSpace, AddPeople } from '../../icons'
-import { Button } from '../atoms'
+import { MenuButton } from '../atoms'
 import { useQuerySpace } from '../../queries'
 import useStore from './store'
 import api from '../../axios'
@@ -23,7 +23,7 @@ const SideHeader: FC = () => {
     openInvitePeopleModal,
     closeInvitePeopleModal,
   } = useStore()
-  const [isProcessing, setIsProcessing] = useState(false)
+  // const [isProcessing, setIsProcessing] = useState(false)
   const { spaceId, user } = useUserStore()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
@@ -31,7 +31,7 @@ const SideHeader: FC = () => {
 
   const onLeaveSpace = async () => {
     try {
-      setIsProcessing(true)
+      // setIsProcessing(true)
       await api.delete(`/spaces/${spaceId}/users/${user.id}`)
 
       queryClient.setQueryData<number[] | undefined>(
@@ -42,7 +42,7 @@ const SideHeader: FC = () => {
       toast.success(`You left '${space?.name}'`)
       navigate('/')
     } catch (err) {
-      setIsProcessing(false)
+      // setIsProcessing(false)
       console.log(err)
       toast.error('Something went wrong')
     }
@@ -74,24 +74,14 @@ const SideHeader: FC = () => {
           minWidth: '16em',
         }}
       >
-        <button
-          className={`flex px-4 py-2 space-x-3 hover:bg-slate-800
-          `}
-          onClick={openInvitePeopleModal}
-        >
+        <MenuButton onClick={openInvitePeopleModal}>
           <AddPeople />
           <span>Invite Poeple to the Space</span>
-        </button>
-        <Button
-          disabled={isProcessing}
-          isLoading={isProcessing}
-          onClick={openLeaveConfirmModal}
-          className={`flex px-4 py-2 text-red-500 space-x-3
-          hover:bg-red-500 hover:text-current`}
-        >
+        </MenuButton>
+        <MenuButton danger onClick={openLeaveConfirmModal}>
           <LeaveSpace />
           <span>Leave the Space</span>
-        </Button>
+        </MenuButton>
       </Popover.Panel>
       <ConfirmationModal
         isOpen={isLeaveConfirmModalOpen}

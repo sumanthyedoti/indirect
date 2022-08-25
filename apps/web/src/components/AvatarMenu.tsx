@@ -3,6 +3,7 @@ import toast from 'react-hot-toast'
 import { Popover } from '@headlessui/react'
 
 import { Tooltip } from './molecules'
+import { MenuButton } from './atoms'
 import { Logout } from '../icons'
 import Avatar from './atoms/Avatar'
 import { useUserStore } from '../store'
@@ -51,14 +52,10 @@ const AvatarMenu: FC<AvatarMenuProps> = ({ spaceId }) => {
           </div>
           <p>{name}</p>
         </div>
-        <button
-          onClick={handleLogout}
-          aria-label="Log out"
-          className="flex px-4 pt-3 space-x-4 hover:text-red-500"
-        >
+        <MenuButton onClick={handleLogout} aria-label="Log out" danger>
           <Logout />
           <span>Logout</span>
-        </button>
+        </MenuButton>
       </Popover.Panel>
     </Popover>
   )
