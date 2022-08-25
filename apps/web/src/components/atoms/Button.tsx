@@ -19,8 +19,8 @@ const Button: FC<props> = ({
   children,
   type = 'button',
   onClick,
-  disabled = false,
-  isLoading = false,
+  disabled,
+  isLoading,
   small,
   primary,
   secondary,
@@ -53,7 +53,11 @@ const Button: FC<props> = ({
       {...props}
     >
       {children}
-      {isLoading && <Loader width="16px" height="16px" />}
+      {isLoading && (
+        <span className="pl-2">
+          <Loader width="16px" height="16px" />
+        </span>
+      )}
     </button>
   )
 }

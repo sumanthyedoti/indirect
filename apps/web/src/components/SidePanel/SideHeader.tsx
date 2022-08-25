@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { useQueryClient } from 'react-query'
@@ -23,7 +23,7 @@ const SideHeader: FC = () => {
     openInvitePeopleModal,
     closeInvitePeopleModal,
   } = useStore()
-  // const [isProcessing, setIsProcessing] = useState(false)
+  const [isProcessing, setIsProcessing] = useState(false)
   const { spaceId, user } = useUserStore()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
@@ -31,7 +31,7 @@ const SideHeader: FC = () => {
 
   const onLeaveSpace = async () => {
     try {
-      // setIsProcessing(true)
+      setIsProcessing(true)
       await api.delete(`/spaces/${spaceId}/users/${user.id}`)
 
       queryClient.setQueryData<number[] | undefined>(
@@ -42,7 +42,7 @@ const SideHeader: FC = () => {
       toast.success(`You left '${space?.name}'`)
       navigate('/')
     } catch (err) {
-      // setIsProcessing(false)
+      setIsProcessing(false)
       console.log(err)
       toast.error('Something went wrong')
     }
@@ -96,6 +96,7 @@ const SideHeader: FC = () => {
         onConfirm={() => {
           onLeaveSpace()
         }}
+        isLoading={isProcessing}
         isDanger={true}
       />
       <Modal

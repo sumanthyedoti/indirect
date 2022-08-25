@@ -22,7 +22,7 @@ const MenuButton: FC<MenuButtonProps> = ({
 }) => {
   const classes = classnames(
     `
-      flex px-4 py-2 space-x-3`,
+      flex items-center px-4 py-2 space-x-3`,
     {
       'hover:bg-slate-800': !danger,
       'text-red-500 hover:bg-red-500 hover:text-current': danger,

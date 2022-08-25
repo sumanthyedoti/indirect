@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Popover } from '@headlessui/react'
 
@@ -16,13 +16,16 @@ interface AvatarMenuProps {
 }
 
 const AvatarMenu: FC<AvatarMenuProps> = ({ spaceId }) => {
+  const [isProcessing, setIsProcessing] = useState(false)
   const { logout } = useUserStore()
   const name = useUserName(spaceId)
   const handleLogout = async () => {
     try {
+      setIsProcessing(true)
       await api.delete('/logout')
       logout()
     } catch (err) {
+      setIsProcessing(false)
       toast.error('Failed to logout. Please try again')
     }
   }
@@ -52,7 +55,13 @@ const AvatarMenu: FC<AvatarMenuProps> = ({ spaceId }) => {
           </div>
           <p>{name}</p>
         </div>
-        <MenuButton onClick={handleLogout} aria-label="Log out" danger>
+        <MenuButton
+          onClick={handleLogout}
+          aria-label="Log out"
+          danger
+          disabled={isProcessing}
+          isLoading={isProcessing}
+        >
           <Logout />
           <span>Logout</span>
         </MenuButton>

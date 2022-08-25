@@ -8,6 +8,7 @@ interface Props {
   isOpen: boolean
   close: () => void
   title?: string
+  isLoading?: boolean
   description: React.ReactNode
   details?: React.ReactNode
   confirmLabel: string
@@ -22,6 +23,7 @@ const DeleteChannelConfirmModal: FC<Props> = ({
   description,
   details,
   confirmLabel,
+  isLoading,
   isDanger,
   onConfirm,
 }) => {
@@ -50,7 +52,13 @@ const DeleteChannelConfirmModal: FC<Props> = ({
           <Button secondary className="w-full" onClick={close}>
             Cancel
           </Button>
-          <Button onClick={handleConfirm} danger={isDanger} className="w-full">
+          <Button
+            onClick={handleConfirm}
+            danger={isDanger}
+            className="w-full"
+            disabled={isLoading}
+            isLoading={isLoading}
+          >
             {confirmLabel}
           </Button>
         </div>

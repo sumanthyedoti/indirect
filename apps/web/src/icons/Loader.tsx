@@ -3,16 +3,21 @@ import { SVGProps } from 'react'
 interface Props {
   width?: string
   height?: string
+  color?: string
 }
 
-const SvgComponent = ({ width = '40px', height = '40px' }: SVGProps<Props>) => (
+const SvgComponent = ({
+  width = '40px',
+  height = '40px',
+  color = 'currentColor',
+}: SVGProps<Props>) => (
   <svg
     width={width}
     height={height}
     className="mb-1"
     viewBox="0 0 60 60"
     xmlns="http://www.w3.org/2000/svg"
-    stroke="#fff"
+    stroke={color}
   >
     <g transform="translate(1 1)" fill="#f1f5f9" fillRule="evenodd">
       <circle cx={5} cy={50} r={8}>
