@@ -5,7 +5,8 @@ import classnames from 'classnames'
 import * as T from '@api-types/messages'
 
 interface MessageProps {
-  senderName: string | null
+  isProfileActive: boolean
+  senderName: string
   createdAt: Date
   message: T.Message
   className?: string | null
@@ -16,10 +17,11 @@ const Message: FC<MessageProps> = ({
   message,
   createdAt,
   className,
+  isProfileActive,
 }) => {
   const senderClassNames = classnames('text-sm font-medium', {
     'text-sky-300': senderName,
-    'text-stone-400': !senderName,
+    'text-stone-400': !isProfileActive,
   })
   const time = dayjs(createdAt)
 

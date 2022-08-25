@@ -103,24 +103,15 @@ interface MessageAreaProps {
 const MessageInput: FC<MessageAreaProps> = ({ onSubmit }) => {
   const [editor] = useState(() => withHistory(withReact(createEditor())))
   const [input, setInput] = useState(initialValue)
-  const [prevNodeType, setPrevNodeType] = useState('paragraph')
 
-  const renderElement = useCallback(
-    (props: RenderElementProps) => {
-      switch (props.element.type) {
-        case 'code':
-          if (prevNodeType === 'code') {
-            // return <CodeElement {...props} />
-          }
-          setPrevNodeType('code')
-          return <CodeBlock {...props} />
-        default:
-          setPrevNodeType('paragraph')
-          return <DefaultElement {...props} />
-      }
-    },
-    [prevNodeType]
-  )
+  const renderElement = useCallback((props: RenderElementProps) => {
+    switch (props.element.type) {
+      case 'code':
+        return <CodeBlock {...props} />
+      default:
+        return <DefaultElement {...props} />
+    }
+  }, [])
 
   const renderLeaf = useCallback((props: RenderLeafProps) => {
     return <Leaf {...props} />

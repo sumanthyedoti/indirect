@@ -177,7 +177,7 @@ const ChannelDetailsModal: FC<ChannelDetailsProps> = () => {
               <ul>
                 {channelUserIds?.map((uid) => {
                   const user = users.idMap[uid]
-
+                  if (!user.is_active) return null
                   return (
                     <li
                       className="p-2 hover:bg-slate-600 flex-between-center"

@@ -42,6 +42,7 @@ const MessagedOfADay: FC<MessagedOfADayProps> = ({
                 users.idMap[m.sender_id]?.display_name ||
                 users.idMap[m.sender_id]?.fullname
               }
+              isProfileActive={users.idMap[m.sender_id]?.is_active}
               message={m}
             />
           )
