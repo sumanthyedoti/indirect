@@ -14,14 +14,6 @@ async function createSpace(space: T.CreateSpace) {
     const [createdSpace]: T.Space[] = await trx('spaces')
       .insert(space)
       .returning('*')
-    // add creator profile in the Space
-    await profileModel.createProfile(
-      {
-        space_id: createdSpace.id,
-        user_id: space.creator_id,
-      },
-      trx
-    )
     // create a general channel for the Space
     const generalChannel = await channelModel.createChannel(
       {
@@ -40,6 +32,14 @@ async function createSpace(space: T.CreateSpace) {
         general_channel_id: generalChannel.id,
       })
       .where({ id: createdSpace.id })
+    // add creator profile in the Space
+    await profileModel.createProfile(
+      {
+        space_id: createdSpace.id,
+        user_id: space.creator_id,
+      },
+      trx
+    )
     trx.commit()
     return {
       ...createdSpace,
@@ -105,11 +105,6 @@ async function createProfile(profile: CreateProfileT) {
   const trx = await db.transaction()
   try {
     await profileModel.createProfile(profile, trx)
-    const space = await getSpace(profile.space_id, trx)
-    await trx('channel_users').insert({
-      user_id: profile.user_id,
-      channel_id: space.general_channel_id,
-    })
     trx.commit()
     return true
   } catch (err) {

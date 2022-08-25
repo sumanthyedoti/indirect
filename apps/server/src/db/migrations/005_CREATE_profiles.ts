@@ -32,7 +32,7 @@ export async function up(knex: Knex): Promise<void> {
         table.specificType('status_emoji', 'CHAR(4)').nullable()
         table.timestamp('status_duration').nullable()
         table.string('status_text', 100).nullable()
-        table.string('is_active', 100).defaultTo(false)
+        table.string('is_active', 100).defaultTo(true)
         table.boolean('is_admin').defaultTo(false)
         table.timestamps(true, true)
       })
