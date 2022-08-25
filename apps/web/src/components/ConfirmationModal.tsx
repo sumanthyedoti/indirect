@@ -47,13 +47,12 @@ const DeleteChannelConfirmModal: FC<Props> = ({
         {details && <p className="text-sm">{details}</p>}
 
         <div className="flex mt-6 space-x-2">
-          <Button secondary className="w-full" label="Cancel" onClick={close} />
-          <Button
-            onClick={handleConfirm}
-            danger={isDanger}
-            className="w-full"
-            label={confirmLabel}
-          />
+          <Button secondary className="w-full" onClick={close}>
+            Cancel
+          </Button>
+          <Button onClick={handleConfirm} danger={isDanger} className="w-full">
+            {confirmLabel}
+          </Button>
         </div>
       </Dialog.Panel>
     </Modal>

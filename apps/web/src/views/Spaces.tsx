@@ -39,10 +39,9 @@ const Spaces: FC = () => {
       <main className="container-width">
         <div className="flex justify-between mb-6">
           <h1 className="mb-0">Your Spaces</h1>
-          <Button
-            onClick={() => setIsCreateSpaceModalOpen(true)}
-            label="Create a new Space"
-          />
+          <Button onClick={() => setIsCreateSpaceModalOpen(true)}>
+            Create a new Space
+          </Button>
         </div>
         <article className="py-2 rounded bg-slate-800 ring-4 ring-slate-600">
           {spaces.length === 0 && (

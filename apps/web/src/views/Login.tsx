@@ -103,8 +103,9 @@ const Login: FC = () => {
           disabled={isProcessing}
           className="w-full mt-5"
           type="submit"
-          label="Login"
-        />
+        >
+          Login
+        </Button>
         <p className="mt-4">
           Need an account?&nbsp;&nbsp;
           <Link

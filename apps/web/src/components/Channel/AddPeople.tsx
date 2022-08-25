@@ -129,11 +129,9 @@ const AddPeole: FC<AddPeoleProps> = () => {
         {isError && (
           <em className="text-sm text-red-400">No poeple are selected</em>
         )}
-        <Button
-          type="submit"
-          className="w-full mt-6"
-          label="Add to the Channel"
-        />
+        <Button type="submit" className="w-full mt-6">
+          Add to the Channel
+        </Button>
       </form>
       <button
         aria-label="Close"

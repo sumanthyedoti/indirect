@@ -3,7 +3,7 @@ import classnames from 'classnames'
 
 import { Loader } from '../../icons'
 interface props {
-  label: string
+  children: React.ReactNode
   type?: 'button' | 'submit' | 'reset'
   className?: string
   disabled?: boolean
@@ -16,7 +16,7 @@ interface props {
 }
 
 const Button: FC<props> = ({
-  label,
+  children,
   type = 'button',
   onClick,
   disabled = false,
@@ -52,7 +52,7 @@ const Button: FC<props> = ({
       onClick={onClick}
       {...props}
     >
-      <span>{label}</span>
+      {children}
       {isLoading && <Loader width="16px" height="16px" />}
     </button>
   )

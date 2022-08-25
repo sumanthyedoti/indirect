@@ -128,8 +128,9 @@ const Register: FC = () => {
           disabled={isProcessing}
           className="w-full mt-5"
           type="submit"
-          label="Register"
-        />
+        >
+          Register
+        </Button>
         <p className="mt-4">
           Already have an account?&nbsp;&nbsp;
           <Link

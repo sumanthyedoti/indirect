@@ -127,7 +127,9 @@ const AddPeole: FC<AddPeoleProps> = () => {
           menuPortalTarget={document.body}
         />
         {error && <em className="text-sm text-red-400">{error}</em>}
-        <Button type="submit" className="w-full mt-6" label="Invite" />
+        <Button type="submit" className="w-full mt-6">
+          Invite
+        </Button>
       </form>
       <button
         aria-label="Close"

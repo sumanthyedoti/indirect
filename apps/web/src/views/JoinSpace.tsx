@@ -11,6 +11,7 @@ import { useQuerySpace, useQueryUserSpaces } from '../queries'
 import api from '../axios'
 
 const JoinSPace: FC = () => {
+  const [isProcessing, setIsProcessing] = useState(false)
   const { user } = useUserStore()
   const params = useParams()
   const navigate = useNavigate()
@@ -40,11 +41,13 @@ const JoinSPace: FC = () => {
 
   const handleJoin = async () => {
     try {
+      setIsProcessing(true)
       const res = await api.post(`/spaces/${params.spaceId}/users/${user.id}`)
       console.log(res, params.spaceId)
       navigate(`/${params.spaceId}`, { replace: true })
       queryClient.invalidateQueries('spaces')
     } catch (err) {
+      setIsProcessing(false)
       console.log(err)
       toast.error('Error joining the Space')
     }
@@ -63,22 +66,25 @@ const JoinSPace: FC = () => {
         >
           <div
             className={`
-              rounded bg-slate-700 text-center
+              rounded bg-slate-700 flex flex-col items-center
               w-full px-6 py-8 ring ring-slate-600
             `}
           >
             <h2 className="mb-0">{space.name}</h2>
             {space.description && (
-              <div className="mt-4">
+              <div className="mt-4 text-center">
                 <b className="text-semibold">Description</b>
                 <p dangerouslySetInnerHTML={{ __html: space.description }} />
               </div>
             )}
             <Button
+              isLoading={isProcessing}
+              disabled={isProcessing}
               onClick={handleJoin}
-              label="Join the Space"
               className="mt-8"
-            />
+            >
+              Join the Space
+            </Button>
             <Link
               to="/"
               className="flex items-center justify-center mt-4 space-x-1"

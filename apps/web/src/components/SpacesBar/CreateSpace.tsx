@@ -157,19 +157,17 @@ const CreateSpace: FC<Props> = ({ isOpen, close }) => {
             error={errors.description?.message}
           />
           <div className="flex space-x-2">
-            <Button
-              secondary
-              className="w-full mt-5"
-              label="Cancel"
-              onClick={close}
-            />
+            <Button secondary className="w-full mt-5" onClick={close}>
+              Cancel
+            </Button>
             <Button
               isLoading={isProcessing}
               disabled={isProcessing}
               className="w-full mt-5"
               type="submit"
-              label="Create"
-            />
+            >
+              Create
+            </Button>
           </div>
         </form>
       </Dialog.Panel>
