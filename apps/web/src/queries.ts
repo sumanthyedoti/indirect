@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { useUserStore } from './store'
 import toast from 'react-hot-toast'
 
-import { SpaceUser, Space } from '@api-types/spaces'
+import type { SpaceUser, Space } from '@api-types/spaces'
 import {
   Channel,
   ChannelMembers,
@@ -31,7 +31,7 @@ function useQueryUserSpaces(userId?: number) {
   )
 }
 
-type UsersQuery = {
+export type UsersQueryT = {
   list: SpaceUser[]
   idMap: Record<string, SpaceUser>
 }
@@ -43,7 +43,7 @@ function useQuerySpaceProfiles(spaceId?: number) {
         `/spaces/${spaceId}/users`
       )
       const users = data.data
-      const usersListAndMap: UsersQuery = { list: users, idMap: {} }
+      const usersListAndMap: UsersQueryT = { list: users, idMap: {} }
       for (let i = 0; i < users.length; i++) {
         usersListAndMap.idMap[users[i].user_id] = users[i]
       }

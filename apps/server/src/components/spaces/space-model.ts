@@ -104,9 +104,9 @@ async function deleteSpace(id: number) {
 async function createProfile(profile: CreateProfileT) {
   const trx = await db.transaction()
   try {
-    await profileModel.createProfile(profile, trx)
+    const createdProfile = await profileModel.createProfile(profile, trx)
     trx.commit()
-    return true
+    return createdProfile
   } catch (err) {
     logger.error('::', err)
     trx.rollback()

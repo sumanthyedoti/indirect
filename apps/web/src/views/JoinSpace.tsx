@@ -3,6 +3,10 @@ import toast from 'react-hot-toast'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useQueryClient } from 'react-query'
 
+import type {
+  Space as SpaceT,
+  SpaceUser as SpaceUserT,
+} from '@api-types/spaces'
 import { Header } from '../components/molecules'
 import { Button } from '../components/atoms'
 import { useUserStore } from '../store'
@@ -20,14 +24,16 @@ const JoinSPace: FC = () => {
     undefined
   )
   const { data: userSpaces } = useQueryUserSpaces(user?.id)
-  const { data: space, isError: isSpaceError } = useQuerySpace(spaceParamId, 1)
+  const { data: space, isError: isSpaceLoadingError } = useQuerySpace(
+    spaceParamId,
+    1
+  )
 
   useEffect(() => {
-    console.log(isSpaceError)
-    if (isSpaceError) {
+    if (isSpaceLoadingError) {
       navigate('/')
     }
-  }, [isSpaceError])
+  }, [isSpaceLoadingError])
 
   useEffect(() => {
     if (!params.spaceId || !userSpaces) return
@@ -42,10 +48,16 @@ const JoinSPace: FC = () => {
   const handleJoin = async () => {
     try {
       setIsProcessing(true)
-      const res = await api.post(`/spaces/${params.spaceId}/users/${user.id}`)
-      console.log(res, params.spaceId)
-      navigate(`/${params.spaceId}`, { replace: true })
+      if (!space) return
+      await api.post<{ data: SpaceUserT }>(
+        `/spaces/${params.spaceId}/users/${user.id}`
+      )
+      queryClient.setQueryData<SpaceT[]>('spaces', (spaces) =>
+        spaces ? [...spaces, space] : [space]
+      )
       queryClient.invalidateQueries('spaces')
+      queryClient.invalidateQueries(['users', space.id])
+      navigate(`/${params.spaceId}`, { replace: true })
     } catch (err) {
       setIsProcessing(false)
       console.log(err)

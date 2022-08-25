@@ -8,6 +8,25 @@ async function createProfile(
   profile: T.CreateProfile,
   queryTrx: Knex.Transaction | Knex = db
 ) {
+  const spaceUserProfile = await queryTrx('profiles').select('*').where({
+    user_id: profile.user_id,
+    space_id: profile.space_id,
+  })
+  if (spaceUserProfile.length === 1) {
+    await queryTrx('profiles')
+      .where({
+        user_id: profile.user_id,
+        space_id: profile.space_id,
+      })
+      .update({
+        is_active: true,
+      })
+    return {
+      ...spaceUserProfile[0],
+      is_active: true,
+    }
+  }
+  // create Profile
   const createdProfile = await queryTrx('profiles')
     .insert({
       user_id: profile.user_id,
@@ -15,13 +34,7 @@ async function createProfile(
     })
     .returning('*')
   const space = await spaceModel.getSpace(profile.space_id, queryTrx)
-  const channelMember = queryTrx('channel_users')
-    .select('user_id', 'channel_id')
-    .where({
-      user_id: profile.user_id,
-      channel_id: space.general_channel_id,
-    })
-  console.log(channelMember)
+  // add user to the general channel to the space
   await queryTrx('channel_users').insert({
     user_id: profile.user_id,
     channel_id: space.general_channel_id,

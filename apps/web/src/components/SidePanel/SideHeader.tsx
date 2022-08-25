@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useQueryClient } from 'react-query'
 import { Popover } from '@headlessui/react'
 
+import { Space as SpaceT } from '@api-types/spaces'
 import Modal from '../Modal'
 import InvitePeople from './InvitePeople'
 import useUserStore from '../../store/useUserStore'
@@ -33,11 +34,8 @@ const SideHeader: FC = () => {
     try {
       setIsProcessing(true)
       await api.delete(`/spaces/${spaceId}/users/${user.id}`)
-
-      queryClient.setQueryData<number[] | undefined>(
-        'spaces',
-        //@ts-ignore
-        (spaceIds) => spaceIds.filter((id) => id !== space?.id)
+      queryClient.setQueryData<SpaceT[] | undefined>('spaces', (spaces) =>
+        spaces?.filter((sp) => sp.id !== space?.id)
       )
       toast.success(`You left '${space?.name}'`)
       navigate('/')
@@ -49,6 +47,7 @@ const SideHeader: FC = () => {
   }
 
   if (!isSuccess) return null
+
   return (
     <Popover className="relative">
       <Popover.Button
