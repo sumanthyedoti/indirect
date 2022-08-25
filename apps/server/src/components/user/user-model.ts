@@ -70,9 +70,9 @@ async function getUserSpaces(userId: number) {
     SELECT s.*
       FROM profiles as p JOIN spaces as s
       ON p.space_id = s.id
-      WHERE p.user_id = ${userId}
+      WHERE p.user_id = ${userId} and p.is_active = true
     `)
-  return result?.rows
+  return result.rows
 }
 
 export default {

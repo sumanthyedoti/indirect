@@ -27,12 +27,12 @@ export async function up(knex: Knex): Promise<void> {
           .inTable('spaces')
           .onDelete('CASCADE')
         table.primary(['user_id', 'space_id'])
+        table.boolean('is_active').defaultTo(true) // if user left the space
         table.string('display_picture', 200).nullable()
         table.string('display_name', 40).nullable()
         table.specificType('status_emoji', 'CHAR(4)').nullable()
         table.timestamp('status_duration').nullable()
         table.string('status_text', 100).nullable()
-        table.string('is_active', 100).defaultTo(true)
         table.boolean('is_admin').defaultTo(false)
         table.timestamps(true, true)
       })
