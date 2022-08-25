@@ -1,4 +1,4 @@
-import React, { useCallback, FC } from 'react'
+import React, { useState, useCallback, FC } from 'react'
 import toast from 'react-hot-toast'
 import { useForm } from 'react-hook-form'
 import { useUserStore, useSpaceStore } from '../../store'
@@ -48,6 +48,7 @@ interface Props {
   close: () => void
 }
 const CreateSpace: FC<Props> = ({ isOpen, close }) => {
+  const [isProcessing, setIsProcessing] = useState(false)
   const { user, setSpaceId } = useUserStore()
   const { setSpace } = useSpaceStore()
   const navigate = useNavigate()
@@ -66,6 +67,7 @@ const CreateSpace: FC<Props> = ({ isOpen, close }) => {
 
   const onCreateNewSpace = useCallback(async (data: CreateSpaceT) => {
     try {
+      setIsProcessing(true)
       const {
         data: { data: newSpace },
       } = await api.post<{ data: SpaceT }>('/spaces', data)
@@ -87,6 +89,7 @@ const CreateSpace: FC<Props> = ({ isOpen, close }) => {
       reset()
       close()
     } catch (err) {
+      setIsProcessing(false)
       console.log(err)
       toast.error('Error creating Space', {
         id: 'post-spacel-error',
@@ -160,7 +163,13 @@ const CreateSpace: FC<Props> = ({ isOpen, close }) => {
               label="Cancel"
               onClick={close}
             />
-            <Button className="w-full mt-5" type="submit" label="Create" />
+            <Button
+              isLoading={isProcessing}
+              disabled={isProcessing}
+              className="w-full mt-5"
+              type="submit"
+              label="Create"
+            />
           </div>
         </form>
       </Dialog.Panel>

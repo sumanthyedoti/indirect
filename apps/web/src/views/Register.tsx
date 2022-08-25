@@ -1,4 +1,4 @@
-import { useEffect, FC } from 'react'
+import { useEffect, useState, FC } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { AxiosError } from 'axios'
@@ -50,6 +50,7 @@ interface FormInputs extends RegisterUser {
 }
 
 const Register: FC = () => {
+  const [isProcessing, setIsProcessing] = useState(false)
   const {
     register,
     handleSubmit,
@@ -67,9 +68,11 @@ const Register: FC = () => {
 
   const onSubmit = async (input: FormInputs) => {
     try {
+      setIsProcessing(true)
       await api.post('/register', input)
       navigate('/login', { state: { isRegister: true } })
     } catch (error) {
+      setIsProcessing(false)
       const err = error as AxiosError
       if (err.response?.status === 409) {
         toast.error('Email already exists!')
@@ -120,7 +123,13 @@ const Register: FC = () => {
           }
           error={errors.confirmPassword?.message}
         />
-        <Button className="w-full mt-5" type="submit" label="Register" />
+        <Button
+          isLoading={isProcessing}
+          disabled={isProcessing}
+          className="w-full mt-5"
+          type="submit"
+          label="Register"
+        />
         <p className="mt-4">
           Already have an account?&nbsp;&nbsp;
           <Link

@@ -1,4 +1,4 @@
-import { useEffect, FC } from 'react'
+import { useEffect, useState, FC } from 'react'
 import { useNavigate, Link, useLocation } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import { AxiosError } from 'axios'
@@ -39,6 +39,7 @@ const schema = yup.object().shape({
 })
 
 const Login: FC = () => {
+  const [isProcessing, setIsProcessing] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
   useToastLimit()
@@ -57,11 +58,14 @@ const Login: FC = () => {
   useEffect(() => {
     if (isLoggedIn) navigate('/')
   }, [isLoggedIn])
+
   const onSubmit = async (input: LoginUser) => {
     try {
+      setIsProcessing(true)
       const { data } = await api.post('/login', input)
       login(data)
     } catch (error) {
+      setIsProcessing(false)
       const err = error as AxiosError
       if (err.response?.status === 401) {
         toast.error('Email/password invalid!')
@@ -94,7 +98,13 @@ const Login: FC = () => {
           }
           error={errors.password?.message}
         />
-        <Button className="w-full mt-5" type="submit" label="Login" />
+        <Button
+          isLoading={isProcessing}
+          disabled={isProcessing}
+          className="w-full mt-5"
+          type="submit"
+          label="Login"
+        />
         <p className="mt-4">
           Need an account?&nbsp;&nbsp;
           <Link

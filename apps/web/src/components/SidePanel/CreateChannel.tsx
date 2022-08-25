@@ -41,8 +41,8 @@ interface Props {
 }
 
 const CreateChannel: FC<Props> = ({ close, spaceParamId }) => {
-  const { spaceId, user } = useUserStore()
   const [isProcessing, setIsProcessing] = useState(false)
+  const { spaceId, user } = useUserStore()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const {
