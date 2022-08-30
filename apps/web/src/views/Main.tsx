@@ -27,7 +27,7 @@ const Space: FC = () => {
   useAuthPing()
 
   useEffect(() => {
-    socket.emit('join-channel-rooms')
+    socket.emit('join-space-and-channels')
   }, [])
 
   useEffect(() => {

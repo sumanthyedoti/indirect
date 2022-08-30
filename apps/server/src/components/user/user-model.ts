@@ -27,17 +27,6 @@ async function getUser(id: number) {
   return user[0]
 }
 
-async function getUserChannelIds(user_id: number) {
-  try {
-    const result: { id: number }[] = await db('channel_users')
-      .select(db.raw('channel_id as id'))
-      .where({ user_id })
-    return result
-  } catch (err) {
-    logger.error('::', err)
-  }
-}
-
 async function getUserByEmail(email: string) {
   const users: T.GetUserByEmail[] = await db('users')
     .select('id', 'fullname', 'email', 'password_hash')
@@ -75,6 +64,27 @@ async function getUserSpaces(userId: number) {
   return result.rows
 }
 
+async function getUserSpaceIds(userId: number) {
+  const result: { rows: { id: number }[] } = await db.raw(`
+    SELECT s.id
+      FROM profiles as p JOIN spaces as s
+      ON p.space_id = s.id
+      WHERE p.user_id = ${userId} and p.is_active = true
+    `)
+  return result.rows.map((r) => r.id)
+}
+
+async function getUserChannelIds(user_id: number) {
+  try {
+    const result: { id: number }[] = await db('channel_users')
+      .select(db.raw('channel_id as id'))
+      .where({ user_id })
+    return result.map((r) => r.id)
+  } catch (err) {
+    logger.error('::', err)
+  }
+}
+
 export default {
   createUser,
   getUsers,
@@ -83,5 +93,6 @@ export default {
   updateUser,
   deleteUser,
   getUserSpaces,
+  getUserSpaceIds,
   getUserChannelIds,
 }

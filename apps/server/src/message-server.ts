@@ -12,11 +12,17 @@ const messageServer = (socketio: Server) => {
     //   })
     // }
 
-    socket.on('join-channel-rooms', async () => {
+    socket.on('join-space-and-channels', async () => {
       const userId = socket.request.user?.id
-      if (!userId) return
-      const userChannels = await userModel.getUserChannelIds(userId)
-      userChannels?.forEach(({ id }) => {
+      if (!userId) return // TODO: inform user Unautherized -> login
+      // join spaces
+      const userSpaceIds = await userModel.getUserSpaceIds(userId)
+      userSpaceIds?.forEach((id) => {
+        socket.join(`space-${id}`)
+      })
+      // join channels
+      const userChannelIds = await userModel.getUserChannelIds(userId)
+      userChannelIds?.forEach((id) => {
         socket.join(`channel-${id}`)
       })
     })

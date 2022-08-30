@@ -25,8 +25,9 @@ const serializeNode = (node: any) => {
       return children
   }
 }
+
 const serializeMessage = (nodes: any) => {
-  const htmlElements: any = []
+  const htmlElements: string[] = []
   let conseqEmptyLines = 0
   let contentStarted = false
   for (let i = 0; i < nodes.length; i++) {
