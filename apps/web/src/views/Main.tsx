@@ -42,6 +42,7 @@ const Space: FC = () => {
   const onAddProfile = (profile: SpaceUserT) => {
     queryClient.setQueryData<UsersQueryT>(
       ['users', profile.space_id],
+      //@ts-ignore
       (profiles) => {
         return addProfileToSpaceProfiles(profile, profiles)
       }

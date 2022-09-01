@@ -60,8 +60,13 @@ function addProfileToSpaceProfiles(
   profile: SpaceUser,
   profiles: UsersQueryT | undefined
 ) {
-  return profiles?.list.some((x) => x.user_id === profile.user_id)
-    ? profiles
+  const userInSpace = profiles?.list.find((x) => x.user_id === profile.user_id)
+  if (userInSpace?.is_active) return profiles
+  if (!userInSpace) return
+  userInSpace.is_active = true
+  return userInSpace
+    ? //@ts-ignore
+      { ...profiles }
     : {
         //@ts-ignore
         list: [...profiles?.list, profile],

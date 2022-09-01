@@ -17,8 +17,14 @@ const MessagedOfADay: FC<MessagedOfADayProps> = ({
   isFirstDay,
   containerRef,
 }) => {
+  // const [messagesOfADay, setMessagesOfADay] = useState(messages)
   const { user, spaceId } = useUserStore()
   const { data: users, isSuccess } = useQuerySpaceProfiles(spaceId)
+
+  // useEffect(() => {
+  //   setMessagesOfADay([...messages])
+  //   console.log({ users })
+  // }, [users])
 
   useEffect(() => {
     if (containerRef.current) {
