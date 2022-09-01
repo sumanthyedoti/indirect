@@ -81,6 +81,7 @@ io.use(wrap(passport.session()))
 // @ts-ignore
 io.use(socketAuthentication)
 
+app.set('socketio', io)
 messageServer(io)
 
 server.listen(port, () => {

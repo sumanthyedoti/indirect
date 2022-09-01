@@ -56,6 +56,23 @@ function useQuerySpaceProfiles(spaceId?: number) {
   )
 }
 
+function addProfileToSpaceProfiles(
+  profile: SpaceUser,
+  profiles: UsersQueryT | undefined
+) {
+  return profiles?.list.some((x) => x.user_id === profile.user_id)
+    ? profiles
+    : {
+        //@ts-ignore
+        list: [...profiles?.list, profile],
+        idMap: {
+          //@ts-ignore
+          ...profiles.idMap,
+          [profile.user_id]: profile,
+        },
+      }
+}
+
 function useQuerySpace(spaceId?: number, retry = 3) {
   return useQuery<Space>(
     ['space', spaceId],
@@ -206,6 +223,7 @@ function usePostChannelMessage(channelId?: number) {
 export {
   useQueryUserSpaces,
   useQuerySpaceProfiles,
+  addProfileToSpaceProfiles,
   useQuerySpaceChannels,
   useQuerySpace,
   useQueryChannel,

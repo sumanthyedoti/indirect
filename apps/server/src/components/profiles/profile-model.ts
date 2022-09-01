@@ -1,5 +1,6 @@
 import { Knex } from 'knex'
 
+import userModel from '../user/user-model'
 import * as T from '@api-types/profiles'
 import spaceModel from '../spaces/space-model'
 import db from '../../db'
@@ -12,6 +13,7 @@ async function createProfile(
     user_id: profile.user_id,
     space_id: profile.space_id,
   })
+  const user = await userModel.getUser(profile.user_id)
   if (spaceUserProfile.length === 1) {
     await queryTrx('profiles')
       .where({
@@ -23,6 +25,8 @@ async function createProfile(
       })
     return {
       ...spaceUserProfile[0],
+      fullname: user.fullname,
+      email: user.email,
       is_active: true,
     }
   }
@@ -33,13 +37,18 @@ async function createProfile(
       space_id: profile.space_id,
     })
     .returning('*')
+
   const space = await spaceModel.getSpace(profile.space_id, queryTrx)
   // add user to the general channel to the space
   await queryTrx('channel_users').insert({
     user_id: profile.user_id,
     channel_id: space.general_channel_id,
   })
-  return createdProfile
+  return {
+    ...createdProfile[0],
+    fullname: user.fullname,
+    email: user.email,
+  }
 }
 
 async function deactivateProfile(space_id: number, user_id: number) {

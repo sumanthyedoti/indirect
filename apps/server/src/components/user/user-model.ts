@@ -1,5 +1,7 @@
-import * as T from '@api-types/users'
+import { Knex } from 'knex'
+
 import { Space as SpaceT } from '@api-types/spaces'
+import * as T from '@api-types/users'
 import db from '../../db'
 import logger from '../../config/logger'
 
@@ -20,8 +22,8 @@ async function getUsers() {
   return users
 }
 
-async function getUser(id: number) {
-  const user: T.User[] = await db('users')
+async function getUser(id: number, queryTrx: Knex.Transaction | Knex = db) {
+  const user: T.User[] = await queryTrx('users')
     .select('id', 'email', 'fullname')
     .where({ id })
   return user[0]

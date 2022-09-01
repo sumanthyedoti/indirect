@@ -161,6 +161,7 @@ async function addUserToSpace(
   res: Response
 ) {
   try {
+    const io = req.app.get('socketio')
     const { id, uid } = req.params
     const result = await spaceModel.createProfile({
       //@ts-ignore
@@ -172,6 +173,7 @@ async function addUserToSpace(
       return
     }
     res.status(201).json({ data: result, message: 'Added User to the Space' })
+    io.to(`space-${id}`).emit('user-joined-space', result)
   } catch (err) {
     logger.error('::', err)
     res.status(500).send('Something went wrong!')

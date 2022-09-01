@@ -1,12 +1,19 @@
 import { useEffect, useState, FC } from 'react'
 import toast from 'react-hot-toast'
+import { useQueryClient } from 'react-query'
 import { useParams, useNavigate, Outlet } from 'react-router-dom'
-import { useSocket } from '../hooks'
 
+import { SpaceUser as SpaceUserT } from '@api-types/spaces'
+import { useSocket } from '../hooks'
 import SpacesBar from '../components/SpacesBar'
 import SidePanel from '../components/SidePanel'
 import { useUserStore, useSpaceStore } from '../store'
-import { useQueryUserSpaces, useQuerySpace } from '../queries'
+import {
+  useQueryUserSpaces,
+  useQuerySpace,
+  addProfileToSpaceProfiles,
+  UsersQueryT,
+} from '../queries'
 import { useAuthPing } from '../hooks'
 
 const Space: FC = () => {
@@ -23,12 +30,23 @@ const Space: FC = () => {
   const params = useParams()
   const navigate = useNavigate()
   const socket = useSocket()
+  const queryClient = useQueryClient()
 
   useAuthPing()
 
   useEffect(() => {
     socket.emit('join-space-and-channels')
+    socket.on('user-joined-space', onAddProfile)
   }, [])
+
+  const onAddProfile = (profile: SpaceUserT) => {
+    queryClient.setQueryData<UsersQueryT>(
+      ['users', profile.space_id],
+      (profiles) => {
+        return addProfileToSpaceProfiles(profile, profiles)
+      }
+    )
+  }
 
   useEffect(() => {
     if (!params.spaceId) return
