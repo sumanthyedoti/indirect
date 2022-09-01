@@ -19,6 +19,7 @@ export async function up(knex: Knex): Promise<void> {
           .references('id')
           .inTable('users')
           .onDelete('SET NULL')
+        table.integer('space_id').notNullable().index()
         table.primary(['channel_id', 'user_id'])
         table.boolean('is_admin').defaultTo(false)
       })

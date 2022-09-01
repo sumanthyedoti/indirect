@@ -82,6 +82,7 @@ async function createChannelMembers(
     user_ids.map((userId) => ({
       user_id: userId,
       channel_id,
+      space_id,
     }))
   )
   return users

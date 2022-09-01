@@ -36,14 +36,18 @@ const AddPeole: FC<AddPeoleProps> = () => {
   const { data: channel } = useQueryChannel(channelId)
   const { data: channelUserIds } = useQueryChannelMembers(channelId)
   if (!users || !channel || !channelUserIds) return null
-  const options: OptionT[] = users?.list.map((user) => {
-    const isAlreadyAMember = !channelUserIds.every((id) => id !== user.user_id)
-    return {
-      value: user.user_id,
-      label: user.fullname,
-      isDisabled: isAlreadyAMember,
-    }
-  })
+  const options: OptionT[] = users?.list
+    .filter((u) => u.is_active)
+    .map((user) => {
+      const isAlreadyAMember = !channelUserIds.every(
+        (id) => id !== user.user_id
+      )
+      return {
+        value: user.user_id,
+        label: user.fullname,
+        isDisabled: isAlreadyAMember,
+      }
+    })
 
   const handleGoBack = () => {
     openChannelModal()

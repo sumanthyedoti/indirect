@@ -1,5 +1,6 @@
 import { Knex } from 'knex'
 
+import logger from '../../config/logger'
 import userModel from '../user/user-model'
 import * as T from '@api-types/profiles'
 import spaceModel from '../spaces/space-model'
@@ -14,6 +15,12 @@ async function createProfile(
     space_id: profile.space_id,
   })
   const user = await userModel.getUser(profile.user_id)
+  const space = await spaceModel.getSpace(profile.space_id, queryTrx)
+  await queryTrx('channel_users').insert({
+    user_id: profile.user_id,
+    channel_id: space.general_channel_id,
+    space_id: profile.space_id,
+  })
   if (spaceUserProfile.length === 1) {
     await queryTrx('profiles')
       .where({
@@ -38,12 +45,7 @@ async function createProfile(
     })
     .returning('*')
 
-  const space = await spaceModel.getSpace(profile.space_id, queryTrx)
   // add user to the general channel to the space
-  await queryTrx('channel_users').insert({
-    user_id: profile.user_id,
-    channel_id: space.general_channel_id,
-  })
   return {
     ...createdProfile[0],
     fullname: user.fullname,
@@ -52,13 +54,22 @@ async function createProfile(
 }
 
 async function deactivateProfile(space_id: number, user_id: number) {
-  const id = await db('profiles')
-    .where({
-      user_id: user_id,
-      space_id: space_id,
-    })
-    .update({ is_active: false })
-  return id
+  const trx = await db.transaction()
+  try {
+    const id = await trx('profiles')
+      .where({
+        user_id: user_id,
+        space_id: space_id,
+      })
+      .update({ is_active: false })
+    // delete user from the channels of the space
+    await trx('channel_users').where({ user_id, space_id }).del()
+    trx.commit()
+    return id
+  } catch (err) {
+    logger.error('::', err)
+    trx.rollback()
+  }
 }
 
 export default {
