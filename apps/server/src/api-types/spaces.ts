@@ -23,6 +23,11 @@ export interface UpdateSpace extends Omit<Info, 'creator_id'> {}
 
 export interface SpaceUser extends User, Profile {}
 
+export interface UserLeftSpace {
+  user_id: number
+  space_id: number
+}
+
 export interface Invites {
   emails: string[]
   spaceName: string

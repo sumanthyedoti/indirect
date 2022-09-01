@@ -16,7 +16,6 @@ async function createSpace(
   res: Response
 ) {
   const { name, tagline, description, creator_id } = req.body
-
   try {
     const space = await spaceModel.createSpace({
       name,
@@ -172,8 +171,8 @@ async function addUserToSpace(
       res.status(404).json({ message: 'Space/User not found' })
       return
     }
-    res.status(201).json({ data: result, message: 'Added User to the Space' })
     io.to(`space-${id}`).emit('user-joined-space', result)
+    res.status(201).json({ data: result, message: 'Added User to the Space' })
   } catch (err) {
     logger.error('::', err)
     res.status(500).send('Something went wrong!')
@@ -185,6 +184,7 @@ async function deactivateUserSpaceProfile(
   res: Response
 ) {
   try {
+    const io = req.app.get('socketio')
     const { id, uid } = req.params
     //@ts-ignore
     const result = await profileModel.deactivateProfile(id, uid)
@@ -192,6 +192,7 @@ async function deactivateUserSpaceProfile(
       res.status(404).json({ id, message: 'Space/User not found' })
       return
     }
+    io.to(`space-${id}`).emit('user-left-space', result)
     res.sendStatus(204)
   } catch (err) {
     logger.error('::', err)

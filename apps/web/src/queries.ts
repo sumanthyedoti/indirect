@@ -62,8 +62,9 @@ function addProfileToSpaceProfiles(
 ) {
   const userInSpace = profiles?.list.find((x) => x.user_id === profile.user_id)
   if (userInSpace?.is_active) return profiles
-  if (!userInSpace) return
-  userInSpace.is_active = true
+  if (userInSpace) {
+    userInSpace.is_active = true
+  }
   return userInSpace
     ? //@ts-ignore
       { ...profiles }
@@ -76,6 +77,17 @@ function addProfileToSpaceProfiles(
           [profile.user_id]: profile,
         },
       }
+}
+
+function deactivateSpaceProfile(
+  user_id: number,
+  profiles: UsersQueryT | undefined
+) {
+  const userInSpace = profiles?.list.find((x) => x.user_id === user_id)
+  if (!userInSpace) return
+  if (!userInSpace?.is_active) return profiles
+  userInSpace.is_active = false
+  return { ...profiles }
 }
 
 function useQuerySpace(spaceId?: number, retry = 3) {
@@ -229,6 +241,7 @@ export {
   useQueryUserSpaces,
   useQuerySpaceProfiles,
   addProfileToSpaceProfiles,
+  deactivateSpaceProfile,
   useQuerySpaceChannels,
   useQuerySpace,
   useQueryChannel,

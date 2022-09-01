@@ -3,7 +3,10 @@ import toast from 'react-hot-toast'
 import { useQueryClient } from 'react-query'
 import { useParams, useNavigate, Outlet } from 'react-router-dom'
 
-import { SpaceUser as SpaceUserT } from '@api-types/spaces'
+import {
+  SpaceUser as SpaceUserT,
+  UserLeftSpace as UserLeftSpaceT,
+} from '@api-types/spaces'
 import { useSocket } from '../hooks'
 import SpacesBar from '../components/SpacesBar'
 import SidePanel from '../components/SidePanel'
@@ -12,6 +15,7 @@ import {
   useQueryUserSpaces,
   useQuerySpace,
   addProfileToSpaceProfiles,
+  deactivateSpaceProfile,
   UsersQueryT,
 } from '../queries'
 import { useAuthPing } from '../hooks'
@@ -36,15 +40,26 @@ const Space: FC = () => {
 
   useEffect(() => {
     socket.emit('join-space-and-channels')
-    socket.on('user-joined-space', onAddProfile)
+    socket.on('user-joined-space', onUserJoinedSpace)
+    socket.on('user-left-space', onUserLeftSpace)
   }, [])
 
-  const onAddProfile = (profile: SpaceUserT) => {
+  const onUserJoinedSpace = (profile: SpaceUserT) => {
     queryClient.setQueryData<UsersQueryT>(
       ['users', profile.space_id],
       //@ts-ignore
       (profiles) => {
         return addProfileToSpaceProfiles(profile, profiles)
+      }
+    )
+  }
+
+  const onUserLeftSpace = ({ user_id, space_id }: UserLeftSpaceT) => {
+    queryClient.setQueryData<UsersQueryT>(
+      ['users', space_id],
+      //@ts-ignore
+      (profiles) => {
+        return deactivateSpaceProfile(user_id, profiles)
       }
     )
   }
