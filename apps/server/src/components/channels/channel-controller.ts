@@ -2,6 +2,7 @@ import { Response } from 'express'
 import { Socket, Server } from 'socket.io'
 
 import * as T from '@api-types/channels'
+import { joinUserToChannel } from '../../message-server'
 import {
   SocketMessage as SocketMessageT,
   SocketMessageFial as SocketMessageFialT,
@@ -21,15 +22,21 @@ async function createChannel(
   res: Response
 ) {
   try {
-    const result = await channelModel.createChannel(req.body)
-    if (!result) {
+    const userId = req.user?.id
+    if (!userId) {
+      res.sendStatus(401)
+      return
+    }
+    const channel = await channelModel.createChannel(req.body)
+    if (!channel) {
       res.status(409).json({
         message: 'Channel with the name already exists in the space',
       })
       return
     }
+    joinUserToChannel(userId, channel.id)
     res.status(201).json({
-      data: result,
+      data: channel,
       message: 'Created the channel successfully!',
     })
   } catch (err) {
