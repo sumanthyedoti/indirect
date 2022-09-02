@@ -1,4 +1,5 @@
 import { Knex } from 'knex'
+
 import * as T from '@api-types/spaces'
 import { CreateProfile as CreateProfileT } from '@api-types/profiles'
 import logger from '../../config/logger'
@@ -64,6 +65,16 @@ async function getSpaceChannels(id: number) {
   return result
 }
 
+async function getSpaceUserChannels(id: number, uid: number) {
+  const result: { rows: T.SpaceUser[] } = await db.raw(`
+    SELECT c.*
+      FROM channels as c JOIN channel_users as cu
+      ON c.id = cu.channel_id
+      WHERE cu.space_id = ${id} AND cu.user_id = ${uid}
+    `)
+  return result?.rows
+}
+
 async function getSpaceUsers(id: number) {
   const result: { rows: T.SpaceUser[] } = await db.raw(`
     SELECT p.*, u.email, u.fullname
@@ -117,6 +128,7 @@ export default {
   createSpace,
   getSpace,
   getSpaceChannels,
+  getSpaceUserChannels,
   getSpaceUsers,
   updateSpace,
   deleteSpace,

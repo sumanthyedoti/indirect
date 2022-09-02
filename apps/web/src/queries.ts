@@ -176,6 +176,20 @@ function useQuerySpaceChannels(spaceId?: number) {
   )
 }
 
+function useQuerySpaceUserChannels(spaceId?: number) {
+  return useQuery<Channel[]>(
+    ['channels', spaceId],
+    async () => {
+      const { data } = await api.get(`/spaces/${spaceId}/user-channels`)
+      return data.data
+    },
+    {
+      staleTime: Infinity,
+      enabled: !!spaceId,
+    }
+  )
+}
+
 function useQueryChannelMessages(channelId?: number) {
   return useQuery<MessageT[]>(
     ['channel-messages', channelId],
@@ -243,6 +257,7 @@ export {
   addProfileToSpaceProfiles,
   deactivateSpaceProfile,
   useQuerySpaceChannels,
+  useQuerySpaceUserChannels,
   useQuerySpace,
   useQueryChannel,
   useQueryChannelMembers,

@@ -79,6 +79,31 @@ async function getSpaceChannels(
   }
 }
 
+async function getSpaceUserChannels(
+  req: TypedRequestParams<{ id: number }>,
+  res: Response
+) {
+  try {
+    const id = req.params.id
+    const userId = req.user?.id
+    if (!userId) {
+      res.sendStatus(401)
+      return
+    }
+    const channels = await spaceModel.getSpaceUserChannels(id, userId)
+    if (!channels) {
+      res.status(204).json({ id, error: 'No channels found for this space' })
+      return
+    }
+    res.status(200).json({
+      data: channels,
+    })
+  } catch (err) {
+    logger.error('::', err)
+    res.status(500).send('Something went wrong!')
+  }
+}
+
 async function getSpaceUsers(
   req: TypedRequestParams<{ id: number }>,
   res: Response
@@ -230,6 +255,7 @@ export default {
   createSpace,
   getSpace,
   getSpaceChannels,
+  getSpaceUserChannels,
   getSpaceUsers,
   updateSpace,
   deleteSpace,

@@ -24,6 +24,11 @@ router.post(
 )
 router.get('/:id', validateIdParam, spaceController.getSpace)
 router.get('/:id/channels', validateIdParam, spaceController.getSpaceChannels)
+router.get(
+  '/:id/user-channels',
+  validateIdParam,
+  spaceController.getSpaceUserChannels
+)
 router.get('/:id/users', validateIdParam, spaceController.getSpaceUsers)
 router.post(
   '/:id/users/:uid',

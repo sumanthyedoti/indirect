@@ -9,7 +9,7 @@ import CreateChannel from './CreateChannel'
 import Modal from '../Modal'
 import { useUserStore } from '../../store'
 import { Plus } from '../../icons'
-import { useQuerySpaceChannels, useQuerySpace } from '../../queries'
+import { useQuerySpaceUserChannels, useQuerySpace } from '../../queries'
 
 const SidePanel: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -19,7 +19,7 @@ const SidePanel: FC = () => {
   const navigate = useNavigate()
   const params = useParams()
   const { setChannelId } = useUserStore()
-  const { data: channels, isError } = useQuerySpaceChannels(spaceParamId)
+  const { data: channels, isError } = useQuerySpaceUserChannels(spaceParamId)
   const { data: space } = useQuerySpace(spaceParamId)
 
   const closeModal = () => {
