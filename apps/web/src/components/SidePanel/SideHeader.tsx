@@ -3,13 +3,16 @@ import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { useQueryClient } from 'react-query'
 import { Popover } from '@headlessui/react'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 
+import { baseURL } from '../../config/constants'
 import { Space as SpaceT } from '@api-types/spaces'
 import Modal from '../Modal'
+import { Tooltip } from '../molecules'
 import InvitePeople from './InvitePeople'
 import useUserStore from '../../store/useUserStore'
 import ConfirmationModal from '../ConfirmationModal'
-import { ChevronDown, LeaveSpace, AddPeople } from '../../icons'
+import { ChevronDown, LeaveSpace, Share, Copy } from '../../icons'
 import { MenuButton } from '../atoms'
 import { useQuerySpace } from '../../queries'
 import useStore from './store'
@@ -21,7 +24,7 @@ const SideHeader: FC = () => {
     isInvitePeopleModalOpen,
     openLeaveConfirmModal,
     closeLeaveConfirmModal,
-    openInvitePeopleModal,
+    // openInvitePeopleModal,
     closeInvitePeopleModal,
   } = useStore()
   const [isProcessing, setIsProcessing] = useState(false)
@@ -73,10 +76,28 @@ const SideHeader: FC = () => {
           minWidth: '16em',
         }}
       >
-        <MenuButton onClick={openInvitePeopleModal}>
-          <AddPeople />
-          <span>Invite Poeple to the Space</span>
-        </MenuButton>
+        <Tooltip
+          trigger="click"
+          timer
+          label="Copied"
+          arrow={false}
+          placement="right"
+        >
+          <div>
+            <CopyToClipboard text={`${baseURL}/${spaceId}/join`}>
+              <MenuButton
+                className="w-full"
+                // onClick={openInvitePeopleModal}
+              >
+                <Share />
+                <span>Invite Link</span>
+                <span>
+                  <Copy className="text-gray-400" />
+                </span>
+              </MenuButton>
+            </CopyToClipboard>
+          </div>
+        </Tooltip>
         <MenuButton danger onClick={openLeaveConfirmModal}>
           <LeaveSpace />
           <span>Leave the Space</span>
