@@ -95,7 +95,6 @@ const Channel: FC = () => {
 
       <article
         className={`h-full shrink mr-2 overflow-y-auto
-        flex flex-col main-view-padding
       `}
       >
         <ChannelMessages />

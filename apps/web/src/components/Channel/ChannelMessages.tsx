@@ -20,6 +20,7 @@ const ChannelMessages: FC = () => {
     <div
       ref={messagesContainerRef}
       className={`h-full overflow-y-auto
+        flex flex-col main-view-padding
       `}
     >
       {messages?.map((m, i) => {

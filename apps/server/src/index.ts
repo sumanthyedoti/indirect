@@ -24,6 +24,14 @@ dotenv.config()
 const app: Application = express()
 
 app.use(helmet())
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", 'https://unpkg.com'],
+    },
+  })
+)
 app.use(express.json())
 // app.use(express.urlencoded({ extended: false }))
 app.use(

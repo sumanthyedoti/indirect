@@ -4,14 +4,13 @@ import { BrowserRouter } from 'react-router-dom'
 import { QueryClientProvider, QueryClient } from 'react-query'
 // import { ReactQueryDevtools } from 'react-query/devtools'
 
+const App = lazy(() => import('./App'))
 import Toaster from './components/Toaster'
 import { CenterLoader } from './components/molecules'
 
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/themes/light.css'
 import './index.css'
-
-const App = lazy(() => import('./App'))
 
 const queryClient = new QueryClient()
 
