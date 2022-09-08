@@ -6,12 +6,14 @@ import isYesterday from 'dayjs/plugin/isYesterday'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 
-import { Login, Register, Main, JoinSpace } from './views'
+import { Login, Register } from './views'
+import { CenterLoader } from './components/molecules'
 import { PrivateRoute, NoMatch } from './routes'
-import { Loader } from './icons'
 
+const Main = lazy(() => import('./views/Main'))
 const Channel = lazy(() => import('./components/Channel'))
 const Spaces = lazy(() => import('./views/Spaces'))
+const JoinSpace = lazy(() => import('./views/JoinSpace'))
 
 dayjs.extend(isToday)
 dayjs.extend(isYesterday)
@@ -29,7 +31,7 @@ const App: FC = () => {
           <Route
             path="/"
             element={
-              <Suspense fallback="Loading">
+              <Suspense fallback={<CenterLoader />}>
                 <Spaces />
               </Suspense>
             }
@@ -37,7 +39,7 @@ const App: FC = () => {
           <Route
             path=":spaceId/join"
             element={
-              <Suspense fallback="Loading">
+              <Suspense fallback={<CenterLoader />}>
                 <JoinSpace />
               </Suspense>
             }
@@ -45,13 +47,7 @@ const App: FC = () => {
           <Route
             path=":spaceId"
             element={
-              <Suspense
-                fallback={
-                  <div className="flex items-center justify-center w-full h-full">
-                    <Loader />
-                  </div>
-                }
-              >
+              <Suspense fallback={<CenterLoader />}>
                 <Main />
               </Suspense>
             }
@@ -59,13 +55,7 @@ const App: FC = () => {
             <Route
               path=":channelId"
               element={
-                <Suspense
-                  fallback={
-                    <div className="flex items-center justify-center w-full h-full">
-                      <Loader />
-                    </div>
-                  }
-                >
+                <Suspense fallback={<CenterLoader />}>
                   <Channel />
                 </Suspense>
               }

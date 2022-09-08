@@ -1,15 +1,17 @@
-import { StrictMode } from 'react'
+import { StrictMode, lazy, Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { QueryClientProvider, QueryClient } from 'react-query'
 // import { ReactQueryDevtools } from 'react-query/devtools'
 
-import App from './App'
 import Toaster from './components/Toaster'
+import { CenterLoader } from './components/molecules'
 
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/themes/light.css'
 import './index.css'
+
+const App = lazy(() => import('./App'))
 
 const queryClient = new QueryClient()
 
@@ -18,7 +20,11 @@ root.render(
   <StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <div className="h-screen">
+          <Suspense fallback={<CenterLoader />}>
+            <App />
+          </Suspense>
+        </div>
         <Toaster />
       </QueryClientProvider>
     </BrowserRouter>
