@@ -7,6 +7,7 @@ import ChannelName from './ChannelName'
 import Section from './Section'
 import CreateChannel from './CreateChannel'
 import Modal from '../Modal'
+import Loader from './Loader'
 import { useUserStore } from '../../store'
 import { Plus } from '../../icons'
 import { useQuerySpaceUserChannels, useQuerySpace } from '../../queries'
@@ -62,17 +63,11 @@ const SidePanel: FC = () => {
   const handleChannelClick = (id: number) => {
     navigate(`./${id}`)
   }
-  if (!channels || !spaceParamId) return null
+
+  if (!channels || !spaceParamId) return <Loader />
 
   return (
-    <aside
-      className={`
-      w-1/3 lg:w-1/4 2xl:w-1/5 h-full
-      shrink-0
-      border-r border-neutral-600
-      bg-slate-900
-     `}
-    >
+    <>
       <SideHeader />
       <div className="">
         <Section
@@ -104,7 +99,7 @@ const SidePanel: FC = () => {
       <Modal isOpen={isModalOpen} close={closeModal}>
         <CreateChannel spaceParamId={spaceParamId} close={closeModal} />
       </Modal>
-    </aside>
+    </>
   )
 }
 

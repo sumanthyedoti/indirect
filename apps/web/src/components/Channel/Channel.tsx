@@ -90,17 +90,20 @@ const Channel: FC = () => {
   )
 
   return (
-    <div
-      className={`
-          w-full flex flex-col relative h-full bg-slate-800
-    `}
-    >
+    <>
       <Header />
-      <ChannelMessages />
+
+      <article
+        className={`h-full shrink mr-2 overflow-y-auto
+        flex flex-col main-view-padding
+      `}
+      >
+        <ChannelMessages />
+      </article>
       <div className="mb-2 main-view-padding">
         <MessageInput onSubmit={handleMessageSubmit} />
       </div>
-    </div>
+    </>
   )
 }
 

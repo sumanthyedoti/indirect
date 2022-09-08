@@ -1,4 +1,4 @@
-import { useEffect, useState, FC } from 'react'
+import { useEffect, useState, lazy, Suspense, FC } from 'react'
 import toast from 'react-hot-toast'
 import { useQueryClient } from 'react-query'
 import { useParams, useNavigate, Outlet } from 'react-router-dom'
@@ -8,8 +8,6 @@ import {
   UserLeftSpace as UserLeftSpaceT,
 } from '@api-types/spaces'
 import { useSocket } from '../hooks'
-import SpacesBar from '../components/SpacesBar'
-import SidePanel from '../components/SidePanel'
 import { useUserStore, useSpaceStore } from '../store'
 import {
   useQueryUserSpaces,
@@ -19,6 +17,10 @@ import {
   UsersQueryT,
 } from '../queries'
 import { useAuthPing } from '../hooks'
+import { SpacesBarLoader } from '../components/SpacesBar'
+import { SidePanelLoader } from '../components/SidePanel'
+const SpacesBar = lazy(() => import('../components/SpacesBar'))
+const SidePanel = lazy(() => import('../components/SidePanel'))
 
 const Space: FC = () => {
   const { setSpaceId, user } = useUserStore()
@@ -104,9 +106,37 @@ const Space: FC = () => {
 
   return (
     <div className="flex h-screen max-h-screen">
-      <SpacesBar />
-      <SidePanel />
-      <Outlet />
+      <aside
+        className={`flex flex-col items-center
+      pt-3 w-28 lg:w-32 overflow-y-auto
+      border-r border-neutral-500
+      `}
+      >
+        <Suspense fallback={<SpacesBarLoader />}>
+          <SpacesBar />
+        </Suspense>
+      </aside>
+
+      <aside
+        className={`
+          w-1/3 lg:w-1/4 2xl:w-1/5 h-full
+          shrink-0
+          border-r border-neutral-600
+          bg-slate-900
+       `}
+      >
+        <Suspense fallback={<SidePanelLoader />}>
+          <SidePanel />
+        </Suspense>
+      </aside>
+
+      <div
+        className={`
+          w-full flex flex-col relative h-full bg-slate-800
+        `}
+      >
+        <Outlet />
+      </div>
     </div>
   )
 }

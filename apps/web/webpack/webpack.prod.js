@@ -34,6 +34,10 @@ module.exports = merge(
       ],
     },
     optimization: {
+      splitChunks: {
+        chunks: 'all',
+        minChunks: 1,
+      },
       minimizer: [
         new TerserPlugin({
           terserOptions: {

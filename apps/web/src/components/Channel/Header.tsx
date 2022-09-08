@@ -9,6 +9,7 @@ import Modal from '../Modal'
 import { ChevronDown } from '../../icons'
 import { useQueryChannel } from '../../queries'
 import ChannelDetails from './ChannelDetails'
+import HeaderLoader from './HeaderLoader'
 import AvatarMenu from '../AvatarMenu'
 import ConfirmationModal from '../ConfirmationModal'
 import AddPeople from './AddPeople'
@@ -63,7 +64,7 @@ const SideHeader: FC = () => {
     }
   }, [channelId, spaceId])
 
-  if (!isSuccess || !user) return null
+  if (!isSuccess || !user) return <HeaderLoader />
 
   return (
     <>

@@ -2,6 +2,7 @@ import { useRef, FC } from 'react'
 
 import * as T from '@api-types/messages'
 import MessagesOfADay from './MessagesOfADay'
+import MessagesLoader from './MessagesLoader'
 import useUserStore from '../../store/useUserStore'
 import { useQueryChannelMessages } from '../../queries'
 
@@ -13,11 +14,12 @@ const ChannelMessages: FC = () => {
   let messagesOfADay: T.Message[] = []
   let isFirstDay = true
 
+  if (!messages) return <MessagesLoader />
+
   return (
-    <article
+    <div
       ref={messagesContainerRef}
-      className={`h-full shrink mr-2 overflow-y-auto
-        flex flex-col main-view-padding
+      className={`h-full overflow-y-auto
       `}
     >
       {messages?.map((m, i) => {
@@ -41,7 +43,7 @@ const ChannelMessages: FC = () => {
           return null
         }
       })}
-    </article>
+    </div>
   )
 }
 

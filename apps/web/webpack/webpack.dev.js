@@ -38,6 +38,12 @@ module.exports = merge(
       // open: true,
       historyApiFallback: true,
     },
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+        minChunks: 1,
+      },
+    },
     plugins: [new ReactRefreshWebpackPlugin()],
   },
   commonConfig

@@ -5,6 +5,7 @@ import classnames from 'classnames'
 import { useQueryUserSpaces } from '../../queries'
 import CreateSpace from './CreateSpace'
 import { Tooltip } from '../molecules'
+import Loader from './Loader'
 import { Space as SpaceIcon, Plus } from '../../icons'
 import { useUserStore } from '../../store'
 
@@ -28,13 +29,10 @@ const SpacesBar: FC<SpacesBarProps> = () => {
     }
   }
 
+  if (!spaces) return <Loader />
+
   return (
-    <aside
-      className={`flex flex-col items-center
-      mt-3 w-28 lg:w-32 overflow-y-auto
-      border-r border-neutral-500
-      `}
-    >
+    <>
       {spaces?.map((space) => {
         return (
           <Tooltip
@@ -47,8 +45,8 @@ const SpacesBar: FC<SpacesBarProps> = () => {
               onClick={() => onSpaceClick(space.id)}
               className={classnames(
                 `rounded-xl first:mt-1
-                w-12 h-12 lg:w-14 lg:h-14
-                bg-slate-900 mb-4 border border-slate-700`,
+                  w-12 h-12 lg:w-14 lg:h-14
+                  bg-slate-900 mb-4 border border-slate-700`,
                 {
                   'border-2 border-slate-400 focus:ring-2 focus:ring-sky-400':
                     space.id === spaceId,
@@ -65,11 +63,11 @@ const SpacesBar: FC<SpacesBarProps> = () => {
       <Tooltip placement="right" label="Create a new Space">
         <button
           className={`
-          mx-2 my-3
-          flex justify-center items-center
-          bg-slate-900 border border-slate-700
-          w-12 h-12 lg:w-14 lg:h-14 shrink-0
-          rounded rounded-lg
+            mx-2 my-3
+            flex justify-center items-center
+            bg-slate-900 border border-slate-700
+            w-12 h-12 lg:w-14 lg:h-14 shrink-0
+            rounded rounded-lg
     `}
           aril-lable="Create a new Space"
           onClick={() => setIsCreateSpaceModalOpen(true)}
@@ -84,7 +82,7 @@ const SpacesBar: FC<SpacesBarProps> = () => {
         isOpen={isCreateSpaceModalOpen}
         close={() => setIsCreateSpaceModalOpen(false)}
       />
-    </aside>
+    </>
   )
 }
 

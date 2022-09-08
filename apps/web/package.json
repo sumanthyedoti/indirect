@@ -33,6 +33,7 @@
     "dayjs": "^1.11.3",
     "escape-html": "^1.0.3",
     "react": "^18.2.0",
+    "react-content-loader": "^6.2.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.33.1",

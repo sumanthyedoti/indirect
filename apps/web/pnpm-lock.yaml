@@ -45,6 +45,7 @@ specifiers:
   postcss-loader: ^7.0.0
   prettier: ^2.7.1
   react: ^18.2.0
+  react-content-loader: ^6.2.0
   react-copy-to-clipboard: ^5.1.0
   react-dom: ^18.2.0
   react-hook-form: ^7.33.1
@@ -86,6 +87,7 @@ dependencies:
   dayjs: 1.11.3
   escape-html: 1.0.3
   react: 18.2.0
+  react-content-loader: 6.2.0_react@18.2.0
   react-copy-to-clipboard: 5.1.0_react@18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.33.1_react@18.2.0
@@ -5682,6 +5684,15 @@ packages:
       minimist: 1.2.6
       strip-json-comments: 2.0.1
     dev: true
+
+  /react-content-loader/6.2.0_react@18.2.0:
+    resolution: {integrity: sha512-r1dI6S+uHNLW68qraLE2njJYOuy6976PpCExuCZUcABWbfnF3FMcmuESRI8L4Bj45wnZ7n8g71hkPLzbma7/Cw==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16.0.0'
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /react-copy-to-clipboard/5.1.0_react@18.2.0:
     resolution: {integrity: sha512-k61RsNgAayIJNoy9yDsYzDe/yAZAzEbEgcz3DZMhF686LEyukcE1hzurxe85JandPUG+yTfGVFzuEw3xt8WP/A==}
