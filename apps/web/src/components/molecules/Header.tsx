@@ -12,7 +12,7 @@ const Header: FC = () => {
       role="banner"
       className={classnames(
         `
-      flex sm:flex-row sm:items-center
+      flex flex-row items-center
       container-width`,
         {
           'justify-between': isLoggedIn,
