@@ -65,7 +65,6 @@ const SidePanel: FC = () => {
   }
 
   if (!channels || !spaceParamId) return <Loader />
-
   return (
     <>
       <SideHeader />

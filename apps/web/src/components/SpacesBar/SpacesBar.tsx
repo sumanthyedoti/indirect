@@ -29,7 +29,6 @@ const SpacesBar: FC<SpacesBarProps> = () => {
   }
 
   if (!spaces) return <Loader />
-
   return (
     <>
       {spaces?.map((space) => {

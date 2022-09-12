@@ -3,9 +3,7 @@ import ContentLoader from 'react-content-loader'
 const Loader = (props: any) => {
   return (
     <ContentLoader
-      viewBox="0 0 180 400"
-      with="100%"
-      height="100%"
+      viewBox="0 0 160 400"
       backgroundColor="#aaa"
       foregroundColor="#888"
       {...props}
