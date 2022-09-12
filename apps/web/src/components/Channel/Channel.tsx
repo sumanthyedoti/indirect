@@ -92,7 +92,6 @@ const Channel: FC = () => {
   return (
     <>
       <Header />
-
       <article
         className={`h-full shrink mr-2 overflow-y-auto
       `}

@@ -64,17 +64,30 @@ const SideHeader: FC = () => {
     }
   }, [channelId, spaceId])
 
-  if (!isSuccess || !user) return <HeaderLoader />
-
-  return (
-    <>
+  const Container = ({ children }: { children: React.ReactNode }) => {
+    return (
       <div
         className={`
-          py-2 px-3 md:px-4 mb-0 text-base border-b border-gray-700
+          h-14 px-3 md:px-4 mb-0 text-base border-b border-gray-700
           shadow-sm shadow-gray-700
           flex justify-between items-center
         `}
       >
+        {children}
+      </div>
+    )
+  }
+
+  if (!isSuccess || !user)
+    return (
+      <Container>
+        <HeaderLoader />
+      </Container>
+    )
+
+  return (
+    <>
+      <Container>
         <button
           onClick={openChannelModal}
           className="flex items-center space-x-1"
@@ -85,7 +98,7 @@ const SideHeader: FC = () => {
           </span>
         </button>
         <AvatarMenu spaceId={spaceId} />
-      </div>
+      </Container>
       <Modal
         className="-mt-48"
         isOpen={isChannelModalOpen}
