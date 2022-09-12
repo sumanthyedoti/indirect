@@ -1,9 +1,9 @@
-import { Loader } from '../../icons'
+import { Space as SpaceIcon } from '../../icons'
 
 const CenterLoader = () => {
   return (
     <div className="flex items-center justify-center w-full h-full">
-      <Loader width="30" height="30" />
+      <SpaceIcon />
     </div>
   )
 }
